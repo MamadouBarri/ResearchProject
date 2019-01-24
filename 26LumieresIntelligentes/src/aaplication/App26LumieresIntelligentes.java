@@ -21,6 +21,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import sceneAnimee.SceneAnimee;
+
 
 public class App26LumieresIntelligentes extends JFrame {
 
@@ -74,16 +76,6 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 		
-		JPanel pnSimulNormal = new JPanel();
-		pnSimulNormal.setBackground(Color.GREEN);
-		pnSimulNormal.setBounds(65, 86, 238, 218);
-		pnSimulations.add(pnSimulNormal);
-		
-		JPanel pnSimulAlgo = new JPanel();
-		pnSimulAlgo.setBackground(Color.ORANGE);
-		pnSimulAlgo.setBounds(398, 86, 238, 218);
-		pnSimulations.add(pnSimulAlgo);
-		
 		JPanel pnEmplacementsDesBoutons = new JPanel();
 		pnEmplacementsDesBoutons.setBackground(Color.DARK_GRAY);
 		pnEmplacementsDesBoutons.setBorder(new TitledBorder(null, "Boutons (play,pause,pas,etc)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -97,6 +89,14 @@ public class App26LumieresIntelligentes extends JFrame {
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
 		lblSimulationSansLAlgorithme.setBounds(109, 61, 140, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
+		
+		SceneAnimee sceneAnimee = new SceneAnimee();
+		sceneAnimee.setBounds(83, 84, 240, 240);
+		pnSimulations.add(sceneAnimee);
+		
+		SceneAnimee sceneAnimee_2 = new SceneAnimee();
+		sceneAnimee_2.setBounds(381, 84, 240, 240);
+		pnSimulations.add(sceneAnimee_2);
 		
 		JPanel pnStatistiques = new JPanel();
 		pnStatistiques.setBackground(Color.LIGHT_GRAY);
