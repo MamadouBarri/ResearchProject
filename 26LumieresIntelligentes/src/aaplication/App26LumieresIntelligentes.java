@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import sceneAnimee.SceneAnimee;
 
 public class App26LumieresIntelligentes extends JFrame {
 
@@ -53,16 +54,6 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 		
-		JPanel pnSimulNormal = new JPanel();
-		pnSimulNormal.setBackground(Color.GREEN);
-		pnSimulNormal.setBounds(65, 86, 238, 218);
-		pnSimulations.add(pnSimulNormal);
-		
-		JPanel pnSimulAlgo = new JPanel();
-		pnSimulAlgo.setBackground(Color.ORANGE);
-		pnSimulAlgo.setBounds(398, 86, 238, 218);
-		pnSimulations.add(pnSimulAlgo);
-		
 		JPanel pnEmplacementsDesBoutons = new JPanel();
 		pnEmplacementsDesBoutons.setBackground(Color.DARK_GRAY);
 		pnEmplacementsDesBoutons.setBorder(new TitledBorder(null, "Boutons (play,pause,pas,etc)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -72,6 +63,14 @@ public class App26LumieresIntelligentes extends JFrame {
 		JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme");
 		lblSimulationAvecLalgorithme.setBounds(454, 61, 140, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithme);
+		
+		SceneAnimee sceneAnimee = new SceneAnimee();
+		sceneAnimee.setBounds(83, 84, 240, 240);
+		pnSimulations.add(sceneAnimee);
+		
+		SceneAnimee sceneAnimee_2 = new SceneAnimee();
+		sceneAnimee_2.setBounds(381, 84, 240, 240);
+		pnSimulations.add(sceneAnimee_2);
 		
 		JPanel pnStatistiques = new JPanel();
 		pnStatistiques.setBackground(Color.LIGHT_GRAY);
