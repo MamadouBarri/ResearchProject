@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import sceneAnimee.SceneAnimee;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class App26LumieresIntelligentes extends JFrame {
@@ -39,6 +41,7 @@ public class App26LumieresIntelligentes extends JFrame {
 	private JSpinner spnVitesseMoyenne;
 	private JSpinner spnTauxDApparition;
 	private JButton btnChoisirUneVideo;
+	private FenetreFileChooser popup;
 
 	/**
 	 * Launch the application.
@@ -61,7 +64,9 @@ public class App26LumieresIntelligentes extends JFrame {
 	 */
 	public App26LumieresIntelligentes() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 716, 876);
+		setBounds(100, 100, 716, 857);
+		
+		popup = new FenetreFileChooser();
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -83,11 +88,11 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnSimulations.add(pnEmplacementsDesBoutons);
 		
 		JLabel lblSimulationAvecLAlgorithme = new JLabel("Simulation avec l'algorithme");
-		lblSimulationAvecLAlgorithme.setBounds(454, 61, 140, 14);
+		lblSimulationAvecLAlgorithme.setBounds(400, 61, 187, 14);
 		pnSimulations.add(lblSimulationAvecLAlgorithme);
 		
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
-		lblSimulationSansLAlgorithme.setBounds(109, 61, 140, 14);
+		lblSimulationSansLAlgorithme.setBounds(120, 61, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 		
 		SceneAnimee sceneAnimee = new SceneAnimee();
@@ -112,6 +117,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnParametres.setLayout(null);
 		
 		JRadioButton rdbtnSimulation = new JRadioButton("Simuler l'intersection");
+		rdbtnSimulation.setSelected(true);
 		rdbtnSimulation.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				if(rdbtnSimulation.isSelected()){
@@ -149,6 +155,15 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnParametres.add(lblTauxDapparition);
 		
 		chckbxTraficAnormal = new JCheckBox("Trafic anormal");
+		chckbxTraficAnormal.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if(chckbxTraficAnormal.isSelected()) {
+					activerVoies(true);
+				} else {
+					activerVoies(false);
+				}
+			}
+		});
 		chckbxTraficAnormal.setBounds(21, 219, 112, 23);
 		pnParametres.add(chckbxTraficAnormal);
 		
@@ -190,6 +205,13 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnParametres.add(spnTauxDApparition);
 		
 		btnChoisirUneVideo = new JButton("Choisir une vid\u00E9o");
+		btnChoisirUneVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!popup.isVisible()) {
+					popup.setVisible(true);
+				}
+			}
+		});
 		btnChoisirUneVideo.setBounds(74, 363, 143, 23);
 		pnParametres.add(btnChoisirUneVideo);
 	}
