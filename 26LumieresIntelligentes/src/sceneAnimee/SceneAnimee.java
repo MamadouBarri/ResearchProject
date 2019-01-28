@@ -88,7 +88,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.dessiner(g2d,mat);
 		
 		g2d.setColor(Color.yellow);
-		g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
+		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
 		System.out.println(xVoiture);
 		
 	}//fin paintComponent
