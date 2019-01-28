@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.JPanel;
 
@@ -22,19 +23,22 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 * Numero par defaut
 	 */
 	
+	private final double DEPLACEMENT = 10;
 	/**
 	 * Variables
 	 */
 	
 	
 	//Varibales animation
-	private boolean enCoursDAnimation;
-	private long tempsDuSleep;
+	private boolean enCoursDAnimation = true;
+	private long tempsDuSleep = 100;
 	private double deltaT;
 	
 	//Objets
 	Intersection inter;
 	private double largeurRouteReelle;
+	private double xVoiture;
+	private int largeurVoiture = 10;
 
 	/**
 	 * Create the panel.
@@ -83,6 +87,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//peut etre modifier lorigine
 		inter.dessiner(g2d,mat);
 		
+		g2d.setColor(Color.yellow);
+		g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
+		System.out.println(xVoiture);
+		
 	}//fin paintComponent
 	
 	
@@ -100,8 +108,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void run() {
 		while (enCoursDAnimation) {	
 			System.out.println("un tour de run..");
-			calculerUneIterationPhysique();
+			//calculerUneIterationPhysique();
+			xVoiture++;
 			repaint();
+			System.out.println(xVoiture);
 			try {
 				Thread.sleep(tempsDuSleep);
 			} catch (InterruptedException e) {

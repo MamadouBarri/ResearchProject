@@ -13,6 +13,9 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import sceneAnimee.SceneAnimee;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class App26LumieresIntelligentes extends JFrame {
 
@@ -68,9 +71,19 @@ public class App26LumieresIntelligentes extends JFrame {
 		sceneAnimee.setBounds(83, 84, 240, 240);
 		pnSimulations.add(sceneAnimee);
 		
-		SceneAnimee sceneAnimee_2 = new SceneAnimee();
-		sceneAnimee_2.setBounds(381, 84, 240, 240);
-		pnSimulations.add(sceneAnimee_2);
+		SceneAnimee sceneAnimee2 = new SceneAnimee();
+		sceneAnimee2.setBounds(381, 84, 240, 240);
+		pnSimulations.add(sceneAnimee2);
+	
+		JButton btnNewButton = new JButton("debutAnimation\r\n");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sceneAnimee.run();
+				sceneAnimee2.run();
+			}
+		});
+		btnNewButton.setBounds(127, 31, 126, 23);
+		pnSimulations.add(btnNewButton);
 		
 		JPanel pnStatistiques = new JPanel();
 		pnStatistiques.setBackground(Color.LIGHT_GRAY);
