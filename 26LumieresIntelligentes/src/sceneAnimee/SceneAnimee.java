@@ -30,8 +30,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	
 	
 	//Varibales animation
-	private boolean enCoursDAnimation = true;
-	private long tempsDuSleep = 100;
+	private boolean enCoursDAnimation = false;
+	private long tempsDuSleep = 10;
 	private double deltaT;
 	
 	//Objets
@@ -88,8 +88,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.dessiner(g2d,mat);
 		
 		g2d.setColor(Color.yellow);
-		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
-		System.out.println(xVoiture);
+		g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
+		System.out.println(xVoiture +  "paint");
 		
 	}//fin paintComponent
 	
