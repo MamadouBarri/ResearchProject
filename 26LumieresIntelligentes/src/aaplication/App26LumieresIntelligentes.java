@@ -2,6 +2,7 @@ package aaplication;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +13,7 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -46,10 +48,13 @@ public class App26LumieresIntelligentes extends JFrame {
 	private JSpinner spnTauxDApparition;
 	private JButton btnChoisirUneVideo;
 	private FenetreFileChooser popup;
-	private java.net.URL  urlAnimer = getClass().getClassLoader().getResource("play.png");
-	private java.net.URL  urlPause = getClass().getClassLoader().getResource("pause.png");
-	private java.net.URL  urlProchaineImage = getClass().getClassLoader().getResource("pas.png");
+	private java.net.URL  urlAnimer = getClass().getClassLoader().getResource("play.jpg");
+	private java.net.URL  urlPause = getClass().getClassLoader().getResource("pause.jpg");
+	private java.net.URL  urlProchaineImage = getClass().getClassLoader().getResource("pas.jpg");
 	private java.net.URL  urlRecommencer = getClass().getClassLoader().getResource("replay.png");
+	private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
+	private SceneAnimee sceneAnimee;
+	private SceneAnimee sceneAnimee2;
 
 	/**
 	 * Launch the application.
@@ -82,6 +87,8 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		
 		
 		JPanel pnSimulations = new JPanel();
 		pnSimulations.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Simulations", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -90,42 +97,55 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnSimulations.setLayout(null);
 		
 		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setBackground(Color.DARK_GRAY);
+		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
+		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
 		pnEmplacementsDesBoutons.setBorder(new TitledBorder(null, "Boutons (play,pause,pas,etc)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnEmplacementsDesBoutons.setBounds(65, 333, 573, 86);
+		pnEmplacementsDesBoutons.setBounds(65, 316, 573, 103);
 		pnSimulations.add(pnEmplacementsDesBoutons);
 		pnEmplacementsDesBoutons.setLayout(null);
 		
-		JButton button = new JButton("New button");
-		button.setBounds(10, 11, 76, 76);
-		pnEmplacementsDesBoutons.add(button);
+		JButton btnAnimer = new JButton(new ImageIcon(urlAnimer));
+		btnAnimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sceneAnimee.demarrer();;
+				sceneAnimee2.demarrer();;
+			}
+		});
+		btnAnimer.setBounds(34, 16, 76, 76);
+		pnEmplacementsDesBoutons.add(btnAnimer);
 		
-		JButton button_1 = new JButton("New button");
-		button_1.setBounds(107, 11, 76, 76);
-		pnEmplacementsDesBoutons.add(button_1);
+		JButton btnPause = new JButton(new ImageIcon(urlPause));
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sceneAnimee.arreter();
+				sceneAnimee2.arreter();
+			}
+		});
+		btnPause.setBounds(175, 16, 76, 76);
+		pnEmplacementsDesBoutons.add(btnPause);
 		
-		JButton button_2 = new JButton("New button");
-		button_2.setBounds(225, 11, 76, 76);
-		pnEmplacementsDesBoutons.add(button_2);
+		JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
+		btnProchainImage.setBounds(324, 16, 76, 76);
+		pnEmplacementsDesBoutons.add(btnProchainImage);
 		
-		JButton button_3 = new JButton(new ImageIcon(urlRecommencer));
-		button_3.setBounds(356, 11, 76, 76);
-		pnEmplacementsDesBoutons.add(button_3);
+		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
+		btnRecommencer.setBounds(459, 16, 76, 76);
+		pnEmplacementsDesBoutons.add(btnRecommencer);
 		
 		JLabel lblSimulationAvecLAlgorithme = new JLabel("Simulation avec l'algorithme");
-		lblSimulationAvecLAlgorithme.setBounds(400, 61, 187, 14);
+		lblSimulationAvecLAlgorithme.setBounds(398, 33, 187, 14);
 		pnSimulations.add(lblSimulationAvecLAlgorithme);
 		
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
-		lblSimulationSansLAlgorithme.setBounds(120, 61, 214, 14);
+		lblSimulationSansLAlgorithme.setBounds(118, 33, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 		
-		SceneAnimee sceneAnimee = new SceneAnimee();
-		sceneAnimee.setBounds(83, 84, 240, 240);
+		sceneAnimee = new SceneAnimee();
+		sceneAnimee.setBounds(81, 56, 240, 240);
 		pnSimulations.add(sceneAnimee);
 		
-		SceneAnimee sceneAnimee2 = new SceneAnimee();
-		sceneAnimee2.setBounds(381, 84, 240, 240);
+		sceneAnimee2 = new SceneAnimee();
+		sceneAnimee2.setBounds(379, 56, 240, 240);
 		pnSimulations.add(sceneAnimee2);
 	
 		JButton btnNewButton = new JButton("debutAnimation\r\n");
@@ -143,6 +163,11 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnStatistiques.setBorder(new TitledBorder(null, "Statistiques", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnStatistiques.setBounds(0, 427, 409, 395);
 		contentPane.add(pnStatistiques);
+		pnStatistiques.setLayout(null);
+		
+		JLabel lblStats = new JLabel(new ImageIcon(urlStats));
+		lblStats.setBounds(10, 45, 385, 274);
+		pnStatistiques.add(lblStats);
 		
 		JPanel pnParametres = new JPanel();
 		pnParametres.setBackground(Color.GRAY);
