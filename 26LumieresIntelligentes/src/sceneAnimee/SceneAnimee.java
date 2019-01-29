@@ -30,7 +30,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	
 	
 	//Varibales animation
-	private boolean enCoursDAnimation = true;
+	private boolean enCoursDAnimation = false;
 	private long tempsDuSleep = 100;
 	private double deltaT;
 	
