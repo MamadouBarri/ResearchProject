@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -45,6 +46,10 @@ public class App26LumieresIntelligentes extends JFrame {
 	private JSpinner spnTauxDApparition;
 	private JButton btnChoisirUneVideo;
 	private FenetreFileChooser popup;
+	private java.net.URL  urlAnimer = getClass().getClassLoader().getResource("play.png");
+	private java.net.URL  urlPause = getClass().getClassLoader().getResource("pause.png");
+	private java.net.URL  urlProchaineImage = getClass().getClassLoader().getResource("pas.png");
+	private java.net.URL  urlRecommencer = getClass().getClassLoader().getResource("replay.png");
 
 	/**
 	 * Launch the application.
@@ -87,8 +92,25 @@ public class App26LumieresIntelligentes extends JFrame {
 		JPanel pnEmplacementsDesBoutons = new JPanel();
 		pnEmplacementsDesBoutons.setBackground(Color.DARK_GRAY);
 		pnEmplacementsDesBoutons.setBorder(new TitledBorder(null, "Boutons (play,pause,pas,etc)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnEmplacementsDesBoutons.setBounds(65, 343, 573, 76);
+		pnEmplacementsDesBoutons.setBounds(65, 333, 573, 86);
 		pnSimulations.add(pnEmplacementsDesBoutons);
+		pnEmplacementsDesBoutons.setLayout(null);
+		
+		JButton button = new JButton("New button");
+		button.setBounds(10, 11, 76, 76);
+		pnEmplacementsDesBoutons.add(button);
+		
+		JButton button_1 = new JButton("New button");
+		button_1.setBounds(107, 11, 76, 76);
+		pnEmplacementsDesBoutons.add(button_1);
+		
+		JButton button_2 = new JButton("New button");
+		button_2.setBounds(225, 11, 76, 76);
+		pnEmplacementsDesBoutons.add(button_2);
+		
+		JButton button_3 = new JButton(new ImageIcon(urlRecommencer));
+		button_3.setBounds(356, 11, 76, 76);
+		pnEmplacementsDesBoutons.add(button_3);
 		
 		JLabel lblSimulationAvecLAlgorithme = new JLabel("Simulation avec l'algorithme");
 		lblSimulationAvecLAlgorithme.setBounds(400, 61, 187, 14);
@@ -147,7 +169,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		btngrpChoixDeComparaison.add(rdbtnSimulation);
-		rdbtnSimulation.setBounds(6, 19, 123, 23);
+		rdbtnSimulation.setBounds(6, 19, 154, 23);
 		pnParametres.add(rdbtnSimulation);
 		
 		JRadioButton rdbtnVideo = new JRadioButton("Vid\u00E9o");
