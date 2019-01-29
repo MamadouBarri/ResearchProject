@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import geometrie.Intersection;
+import geometrie.Voiture;
 import modele.ModeleAffichage;
 
 public class SceneAnimee extends JPanel implements Runnable{
@@ -87,9 +88,11 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//peut etre modifier lorigine
 		inter.dessiner(g2d,mat);
 		
-		g2d.setColor(Color.yellow);
-		g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
+		//g2d.setColor(Color.yellow);
+		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
 		System.out.println(xVoiture +  "paint");
+		Voiture voiture = new Voiture();
+		voiture.dessiner(g2d, mat);
 		
 	}//fin paintComponent
 	

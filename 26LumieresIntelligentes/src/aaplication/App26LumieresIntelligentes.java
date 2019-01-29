@@ -131,7 +131,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		JButton btnNewButton = new JButton("debutAnimation\r\n");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee.demarrer();;
+				sceneAnimee.demarrer();
 				sceneAnimee2.demarrer();
 			}
 		});
