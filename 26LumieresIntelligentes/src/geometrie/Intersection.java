@@ -89,5 +89,8 @@ public class Intersection implements Dessinable {
 		ligne =new Line2D.Double(moitieRoute, 0, moitieRoute, moitieRoute-DIMENSION_CARRE_INTERSECTION/2.0);
 		
 	}
+	public double getMoitieLargeur() {
+		return(moitieRoute);
+	}
 	
 }
