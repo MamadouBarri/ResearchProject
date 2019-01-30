@@ -177,6 +177,9 @@ public class Voiture implements Dessinable, Runnable{
 	public boolean getVoitureActive() {
 		return(voitureActive);
 	}
+	public void setVoitureActive(boolean voitureActive) {
+		this.voitureActive = voitureActive;
+	}
 	/**
 	 * Affichage a la console avec le temps precis
 	 * @param affichage Ce qu'on veut afficher a la console
@@ -186,5 +189,18 @@ public class Voiture implements Dessinable, Runnable{
 		Date maintenant = new Date();
 		String strDate = sdfDate.format(maintenant);
 		System.out.println("[" + strDate + "] " + affichage);
+	}
+	
+	/**
+	 * getter de la position de la voiture
+	 */
+	public int getXVoiture() {
+		return(xVoiture);
+	}
+	/**
+	 * setter de la position X de la voiture
+	 */
+	public  void setXVoiture(int xVoiture) {
+		this.xVoiture = xVoiture;
 	}
 }

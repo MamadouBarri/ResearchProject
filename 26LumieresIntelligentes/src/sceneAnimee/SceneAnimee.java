@@ -7,7 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -128,7 +130,14 @@ public void run() {
 		//Commencer le thread de voiture pour chaque voiture de la liste
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 			Voiture v = i.next();
-			v.demarrer();
+			//Essaie pour voir si l'animation marche avec un seul thread
+			//v.demarrer();
+			v.setXVoiture(v.getXVoiture()+1);
+			if(v.getXVoiture()>240 && v.getVoitureActive()) {
+				//v.arreter();
+				//v.setVoitureActive(false);
+				affichageAvecTemps("Thread d'une voiture: mort");
+			}
 		}
 		try {
 			Thread.sleep(tempsDuSleep);
@@ -167,6 +176,16 @@ private void calculerUneIterationPhysique() {
 	//blocEtRessort.setSommeDesForces(MoteurPhysique.sommeDesForces(forceDeFriction, forceDeRappel) );
 	//System.out.println(forceDeFriction);
 
+}
+/**
+ * Affichage a la console avec le temps precis
+ * @param affichage Ce qu'on veut afficher a la console
+ */
+public void affichageAvecTemps(String affichage){
+	SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date maintenant = new Date();
+	String strDate = sdfDate.format(maintenant);
+	System.out.println("[" + strDate + "] " + affichage);
 }
 
 /**
