@@ -2,15 +2,20 @@ package aaplication;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FenetreFileChooser extends JFrame {
 
 	private JPanel contentPane;
+	private JFileChooser chooser;
 
 	/**
 	 * Launch the application.
@@ -20,7 +25,7 @@ public class FenetreFileChooser extends JFrame {
 			public void run() {
 				try {
 					FenetreFileChooser frame = new FenetreFileChooser();
-					frame.setVisible(true);
+					frame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,8 +44,18 @@ public class FenetreFileChooser extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setBounds(0, 0, 582, 399);
-		contentPane.add(fileChooser);
+		chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "JPG & GIF Images", "jpg", "gif");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(getParent());
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		       System.out.println("You chose to open this file: " +
+		            chooser.getSelectedFile().getName());
+		    }
+		chooser.setBounds(0, 0, 582, 399);
+		contentPane.add(chooser);
+		
 	}
+	
 }
