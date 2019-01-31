@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 
 public class App26LumieresIntelligentes extends JFrame {
@@ -77,12 +79,21 @@ public class App26LumieresIntelligentes extends JFrame {
 	 */
 	public App26LumieresIntelligentes() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 716, 857);
+		setBounds(100, 100, 716, 711);
 		
 		popup = new FenetreFileChooser();
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		menuBar.add(mnMenu);
+		
+		JMenuItem mntmMenuDeDpart = new JMenuItem("Menu de D\u00E9part");
+		mnMenu.add(mntmMenuDeDpart);
+		
+		JMenuItem mntmStatisitques = new JMenuItem("Statisitques");
+		mnMenu.add(mntmStatisitques);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -148,21 +159,10 @@ public class App26LumieresIntelligentes extends JFrame {
 		sceneAnimee2.setBounds(379, 56, 240, 240);
 		pnSimulations.add(sceneAnimee2);
 		
-		JPanel pnStatistiques = new JPanel();
-		pnStatistiques.setBackground(Color.LIGHT_GRAY);
-		pnStatistiques.setBorder(new TitledBorder(null, "Statistiques", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnStatistiques.setBounds(0, 427, 409, 395);
-		contentPane.add(pnStatistiques);
-		pnStatistiques.setLayout(null);
-		
-		JLabel lblStats = new JLabel(new ImageIcon(urlStats));
-		lblStats.setBounds(10, 45, 385, 274);
-		pnStatistiques.add(lblStats);
-		
 		JPanel pnParametres = new JPanel();
 		pnParametres.setBackground(Color.GRAY);
 		pnParametres.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Param\u00E8tres", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnParametres.setBounds(411, 427, 293, 395);
+		pnParametres.setBounds(0, 429, 694, 220);
 		contentPane.add(pnParametres);
 		pnParametres.setLayout(null);
 		
@@ -189,7 +189,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		
 		JRadioButton rdbtnVideo = new JRadioButton("Vid\u00E9o");
 		btngrpChoixDeComparaison.add(rdbtnVideo);
-		rdbtnVideo.setBounds(6, 319, 139, 23);
+		rdbtnVideo.setBounds(373, 133, 139, 23);
 		pnParametres.add(rdbtnVideo);
 		
 		lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
@@ -214,23 +214,23 @@ public class App26LumieresIntelligentes extends JFrame {
 				}
 			}
 		});
-		chckbxTraficAnormal.setBounds(21, 219, 112, 23);
+		chckbxTraficAnormal.setBounds(373, 19, 112, 23);
 		pnParametres.add(chckbxTraficAnormal);
 		
 		chckbxVoie1 = new JCheckBox("Voie 1");
-		chckbxVoie1.setBounds(38, 254, 97, 23);
+		chckbxVoie1.setBounds(390, 54, 97, 23);
 		pnParametres.add(chckbxVoie1);
 		
 		chckbxVoie2 = new JCheckBox("Voie 2");
-		chckbxVoie2.setBounds(148, 254, 97, 23);
+		chckbxVoie2.setBounds(500, 54, 97, 23);
 		pnParametres.add(chckbxVoie2);
 		
 		chckbxVoie3 = new JCheckBox("Voie 3");
-		chckbxVoie3.setBounds(38, 280, 97, 23);
+		chckbxVoie3.setBounds(390, 80, 97, 23);
 		pnParametres.add(chckbxVoie3);
 		
 		chckbxVoie4 = new JCheckBox("Voie 4");
-		chckbxVoie4.setBounds(148, 280, 97, 23);
+		chckbxVoie4.setBounds(500, 80, 97, 23);
 		pnParametres.add(chckbxVoie4);
 		
 		txtfldNombreDeVoitures = new JTextField();
@@ -262,7 +262,7 @@ public class App26LumieresIntelligentes extends JFrame {
 				}
 			}
 		});
-		btnChoisirUneVideo.setBounds(74, 363, 143, 23);
+		btnChoisirUneVideo.setBounds(441, 177, 143, 23);
 		pnParametres.add(btnChoisirUneVideo);
 	}
 	
