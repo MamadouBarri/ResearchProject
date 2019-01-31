@@ -1,24 +1,22 @@
 package sceneAnimee;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Queue;
 
 import javax.swing.JPanel;
 
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import geometrie.Direction;
 import geometrie.Intersection;
 import geometrie.Voiture;
 import modele.ModeleAffichage;
@@ -33,12 +31,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 	/**
 	 * Variables
 	 */
+	private ArrayList<Queue<Voiture>> traffic = new ArrayList<Queue<Voiture>>();
+	
+	
 
+	
+	//Liste de cotes
+	ArrayList<Direction> direction = new ArrayList<Direction>();
 	//Liste de voitures
 	ArrayList<Voiture> voitures = new ArrayList<Voiture>();
-
-	//Liste des voitures enlev
-	List<Voiture> toRemove = new ArrayList<Voiture>();
+	
+	//Les listes des directions 
+	ArrayList<Voiture> est = new ArrayList<Voiture>();
+	ArrayList<Voiture> sud = new ArrayList<Voiture>();
+	ArrayList<Voiture>  ouest = new ArrayList<Voiture>();
+	ArrayList<Voiture> nord = new ArrayList<Voiture>();
 	//Varibales animation
 	private boolean enCoursDAnimation = false;
 	private long tempsDuSleep = 10; 
@@ -128,15 +135,46 @@ public void run() {
 	double nbRepetitions = 0;
 	while (enCoursDAnimation) {	
 		//Commencer le thread de voiture pour chaque voiture de la liste
-		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+		//DIRECTION : EST
+		for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 			Voiture v = i.next();
 			//Essaie pour voir si l'animation marche avec un seul thread
 			//v.demarrer();
 			v.setXVoiture(v.getXVoiture()+1);
 			if(v.getXVoiture()>240 && v.getVoitureActive()) {
 				//v.arreter();
-				//v.setVoitureActive(false);
-				affichageAvecTemps("Thread d'une voiture: mort");
+				v.setVoitureActive(false);
+			}
+		}
+		//DIRECTION : 
+		for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//Essaie pour voir si l'animation marche avec un seul thread
+			//v.demarrer();
+			v.setYVoiture(v.getYVoiture()+1);
+			if(v.getYVoiture()>240 && v.getVoitureActive()) {
+				//v.arreter();
+				v.setVoitureActive(false);
+			}
+		}
+		for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//Essaie pour voir si l'animation marche avec un seul thread
+			//v.demarrer();
+			v.setXVoiture(v.getXVoiture()-1);
+			if(v.getXVoiture()<-20 && v.getVoitureActive()) {
+				//v.arreter();
+				v.setVoitureActive(false);
+			}
+		}
+		for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//Essaie pour voir si l'animation marche avec un seul thread
+			//v.demarrer();
+			v.setYVoiture(v.getYVoiture()-1);
+			if(v.getXVoiture()>240 && v.getVoitureActive()) {
+				//v.arreter();
+				v.setVoitureActive(false);
 			}
 		}
 		try {
@@ -151,6 +189,7 @@ public void run() {
 					if(!v.getVoitureActive()) {
 						//Utiliser le remove sur l'iterrateur pour eviter les erreurs concurrentModification
 						i.remove();
+						affichageAvecTemps("Thread d'une voiture: mort");
 					}
 				}
 			}
@@ -192,7 +231,30 @@ public void affichageAvecTemps(String affichage){
  * Rajouter une autre voiture dans l'intersection
  */
 public void ajouterNouvelleVoiture() {
-	voitures.add(new Voiture());
+	Voiture voiture = new Voiture();
+	//Quelle direction?
+	int direction = voiture.getDirection().getNumDirection();
+	switch (direction)
+	{
+		case 1:
+			//se deplace vers le est
+			est.add(voiture);
+			break;
+		case 2:
+			//se deplace vers le sud
+			sud.add(voiture);
+			break;
+		case 3:
+			//se deplace vers louest
+			ouest.add(voiture);
+			break;
+		case 4:
+			//se deplace vers le nord
+			nord.add(voiture);
+			break;
+	}
+	//pour linstants jajoute dans voitures general
+	voitures.add(voiture);
 }
 
 /**
