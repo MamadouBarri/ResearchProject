@@ -55,7 +55,7 @@ public class App26LumieresIntelligentes extends JFrame {
 	private java.net.URL  urlProchaineImage = getClass().getClassLoader().getResource("pas.jpg");
 	private java.net.URL  urlRecommencer = getClass().getClassLoader().getResource("replay.png");
 	private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
-	private SceneAnimee sceneAnimee;
+	private SceneAnimee sceneAnimee1;
 	private SceneAnimee sceneAnimee2;
 
 	/**
@@ -118,8 +118,9 @@ public class App26LumieresIntelligentes extends JFrame {
 		JButton btnAnimer = new JButton(new ImageIcon(urlAnimer));
 		btnAnimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee.demarrer();;
-				sceneAnimee2.demarrer();;
+				//On fait juste une scene pour l'instant
+				sceneAnimee1.demarrer();
+				//sceneAnimee2.demarrer();
 			}
 		});
 		btnAnimer.setBounds(34, 16, 76, 76);
@@ -128,7 +129,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		JButton btnPause = new JButton(new ImageIcon(urlPause));
 		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee.arreter();
+				sceneAnimee1.arreter();
 				sceneAnimee2.arreter();
 			}
 		});
@@ -151,13 +152,24 @@ public class App26LumieresIntelligentes extends JFrame {
 		lblSimulationSansLAlgorithme.setBounds(118, 33, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 		
-		sceneAnimee = new SceneAnimee();
-		sceneAnimee.setBounds(81, 56, 240, 240);
-		pnSimulations.add(sceneAnimee);
+		sceneAnimee1 = new SceneAnimee();
+		sceneAnimee1.setBounds(81, 56, 240, 240);
+		pnSimulations.add(sceneAnimee1);
 		
 		sceneAnimee2 = new SceneAnimee();
 		sceneAnimee2.setBounds(379, 56, 240, 240);
 		pnSimulations.add(sceneAnimee2);
+	
+		JButton btnNewButton = new JButton("debutAnimation\r\n");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//On demarre juste une scene pour l'instant
+				sceneAnimee1.demarrer();
+				//sceneAnimee2.demarrer();
+			}
+		});
+		btnNewButton.setBounds(127, 31, 126, 23);
+		pnSimulations.add(btnNewButton);
 		
 		JPanel pnParametres = new JPanel();
 		pnParametres.setBackground(Color.GRAY);
