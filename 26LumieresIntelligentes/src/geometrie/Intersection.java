@@ -82,7 +82,7 @@ public class Intersection implements Dessinable {
 		ligne = new Line2D.Double(moitieRoute + DIMENSION_CARRE_INTERSECTION/2.0,moitieRoute , largeurRoute, moitieRoute);
 		g2d.draw(ligne);
 		
-	}//fin methode
+	}//fin methode//
 	
 	
 	public void creerAxes() {

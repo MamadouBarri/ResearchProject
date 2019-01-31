@@ -3,7 +3,7 @@ package geometrie;
 import java.util.Random;
 
 public class Direction extends Ligne {
-	
+	//
 	//varbiales
 	private String descriptionDirection="";
 	private int numDirection;

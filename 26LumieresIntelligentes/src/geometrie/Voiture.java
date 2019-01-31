@@ -17,7 +17,7 @@ import interfaces.Dessinable;
 
 public class Voiture implements Dessinable, Runnable {
 
-
+//
 	//image des voitures
 	private Image imgVoiture = null;
 	//constantes des positions

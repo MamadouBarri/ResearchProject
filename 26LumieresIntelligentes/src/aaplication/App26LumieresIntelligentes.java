@@ -35,7 +35,7 @@ import javax.swing.JMenuItem;
 
 
 public class App26LumieresIntelligentes extends JFrame {
-
+//
 	private JPanel contentPane;
 	private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();
 	private FenetreFileChooser popup;

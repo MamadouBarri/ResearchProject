@@ -22,7 +22,7 @@ import geometrie.Voiture;
 import modele.ModeleAffichage;
 
 public class SceneAnimee extends JPanel implements Runnable{
-
+//
 	/**
 	 * Numero par defaut
 	 */
