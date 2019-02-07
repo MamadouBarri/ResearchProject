@@ -43,7 +43,7 @@ public class Intersection implements Dessinable {
 	 * @param diametre diametre (unites du monde reel)
 	 */
 	public Intersection(int longueur, int hauteur) {
-		System.out.println(longueur);
+		System.out.println("Longueur reele: " + longueur);
 		moitieRoute = largeurRoute/2.0;
 		nbTraits = (largeurRoute/2-(int)DIMENSION_CARRE_INTERSECTION)/LARGEUR_TRAITS;
 	}

@@ -181,17 +181,18 @@ public void run() {
 			Thread.sleep(tempsDuSleep);
 			nbRepetitions++;
 			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
+			
 			if(nbRepetitions == nbBouclesAvantNouvelleVoiture ) {
 				ajouterNouvelleVoiture();
 				nbRepetitions=0;
-				for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
-					Voiture v = i.next();
-					if(!v.getVoitureActive()) {
+				//for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+					//Voiture v = i.next();
+					//if(!v.getVoitureActive()) {
 						//Utiliser le remove sur l'iterrateur pour eviter les erreurs concurrentModification
-						i.remove();
-						affichageAvecTemps("Thread d'une voiture: mort");
-					}
-				}
+					//	i.remove();
+					//	affichageAvecTemps("1 voiture sortie de l'intersection");
+					//}
+				//}
 			}
 
 		} catch (InterruptedException e) {

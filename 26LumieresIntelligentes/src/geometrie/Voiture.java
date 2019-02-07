@@ -14,31 +14,41 @@ import javax.naming.directory.ModificationItem;
 
 import actions.Action;
 import interfaces.Dessinable;
-
+/**
+ * Cette classe génère l'image, la direction et l'action d'une voiture de façon aléatoire.
+ * C'est également un objet dessinable et on le dessine en fonction de sa direction et de l'image.
+ * @author Mamadou Barri
+ *
+ */
 public class Voiture implements Dessinable, Runnable {
-
-//
-	//image des voitures
+	//Image de la voiture
 	private Image imgVoiture = null;
-	//constantes des positions
-	private int coteVoiture;
-	private int[] lignes;
 	private int numImage = 1;
+
+	//Variables
+	
+	//Trafic anormal
 	private int trafficAnormale;
 	private double ampleurTrafficAnormale;
+	
+	//Positions de la voiture
 	private int xVoiture;
 	private int yVoiture = 120 + 10;
-	//variables 
+	
+	//Les booleans
 	private boolean premiereFois = true;
 	private boolean enCoursDAnimation = false;
 	private boolean voitureActive = true;
-	//compteurs
-	
-	//Objets
+
+	//Objets de la voiture
 	Direction direction;
 	Action action;
+	
+	//Description de la voiture
+	String descriptionDirection = "";
+	
 	/**
-	 * Pour la direction -1 represente gauche, 0 tout droit et 1 a droite
+	 * Constructeur de la voiture qui génère: image, direction et action
 	 */
 	public Voiture() {
 		//Generer l'image aleatoire de la voiture
@@ -58,7 +68,6 @@ public class Voiture implements Dessinable, Runnable {
 		//Afficher les informations sur la voiture generee
 		
 		//Traduire la direction
-		String descriptionDirection ="";
 		//Objet direction aleatoire
 		direction = new Direction();
 		descriptionDirection = direction.toString();
@@ -75,15 +84,6 @@ public class Voiture implements Dessinable, Runnable {
 	public void run() {
 		//calculerUneIterationPhysique();
 		while (enCoursDAnimation) {
-			int directionVoiture = direction.getNumDirection();
-			xVoiture++;
-			//Lorsque voiture va vers l'ouest ->
-			if(xVoiture>240 && voitureActive) {
-				arreter();
-				//Ajouter au nombre de voitures passees
-				//Lorsque la voiture a depasse l'intersection on la rend inactive et on l'enleve de la liste dans scene
-				voitureActive = false;
-				affichageAvecTemps("Thread d'une voiture: mort");
 			}
 			try {
 				Thread.sleep(10);
@@ -91,7 +91,6 @@ public class Voiture implements Dessinable, Runnable {
 				e.printStackTrace();
 			}
 		}
-	}
 	/**
 	 * Demarre le thread s'il n'est pas deja demarre
 	 */
@@ -137,7 +136,7 @@ public class Voiture implements Dessinable, Runnable {
 			premiereFois = false;
 		}
 		//Dessiner la voiture selon la direction
-		g2d.drawImage(imgVoiture, (int)xVoiture, (int)yVoiture , 20, 10, null);
+		g2d.drawImage(imgVoiture, xVoiture, yVoiture , 20, 10, null);
 
 	}
 	/**
