@@ -192,7 +192,7 @@ public void run() {
 					//	i.remove();
 					//	affichageAvecTemps("1 voiture sortie de l'intersection");
 					//}
-				//}
+				//}//
 			}
 
 		} catch (InterruptedException e) {

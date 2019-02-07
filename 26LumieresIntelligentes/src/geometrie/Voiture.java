@@ -76,7 +76,7 @@ public class Voiture implements Dessinable, Runnable {
 		action = new Action();
 		descriptionAction = action.toString();
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
-		
+		//
 		//Ou mettre la voiture?
 	}
 
