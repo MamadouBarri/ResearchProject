@@ -37,6 +37,7 @@ public class FenetreFileChooser extends JFrame {
 	 * Create the frame.
 	 */
 	public FenetreFileChooser() {
+		setTitle("Choisir une vid\u00E9o");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 599, 438);
 		contentPane = new JPanel();
@@ -45,6 +46,7 @@ public class FenetreFileChooser extends JFrame {
 		contentPane.setLayout(null);
 		
 		chooser = new JFileChooser();
+		chooser.setDialogTitle("Choisir une vid\u00E9o");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 		        "JPG & GIF Images", "jpg", "gif");
 		    chooser.setFileFilter(filter);

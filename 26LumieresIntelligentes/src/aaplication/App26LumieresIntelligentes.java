@@ -32,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.SystemColor;
 
 
 public class App26LumieresIntelligentes extends JFrame {
@@ -67,8 +68,9 @@ public class App26LumieresIntelligentes extends JFrame {
 	 * Create the frame.
 	 */
 	public App26LumieresIntelligentes() {
+		setTitle("Simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 487, 683);
+		setBounds(100, 100, 788, 683);
 		
 		/*popup = new FenetreFileChooser();
 		popup.setVisible(false);*/
@@ -82,13 +84,18 @@ public class App26LumieresIntelligentes extends JFrame {
 		JMenuItem mntmMenuDeDpart = new JMenuItem("Menu de D\u00E9part");
 		mnMenu.add(mntmMenuDeDpart);
 		
-		JMenuItem mntmChangerNbVoies = new JMenuItem("Changer nombre de Voies");
-		mnMenu.add(mntmChangerNbVoies);
+		JMenuItem mntmChangerParametres = new JMenuItem("Changer les param\u00E8tres de simulation");
+		mnMenu.add(mntmChangerParametres);
 		
 		JMenuItem mntmStatisitques = new JMenuItem("Statisitques");
 		mnMenu.add(mntmStatisitques);
 		
 		JMenuItem mntmQuitter = new JMenuItem("Quitter");
+		mntmQuitter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		mnMenu.add(mntmQuitter);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -116,6 +123,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				//On fait juste une scene pour l'instant
 				sceneAnimee1.demarrer();
+				sceneAnimee2.demarrer();				
 				//sceneAnimee2.demarrer();
 			}
 		});
@@ -155,21 +163,57 @@ public class App26LumieresIntelligentes extends JFrame {
 		sceneAnimee2 = new SceneAnimee();
 		sceneAnimee2.setBounds(192, 352, 240, 240);
 		pnSimulations.add(sceneAnimee2);
+		
+		JLabel lblVideo = new JLabel("Param\u00E8tres");
+		lblVideo.setBounds(568, 130, 123, 14);
+		contentPane.add(lblVideo);
+		
+		JLabel label = new JLabel("Vitesse moyenne :");
+		label.setBounds(480, 176, 123, 14);
+		contentPane.add(label);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(587, 173, 48, 20);
+		contentPane.add(spinner);
+		
+		JLabel label_4 = new JLabel("km/h");
+		label_4.setBounds(645, 176, 46, 14);
+		contentPane.add(label_4);
+		
+		JLabel label_2 = new JLabel("Taux d'apparition :");
+		label_2.setBounds(481, 225, 123, 14);
+		contentPane.add(label_2);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setBounds(588, 222, 48, 20);
+		contentPane.add(spinner_1);
+		
+		JLabel label_3 = new JLabel("Voitures/Minute");
+		label_3.setBounds(646, 225, 126, 14);
+		contentPane.add(label_3);
+		
+		JCheckBox checkBox = new JCheckBox("Voie 3");
+		checkBox.setEnabled(false);
+		checkBox.setBounds(497, 325, 97, 23);
+		contentPane.add(checkBox);
+		
+		JCheckBox checkBox_1 = new JCheckBox("Voie 4");
+		checkBox_1.setEnabled(false);
+		checkBox_1.setBounds(607, 325, 97, 23);
+		contentPane.add(checkBox_1);
+		
+		JCheckBox checkBox_2 = new JCheckBox("Voie 2");
+		checkBox_2.setEnabled(false);
+		checkBox_2.setBounds(607, 299, 97, 23);
+		contentPane.add(checkBox_2);
+		
+		JCheckBox checkBox_3 = new JCheckBox("Voie 1");
+		checkBox_3.setEnabled(false);
+		checkBox_3.setBounds(497, 299, 97, 23);
+		contentPane.add(checkBox_3);
+		
+		JCheckBox checkBox_4 = new JCheckBox("Trafic anormal");
+		checkBox_4.setBounds(480, 264, 112, 23);
+		contentPane.add(checkBox_4);
 	}
-	
-	/*public void activerVoies(boolean b){
-		chckbxVoie1.setEnabled(b);
-		chckbxVoie2.setEnabled(b);
-		chckbxVoie3.setEnabled(b);
-		chckbxVoie4.setEnabled(b);
-	}
-	public void activerParamSimul(boolean b){
-		spnTauxDApparition.setEnabled(b);
-		spnVitesseMoyenne.setEnabled(b);
-		chckbxTraficAnormal.setEnabled(b);
-		txtfldNombreDeVoitures.setEnabled(b);
-	}
-	public void activerBoutonVideo(boolean b){
-		btnChoisirUneVideo.setEnabled(b);
-	}*/
 }
