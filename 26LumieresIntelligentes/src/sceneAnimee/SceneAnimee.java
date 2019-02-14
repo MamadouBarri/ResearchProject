@@ -65,6 +65,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Voitures
 	private Voiture voiture = new Voiture();
 	private double nbBouclesAvantNouvelleVoiture = 100;
+	private double nbBouclesAvantLumiereJaune = 1500;
+	private double nbBouclesAvantLumiereVerte = 1900;
+	private double nbBouclesAvantLumiereRouge = 3400;
+	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
+	private int couleur=1;
+	Lumiere lum1,lum2,lum3;
+	
 
 	/**
 	 * Create the panel.
@@ -114,17 +121,17 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.dessiner(g2d,mat);
 		
 		
-		/*Lumiere lum2 = new Lumiere(105,10,75);
-		lum2.setCouleurJaune();
+		lum2 = new Lumiere(105,10,75,2);
+		//lum2.setCouleurJaune();
 		lum2.dessiner(g2d, mat);
 		
-		Lumiere lum3 = new Lumiere(205,10,75);
-		lum3.setCouleurVert();
+		lum3 = new Lumiere(205,10,75,3);
+		//lum3.setCouleurVert();
 		lum3.dessiner(g2d, mat);
 		
-		Lumiere lum1 = new Lumiere(10,10,75);
-		lum1.setCouleurRouge();
-		lum1.dessiner(g2d, mat);*/
+		lum1 = new Lumiere(10,10,75,couleur);
+		//lum1.setCouleurRouge();
+		lum1.dessiner(g2d, mat);
 
 		//g2d.setColor(Color.yellow);
 		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
@@ -151,7 +158,8 @@ public double positionVoiture () {
  */
 @Override
 public void run() {
-	double nbRepetitions = 0;
+	double nbRepetitionsPourVoitures = 0;
+	double nbRepetitionsPourLumieres = 0;
 	while (enCoursDAnimation) {	
 		//Commencer le thread de voiture pour chaque voiture de la liste
 		//DIRECTION : EST
@@ -198,12 +206,14 @@ public void run() {
 		}
 		try {
 			Thread.sleep(tempsDuSleep);
-			nbRepetitions++;
+			nbRepetitionsPourVoitures++;
+			nbRepetitionsPourLumieres++;
+			System.out.println(nbRepetitionsPourLumieres);
 			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 			
-			if(nbRepetitions == nbBouclesAvantNouvelleVoiture ) {
+			if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture ) {
 				ajouterNouvelleVoiture();
-				nbRepetitions=0;
+				nbRepetitionsPourVoitures=0;
 				//for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 					//Voiture v = i.next();
 					//if(!v.getVoitureActive()) {
@@ -213,6 +223,20 @@ public void run() {
 					//}
 				//}//
 			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
+				this.couleur = 2;
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereVerte) {
+				this.couleur = 3;
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereRouge) {
+				this.couleur = 1;
+				repaint();
+				nbRepetitionsPourLumieres =0;
+			}
+			
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -361,6 +385,13 @@ public void setDeltaT(double deltaT) {
  */
 public double getDeltaT() {
 	return (deltaT);
+}
+/**
+ * Modifie le nombre de boucles nécessaires avant de créer une voiture
+ * @param taux Le taux d'apparition des voitures en voitures/secondes.
+ */
+public void setTauxDApparition(double taux) {
+	this.nbBouclesAvantNouvelleVoiture = this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep/taux;
 }
 
 }

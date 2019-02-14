@@ -18,11 +18,27 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 import javax.swing.SpinnerNumberModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FenetreParametres extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JSpinner spnVitesseMoyenne;
+	private JSpinner spnTauxDApparition;
+	private JCheckBox checkBox_1;
+	private JCheckBox checkBox_3;
+	private JCheckBox checkBox_4;
+	private JCheckBox checkBox_2;
+	private JButton button;
+	private JCheckBox checkBox;
+	private JSpinner spnNbVoies1;
+	private JSpinner spnNbVoies4;
+	private JSpinner spnNbVoies3;
+	private JSpinner spnNbVoies2;
+	private double tauxDApparition;
+	
 
 	/**
 	 * Launch the application.
@@ -80,23 +96,23 @@ public class FenetreParametres extends JFrame {
 		label_2.setBounds(21, 167, 123, 14);
 		panel.add(label_2);
 		
-		JCheckBox checkBox = new JCheckBox("Trafic anormal");
+		checkBox = new JCheckBox("Trafic anormal");
 		checkBox.setBounds(373, 19, 112, 23);
 		panel.add(checkBox);
 		
-		JCheckBox checkBox_1 = new JCheckBox("Voie 1");
+		checkBox_1 = new JCheckBox("Voie 1");
 		checkBox_1.setBounds(390, 54, 97, 23);
 		panel.add(checkBox_1);
 		
-		JCheckBox checkBox_2 = new JCheckBox("Voie 2");
+		checkBox_2 = new JCheckBox("Voie 2");
 		checkBox_2.setBounds(500, 54, 97, 23);
 		panel.add(checkBox_2);
 		
-		JCheckBox checkBox_3 = new JCheckBox("Voie 3");
+		checkBox_3 = new JCheckBox("Voie 3");
 		checkBox_3.setBounds(390, 80, 97, 23);
 		panel.add(checkBox_3);
 		
-		JCheckBox checkBox_4 = new JCheckBox("Voie 4");
+		checkBox_4 = new JCheckBox("Voie 4");
 		checkBox_4.setBounds(500, 80, 97, 23);
 		panel.add(checkBox_4);
 		
@@ -113,15 +129,15 @@ public class FenetreParametres extends JFrame {
 		label_4.setBounds(186, 69, 46, 14);
 		panel.add(label_4);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(128, 66, 48, 20);
-		panel.add(spinner);
+		spnVitesseMoyenne = new JSpinner();
+		spnVitesseMoyenne.setBounds(128, 66, 48, 20);
+		panel.add(spnVitesseMoyenne);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(128, 164, 48, 20);
-		panel.add(spinner_1);
+		spnTauxDApparition = new JSpinner();
+		spnTauxDApparition.setBounds(128, 164, 48, 20);
+		panel.add(spnTauxDApparition);
 		
-		JButton button = new JButton("Choisir une vid\u00E9o");
+		button = new JButton("Choisir une vid\u00E9o");
 		button.setBounds(441, 177, 143, 23);
 		panel.add(button);
 		
@@ -129,7 +145,7 @@ public class FenetreParametres extends JFrame {
 		btnConfirmer.setBounds(272, 530, 89, 23);
 		panel.add(btnConfirmer);
 		
-		JSpinner spnNbVoies3 = new JSpinner();
+		spnNbVoies3 = new JSpinner();
 		spnNbVoies3.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
 		spnNbVoies3.setBounds(299, 496, 29, 20);
 		panel.add(spnNbVoies3);
@@ -138,17 +154,17 @@ public class FenetreParametres extends JFrame {
 		sceneAnimee.setBounds(190, 250, 242, 243);
 		panel.add(sceneAnimee);
 		
-		JSpinner spnNbVoies1 = new JSpinner();
+		spnNbVoies1 = new JSpinner();
 		spnNbVoies1.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
 		spnNbVoies1.setBounds(299, 224, 29, 20);
 		panel.add(spnNbVoies1);
 		
-		JSpinner spnNbVoies4 = new JSpinner();
+		spnNbVoies4 = new JSpinner();
 		spnNbVoies4.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
 		spnNbVoies4.setBounds(151, 359, 29, 20);
 		panel.add(spnNbVoies4);
 		
-		JSpinner spnNbVoies2 = new JSpinner();
+		spnNbVoies2 = new JSpinner();
 		spnNbVoies2.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
 		spnNbVoies2.setBounds(442, 359, 29, 20);
 		panel.add(spnNbVoies2);

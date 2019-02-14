@@ -28,8 +28,7 @@ public class Voiture implements Dessinable, Runnable {
 	//Variables
 	
 	//Trafic anormal
-	private int trafficAnormale;
-	private double ampleurTrafficAnormale;
+	private int[] trafficAnormale;
 	
 	//Positions de la voiture
 	private int xVoiture;
@@ -70,6 +69,39 @@ public class Voiture implements Dessinable, Runnable {
 		//Traduire la direction
 		//Objet direction aleatoire
 		direction = new Direction();
+		descriptionDirection = direction.toString();
+		//Traduire l'action
+		String descriptionAction = "";
+		action = new Action();
+		descriptionAction = action.toString();
+		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
+		//
+		//Ou mettre la voiture?
+	}
+	public Voiture(int[] trafficAnormale) {
+		this.trafficAnormale = trafficAnormale;
+		//Generer l'image aleatoire de la voiture
+		genererImageVoitre();
+		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
+
+		if (fichVoiture == null) {
+			affichageAvecTemps("**ERREUR** : Incapable de lire un fichier d'image");
+			return;
+		}
+		try {
+			imgVoiture = ImageIO.read(fichVoiture);
+		} 
+		catch (IOException e) {
+			affichageAvecTemps("Erreur de lecture d'images");
+		}
+		//Afficher les informations sur la voiture generee
+		
+		//Traduire la direction
+		//Objet direction aleatoire
+		direction = new Direction();
+		for(int i=0;i<trafficAnormale.length;i++) {
+			direction.setAnormal(trafficAnormale[i]);
+		}
 		descriptionDirection = direction.toString();
 		//Traduire l'action
 		String descriptionAction = "";

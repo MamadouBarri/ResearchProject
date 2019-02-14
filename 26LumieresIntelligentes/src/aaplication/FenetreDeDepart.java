@@ -10,10 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FenetreDeDepart extends JFrame {
 
 	private JPanel contentPane;
+	FenetreParametres parametres;
 
 	/**
 	 * Launch the application.
@@ -35,6 +38,8 @@ public class FenetreDeDepart extends JFrame {
 	 * Create the frame.
 	 */
 	public FenetreDeDepart() {
+		parametres = new FenetreParametres();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 543);
 		contentPane = new JPanel();
@@ -49,6 +54,12 @@ public class FenetreDeDepart extends JFrame {
 		contentPane.add(lblTitre);
 		
 		JButton btnDepart = new JButton("Commencer");
+		btnDepart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parametres.setVisible(true);
+				setVisible(false);
+			}
+		});
 		btnDepart.setBounds(248, 171, 171, 46);
 		contentPane.add(btnDepart);
 		
