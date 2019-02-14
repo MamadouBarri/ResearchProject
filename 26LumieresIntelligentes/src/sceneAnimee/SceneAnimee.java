@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 
 import geometrie.Direction;
 import geometrie.Intersection;
+import geometrie.Lumiere;
 import geometrie.Voiture;
 import modele.ModeleAffichage;
 
@@ -69,6 +71,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//this.setPreferredSize(preferredSize);
 		//setPrefferedBounds(1110,406);
 		inter = new Intersection(this.getHeight(),this.getWidth());
+		
 	}
 
 	public void ecouteursDeSouris() {
@@ -106,6 +109,19 @@ public class SceneAnimee extends JPanel implements Runnable{
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//peut etre modifier lorigine
 		inter.dessiner(g2d,mat);
+		
+		
+		Lumiere lum2 = new Lumiere(105,10,75);
+		lum2.setCouleurJaune();
+		lum2.dessiner(g2d, mat);
+		
+		Lumiere lum3 = new Lumiere(205,10,75);
+		lum3.setCouleurVert();
+		lum3.dessiner(g2d, mat);
+		
+		Lumiere lum1 = new Lumiere(10,10,75);
+		lum1.setCouleurRouge();
+		lum1.dessiner(g2d, mat);
 
 		//g2d.setColor(Color.yellow);
 		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
@@ -181,17 +197,18 @@ public void run() {
 			Thread.sleep(tempsDuSleep);
 			nbRepetitions++;
 			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
+			
 			if(nbRepetitions == nbBouclesAvantNouvelleVoiture ) {
 				ajouterNouvelleVoiture();
 				nbRepetitions=0;
-				for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
-					Voiture v = i.next();
-					if(!v.getVoitureActive()) {
+				//for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+					//Voiture v = i.next();
+					//if(!v.getVoitureActive()) {
 						//Utiliser le remove sur l'iterrateur pour eviter les erreurs concurrentModification
-						i.remove();
-						affichageAvecTemps("Thread d'une voiture: mort");
-					}
-				}
+					//	i.remove();
+					//	affichageAvecTemps("1 voiture sortie de l'intersection");
+					//}
+				//}//
 			}
 
 		} catch (InterruptedException e) {
