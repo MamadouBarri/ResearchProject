@@ -111,7 +111,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.dessiner(g2d,mat);
 		
 		
-		Lumiere lum2 = new Lumiere(105,10,75);
+		/*Lumiere lum2 = new Lumiere(105,10,75);
 		lum2.setCouleurJaune();
 		lum2.dessiner(g2d, mat);
 		
@@ -121,7 +121,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		
 		Lumiere lum1 = new Lumiere(10,10,75);
 		lum1.setCouleurRouge();
-		lum1.dessiner(g2d, mat);
+		lum1.dessiner(g2d, mat);*/
 
 		//g2d.setColor(Color.yellow);
 		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
