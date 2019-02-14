@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 
 import geometrie.Direction;
 import geometrie.Intersection;
+import geometrie.Lumiere;
 import geometrie.Voiture;
 import modele.ModeleAffichage;
 /**
@@ -72,7 +74,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//On cree le bloc et ressort
 		//this.setPreferredSize(preferredSize);
 		//setPrefferedBounds(1110,406);
-		
 	}
 
 	public void ecouteursDeSouris() {
@@ -111,6 +112,19 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//On passe les dimensions du JPanel a l'intersection
 		inter = new Intersection(this.getHeight(),this.getWidth());
 		inter.dessiner(g2d,mat);
+		
+		
+		/*Lumiere lum2 = new Lumiere(105,10,75);
+		lum2.setCouleurJaune();
+		lum2.dessiner(g2d, mat);
+		
+		Lumiere lum3 = new Lumiere(205,10,75);
+		lum3.setCouleurVert();
+		lum3.dessiner(g2d, mat);
+		
+		Lumiere lum1 = new Lumiere(10,10,75);
+		lum1.setCouleurRouge();
+		lum1.dessiner(g2d, mat);*/
 
 		//g2d.setColor(Color.yellow);
 		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
