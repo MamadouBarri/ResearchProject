@@ -3,6 +3,7 @@ package geometrie;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import javax.naming.directory.ModificationItem;
 
 import actions.Action;
 import interfaces.Dessinable;
+import modele.ModeleAffichage;
 /**
  * Cette classe génère l'image, la direction et l'action d'une voiture de façon aléatoire.
  * C'est également un objet dessinable et on le dessine en fonction de sa direction et de l'image.
@@ -32,7 +34,12 @@ public class Voiture implements Dessinable, Runnable {
 	
 	//Positions de la voiture
 	private int xVoiture;
-	private int yVoiture = 120 + 10;
+	private int yVoiture;
+	
+	//Dimensions de la voiture
+
+	private double longueurVoiturePixels;
+	private double largeurVoiturePixels;
 	
 	//Les booleans
 	private boolean premiereFois = true;
@@ -45,11 +52,21 @@ public class Voiture implements Dessinable, Runnable {
 	
 	//Description de la voiture
 	String descriptionDirection = "";
+	private double dimensionRoutePixels;
+	private double largeurVoie;
 	
 	/**
 	 * Constructeur de la voiture qui génère: image, direction et action
+	 * @param f 
+	 * @param longueurVoiturePixels 
+	 * @param modele 
 	 */
-	public Voiture() {
+	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie) {
+		//Initialisation des parametres de la voiture
+		this.largeurVoie = largeurVoie;
+		this.dimensionRoutePixels = dimensionRoutePixels;
+		this.largeurVoiturePixels = largeurVoiturePixels;
+		this.longueurVoiturePixels = longueurVoiturePixels;
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
 		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
@@ -143,33 +160,43 @@ public class Voiture implements Dessinable, Runnable {
 
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
-		//Dessiner la voiture
+		//Dessiner la voiture;
 		//Si premiere fois 
+		AffineTransform matLocale = new AffineTransform(mat);
+		AffineTransform matInitial = g2d.getTransform();
 		if (premiereFois) {
 			switch (this.direction.getNumDirection())
 			{
 				case 1:
-					//se deplace vers le nord
-					xVoiture = 0;yVoiture=130;
+					//se deplace vers l'est
+					
+					xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie);
 					break;
 				case 2:
-					//se deplace vers l'ouest
-					xVoiture=110;yVoiture=0;
+					//se deplace vers le sud
+					xVoiture=(int)(dimensionRoutePixels/2.0- largeurVoie);yVoiture=0;
 					break;
 				case 3:
-					//se deplace vers le sud
-					xVoiture=240;yVoiture = 120;
+					//se deplace vers l'ouest
+					//Rotation de l'image
+					AffineTransform rotation180 = AffineTransform.getRotateInstance(Math.PI, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+					g2d.setTransform(rotation180);
+					xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0- largeurVoie);
 					break;
 				case 4:
-					//se deplace vers l'est
-					xVoiture=130; yVoiture= 240;
+					//se deplace vers le nord
+					AffineTransform rotation90 = AffineTransform.getRotateInstance(Math.PI, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+					g2d.setTransform(rotation90);
+					xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie) ;yVoiture=(int)dimensionRoutePixels;
 					break;
 			}
 			premiereFois = false;
 		}
+		
 		//Dessiner la voiture selon la direction
-		g2d.drawImage(imgVoiture, xVoiture, yVoiture , 20, 10, null);
-
+		//Image imgVoitureRedimentionnee = imgVoiture.getScaledInstance(LONGUEUR_VOITURE, LARGEUR_VOITURE, Image.SCALE_SMOOTH);
+		g2d.drawImage(imgVoiture, xVoiture,yVoiture, (int)this.longueurVoiturePixels, (int)this.largeurVoiturePixels, null);
+		g2d.setTransform(matInitial);
 	}
 	/**
 	 * Gener une image qui va representer la voiture

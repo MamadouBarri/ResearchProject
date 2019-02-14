@@ -40,6 +40,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private ArrayList<Queue<Voiture>> traffic = new ArrayList<Queue<Voiture>>();
 	
 	
+	//Largeur reelle
+	private final double LARGEUR_REELLE = 100; //En metres
+	
+	
+	//Voitures
+	private final int LARGEUR_VOITURE = 2;
+	private final int LONGUEUR_VOITURE = 4;
+	private final double DIMENSION_VOIE_REELLE = 10;
+	//Modele
+	private ModeleAffichage modele;
 
 	
 	//Liste de cotes
@@ -63,7 +73,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private double xVoiture;
 	private int largeurVoiture = 10;
 	//Voitures
-	private Voiture voiture = new Voiture();
 	private double nbBouclesAvantNouvelleVoiture = 100;
 	private double nbBouclesAvantLumiereJaune = 1500;
 	private double nbBouclesAvantLumiereVerte = 1900;
@@ -113,7 +122,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		ModeleAffichage modele = new ModeleAffichage(getWidth(), getHeight(), largeurRouteReelle);
+		modele = new ModeleAffichage(getWidth(), getHeight(), LARGEUR_REELLE);
 		AffineTransform mat = modele.getMatMC();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
@@ -275,7 +284,7 @@ public void affichageAvecTemps(String affichage){
  * Rajouter une autre voiture dans l'intersection
  */
 public void ajouterNouvelleVoiture() {
-	Voiture voiture = new Voiture();
+	Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE );
 	//Quelle direction?
 	int direction = voiture.getDirection().getNumDirection();
 	switch (direction)
