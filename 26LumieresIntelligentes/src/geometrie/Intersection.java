@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import interfaces.Dessinable;
+import modele.ModeleAffichage;
 
 /**
  * Cette classe va dessiner le bloc + ressort + sol + ligne de zéro + l'affichage de l'échelle
@@ -31,10 +32,14 @@ public class Intersection implements Dessinable {
 	//CONSTANTES
 	private final double DIMENSION_CARRE_INTERSECTION = 50;
 	private final int LARGEUR_TRAITS = 5;
+		//Modele
+	private final double LARGEUR_REELLE = 100; //En metres
 	//Geometrie
 	private Path2D.Double axe; 
 	private Line2D.Double ligne;
 	
+	//Modele
+	private ModeleAffichage modele;
 	/**
 	 * Constructeur ou la position, la vitesse et l'acceleration  initiales sont spécifiés
 	 * @param position Vecteur incluant les positions en x et y du coin superieur-gauche
@@ -42,9 +47,10 @@ public class Intersection implements Dessinable {
 	 * @param accel Vecteur incluant les accelerations en x et y  
 	 * @param diametre diametre (unites du monde reel)
 	 */
-	public Intersection(int longueur, int hauteur) {
-		System.out.println("Longueur reele: " + longueur);
-		moitieRoute = largeurRoute/2.0;
+	public Intersection(int largeurPixels, int hauteurPixels) {
+		modele = new ModeleAffichage(largeurPixels, hauteurPixels, LARGEUR_REELLE, true);
+		System.out.println("Longueur reele: " + modele.getLargPixels());
+		moitieRoute = LARGEUR_REELLE/2.0;
 		nbTraits = (largeurRoute/2-(int)DIMENSION_CARRE_INTERSECTION)/LARGEUR_TRAITS;
 	}
 	/**

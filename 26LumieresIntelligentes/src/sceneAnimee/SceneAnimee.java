@@ -20,7 +20,11 @@ import geometrie.Direction;
 import geometrie.Intersection;
 import geometrie.Voiture;
 import modele.ModeleAffichage;
-
+/**
+ * Classe de la scène d'animation de l'intersection
+ * @author Mamadou
+ *
+ */
 public class SceneAnimee extends JPanel implements Runnable{
 //
 	/**
@@ -68,7 +72,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//On cree le bloc et ressort
 		//this.setPreferredSize(preferredSize);
 		//setPrefferedBounds(1110,406);
-		inter = new Intersection(this.getHeight(),this.getWidth());
+		
 	}
 
 	public void ecouteursDeSouris() {
@@ -104,7 +108,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 		ModeleAffichage modele = new ModeleAffichage(getWidth(), getHeight(), largeurRouteReelle);
 		AffineTransform mat = modele.getMatMC();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		//peut etre modifier lorigine
+		//On passe les dimensions du JPanel a l'intersection
+		inter = new Intersection(this.getHeight(),this.getWidth());
 		inter.dessiner(g2d,mat);
 
 		//g2d.setColor(Color.yellow);

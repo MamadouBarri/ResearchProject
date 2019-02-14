@@ -68,7 +68,7 @@ public class App26LumieresIntelligentes extends JFrame {
 	 */
 	public App26LumieresIntelligentes() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 487, 683);
+		setBounds(100, 100, 1080, 665);
 		
 		/*popup = new FenetreFileChooser();
 		popup.setVisible(false);*/
@@ -99,7 +99,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		
 		JPanel pnSimulations = new JPanel();
 		pnSimulations.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Simulations", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnSimulations.setBounds(0, 0, 472, 619);
+		pnSimulations.setBounds(0, 0, 1054, 579);
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 		
@@ -141,20 +141,20 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnEmplacementsDesBoutons.add(btnRecommencer);
 		
 		JLabel lblSimulationAvecLAlgorithme = new JLabel("Simulation avec l'algorithme");
-		lblSimulationAvecLAlgorithme.setBounds(211, 329, 187, 14);
+		lblSimulationAvecLAlgorithme.setBounds(700, 85, 187, 14);
 		pnSimulations.add(lblSimulationAvecLAlgorithme);
 		
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
 		lblSimulationSansLAlgorithme.setBounds(229, 25, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 		
-		sceneAnimee1 = new SceneAnimee();
-		sceneAnimee1.setBounds(192, 48, 240, 240);
-		pnSimulations.add(sceneAnimee1);
-		
 		sceneAnimee2 = new SceneAnimee();
-		sceneAnimee2.setBounds(192, 352, 240, 240);
+		sceneAnimee2.setBounds(644, 127, 400, 400);
 		pnSimulations.add(sceneAnimee2);
+		
+		sceneAnimee1 = new SceneAnimee();
+		sceneAnimee1.setBounds(195, 127, 400, 400);
+		pnSimulations.add(sceneAnimee1);
 	}
 	
 	/*public void activerVoies(boolean b){
