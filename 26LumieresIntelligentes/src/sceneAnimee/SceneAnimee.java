@@ -22,7 +22,11 @@ import geometrie.Intersection;
 import geometrie.Lumiere;
 import geometrie.Voiture;
 import modele.ModeleAffichage;
-
+/**
+ * Classe de la scène d'animation de l'intersection
+ * @author Mamadou
+ *
+ */
 public class SceneAnimee extends JPanel implements Runnable{
 //
 	/**
@@ -36,6 +40,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private ArrayList<Queue<Voiture>> traffic = new ArrayList<Queue<Voiture>>();
 	
 	
+	//Largeur reelle
+	private final double LARGEUR_REELLE = 100; //En metres
+	
+	
+	//Voitures
+	private final int LARGEUR_VOITURE = 2;
+	private final int LONGUEUR_VOITURE = 4;
+	private final double DIMENSION_VOIE_REELLE = 10;
+	//Modele
+	private ModeleAffichage modele;
 
 	
 	//Liste de cotes
@@ -59,8 +73,14 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private double xVoiture;
 	private int largeurVoiture = 10;
 	//Voitures
-	private Voiture voiture = new Voiture();
 	private double nbBouclesAvantNouvelleVoiture = 100;
+	private double nbBouclesAvantLumiereJaune = 1500;
+	private double nbBouclesAvantLumiereVerte = 1900;
+	private double nbBouclesAvantLumiereRouge = 3400;
+	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
+	private int couleur=1;
+	Lumiere lum1,lum2,lum3;
+	
 
 	/**
 	 * Create the panel.
@@ -70,8 +90,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//On cree le bloc et ressort
 		//this.setPreferredSize(preferredSize);
 		//setPrefferedBounds(1110,406);
-		inter = new Intersection(this.getHeight(),this.getWidth());
-		
 	}
 
 	public void ecouteursDeSouris() {
@@ -104,23 +122,24 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		ModeleAffichage modele = new ModeleAffichage(getWidth(), getHeight(), largeurRouteReelle);
+		modele = new ModeleAffichage(getWidth(), getHeight(), LARGEUR_REELLE);
 		AffineTransform mat = modele.getMatMC();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		//peut etre modifier lorigine
+		//On passe les dimensions du JPanel a l'intersection
+		inter = new Intersection(this.getHeight(),this.getWidth());
 		inter.dessiner(g2d,mat);
 		
 		
-		Lumiere lum2 = new Lumiere(105,10,75);
-		lum2.setCouleurJaune();
+		lum2 = new Lumiere(105,10,75,2);
+		//lum2.setCouleurJaune();
 		lum2.dessiner(g2d, mat);
 		
-		Lumiere lum3 = new Lumiere(205,10,75);
-		lum3.setCouleurVert();
+		lum3 = new Lumiere(205,10,75,3);
+		//lum3.setCouleurVert();
 		lum3.dessiner(g2d, mat);
 		
-		Lumiere lum1 = new Lumiere(10,10,75);
-		lum1.setCouleurRouge();
+		lum1 = new Lumiere(10,10,75,couleur);
+		//lum1.setCouleurRouge();
 		lum1.dessiner(g2d, mat);
 
 		//g2d.setColor(Color.yellow);
@@ -148,7 +167,8 @@ public double positionVoiture () {
  */
 @Override
 public void run() {
-	double nbRepetitions = 0;
+	double nbRepetitionsPourVoitures = 0;
+	double nbRepetitionsPourLumieres = 0;
 	while (enCoursDAnimation) {	
 		//Commencer le thread de voiture pour chaque voiture de la liste
 		//DIRECTION : EST
@@ -195,12 +215,14 @@ public void run() {
 		}
 		try {
 			Thread.sleep(tempsDuSleep);
-			nbRepetitions++;
+			nbRepetitionsPourVoitures++;
+			nbRepetitionsPourLumieres++;
+			System.out.println(nbRepetitionsPourLumieres);
 			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 			
-			if(nbRepetitions == nbBouclesAvantNouvelleVoiture ) {
+			if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture ) {
 				ajouterNouvelleVoiture();
-				nbRepetitions=0;
+				nbRepetitionsPourVoitures=0;
 				//for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 					//Voiture v = i.next();
 					//if(!v.getVoitureActive()) {
@@ -210,6 +232,20 @@ public void run() {
 					//}
 				//}//
 			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
+				this.couleur = 2;
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereVerte) {
+				this.couleur = 3;
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereRouge) {
+				this.couleur = 1;
+				repaint();
+				nbRepetitionsPourLumieres =0;
+			}
+			
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -248,7 +284,7 @@ public void affichageAvecTemps(String affichage){
  * Rajouter une autre voiture dans l'intersection
  */
 public void ajouterNouvelleVoiture() {
-	Voiture voiture = new Voiture();
+	Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE );
 	//Quelle direction?
 	int direction = voiture.getDirection().getNumDirection();
 	switch (direction)
@@ -358,6 +394,13 @@ public void setDeltaT(double deltaT) {
  */
 public double getDeltaT() {
 	return (deltaT);
+}
+/**
+ * Modifie le nombre de boucles nécessaires avant de créer une voiture
+ * @param taux Le taux d'apparition des voitures en voitures/secondes.
+ */
+public void setTauxDApparition(double taux) {
+	this.nbBouclesAvantNouvelleVoiture = this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep/taux;
 }
 
 }

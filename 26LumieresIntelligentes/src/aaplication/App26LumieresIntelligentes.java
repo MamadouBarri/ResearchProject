@@ -32,7 +32,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import java.awt.SystemColor;
 
 
 public class App26LumieresIntelligentes extends JFrame {

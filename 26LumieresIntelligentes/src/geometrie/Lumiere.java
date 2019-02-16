@@ -14,11 +14,12 @@ public class Lumiere implements Dessinable{
 	Ellipse2D.Double lumiereVerte;
 	Ellipse2D.Double lumiereJaune;
 	Ellipse2D.Double lumiereRouge;
-	int x,y;
+	int x,y,couleur;
 	Color rouge, jaune, vert;
 	double hauteur, longueur, diametre, rayon;
 	
-	public Lumiere(int x, int y, double hauteur){
+	public Lumiere(int x, int y, double hauteur, int couleur){
+		this.couleur = couleur;
 		this.hauteur = hauteur;
 		this.longueur = this.hauteur * (6.0/19.0);
 		this.x = x;
@@ -32,6 +33,17 @@ public class Lumiere implements Dessinable{
 
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
+		switch(this.couleur) {
+		case 1:
+			setCouleurRouge();
+			break;
+		case 2:
+			setCouleurJaune();
+			break;
+		case 3:
+			setCouleurVert();
+			break;
+		}
 		cadre = new Rectangle2D.Double(x, y, longueur, hauteur);
 		g2d.setColor(Color.black);
 		g2d.fill(cadre);
