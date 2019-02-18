@@ -41,7 +41,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	
 	
 	//Largeur reelle
-	private final double LARGEUR_REELLE = 100; //En metres
+	private final double LARGEUR_REELLE = 50; //En metres
+	
 	
 	
 	//Voitures
@@ -126,7 +127,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		AffineTransform mat = modele.getMatMC();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
-		inter = new Intersection(this.getHeight(),this.getWidth());
+		inter = new Intersection(this.LARGEUR_REELLE);
 		inter.dessiner(g2d,mat);
 		
 		
@@ -217,7 +218,7 @@ public void run() {
 			Thread.sleep(tempsDuSleep);
 			nbRepetitionsPourVoitures++;
 			nbRepetitionsPourLumieres++;
-			System.out.println(nbRepetitionsPourLumieres);
+			//System.out.println(nbRepetitionsPourLumieres);
 			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 			
 			if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture ) {
@@ -402,5 +403,7 @@ public double getDeltaT() {
 public void setTauxDApparition(double taux) {
 	this.nbBouclesAvantNouvelleVoiture = this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep/taux;
 }
-
+public double getLARGEUR_REELLE() {
+	return LARGEUR_REELLE;
+}
 }

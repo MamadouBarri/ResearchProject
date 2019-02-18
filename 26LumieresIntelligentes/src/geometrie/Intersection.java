@@ -36,7 +36,7 @@ public class Intersection implements Dessinable {
 	private final double DIMENSION_VOIE_REELLE = 10;
 	private final int LARGEUR_TRAITS = 1;
 		//Modele
-	private final double LARGEUR_REELLE = 100; //En metres
+	private final double LARGEUR_REELLE; //En metres
 	//Geometrie
 	private Path2D.Double axe; 
 	private Line2D.Double ligne;
@@ -47,7 +47,8 @@ public class Intersection implements Dessinable {
 	 * @param accel Vecteur incluant les accelerations en x et y  
 	 * @param diametre diametre (unites du monde reel)
 	 */
-	public Intersection(int largeurPixels, int hauteurPixels) {
+	public Intersection(double largeurReelle) {
+		this.LARGEUR_REELLE = largeurReelle;
 		moitieRouteReelle = LARGEUR_REELLE / 2.0;
 		nbTraits = (int)(moitieRouteReelle/2.0-DIMENSION_VOIE_REELLE)/LARGEUR_TRAITS;
 	}

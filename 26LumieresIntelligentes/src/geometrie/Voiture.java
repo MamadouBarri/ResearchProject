@@ -169,28 +169,47 @@ public class Voiture implements Dessinable, Runnable {
 			{
 				case 1:
 					//se deplace vers l'est
-					
 					xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie);
 					break;
 				case 2:
 					//se deplace vers le sud
-					xVoiture=(int)(dimensionRoutePixels/2.0- largeurVoie);yVoiture=0;
+					xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0);yVoiture=0;
 					break;
 				case 3:
 					//se deplace vers l'ouest
 					//Rotation de l'image
-					AffineTransform rotation180 = AffineTransform.getRotateInstance(Math.PI, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
-					g2d.setTransform(rotation180);
-					xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0- largeurVoie);
+					xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 + largeurVoiturePixels/2.0);
 					break;
 				case 4:
 					//se deplace vers le nord
-					AffineTransform rotation90 = AffineTransform.getRotateInstance(Math.PI, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
-					g2d.setTransform(rotation90);
-					xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie) ;yVoiture=(int)dimensionRoutePixels;
+					xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0) ;yVoiture=(int)dimensionRoutePixels;
 					break;
 			}
 			premiereFois = false;
+		}
+		//Rotation des images en fonction de la direction
+		switch (this.direction.getNumDirection())
+		{
+			case 1:
+				//se deplace vers l'est
+				//aucune rotation d'image
+				break;
+			case 2:
+				//se deplace vers le sud
+				AffineTransform rotationMoins90 = AffineTransform.getRotateInstance(Math.PI/2.0, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+				g2d.setTransform(rotationMoins90);
+				break;
+			case 3:
+				//se deplace vers l'ouest
+				//Rotation de l'image
+				AffineTransform rotation180 = AffineTransform.getRotateInstance(Math.PI, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+				g2d.setTransform(rotation180);
+				break;
+			case 4:
+				//se deplace vers le nord
+				AffineTransform rotation90 = AffineTransform.getRotateInstance(-Math.PI/2.0, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+				g2d.setTransform(rotation90);
+				break;
 		}
 		
 		//Dessiner la voiture selon la direction

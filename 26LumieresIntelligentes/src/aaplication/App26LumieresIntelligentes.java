@@ -156,11 +156,11 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 		
 		sceneAnimee1 = new SceneAnimee();
-		sceneAnimee1.setBounds(192, 48, 240, 240);
+		sceneAnimee1.setBounds(174, 51, 260, 260);
 		pnSimulations.add(sceneAnimee1);
 		
 		sceneAnimee2 = new SceneAnimee();
-		sceneAnimee2.setBounds(192, 352, 240, 240);
+		sceneAnimee2.setBounds(174, 371, 260, 260);
 		pnSimulations.add(sceneAnimee2);
 		
 		JLabel lblVideo = new JLabel("Param\u00E8tres");
