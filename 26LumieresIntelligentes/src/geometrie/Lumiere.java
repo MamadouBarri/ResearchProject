@@ -34,13 +34,13 @@ public class Lumiere implements Dessinable{
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
 		switch(this.couleur) {
-		case 1:
+		case 2:
 			setCouleurRouge();
 			break;
-		case 2:
+		case 1:
 			setCouleurJaune();
 			break;
-		case 3:
+		case 0:
 			setCouleurVert();
 			break;
 		}
@@ -57,23 +57,27 @@ public class Lumiere implements Dessinable{
 		g2d.setColor(vert);
 		g2d.fill(lumiereVerte);
 	}
-	
+	//allume la lumiere rouge
 	public void setCouleurRouge() {
 		rouge = new Color(255,0,0);
 		jaune = new Color(75,75,0);
 		vert = new Color(0,75,0);
 	}
-	
+	//allume la lumiere jaune
 	public void setCouleurJaune() {
 		rouge = new Color(75,0,0);
 		jaune = new Color(255,255,0);
 		vert = new Color(0,75,0);
 	}
-
+	//allume la lumiere verte
 	public void setCouleurVert() {
 		rouge = new Color(75,0,0);
 		jaune = new Color(75,75,0);
 		vert = new Color(0,255,0);
+	}
+	//change la lumiere allumee
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
 	}
 
 

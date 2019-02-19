@@ -32,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.SpinnerNumberModel;
 
 
 public class App26LumieresIntelligentes extends JFrame {
@@ -144,6 +145,21 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnEmplacementsDesBoutons.add(btnProchainImage);
 		
 		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
+		btnRecommencer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sceneAnimee1.arreter();
+				sceneAnimee2.arreter();
+				sceneAnimee1 = new SceneAnimee();
+				sceneAnimee1.setBounds(174, 51, 260, 260);
+				pnSimulations.add(sceneAnimee1);
+				sceneAnimee2 = new SceneAnimee();
+				sceneAnimee2.setBounds(174, 371, 260, 260);
+				pnSimulations.add(sceneAnimee2);
+				sceneAnimee1.repaint();
+				sceneAnimee2.repaint();
+				
+			}
+		});
 		btnRecommencer.setBounds(34, 311, 76, 76);
 		pnEmplacementsDesBoutons.add(btnRecommencer);
 		
@@ -172,6 +188,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(label);
 		
 		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(60), new Integer(0), null, new Integer(1)));
 		spinner.setBounds(587, 173, 48, 20);
 		contentPane.add(spinner);
 		
@@ -184,6 +201,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(label_2);
 		
 		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
 		spinner_1.setBounds(588, 222, 48, 20);
 		contentPane.add(spinner_1);
 		
@@ -212,6 +230,21 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(checkBox_3);
 		
 		JCheckBox checkBox_4 = new JCheckBox("Trafic anormal");
+		checkBox_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(checkBox_4.isSelected()) {
+				checkBox.setEnabled(true);
+				checkBox_1.setEnabled(true);
+				checkBox_2.setEnabled(true);
+				checkBox_3.setEnabled(true);
+				} else {
+					checkBox.setEnabled(false);
+					checkBox_1.setEnabled(false);
+					checkBox_2.setEnabled(false);
+					checkBox_3.setEnabled(false);
+				}
+			}
+		});
 		checkBox_4.setBounds(480, 264, 112, 23);
 		contentPane.add(checkBox_4);
 	}

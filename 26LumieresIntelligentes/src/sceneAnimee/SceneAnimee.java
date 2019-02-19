@@ -75,12 +75,17 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int largeurVoiture = 10;
 	//Voitures
 	private double nbBouclesAvantNouvelleVoiture = 100;
-	private double nbBouclesAvantLumiereJaune = 1500;
-	private double nbBouclesAvantLumiereVerte = 1900;
-	private double nbBouclesAvantLumiereRouge = 3400;
+	//Lumieres 
+	private double nbBouclesAvantLumiereJaune = 200;
+	private double nbBouclesAvantLumiereVerte = 400;
+	private double nbBouclesAvantLumiereRouge = 600;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
-	private int couleur=1;
-	Lumiere lum1,lum2,lum3;
+	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
+	//couleur des lumieres pour les voies nord et sud
+	private int couleur=0;
+	//couleur des lumieres pour les voies est et ouest
+	private int couleurInv=2; 
+	Lumiere lum1,lum2,lum3,lum4;
 	
 
 	/**
@@ -130,18 +135,20 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter = new Intersection(this.LARGEUR_REELLE);
 		inter.dessiner(g2d,mat);
 		
+		lum1 = new Lumiere(70,20,75,couleur);
+		lum1.dessiner(g2d, mat);
 		
-		lum2 = new Lumiere(105,10,75,2);
-		//lum2.setCouleurJaune();
+		lum2 = new Lumiere(165,165,75,couleur);
+		//g2d.rotate(Math.toRadians(40));
 		lum2.dessiner(g2d, mat);
 		
-		lum3 = new Lumiere(205,10,75,3);
-		//lum3.setCouleurVert();
+		lum3 = new Lumiere(205,40,75,couleurInv);
 		lum3.dessiner(g2d, mat);
 		
-		lum1 = new Lumiere(10,10,75,couleur);
-		//lum1.setCouleurRouge();
-		lum1.dessiner(g2d, mat);
+		lum4 = new Lumiere(10,50,75,couleurInv);
+		lum4.dessiner(g2d, mat);
+		
+		
 
 		//g2d.setColor(Color.yellow);
 		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
@@ -234,15 +241,15 @@ public void run() {
 				//}//
 			}
 			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
-				this.couleur = 2;
+				changeCouleurLumieres();
 				repaint();
 			}
 			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereVerte) {
-				this.couleur = 3;
+				changeCouleurLumieres();
 				repaint();
 			}
 			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereRouge) {
-				this.couleur = 1;
+				changeCouleurLumieres();
 				repaint();
 				nbRepetitionsPourLumieres =0;
 			}
@@ -405,5 +412,40 @@ public void setTauxDApparition(double taux) {
 }
 public double getLARGEUR_REELLE() {
 	return LARGEUR_REELLE;
+}
+private void changeCouleurLumieres(){
+	if(couleur==0) {
+		couleur = (couleur+1)%3;
+		lum1.setCouleur(couleur);
+		lum2.setCouleur(couleur);
+	} else {
+		if(couleur==1) {
+			couleur = (couleur+1)%3;
+			couleurInv = (couleurInv+1)%3;
+			lum1.setCouleur(couleur);
+			lum2.setCouleur(couleur);
+			lum3.setCouleur(couleurInv);
+			lum4.setCouleur(couleurInv);
+		} else {
+			if(couleur==2&&couleurInv==0) {
+			couleurInv = (couleurInv+1)%3;
+			lum3.setCouleur(couleurInv);
+			lum4.setCouleur(couleurInv);
+			} else {
+				couleur = (couleur+1)%3;
+				couleurInv = (couleurInv+1)%3;
+				lum1.setCouleur(couleur);
+				lum2.setCouleur(couleur);
+				lum3.setCouleur(couleurInv);
+				lum4.setCouleur(couleurInv);
+			}
+		}
+	}
+	/*lum1.setCouleur(couleur);
+	lum2.setCouleur(couleur);
+	lum3.setCouleur(couleurInv);
+	lum4.setCouleur(couleurInv);
+	couleur = (couleur+1)%3;
+	couleurInv = (couleurInv+1)%3;*/
 }
 }
