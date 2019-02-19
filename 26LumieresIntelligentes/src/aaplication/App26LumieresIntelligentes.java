@@ -159,7 +159,7 @@ public class App26LumieresIntelligentes extends JFrame {
 				sceneAnimee2.repaint();
 				
 			}
-		});
+		});//À CHANGER 
 		btnRecommencer.setBounds(34, 311, 76, 76);
 		pnEmplacementsDesBoutons.add(btnRecommencer);
 		
