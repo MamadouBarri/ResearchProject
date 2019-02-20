@@ -33,7 +33,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 * Numero par defaut
 	 */
 
-	private final double DEPLACEMENT = 10;
+	private double deplacement = 1;
 	/**
 	 * Variables
 	 */
@@ -70,26 +70,26 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 	//Objets
 	Intersection inter;
-	private double largeurRouteReelle;
-	private double xVoiture;
-	private int largeurVoiture = 10;
 	//Voitures
-	private double nbBouclesAvantNouvelleVoiture = 100;
+	private int nbBouclesAvantNouvelleVoiture = 100;
 	//Lumieres 
 	private double nbBouclesAvantLumiereJaune = 200;
 	private double nbBouclesAvantLumiereVerte = 400;
 	private double nbBouclesAvantLumiereRouge = 600;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
+	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
 	//couleur des lumieres pour les voies nord et sud
 	private int couleur=0;
 	//couleur des lumieres pour les voies est et ouest
 	private int couleurInv=2; 
 	Lumiere lum1,lum2,lum3,lum4;
+	private boolean voituresEnArret;
+	private int nbVoiesHorizontale = 1;
 	
 
 	/**
-	 * Create the panel.
+	 * Constructeur de la scène d'animation qui met le background en gris
 	 */
 	public SceneAnimee() {
 		setBackground(Color.gray);
@@ -98,6 +98,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//setPrefferedBounds(1110,406);
 	}
 
+	/**
+	 * Écouteur de souris qui sera utilisé plus tard
+	 */
 	public void ecouteursDeSouris() {
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -124,15 +127,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 		});	
 	}
-
+	
+	/**
+	 * Dessine le systeme bloc-ressort avec axe et le vecteur graphique de la force de rappel
+	 * @param g Le conexte graphique
+	 */
 	public void paintComponent(Graphics g) {		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
 		modele = new ModeleAffichage(getWidth(), getHeight(), LARGEUR_REELLE);
 		AffineTransform mat = modele.getMatMC();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
 		inter = new Intersection(this.LARGEUR_REELLE);
+		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 		
 		lum1 = new Lumiere(70,20,75,couleur);
@@ -148,6 +157,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 		lum4 = new Lumiere(10,50,75,couleurInv);
 		lum4.dessiner(g2d, mat);
 		
+		//Dessiner l'échelle
+		g2d.setColor(Color.cyan);
+		g2d.drawString("Échelle: " + LARGEUR_REELLE + " m", (float)DISTANCE_BORDURE, (float)(LARGEUR_REELLE * modele.getPixelsParUniteY() - DISTANCE_BORDURE));
 		
 
 		//g2d.setColor(Color.yellow);
@@ -161,15 +173,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//	i.remove();
 		//}
 }//fin paintComponent
-
-
-/**
- * position de la voiture
- */
-
-public double positionVoiture () {
-	return 0;
-}
+	
 /**
  * Animation de la balle
  */
@@ -178,13 +182,19 @@ public void run() {
 	double nbRepetitionsPourVoitures = 0;
 	double nbRepetitionsPourLumieres = 0;
 	while (enCoursDAnimation) {	
+		if(voituresEnArret && deplacement>=0) {
+			deplacement--;
+			if(deplacement<0) {
+				deplacement =0;
+			}
+		}
 		//Commencer le thread de voiture pour chaque voiture de la liste
 		//DIRECTION : EST
 		for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 			Voiture v = i.next();
 			//Essaie pour voir si l'animation marche avec un seul thread
 			//v.demarrer();
-			v.setXVoiture(v.getXVoiture()+1);
+			v.setXVoiture((int)(v.getXVoiture()+deplacement));
 			if(v.getXVoiture()>240 && v.getVoitureActive()) {
 				//v.arreter();
 				v.setVoitureActive(false);
@@ -195,7 +205,7 @@ public void run() {
 			Voiture v = i.next();
 			//Essaie pour voir si l'animation marche avec un seul thread
 			//v.demarrer();
-			v.setYVoiture(v.getYVoiture()+1);
+			v.setYVoiture((int)(v.getYVoiture()+deplacement));
 			if(v.getYVoiture()>240 && v.getVoitureActive()) {
 				//v.arreter();
 				v.setVoitureActive(false);
@@ -205,7 +215,7 @@ public void run() {
 			Voiture v = i.next();
 			//Essaie pour voir si l'animation marche avec un seul thread
 			//v.demarrer();
-			v.setXVoiture(v.getXVoiture()-1);
+			v.setXVoiture((int)(v.getXVoiture()-deplacement));
 			if(v.getXVoiture()<-20 && v.getVoitureActive()) {
 				//v.arreter();
 				v.setVoitureActive(false);
@@ -213,9 +223,7 @@ public void run() {
 		}
 		for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 			Voiture v = i.next();
-			//Essaie pour voir si l'animation marche avec un seul thread
-			//v.demarrer();
-			v.setYVoiture(v.getYVoiture()-1);
+			v.setYVoiture((int)(v.getYVoiture()-deplacement));
 			if(v.getXVoiture()>240 && v.getVoitureActive()) {
 				//v.arreter();
 				v.setVoitureActive(false);
@@ -227,18 +235,9 @@ public void run() {
 			nbRepetitionsPourLumieres++;
 			//System.out.println(nbRepetitionsPourLumieres);
 			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
-			
 			if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture ) {
 				ajouterNouvelleVoiture();
 				nbRepetitionsPourVoitures=0;
-				//for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
-					//Voiture v = i.next();
-					//if(!v.getVoitureActive()) {
-						//Utiliser le remove sur l'iterrateur pour eviter les erreurs concurrentModification
-					//	i.remove();
-					//	affichageAvecTemps("1 voiture sortie de l'intersection");
-					//}
-				//}//
 			}
 			if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
 				changeCouleurLumieres();
@@ -253,8 +252,6 @@ public void run() {
 				repaint();
 				nbRepetitionsPourLumieres =0;
 			}
-			
-
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -289,7 +286,7 @@ public void affichageAvecTemps(String affichage){
 }
 
 /**
- * Rajouter une autre voiture dans l'intersection
+ * Méthode qui ajoute une nouvelle voiture dans l'intersection
  */
 public void ajouterNouvelleVoiture() {
 	Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE );
@@ -336,7 +333,7 @@ public void arreter() {
 	enCoursDAnimation = false;
 	for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 		Voiture v = i.next();
-		v.arreter();
+		//v.arreter();
 	}
 }//fin methode
 
@@ -364,12 +361,13 @@ public void prochaineImage() {
 
 }
 
+/**
+ * Getter vrai si en cours d'animation et faux sinon
+ * @return enCoursDAnimation boul qui spécifie si on est en cours d'animation
+ */
 public boolean getEnCoursDAnimation() {
 	return enCoursDAnimation;
 }
-
-
-
 /**
  * Change le temps pour le sleep du thread
  * @param tempsDuSleep Nouveua temps a appliquer au sleep
@@ -377,7 +375,6 @@ public boolean getEnCoursDAnimation() {
 public void setTempsDuSleep(int tempsDuSleep) {
 	this.tempsDuSleep = tempsDuSleep;
 }
-
 /**
  * Retourne le temps de sleep actuel
  * @return temps du sleep actuel
@@ -385,8 +382,6 @@ public void setTempsDuSleep(int tempsDuSleep) {
 public int getTempsDuSleep() {
 	return (int) tempsDuSleep;
 }
-
-
 /**
  * Modifie le pas (intervalle) de la simulation
  * @param deltaT le pas (intervalle) de la simulation, exprime en secondes
@@ -395,7 +390,6 @@ public void setDeltaT(double deltaT) {
 	this.deltaT = deltaT;
 
 }
-
 /**
  * Retourne le pas intervalle) de la simulation
  * @return le pas intervalle) de la simulation, exprime en secondes
@@ -407,12 +401,22 @@ public double getDeltaT() {
  * Modifie le nombre de boucles nécessaires avant de créer une voiture
  * @param taux Le taux d'apparition des voitures en voitures/secondes.
  */
-public void setTauxDApparition(double taux) {
-	this.nbBouclesAvantNouvelleVoiture = this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep/taux;
+public void setTauxDApparition(double tauxParMinute) {
+	double tauxParSeconde = tauxParMinute/60.0;
+	double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
+	this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
+	System.out.println("Nombre de boucle sleep avant une nouvelle voiture : " + this.nbBouclesAvantNouvelleVoiture); //Test
 }
+/**
+ * Getter de la largeur reelle
+ * @return LARGEUR_REELLE retourne la constante de la largeur reelle
+ */
 public double getLARGEUR_REELLE() {
 	return LARGEUR_REELLE;
 }
+/**
+ * Méthode qui change la couleur des lumières
+ */
 private void changeCouleurLumieres(){
 	if(couleur==0) {
 		couleur = (couleur+1)%3;
@@ -447,5 +451,18 @@ private void changeCouleurLumieres(){
 	lum4.setCouleur(couleurInv);
 	couleur = (couleur+1)%3;
 	couleurInv = (couleurInv+1)%3;*/
+}
+/**
+ * La méthode qui set l'arret des voitures a vrai
+ */
+public void arreterVoitures() {
+	voituresEnArret = true;
+}
+/**
+ * Setter qui change le nombre de voies horizontalemnt
+ * @param nbVoiesHorizontale le nombre de voie a l'horizontale
+ */
+public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
+	this.nbVoiesHorizontale= nbVoiesHorizontale; 
 }
 }

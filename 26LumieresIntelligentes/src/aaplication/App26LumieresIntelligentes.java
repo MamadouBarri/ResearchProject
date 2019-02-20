@@ -176,7 +176,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		pnSimulations.add(sceneAnimee1);
 		
 		sceneAnimee2 = new SceneAnimee();
-		sceneAnimee2.setBounds(174, 371, 260, 260);
+		sceneAnimee2.setBounds(174, 348, 260, 260);
 		pnSimulations.add(sceneAnimee2);
 		
 		JLabel lblVideo = new JLabel("Param\u00E8tres");
@@ -200,10 +200,18 @@ public class App26LumieresIntelligentes extends JFrame {
 		label_2.setBounds(481, 225, 123, 14);
 		contentPane.add(label_2);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
-		spinner_1.setBounds(588, 222, 48, 20);
-		contentPane.add(spinner_1);
+		JSpinner spinner1 = new JSpinner();
+		spinner1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				//On modifie le taux pour les deux fenêtres d'animation
+				sceneAnimee1.setTauxDApparition((Integer)spinner1.getValue());
+				sceneAnimee2.setTauxDApparition((Integer)spinner1.getValue());
+				System.out.println("Nouveau taux d'apparition : " + (Integer)spinner1.getValue());
+			}
+		});
+		spinner1.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
+		spinner1.setBounds(588, 222, 48, 20);
+		contentPane.add(spinner1);
 		
 		JLabel label_3 = new JLabel("Voitures/Minute");
 		label_3.setBounds(646, 225, 126, 14);
@@ -247,5 +255,15 @@ public class App26LumieresIntelligentes extends JFrame {
 		});
 		checkBox_4.setBounds(480, 264, 112, 23);
 		contentPane.add(checkBox_4);
+		
+		JButton btnArret = new JButton("arret");
+		btnArret.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sceneAnimee1.arreterVoitures();
+				sceneAnimee2.arreterVoitures();
+			}
+		});
+		btnArret.setBounds(559, 425, 89, 23);
+		contentPane.add(btnArret);
 	}
 }

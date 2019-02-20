@@ -20,9 +20,8 @@ import modele.ModeleAffichage;
  * Cette classe génère l'image, la direction et l'action d'une voiture de façon aléatoire.
  * C'est également un objet dessinable et on le dessine en fonction de sa direction et de l'image.
  * @author Mamadou Barri
- *
  */
-public class Voiture implements Dessinable, Runnable {
+public class Voiture implements Dessinable {
 	//Image de la voiture
 	private Image imgVoiture = null;
 	private int numImage = 1;
@@ -57,9 +56,10 @@ public class Voiture implements Dessinable, Runnable {
 	
 	/**
 	 * Constructeur de la voiture qui génère: image, direction et action
-	 * @param f 
-	 * @param longueurVoiturePixels 
-	 * @param modele 
+	 * @param longueurVoiturePixels longueur d'une voiture en pixels
+	 * @param largeurVoiturePixels largeur d'une voiture en pixels
+	 * @param dimensionRoutePixels dimension d'une route en pixels
+	 * @param largeurVoie la largeur d'une voie en pixels
 	 */
 	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie) {
 		//Initialisation des parametres de la voiture
@@ -95,6 +95,11 @@ public class Voiture implements Dessinable, Runnable {
 		//
 		//Ou mettre la voiture?
 	}
+	
+	/**
+	 * Constructeur d'une voiture 
+	 * @param trafficAnormale tableau du traffic anormal
+	 */
 	public Voiture(int[] trafficAnormale) {
 		this.trafficAnormale = trafficAnormale;
 		//Generer l'image aleatoire de la voiture
@@ -129,35 +134,41 @@ public class Voiture implements Dessinable, Runnable {
 		//Ou mettre la voiture?
 	}
 
-	@Override
-	public void run() {
-		//calculerUneIterationPhysique();
-		while (enCoursDAnimation) {
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	/**
-	 * Demarre le thread s'il n'est pas deja demarre
-	 */
-	public void demarrer() {
-		if (!enCoursDAnimation ) { 
-			Thread proc = new Thread(this);
-			proc.start();
-			enCoursDAnimation = true;
-		}
-	}//fin methode
+//	/**
+//	 * 
+//	 */
+//	@Override
+//	public void run() {
+//		//calculerUneIterationPhysique();
+//		while (enCoursDAnimation) {
+//			}
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	/**
+//	 * Demarre le thread s'il n'est pas deja demarre
+//	 */
+//	public void demarrer() {
+//		if (!enCoursDAnimation ) { 
+//			Thread proc = new Thread(this);
+//			proc.start();
+//			enCoursDAnimation = true;
+//		}
+//	}//fin methode
+//
+//	/**
+//	 * Demande l'arret du thread (prochain tour de boucle)
+//	 */
+//	public void arreter() {
+//		enCoursDAnimation = false;
+//	}//fin methode
 
 	/**
-	 * Demande l'arret du thread (prochain tour de boucle)
+	 * 
 	 */
-	public void arreter() {
-		enCoursDAnimation = false;
-	}//fin methode
-
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
 		//Dessiner la voiture;
