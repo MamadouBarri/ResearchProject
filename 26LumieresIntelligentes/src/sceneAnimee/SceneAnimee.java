@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Queue;
 
+import javax.print.attribute.standard.NumberOfInterveningJobs;
 import javax.swing.JPanel;
 
 import geometrie.Direction;
@@ -41,7 +42,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 
 	//Largeur reelle
-	private final double LARGEUR_REELLE = 50; //En metres
+	private final double LARGEUR_REELLE = 100; //En metres
 
 
 
@@ -65,17 +66,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 	ArrayList<Voiture> nord = new ArrayList<Voiture>();
 	//Varibales animation
 	private boolean enCoursDAnimation = false;
-	private long tempsDuSleep = 10; 
+	private long tempsDuSleep = 5; 
 	private double deltaT;
 
 	//Objets
 	Intersection inter;
 	//Voitures
 	private int nbBouclesAvantNouvelleVoiture = 100;
+	private int nbVoituresGenerees =0;
+	private int nbVoituresMax = 50;
 	//Lumieres 
-	private double nbBouclesAvantLumiereJaune = 200;
-	private double nbBouclesAvantLumiereVerte = 400;
-	private double nbBouclesAvantLumiereRouge = 600;
+	private double nbBouclesAvantLumiereJaune = 10000;
+	
+
+	private double nbBouclesAvantLumiereVerte = 10000;
+	private double nbBouclesAvantLumiereRouge = 10000;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
@@ -91,6 +96,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int[] trafficAnormale = new int[1];
 	private int[] trafficAnormaleTemp= new int[1];
 	private boolean enTrafficAnormale;
+
 
 
 	/**
@@ -201,8 +207,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Essaie pour voir si l'animation marche avec un seul thread
 				//v.demarrer();
 				v.setXVoiture((int)(v.getXVoiture()+deplacement));
-				if(v.getXVoiture()>240 && v.getVoitureActive()) {
+				if(v.getXVoiture()>this.LARGEUR_REELLE *modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
+					affichageAvecTemps("voiture enlevée");
+					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 			}
@@ -212,8 +220,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Essaie pour voir si l'animation marche avec un seul thread
 				//v.demarrer();
 				v.setYVoiture((int)(v.getYVoiture()+deplacement));
-				if(v.getYVoiture()>240 && v.getVoitureActive()) {
+				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
 					//v.arreter();
+					affichageAvecTemps("voiture enlevée");
+					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 			}
@@ -222,26 +232,31 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Essaie pour voir si l'animation marche avec un seul thread
 				//v.demarrer();
 				v.setXVoiture((int)(v.getXVoiture()-deplacement));
-				if(v.getXVoiture()<-20 && v.getVoitureActive()) {
+				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
+					affichageAvecTemps("voiture enlevée");
+					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 			}
 			for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				v.setYVoiture((int)(v.getYVoiture()-deplacement));
-				if(v.getXVoiture()>240 && v.getVoitureActive()) {
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
+					affichageAvecTemps("voiture enlevée");
+					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 			}
+			repaint();
 			try {
 				Thread.sleep(tempsDuSleep);
 				nbRepetitionsPourVoitures++;
 				nbRepetitionsPourLumieres++;
 				//System.out.println(nbRepetitionsPourLumieres);
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
-				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture ) {
+				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
 					ajouterNouvelleVoiture();
 					nbRepetitionsPourVoitures=0;
 				}
@@ -261,7 +276,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			repaint();
+			
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
@@ -295,6 +310,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 * Méthode qui ajoute une nouvelle voiture dans l'intersection
 	 */
 	public void ajouterNouvelleVoiture() {
+		//On ajoute au nombre de voitures generees
+		nbVoituresGenerees++;
 		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale );
 		//Quelle direction?
 		int direction = voiture.getDirection().getNumDirection();
@@ -508,5 +525,19 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.trafficAnormale = new int[1];
 			this.enTrafficAnormale = false;
 		}
+	}
+	public int getNbVoituresGenerees() {
+		return nbVoituresGenerees;
+	}
+
+	public void setNbVoituresGenerees(int nbVoituresGenerees) {
+		this.nbVoituresGenerees = nbVoituresGenerees;
+	}
+	public int getNbVoituresMax() {
+		return nbVoituresMax;
+	}
+
+	public void setNbVoituresMax(int nbVoituresMax) {
+		this.nbVoituresMax = nbVoituresMax;
 	}
 }

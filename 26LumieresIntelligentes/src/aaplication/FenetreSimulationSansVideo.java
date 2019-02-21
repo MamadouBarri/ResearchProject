@@ -319,6 +319,15 @@ public class FenetreSimulationSansVideo extends JFrame {
 													});//À CHANGER 
 													btnRecommencer.setBounds(34, 311, 76, 76);
 													pnEmplacementsDesBoutons.add(btnRecommencer);
+													
+													JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
+													lblNombreDeVoituresAGenerer.setBounds(1425, 323, 214, 14);
+													contentPane.add(lblNombreDeVoituresAGenerer);
+													
+													JLabel nbVoituresAGenerer = new JLabel("");
+													nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
+													nbVoituresAGenerer.setBounds(1650, 323, 17, 14);
+													contentPane.add(nbVoituresAGenerer);
 		}
 	
 }

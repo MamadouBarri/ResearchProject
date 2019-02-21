@@ -1,8 +1,10 @@
 package geometrie;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -53,6 +55,15 @@ public class Voiture implements Dessinable {
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
 	private double largeurVoie;
+	private double xTest;
+	//Tester le bug
+	public double getxTest() {
+		return xTest;
+	}
+
+	public void setxTest(double xTest) {
+		this.xTest = xTest;
+	}
 
 	/**
 	 * Constructeur de la voiture qui génère: image, direction et action
@@ -189,12 +200,12 @@ public class Voiture implements Dessinable {
 				break;
 			case 2:
 				//se deplace vers le sud
-				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0);yVoiture=0;
+				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 );yVoiture=0;
 				break;
 			case 3:
 				//se deplace vers l'ouest
 				//Rotation de l'image
-				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 + largeurVoiturePixels/2.0);
+				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 );
 				break;
 			case 4:
 				//se deplace vers le nord
@@ -231,6 +242,8 @@ public class Voiture implements Dessinable {
 		//Dessiner la voiture selon la direction
 		//Image imgVoitureRedimentionnee = imgVoiture.getScaledInstance(LONGUEUR_VOITURE, LARGEUR_VOITURE, Image.SCALE_SMOOTH);
 		g2d.drawImage(imgVoiture, xVoiture,yVoiture, (int)this.longueurVoiturePixels, (int)this.largeurVoiturePixels, null);
+		//g2d.setColor(Color.red);
+		//g2d.draw(new Ellipse2D.Double(xTest, 100, largeurVoiturePixels,largeurVoiturePixels ));
 		g2d.setTransform(matInitial);
 	}
 	/**
