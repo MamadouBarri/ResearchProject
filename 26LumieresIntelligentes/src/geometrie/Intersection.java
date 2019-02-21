@@ -123,7 +123,6 @@ public class Intersection implements Dessinable {
 	public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
 		this.nbVoiesHorizontale = nbVoiesHorizontale;
 	}
-	/*public int getX
-	*/
+	
 	
 }

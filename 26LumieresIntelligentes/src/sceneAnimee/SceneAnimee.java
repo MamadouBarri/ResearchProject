@@ -41,7 +41,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 
 	//Largeur reelle
-	private final double LARGEUR_REELLE = 50; //En metres
+	private final double LARGEUR_REELLE = 100; //En metres
 
 
 
@@ -150,16 +150,20 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 
-		lum1 = new Lumiere(70,20,75,couleur,4);
+		lum1 = new Lumiere(0,0,75,couleur,4);
+		lum1.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lum1.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lum1.getLargeur()-5);
 		lum1.dessiner(g2d, mat);
 
-		lum2 = new Lumiere(165,165,75,couleur,1);
+		lum2 = new Lumiere(0,0,75,couleur,1);
+		lum2.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0+5);
 		lum2.dessiner(g2d, mat);
 
-		lum3 = new Lumiere(190,45,75,couleurInv,2);
+		lum3 = new Lumiere(0,0,75,couleurInv,2);
+		lum3.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+lum3.getLargeur()/2.0-lum3.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lum3.getLongueur()/2.0-lum3.getLargeur()/2.0-5);
 		lum3.dessiner(g2d, mat);	
 
-		lum4 = new Lumiere(50,140,75,couleurInv,3);
+		lum4 = new Lumiere(0,0,75,couleurInv,3);
+		lum4.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lum4.getLongueur()/2.0-lum4.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lum4.getLargeur()/2.0+lum4.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lum4.dessiner(g2d, mat);
 
 
