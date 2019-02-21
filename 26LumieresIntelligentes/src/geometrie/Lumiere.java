@@ -14,12 +14,12 @@ public class Lumiere implements Dessinable{
 	Ellipse2D.Double lumiereVerte;
 	Ellipse2D.Double lumiereJaune;
 	Ellipse2D.Double lumiereRouge;
-	int x,y,couleur;
-	int direction;
+	double x,y;
+	int direction,couleur;
 	Color rouge, jaune, vert;
 	double largeur, longueur, diametre, rayon;
 	
-	public Lumiere(int x, int y, double largeur, int couleur, int direction){
+	public Lumiere(double x, double y, double largeur, int couleur, int direction){
 		this.direction = direction;
 		this.couleur = couleur;
 		this.largeur = largeur;
@@ -73,13 +73,13 @@ public class Lumiere implements Dessinable{
 		cadre = new Rectangle2D.Double(x, y, longueur, largeur);
 		g2d.setColor(Color.black);
 		g2d.fill(cadre);
-		lumiereRouge = new Ellipse2D.Double(x+longueur/2-rayon, y+rayon/2, diametre, diametre);
+		lumiereRouge = new Ellipse2D.Double(x+longueur/2.0-rayon, y+rayon/2.0, diametre, diametre);
 		g2d.setColor(rouge);
 		g2d.fill(lumiereRouge);
-		lumiereJaune = new Ellipse2D.Double(x+longueur/2-rayon, y+largeur*2/4-rayon, diametre, diametre);
+		lumiereJaune = new Ellipse2D.Double(x+longueur/2.0-rayon, y+largeur*2.0/4.0-rayon, diametre, diametre);
 		g2d.setColor(jaune);
 		g2d.fill(lumiereJaune);
-		lumiereVerte = new Ellipse2D.Double(x+longueur/2-rayon, y+largeur-diametre-rayon/2, diametre, diametre);
+		lumiereVerte = new Ellipse2D.Double(x+longueur/2.0-rayon, y+largeur-diametre-rayon/2, diametre, diametre);
 		g2d.setColor(vert);
 		g2d.fill(lumiereVerte);
 		g2d.setTransform(matInitial);
@@ -105,6 +105,27 @@ public class Lumiere implements Dessinable{
 	//change la lumiere allumee
 	public void setCouleur(int couleur) {
 		this.couleur = couleur;
+	}
+	
+	public double getLongueur() {
+		return this.longueur;
+	}
+	
+	public double getLargeur() {
+		return this.largeur;
+	}
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
+	
+	public void setPosition(double x, double y) {
+		this.x = x;
+		this.y = y;
 	}
 
 
