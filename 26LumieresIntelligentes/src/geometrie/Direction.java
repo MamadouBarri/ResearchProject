@@ -121,4 +121,11 @@ public class Direction extends Ligne {
 			nbVoiesNormales++;
 		}
 	}
+	public void setToutNormal() {
+		probVoie1 = 25;
+		probVoie2 = 25;
+		probVoie3 = 25;
+		probVoie4 = 25;
+		nbVoiesNormales = 4;
+	}
 }

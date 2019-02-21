@@ -144,18 +144,18 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 		
-		lum1 = new Lumiere(70,20,75,couleur);
+		lum1 = new Lumiere(70,20,75,couleur,4);
 		lum1.dessiner(g2d, mat);
 		
-		lum2 = new Lumiere(165,165,75,couleur);
-		//g2d.rotate(Math.toRadians(40));
+		lum2 = new Lumiere(165,165,75,couleur,1);
 		lum2.dessiner(g2d, mat);
 		
-		lum3 = new Lumiere(205,40,75,couleurInv);
-		lum3.dessiner(g2d, mat);
+		lum3 = new Lumiere(190,45,75,couleurInv,2);
+		lum3.dessiner(g2d, mat);	
 		
-		lum4 = new Lumiere(10,50,75,couleurInv);
+		lum4 = new Lumiere(50,140,75,couleurInv,3);
 		lum4.dessiner(g2d, mat);
+		
 		
 		//Dessiner l'échelle
 		g2d.setColor(Color.cyan);

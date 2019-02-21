@@ -15,13 +15,15 @@ public class Lumiere implements Dessinable{
 	Ellipse2D.Double lumiereJaune;
 	Ellipse2D.Double lumiereRouge;
 	int x,y,couleur;
+	int direction;
 	Color rouge, jaune, vert;
-	double hauteur, longueur, diametre, rayon;
+	double largeur, longueur, diametre, rayon;
 	
-	public Lumiere(int x, int y, double hauteur, int couleur){
+	public Lumiere(int x, int y, double largeur, int couleur, int direction){
+		this.direction = direction;
 		this.couleur = couleur;
-		this.hauteur = hauteur;
-		this.longueur = this.hauteur * (6.0/19.0);
+		this.largeur = largeur;
+		this.longueur = this.largeur * (6.0/19.0);
 		this.x = x;
 		this.y = y;
 		this.diametre = this.longueur * 6.0/8.0;
@@ -33,6 +35,7 @@ public class Lumiere implements Dessinable{
 
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
+		AffineTransform matInitial = g2d.getTransform();
 		switch(this.couleur) {
 		case 2:
 			setCouleurRouge();
@@ -44,18 +47,42 @@ public class Lumiere implements Dessinable{
 			setCouleurVert();
 			break;
 		}
-		cadre = new Rectangle2D.Double(x, y, longueur, hauteur);
+		
+		switch (direction)
+		{
+			case 1:
+				//Lumiere de la voie sud
+				//aucune rotation d'image
+				break;
+			case 2:
+				//Lumiere de la voie ouest
+				g2d.rotate(-Math.toRadians(90), x+longueur/2.0,y+largeur/2.0);
+				break;
+			case 3:
+				//Lumiere de la voie est
+				//Rotation de l'image
+				g2d.rotate(-Math.toRadians(-90), x+longueur/2.0,y+largeur/2.0);
+				break;
+			case 4:
+				//Lumiere de la voie nord
+				g2d.rotate(-Math.toRadians(180), x+longueur/2.0,y+largeur/2.0);
+				break;
+				
+		}
+		
+		cadre = new Rectangle2D.Double(x, y, longueur, largeur);
 		g2d.setColor(Color.black);
 		g2d.fill(cadre);
 		lumiereRouge = new Ellipse2D.Double(x+longueur/2-rayon, y+rayon/2, diametre, diametre);
 		g2d.setColor(rouge);
 		g2d.fill(lumiereRouge);
-		lumiereJaune = new Ellipse2D.Double(x+longueur/2-rayon, y+hauteur*2/4-rayon, diametre, diametre);
+		lumiereJaune = new Ellipse2D.Double(x+longueur/2-rayon, y+largeur*2/4-rayon, diametre, diametre);
 		g2d.setColor(jaune);
 		g2d.fill(lumiereJaune);
-		lumiereVerte = new Ellipse2D.Double(x+longueur/2-rayon, y+hauteur-diametre-rayon/2, diametre, diametre);
+		lumiereVerte = new Ellipse2D.Double(x+longueur/2-rayon, y+largeur-diametre-rayon/2, diametre, diametre);
 		g2d.setColor(vert);
 		g2d.fill(lumiereVerte);
+		g2d.setTransform(matInitial);
 	}
 	//allume la lumiere rouge
 	public void setCouleurRouge() {
