@@ -52,7 +52,7 @@ public class Direction extends Ligne {
 	//Mamadou
 	public void genererDirectionVoiture( ) {
 		Random rn = new Random();
-		//génère un nombre entre 1 et 100
+		//génère un nombre entre 1 et la probabilité totale
 		int aleatoire = rn.nextInt(probabiliteTotale) + 1;
 		//détermine la direction de la voiture selon le chiffre généré
 		if(aleatoire<=probVoie1) {
@@ -127,5 +127,17 @@ public class Direction extends Ligne {
 		probVoie3 = 25;
 		probVoie4 = 25;
 		nbVoiesNormales = 4;
+	}
+	public int getProbVoie1() {
+		return probVoie1;
+	}
+	public int getProbVoie2() {
+		return probVoie2;
+	}
+	public int getProbVoie3() {
+		return probVoie3;
+	}
+	public int getProbVoie4() {
+		return probVoie4;
 	}
 }
