@@ -181,7 +181,7 @@ public class Voiture implements Dessinable {
 	//	public void arreter() {
 	//		enCoursDAnimation = false;
 	//	}//fin methode
-
+//
 	/**
 	 * 
 	 */

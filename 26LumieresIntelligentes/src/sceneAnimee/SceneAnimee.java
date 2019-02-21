@@ -217,7 +217,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
-			}
+			}//
 			//DIRECTION : 
 			for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 				Voiture v = i.next();
