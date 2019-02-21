@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
+import java.awt.Font;
 
 
 public class App26LumieresIntelligentes extends JFrame {
@@ -76,7 +77,7 @@ public class App26LumieresIntelligentes extends JFrame {
 	public App26LumieresIntelligentes() {
 		setTitle("Simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 788, 683);
+		setBounds(100, 100, 1800, 900);
 
 		/*popup = new FenetreFileChooser();
 		popup.setVisible(false);*/
@@ -112,85 +113,34 @@ public class App26LumieresIntelligentes extends JFrame {
 
 		JPanel pnSimulations = new JPanel();
 		pnSimulations.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Simulations", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnSimulations.setBounds(0, 0, 472, 619);
+		pnSimulations.setBounds(0, 0, 1308, 829);
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 
-		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
-		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
-		pnEmplacementsDesBoutons.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Boutons ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnEmplacementsDesBoutons.setBounds(10, 113, 142, 414);
-		pnSimulations.add(pnEmplacementsDesBoutons);
-		pnEmplacementsDesBoutons.setLayout(null);
-
-		JButton btnAnimer = new JButton(new ImageIcon(urlAnimer));
-		btnAnimer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//On fait juste une scene pour l'instant
-				sceneAnimee1.demarrer();
-				sceneAnimee2.demarrer();				
-				//sceneAnimee2.demarrer();
-			}
-		});
-		btnAnimer.setBounds(34, 16, 76, 76);
-		pnEmplacementsDesBoutons.add(btnAnimer);
-
-		JButton btnPause = new JButton(new ImageIcon(urlPause));
-		btnPause.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee1.arreter();
-				sceneAnimee2.arreter();
-			}
-		});
-		btnPause.setBounds(34, 117, 76, 76);
-		pnEmplacementsDesBoutons.add(btnPause);
-
-		JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
-		btnProchainImage.setBounds(34, 213, 76, 76);
-		pnEmplacementsDesBoutons.add(btnProchainImage);
-
-		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
-		btnRecommencer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee1.arreter();
-				sceneAnimee2.arreter();
-				sceneAnimee1 = new SceneAnimee();
-				sceneAnimee1.setBounds(174, 51, 260, 260);
-				pnSimulations.add(sceneAnimee1);
-				sceneAnimee2 = new SceneAnimee();
-				sceneAnimee2.setBounds(174, 371, 260, 260);
-				pnSimulations.add(sceneAnimee2);
-				sceneAnimee1.repaint();
-				sceneAnimee2.repaint();
-
-			}
-		});//À CHANGER 
-		btnRecommencer.setBounds(34, 311, 76, 76);
-		pnEmplacementsDesBoutons.add(btnRecommencer);
-
-		JLabel lblSimulationAvecLAlgorithme = new JLabel("Simulation avec l'algorithme");
-		lblSimulationAvecLAlgorithme.setBounds(211, 329, 187, 14);
-		pnSimulations.add(lblSimulationAvecLAlgorithme);
-
-		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
-		lblSimulationSansLAlgorithme.setBounds(229, 25, 214, 14);
-		pnSimulations.add(lblSimulationSansLAlgorithme);
-
-		sceneAnimee1 = new SceneAnimee();
-		sceneAnimee1.setBounds(174, 51, 260, 260);
-		pnSimulations.add(sceneAnimee1);
-
 		sceneAnimee2 = new SceneAnimee();
-		sceneAnimee2.setBounds(174, 348, 260, 260);
+		sceneAnimee2.setBounds(698, 109, 600, 600);
 		pnSimulations.add(sceneAnimee2);
+		
+				sceneAnimee1 = new SceneAnimee();
+				sceneAnimee1.setBounds(37, 109, 600, 600);
+				pnSimulations.add(sceneAnimee1);
+				
+				JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme");
+				lblSimulationAvecLalgorithme.setFont(new Font("Britannic Bold", Font.PLAIN, 16));
+				lblSimulationAvecLalgorithme.setBounds(928, 65, 214, 33);
+				pnSimulations.add(lblSimulationAvecLalgorithme);
+				
+				JLabel lblSimulationSansLalgorithme = new JLabel("Simulation sans l'algorithme");
+				lblSimulationSansLalgorithme.setFont(new Font("Britannic Bold", Font.PLAIN, 16));
+				lblSimulationSansLalgorithme.setBounds(195, 65, 214, 33);
+				pnSimulations.add(lblSimulationSansLalgorithme);
 
 		JLabel lblVideo = new JLabel("Param\u00E8tres");
-		lblVideo.setBounds(568, 130, 123, 14);
+		lblVideo.setBounds(1550, 98, 123, 14);
 		contentPane.add(lblVideo);
 
 		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
-		lblVitesseMoyenne.setBounds(480, 176, 123, 14);
+		lblVitesseMoyenne.setBounds(1462, 144, 123, 14);
 		contentPane.add(lblVitesseMoyenne);
 
 		spnVitesse = new JSpinner();
@@ -203,15 +153,15 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		spnVitesse.setModel(new SpinnerNumberModel(new Integer(60), new Integer(0), null, new Integer(1)));
-		spnVitesse.setBounds(587, 173, 48, 20);
+		spnVitesse.setBounds(1569, 141, 48, 20);
 		contentPane.add(spnVitesse);
 
 		JLabel lblKmParHeure = new JLabel("km/h");
-		lblKmParHeure.setBounds(645, 176, 46, 14);
+		lblKmParHeure.setBounds(1627, 144, 46, 14);
 		contentPane.add(lblKmParHeure);
 
 		JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
-		lblTauxDApparition.setBounds(481, 225, 123, 14);
+		lblTauxDApparition.setBounds(1463, 193, 123, 14);
 		contentPane.add(lblTauxDApparition);
 
 		spnTauxDApparition = new JSpinner();
@@ -224,11 +174,11 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
-		spnTauxDApparition.setBounds(588, 222, 48, 20);
+		spnTauxDApparition.setBounds(1570, 190, 48, 20);
 		contentPane.add(spnTauxDApparition);
 
 		JLabel lblVoituresParMinute = new JLabel("Voitures/Minute");
-		lblVoituresParMinute.setBounds(646, 225, 126, 14);
+		lblVoituresParMinute.setBounds(1628, 193, 126, 14);
 		contentPane.add(lblVoituresParMinute);
 
 		chkbxVoie3 = new JCheckBox("Voie 3");
@@ -242,7 +192,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		chkbxVoie3.setEnabled(false);
-		chkbxVoie3.setBounds(497, 325, 97, 23);
+		chkbxVoie3.setBounds(1479, 293, 97, 23);
 		contentPane.add(chkbxVoie3);
 
 		chkbxVoie4 = new JCheckBox("Voie 4");
@@ -256,7 +206,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		chkbxVoie4.setEnabled(false);
-		chkbxVoie4.setBounds(607, 325, 97, 23);
+		chkbxVoie4.setBounds(1589, 293, 97, 23);
 		contentPane.add(chkbxVoie4);
 
 		chkbxVoie2 = new JCheckBox("Voie 2");
@@ -270,7 +220,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		chkbxVoie2.setEnabled(false);
-		chkbxVoie2.setBounds(607, 299, 97, 23);
+		chkbxVoie2.setBounds(1589, 267, 97, 23);
 		contentPane.add(chkbxVoie2);
 
 		chkbxVoie1 = new JCheckBox("Voie 1");
@@ -284,7 +234,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		chkbxVoie1.setEnabled(false);
-		chkbxVoie1.setBounds(497, 299, 97, 23);
+		chkbxVoie1.setBounds(1479, 267, 97, 23);
 		contentPane.add(chkbxVoie1);
 
 		JCheckBox checkBox_4 = new JCheckBox("Trafic anormal");
@@ -307,7 +257,7 @@ public class App26LumieresIntelligentes extends JFrame {
 				}
 			}
 		});
-		checkBox_4.setBounds(480, 264, 112, 23);
+		checkBox_4.setBounds(1462, 232, 112, 23);
 		contentPane.add(checkBox_4);
 
 		JButton btnArret = new JButton("arret");
@@ -317,7 +267,60 @@ public class App26LumieresIntelligentes extends JFrame {
 				sceneAnimee2.arreterVoitures();
 			}
 		});
-		btnArret.setBounds(559, 425, 89, 23);
+		btnArret.setBounds(1550, 355, 89, 23);
 		contentPane.add(btnArret);
+		
+				JPanel pnEmplacementsDesBoutons = new JPanel();
+				pnEmplacementsDesBoutons.setBounds(1537, 410, 142, 414);
+				contentPane.add(pnEmplacementsDesBoutons);
+				pnEmplacementsDesBoutons.setForeground(Color.BLACK);
+				pnEmplacementsDesBoutons.setBackground(Color.WHITE);
+				pnEmplacementsDesBoutons.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Boutons ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				pnEmplacementsDesBoutons.setLayout(null);
+				
+						JButton btnAnimer = new JButton(new ImageIcon(urlAnimer));
+						btnAnimer.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+								//On fait juste une scene pour l'instant
+								sceneAnimee1.demarrer();
+								sceneAnimee2.demarrer();				
+								//sceneAnimee2.demarrer();
+							}
+						});
+						btnAnimer.setBounds(34, 16, 76, 76);
+						pnEmplacementsDesBoutons.add(btnAnimer);
+						
+								JButton btnPause = new JButton(new ImageIcon(urlPause));
+								btnPause.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent arg0) {
+										sceneAnimee1.arreter();
+										sceneAnimee2.arreter();
+									}
+								});
+								btnPause.setBounds(34, 117, 76, 76);
+								pnEmplacementsDesBoutons.add(btnPause);
+								
+										JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
+										btnProchainImage.setBounds(34, 222, 76, 76);
+										pnEmplacementsDesBoutons.add(btnProchainImage);
+										
+												JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
+												btnRecommencer.addActionListener(new ActionListener() {
+													public void actionPerformed(ActionEvent arg0) {
+														sceneAnimee1.arreter();
+														sceneAnimee2.arreter();
+														sceneAnimee1 = new SceneAnimee();
+														sceneAnimee1.setBounds(174, 51, 260, 260);
+														pnSimulations.add(sceneAnimee1);
+														sceneAnimee2 = new SceneAnimee();
+														sceneAnimee2.setBounds(174, 371, 260, 260);
+														pnSimulations.add(sceneAnimee2);
+														sceneAnimee1.repaint();
+														sceneAnimee2.repaint();
+
+													}
+												});//À CHANGER 
+												btnRecommencer.setBounds(34, 311, 76, 76);
+												pnEmplacementsDesBoutons.add(btnRecommencer);
 	}
 }
