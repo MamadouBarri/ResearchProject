@@ -124,4 +124,5 @@ public class Intersection implements Dessinable {
 		this.nbVoiesHorizontale = nbVoiesHorizontale;
 	}
 	
+	
 }
