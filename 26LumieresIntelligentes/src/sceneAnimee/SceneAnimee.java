@@ -21,6 +21,7 @@ import geometrie.Direction;
 import geometrie.Intersection;
 import geometrie.Lumiere;
 import geometrie.Voiture;
+import interfaces.LumiereListener;
 import modele.ModeleAffichage;
 /**
  * Classe de la scène d'animation de l'intersection
@@ -78,6 +79,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private double nbBouclesAvantLumiereRouge = 600;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
+	private ArrayList<LumiereListener> listeEcouteurs = new ArrayList<LumiereListener>();
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
 	//couleur des lumieres pour les voies nord et sud
 	private int couleur=0;
@@ -132,6 +134,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 
 		});	
+		
+		addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				//debut
+
+				//fin
+			}
+
+		});	
 	}
 
 	/**
@@ -161,6 +173,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 		lum4 = new Lumiere(50,140,75,couleurInv,3);
 		lum4.dessiner(g2d, mat);
+		
 
 
 		//Dessiner l'échelle
@@ -246,14 +259,17 @@ public class SceneAnimee extends JPanel implements Runnable{
 					nbRepetitionsPourVoitures=0;
 				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
+					leverEvenChangeCouleur();
 					changeCouleurLumieres();
 					repaint();
 				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereVerte) {
+					leverEvenChangeCouleur();
 					changeCouleurLumieres();
 					repaint();
 				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereRouge) {
+					leverEvenChangeCouleur();
 					changeCouleurLumieres();
 					repaint();
 					nbRepetitionsPourLumieres =0;
@@ -507,6 +523,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.trafficAnormaleTemp = this.trafficAnormale;
 			this.trafficAnormale = new int[1];
 			this.enTrafficAnormale = false;
+		}
+	}
+	
+	public void addLumiereListener( LumiereListener objEcout) {
+		listeEcouteurs.add(objEcout);
+	}
+	
+	private void leverEvenChangeCouleur() {
+		for (LumiereListener ecout : listeEcouteurs) {
+			ecout.changeDeCouleur(this.couleur);
 		}
 	}
 }
