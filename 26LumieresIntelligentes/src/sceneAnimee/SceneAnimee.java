@@ -77,14 +77,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbVoituresGenerees =0;
 	private int nbVoituresMax = 50;
 	//Lumieres 
-	private double nbBouclesAvantLumiereJaune = 10000;
+	private double nbBouclesAvantLumiereJaune = 100;
 	
 
-	private double nbBouclesAvantLumiereVerte = 10000;
-	private double nbBouclesAvantLumiereRouge = 10000;
+	private double nbBouclesAvantLumiereVerte = 200;
+	private double nbBouclesAvantLumiereRouge = 300;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
-	private ArrayList<LumiereListener> listeEcouteurs = new ArrayList<LumiereListener>();
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
 	//couleur des lumieres pour les voies nord et sud
 	private int couleur=0;
@@ -278,17 +277,14 @@ public class SceneAnimee extends JPanel implements Runnable{
 					nbRepetitionsPourVoitures=0;
 				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
-					leverEvenChangeCouleur();
 					changeCouleurLumieres();
 					repaint();
 				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereVerte) {
-					leverEvenChangeCouleur();
 					changeCouleurLumieres();
 					repaint();
 				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereRouge) {
-					leverEvenChangeCouleur();
 					changeCouleurLumieres();
 					repaint();
 					nbRepetitionsPourLumieres =0;
@@ -544,16 +540,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.trafficAnormaleTemp = this.trafficAnormale;
 			this.trafficAnormale = new int[1];
 			this.enTrafficAnormale = false;
-		}
-	}
-	
-	public void addLumiereListener( LumiereListener objEcout) {
-		listeEcouteurs.add(objEcout);
-	}
-	
-	private void leverEvenChangeCouleur() {
-		for (LumiereListener ecout : listeEcouteurs) {
-			ecout.changeDeCouleur(this.couleur);
 		}
 	}
 	public int getNbVoituresGenerees() {

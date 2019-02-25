@@ -21,6 +21,7 @@ public class Lumiere implements Dessinable{
 	Color rouge, jaune, vert;
 	double largeur, longueur, diametre, rayon;
 	boolean isInverse, isMaitre;
+	Lumiere maitre;
 	
 	public Lumiere(double x, double y, double largeur, int couleur, int direction){
 		this.direction = direction;
@@ -34,31 +35,10 @@ public class Lumiere implements Dessinable{
 		rouge = new Color(255,0,0);
 		jaune = new Color(75,75,0);
 		vert = new Color(0,75,0);
-		isMaitre = true;
-		isInverse = false;
 	}
-
-	public Lumiere(int x, int y, double largeur, int couleur, int direction, boolean isInverse){
-		this.direction = direction;
-		this.couleur = couleur;
-		this.largeur = largeur;
-		this.longueur = this.largeur * (6.0/19.0);
-		this.x = x;
-		this.y = y;
-		this.diametre = this.longueur * 6.0/8.0;
-		this.rayon = this.diametre/2.0;
-		rouge = new Color(255,0,0);
-		jaune = new Color(75,75,0);
-		vert = new Color(0,75,0);
-		isMaitre = false;
-		this.isInverse = isInverse;
-		
-	}
-
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
 		AffineTransform matInitial = g2d.getTransform();
-		//leverEvenChangeCouleur();
 		switch(this.couleur) {
 		case 2:
 			setCouleurRouge();
@@ -128,6 +108,10 @@ public class Lumiere implements Dessinable{
 	//change la lumiere allumee
 	public void setCouleur(int couleur) {
 		this.couleur = couleur;
+	}
+	
+	public int getCouleur() {
+		return this.couleur;
 	}
 	
 	public double getLongueur() {
