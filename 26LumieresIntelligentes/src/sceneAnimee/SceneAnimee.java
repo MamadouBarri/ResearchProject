@@ -67,7 +67,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	ArrayList<Voiture> nord = new ArrayList<Voiture>();
 	//Varibales animation
 	private boolean enCoursDAnimation = false;
-	private long tempsDuSleep = 5; 
+	private long tempsDuSleep = 10; 
 	private double deltaT;
 
 	//Objets
@@ -77,11 +77,11 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbVoituresGenerees =0;
 	private int nbVoituresMax = 50;
 	//Lumieres 
-	private double nbBouclesAvantLumiereJaune = 100;
+	private double nbBouclesAvantLumiereJaune = 2400;
 	
 
-	private double nbBouclesAvantLumiereVerte = 200;
-	private double nbBouclesAvantLumiereRouge = 300;
+	private double nbBouclesAvantLumiereVerte = 2700;
+	private double nbBouclesAvantLumiereRouge = 5100;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
