@@ -168,9 +168,19 @@ public class FenetreParametres extends JFrame {
 		lblTauxDApparition.setBounds(21, 167, 123, 14);
 		panel.add(lblTauxDApparition);
 		
-		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
-		chkbxTrfcAnom.addChangeListener(new ChangeListener() {
+		spnVitesse = new JSpinner();
+		spnVitesse.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
+				leverEvenGetParams();
+			}
+		});
+		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), null, null, new Integer(1)));
+		spnVitesse.setBounds(128, 66, 48, 20);
+		panel.add(spnVitesse);
+		
+		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
+		chkbxTrfcAnom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxTrfcAnom.isSelected()) {
 					setEtatVoiesAnom(true);
 				} else {
@@ -247,16 +257,6 @@ public class FenetreParametres extends JFrame {
 		JLabel lblUniteVitesse = new JLabel("km/h");
 		lblUniteVitesse.setBounds(186, 69, 46, 14);
 		panel.add(lblUniteVitesse);
-		
-		spnVitesse = new JSpinner();
-		spnVitesse.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				leverEvenGetParams();
-			}
-		});
-		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), null, null, new Integer(1)));
-		spnVitesse.setBounds(128, 66, 48, 20);
-		panel.add(spnVitesse);
 		
 		spnTauxDApparition = new JSpinner();
 		spnTauxDApparition.addChangeListener(new ChangeListener() {
@@ -357,7 +357,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoitures.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
-		spnNbVoitures.setBounds(143, 113, 48, 20);
+		spnNbVoitures.setBounds(154, 113, 48, 20);
 		panel.add(spnNbVoitures);
 	}
 	

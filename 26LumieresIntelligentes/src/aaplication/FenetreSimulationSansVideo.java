@@ -167,13 +167,16 @@ public class FenetreSimulationSansVideo extends JFrame {
 		spnVitesse = new JSpinner();
 		spnVitesse.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				double VitesseKmParHeure = (int)spnVitesse.getValue();
-				//convertir les km/h en m/s (1m/s = (1km/h)*(1000m/km)/(3600s/h)
-				double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
-				sceneAnimee1.setVitesse(VitesseMParSeconde);
+				if(!spnVitesse.getValue().equals(null)) {
+					double VitesseKmParHeure = (Integer)spnVitesse.getValue();
+					//convertir les km/h en m/s (1m/s = (1km/h)*(1000m/km)/(3600s/h)
+					double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
+					//if()
+					sceneAnimee1.setVitesse((int)spnVitesse.getValue());
+				}
 			}
 		});
-		spnVitesse.setModel(new SpinnerNumberModel(new Integer(60), new Integer(0), null, new Integer(1)));
+		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), new Integer(0), null, new Integer(1)));
 		spnVitesse.setBounds(1569, 141, 48, 20);
 		contentPane.add(spnVitesse);
 
@@ -191,7 +194,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 				//On modifie le taux pour les deux fenêtres d'animation
 				sceneAnimee1.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 				sceneAnimee2.setTauxDApparition((Integer)spnTauxDApparition.getValue());
-				System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
+				//System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
 			}
 		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
@@ -385,8 +388,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 		}
 	}
 	public void setTraficAnormal(boolean anom) {
-		sceneAnimee1.setTrafficAnormale(anom);
-		sceneAnimee2.setTrafficAnormale(anom);
+		//sceneAnimee1.setTrafficAnormale(anom);
+		//sceneAnimee2.setTrafficAnormale(anom);
 		chkbxVoie3.setEnabled(anom);
 		chkbxVoie4.setEnabled(anom);
 		chkbxVoie2.setEnabled(anom);

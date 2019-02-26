@@ -170,34 +170,27 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 		parametres.addResultatsFenParamListener(new ResultatsFenParamListener() {
-
-			@Override
 			public void VitesseDesVoitures(int vitesse) {
-				// TODO Auto-generated method stub
 				simulSansVideo.setVitesse(vitesse);
 			}
 
 			@Override
 			public void TauxDApparitionDesVoitures(int taux) {
-				// TODO Auto-generated method stub
 				simulSansVideo.setTaux(taux);
 			}
 
 			@Override
 			public void NombreDeVoituresAGenerer(int nbVoitures) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void isTraficAnormal(boolean anormale) {
-				// TODO Auto-generated method stub
 				simulSansVideo.setTraficAnormal(anormale);
 			}
 
 			@Override
 			public void setVoiesAvecTraficAnormal(int[] listeVoiesAnormales) {
-				// TODO Auto-generated method stub
 				simulSansVideo.setVoieAnormale(listeVoiesAnormales);
 			}
 			
