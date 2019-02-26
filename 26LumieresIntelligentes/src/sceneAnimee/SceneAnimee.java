@@ -30,12 +30,15 @@ import modele.ModeleAffichage;
  *
  */
 public class SceneAnimee extends JPanel implements Runnable{
+	
+	
+
 	//
 	/**
 	 * Numero par defaut
 	 */
 
-	private double deplacement = 1;
+	private double deplacement = 30; //km/h pour convertir en m/s diviser par 3.6
 	/**
 	 * Variables
 	 */
@@ -51,6 +54,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private final int LARGEUR_VOITURE = 2;
 	private final int LONGUEUR_VOITURE = 4;
 	private final double DIMENSION_VOIE_REELLE = 10;
+	//Constante de conversion
+	private final double CONVERSION_KMH_MS = 3.6;
 	//Modele
 	private ModeleAffichage modele;
 
@@ -84,6 +89,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private double nbBouclesAvantLumiereRouge = 5100;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
+	private  final double TAUX_DECELERATION = 0.1;
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
 	//couleur des lumieres pour les voies nord et sud
 	private int couleur=0;
@@ -97,6 +103,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int[] trafficAnormale = new int[1];
 	private int[] trafficAnormaleTemp= new int[1];
 	private boolean enTrafficAnormale;
+	private boolean premiereFois = true;
 
 
 
@@ -161,6 +168,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 		modele = new ModeleAffichage(getWidth(), getHeight(), LARGEUR_REELLE);
 		AffineTransform mat = modele.getMatMC();
+		//Convertir la vitesse en pixels
+		if(premiereFois) {
+			//deplacement /=CONVERSION_KMH_MS;
+			//deplacement /= UNE_SECONDE_EN_MILLISECONDE ; //metre/miliseconde
+			//premiereFois= false;
+			deplacement = 1; //A changer
+		}
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
 		inter = new Intersection(this.LARGEUR_REELLE);
@@ -211,7 +225,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		double nbRepetitionsPourLumieres = 0;
 		while (enCoursDAnimation) {	
 			if(voituresEnArret && deplacement>=0) {
-				deplacement--;
+				deplacement = deplacement-TAUX_DECELERATION;
 				if(deplacement<0) {
 					deplacement =0;
 				}
@@ -223,7 +237,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Essaie pour voir si l'animation marche avec un seul thread
 				//v.demarrer();
 				v.setXVoiture((int)(v.getXVoiture()+deplacement));
-				if(v.getXVoiture()>this.LARGEUR_REELLE *modele.getPixelsParUniteX() && v.getVoitureActive()) {
+				
+				//Lorsque la voiture doit s'arreter
+				
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
@@ -258,6 +275,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				v.setYVoiture((int)(v.getYVoiture()-deplacement));
+				System.out.println(deplacement);
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
