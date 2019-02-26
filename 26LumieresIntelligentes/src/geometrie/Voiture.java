@@ -31,7 +31,7 @@ public class Voiture implements Dessinable {
 	//Variables
 
 	//Trafic anormal
-	private int[] trafficAnormale;
+	private int[] trafficAnormal;
 
 	//Positions de la voiture
 	private int xVoiture;
@@ -50,7 +50,11 @@ public class Voiture implements Dessinable {
 	//Objets de la voiture
 	Direction direction;
 	Action action;
-
+	//Distances relatives des voitures
+	private boolean voitureProche=false;
+	private boolean voitureArretee = false;
+	
+	
 	//Description de la voiture
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
@@ -109,15 +113,15 @@ public class Voiture implements Dessinable {
 
 	/**
 	 * Constructeur d'une voiture 
-	 * @param trafficAnormale tableau du traffic anormal
+	 * @param trafficAnormal tableau du traffic anormal
 	 */
-	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormale) {
+	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal) {
 		//Initialisation des parametres de la voiture
 		this.largeurVoie = largeurVoie;
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
 		this.longueurVoiturePixels = longueurVoiturePixels;
-		this.trafficAnormale = trafficAnormale;
+		this.trafficAnormal = trafficAnormal;
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
 		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
@@ -137,8 +141,8 @@ public class Voiture implements Dessinable {
 		//Traduire la direction
 		//Objet direction aleatoire
 		direction = new Direction();
-		for(int i=0;i<trafficAnormale.length;i++) {
-			direction.setAnormal(trafficAnormale[i]);
+		for(int i=0;i<trafficAnormal.length;i++) {
+			direction.setAnormal(trafficAnormal[i]);
 		}
 		descriptionDirection = direction.toString();
 		//Traduire l'action
@@ -280,6 +284,7 @@ public class Voiture implements Dessinable {
 	}
 	/**
 	 * setter de la position X de la voiture
+	 * 
 	 */
 	public  void setXVoiture(int xVoiture) {
 		this.xVoiture = xVoiture;
@@ -298,13 +303,56 @@ public class Voiture implements Dessinable {
 		this.yVoiture = xVoiture;
 	}
 
+	/**
+	 * getter de la direction
+	 * @return la direction
+	 */
 	public Direction getDirection() {
 		return(this.direction);
 	}
-	public void setAnormale(int[] trafficAnormale) {
-		this.trafficAnormale = trafficAnormale;
+	/**
+	 * getter du tableau du traffic anormal
+	 * @param trafficAnormal
+	 */
+	public void setAnormale(int[] trafficAnormal) {
+		this.trafficAnormal = trafficAnormal;
 	}
+	/**
+	 * Getter de la probabilite de generation pour la premiere voiture
+	 * @return
+	 */
 	public int getProbVoie1() {
 		return direction.getProbVoie1();
+	}
+	/**
+	 * Getter du boolean qui dit si la voiture est proche de celle devant
+	 * @return
+	 */
+	public boolean isVoitureProche() {
+		return voitureProche;
+	}
+
+	/**
+	 * Setter de la proximite de la voiture devant
+	 * @param voitureProche
+	 */
+	public void setVoitureProche(boolean voitureProche) {
+		this.voitureProche = voitureProche;
+	}
+
+	/**
+	 * Getter qui retourne vrai si la voiuture est arretee
+	 * @return
+	 */
+	public boolean isVoitureArretee() {
+		return voitureArretee;
+	}
+
+	/**
+	 * Setter de l'arret de la voiture
+	 * @param voitureArretee
+	 */
+	public void setVoitureArretee(boolean voitureArretee) {
+		this.voitureArretee = voitureArretee;
 	}
 }
