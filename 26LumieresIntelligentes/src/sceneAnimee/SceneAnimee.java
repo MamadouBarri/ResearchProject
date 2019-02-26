@@ -80,7 +80,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Voitures
 	private int nbBouclesAvantNouvelleVoiture = 100;
 	private int nbVoituresGenerees =0;
-	private int nbVoituresMax = 50;
+	private int nbVoituresMax = 100;
 	//Lumieres 
 	private double nbBouclesAvantLumiereJaune = 2400;
 	
@@ -105,6 +105,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private boolean enTrafficAnormale;
 	private boolean premiereFois = true;
 	
+	private double vitesse;
 	//Code des lumiere
 	private final int VERTE = 0;
 	private final int JAUNE = 1;
@@ -178,7 +179,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			//deplacement /=CONVERSION_KMH_MS;
 			//deplacement /= UNE_SECONDE_EN_MILLISECONDE ; //metre/miliseconde
 			//premiereFois= false;
-			deplacement = 1; //A changer
+			calculerVitesse(); //A changer
 		}
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
@@ -488,6 +489,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
 		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
 		System.out.println("Nombre de boucle sleep avant une nouvelle voiture : " + this.nbBouclesAvantNouvelleVoiture); //Test
+		
 	}
 	/**
 	 * Getter de la largeur reelle
@@ -552,6 +554,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 * @param vitesse
 	 */
 	public void setVitesse(double vitesse) {
+		this.vitesse = vitesse;
+	}
+	public void calculerVitesse() {
 		this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
 	}
 	public void addTrafficAnormale(int numDeVoie) {
