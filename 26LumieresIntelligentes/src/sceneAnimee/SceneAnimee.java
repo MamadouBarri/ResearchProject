@@ -236,7 +236,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
-				Voiture v = i.next();
+				Voiture v = i.next();//
 				//Essaie pour voir si l'animation marche avec un seul thread
 				//v.demarrer();
 				if(v.isVoitureArretee() && deplacement>=0 ) {
