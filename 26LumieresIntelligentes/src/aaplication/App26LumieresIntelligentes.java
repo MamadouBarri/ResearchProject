@@ -35,7 +35,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-
+import ecouteursperso.VisibiliteFenDepartListener;
+import ecouteursperso.VisibiliteFenParamListener;
+import ecouteursperso.VisibiliteFenSimulListener;
+import ecouteursperso.VisibiliteFenSimulVideoListener;
 
 public class App26LumieresIntelligentes extends JFrame {
 
@@ -44,6 +47,8 @@ public class App26LumieresIntelligentes extends JFrame {
 	FenetreConcepts concepts;
 	FenetreInstructions instructions;
 	FenetreParametres parametres;
+	FenetreSimulationSansVideo simulSansVideo;
+	FenetreSimulationAvecVideo simulAvecVideo;
 
 	/**
 	 * Launch the application.
@@ -65,9 +70,104 @@ public class App26LumieresIntelligentes extends JFrame {
 	 * Create the frame.
 	 */
 	public App26LumieresIntelligentes() {
+		//creation de la fentre de simulations avec video
+		simulAvecVideo = new FenetreSimulationAvecVideo();
+		//ecouteur qui permet de revenir au menu de depart à partir de la fenetre de simulations avec video
+		simulAvecVideo.addVisibiliteFenDepartListener(new VisibiliteFenDepartListener() {
+			public void rendreFenetreDepartVisible() {
+				simulAvecVideo.setVisible(false);
+				setVisible(true);
+			}
+			
+		});
+		//ecouteur qui permet l'utilisateur de revenir à la fenetre de parametres à partir de la fenêtre de simulations avec video
+		simulAvecVideo.addVisibiliteFenParamListener(new VisibiliteFenParamListener(){
+			public void rendreFenetreParamVisible() {
+				simulAvecVideo.setVisible(false);
+				parametres.setVisible(true);
+			}});
+		//création de la fenetre de simulations sans video
+		simulSansVideo = new FenetreSimulationSansVideo();
+		//ecouteur qui permet l'utilisateur de revenir à la fenetre de depart à partir de la fenetre de simulations sans video
+		simulSansVideo.addVisibiliteFenDepartListener(new VisibiliteFenDepartListener(){
+			@Override
+			public void rendreFenetreDepartVisible() {
+				simulSansVideo.setVisible(false);
+				setVisible(true);
+			}
+		});
+		//ecouteur qui permet l'utilisateur de revenir à la fenetre de parametres à partir de la fenêtre de simulations sans video
+		simulSansVideo.addVisibiliteFenParamListener(new VisibiliteFenParamListener() {
+			public void rendreFenetreParamVisible() {
+				simulSansVideo.setVisible(false);
+				parametres.setVisible(true);
+			}});
+		//creation de la fenetre de concepts scientifiques
 		concepts = new FenetreConcepts();
+		//ecouteur qui permet l'utilisateur de revenir à la fenetre de depart à partir de la fenetre de concepts scientifiques
+		concepts.addVisibiliteFenDepartListener(new VisibiliteFenDepartListener() {
+
+			@Override
+			public void rendreFenetreDepartVisible() {
+				concepts.setVisible(false);
+				setVisible(true);
+			}
+			
+		});
+		//ecouteur qui permet l'utilisateur d'ouvrir la fenetre de parametres à partir de la fenetre de concepts scientifiques
+		concepts.addVisibiliteFenParamListener(new VisibiliteFenParamListener() {
+			public void rendreFenetreParamVisible() {
+				concepts.setVisible(false);
+				parametres.setVisible(true);
+			}
+		});
+		//creation de la fenetre d'instructions
 		instructions = new FenetreInstructions();
+		//ecouteur qui permet l'utilisateur de revenir à la fenetre de depart à partir de la fenetre d'instructions
+		instructions.addVisibiliteFenDepartListener(new VisibiliteFenDepartListener() {
+			public void rendreFenetreDepartVisible() {
+				instructions.setVisible(false);
+				setVisible(true);
+			}
+		});
+		//ecouteur qui permet l'utilisateur d'ouvrir la fenetre de parametres à partir de la fenetre d'instructions
+		instructions.addVisibiliteFenParamListener(new VisibiliteFenParamListener() {
+			@Override
+			public void rendreFenetreParamVisible() {
+				parametres.setVisible(true);
+				instructions.setVisible(false);
+			}
+		});
+		//creation de la fenetre de parametres
 		parametres = new FenetreParametres();
+		//ecouteur qui permet l'utilisateur de revenir à la fenetre de depart à partir de la fenetre de parametres
+		parametres.addVisibiliteFenDepartListener(new VisibiliteFenDepartListener() {
+
+			@Override
+			public void rendreFenetreDepartVisible() {
+				parametres.setVisible(false);
+				setVisible(true);
+			}
+			
+		});
+		//ecouteur qui permet l'utilisateur d'ouvrir la fenetre de simulations sans video
+		parametres.addVisibiliteFenSimulListener(new VisibiliteFenSimulListener() {
+
+			@Override
+			public void rendreFenetreSimulationsSansVideoVisible() {
+				parametres.setVisible(false);
+				simulSansVideo.setVisible(true);
+			}
+			
+		});
+		//ecouteur qui permet l'utilisateur d'ouvrir la fenetre de simulations avec video
+		parametres.addVisibiliteFenSimulVideoListener(new VisibiliteFenSimulVideoListener() {
+
+			public void rendreFenetreSimulationsAvecVideoVisible() {
+				parametres.setVisible(false);
+				simulAvecVideo.setVisible(true);
+			}
+		});
 		
 		setTitle("Lumi\u00E8res Intelligentes - Mamadou Barri, Reiner Luis Gayta\r\n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

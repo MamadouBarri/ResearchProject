@@ -6,17 +6,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ecouteursperso.VisibiliteFenDepartListener;
+import ecouteursperso.VisibiliteFenParamListener;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class FenetreInstructions extends JFrame {
-
+	//listes contenant les objets qui veulent ecouter à cet objet
+	private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();
+	private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();
+	
 	private JPanel contentPane;
 
 	/**
@@ -50,9 +58,19 @@ public class FenetreInstructions extends JFrame {
 		menuBar.add(mnMenu);
 		
 		JMenuItem mntmMenuDeDepart = new JMenuItem("Menu de d\u00E9part");
+		mntmMenuDeDepart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leverEvenFenetreDepartVisible();
+			}
+		});
 		mnMenu.add(mntmMenuDeDepart);
 		
 		JMenuItem mntmDebuterLaSimulation = new JMenuItem("D\u00E9buter la simulation");
+		mntmDebuterLaSimulation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leverEvenFenetreParametresListener();
+			}
+		});
 		mnMenu.add(mntmDebuterLaSimulation);
 		
 		JMenuItem mntmQuitter = new JMenuItem("Quitter");
@@ -76,5 +94,35 @@ public class FenetreInstructions extends JFrame {
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollPane.setRowHeaderView(scrollBar);
+	}
+	/**
+	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
+	 * @param objEcouteur objet qui desire savoir quand on veut rouvrit la fenetre de depart
+	 */
+	public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
+		listeEcouteurs.add(objEcouteur);
+	}
+	/**
+	 * indique aux objets ecouteurs si on desire faire apparaitre la fenetre de depart
+	 */
+	private void leverEvenFenetreDepartVisible() {	
+		for(VisibiliteFenDepartListener ecout : listeEcouteurs ) {
+			ecout.rendreFenetreDepartVisible();
+		}
+	}
+	/**
+	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de parametres
+	 * @param visibiliteFenParamListener objet qui desire savoir quand on veut ouvrir la fenetre de parametres
+	 */
+	public void addVisibiliteFenParamListener(VisibiliteFenParamListener visibiliteFenParamListener) {
+		listeEcouteursFenParam.add(visibiliteFenParamListener);
+	}
+	/**
+	 * indique aux objet écouteurs qu'on desire faire apparaitre la fenetre de parametres
+	 */
+	private void leverEvenFenetreParametresListener() {
+		for(VisibiliteFenParamListener ecout : listeEcouteursFenParam) {
+			ecout.rendreFenetreParamVisible();
+		}
 	}
 }

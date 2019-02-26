@@ -20,8 +20,14 @@ import java.awt.SystemColor;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
+
+import ecouteursperso.VisibiliteFenDepartListener;
+import ecouteursperso.VisibiliteFenSimulListener;
+import ecouteursperso.VisibiliteFenSimulVideoListener;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -47,6 +53,10 @@ public class FenetreParametres extends JFrame {
 	private JLabel lblVoieSud;
 	private JCheckBox chkbxTrfcAnom;
 	private JSpinner spnNbVoitures;
+	////listes contenant les objets qui veulent ecouter à cet objet
+	private ArrayList<VisibiliteFenDepartListener> listeEcouteursFenDepart = new ArrayList<VisibiliteFenDepartListener>();
+	private ArrayList<VisibiliteFenSimulListener> listeEcouteursFenSimul = new ArrayList<VisibiliteFenSimulListener>();
+	private ArrayList<VisibiliteFenSimulVideoListener> listeEcouteursFenSimulVideo = new ArrayList<VisibiliteFenSimulVideoListener>();
 
 	/**
 	 * Launch the application.
@@ -79,6 +89,11 @@ public class FenetreParametres extends JFrame {
 		menuBar.add(mnMenu);
 		
 		JMenuItem mntmMenuDeDepart = new JMenuItem("Menu de d\u00E9part");
+		mntmMenuDeDepart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leverEvenFenetreDepartVisible();
+			}
+		});
 		mnMenu.add(mntmMenuDeDepart);
 		
 		JMenuItem mntmQuitter = new JMenuItem("Quitter");
@@ -204,6 +219,15 @@ public class FenetreParametres extends JFrame {
 		panel.add(btnChoisirVideo);
 		
 		JButton btnConfirmer = new JButton("Confirmer");
+		btnConfirmer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(rdbtnSimuler.isSelected()) {
+					leverEvenFenetreSimulationSansVideoVisible();
+				} else {
+					leverEvenFenetreSimulationAvecVideoVisible(); 
+				}
+			}
+		});
 		btnConfirmer.setBounds(258, 550, 105, 23);
 		panel.add(btnConfirmer);
 		
@@ -289,5 +313,50 @@ public class FenetreParametres extends JFrame {
 		chkbxTrfcAnom2.setEnabled(etat);
 		chkbxTrfcAnom3.setEnabled(etat);
 		chkbxTrfcAnom4.setEnabled(etat);
+	}
+	/**
+	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
+	 * @param objEcouteur objet ecouteur qui desire savoir quand on veut rouvrir la fenetre de depart
+	 */
+	public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
+		listeEcouteursFenDepart.add(objEcouteur);
+	}
+	/**
+	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de depart
+	 */
+	private void leverEvenFenetreDepartVisible() {	
+		for(VisibiliteFenDepartListener ecout : listeEcouteursFenDepart ) {
+			ecout.rendreFenetreDepartVisible();
+		}
+	}
+	/**
+	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de simulations sans video
+	 * @param visibiliteFenSimulListener objet qui desire savoir quand on veut ouvrir la fenetre de simulations sans video
+	 */
+	public void addVisibiliteFenSimulListener(VisibiliteFenSimulListener visibiliteFenSimulListener) {
+		listeEcouteursFenSimul.add(visibiliteFenSimulListener);
+	}
+	/**
+	 * indique aux objets ecouteurs qu'on desire ouvrir la fenetre de simulations sans video
+	 */
+	private void leverEvenFenetreSimulationSansVideoVisible() {	
+		for(VisibiliteFenSimulListener ecout : listeEcouteursFenSimul ) {
+			ecout.rendreFenetreSimulationsSansVideoVisible();
+		}
+	}
+	/**
+	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de simulations avec video
+	 * @param visibiliteFenSimulVideoListener objet qui desire savoir quand on veut ouvrir la fenetre de simulations avec video
+	 */
+	public void addVisibiliteFenSimulVideoListener(VisibiliteFenSimulVideoListener visibiliteFenSimulVideoListener) {
+		listeEcouteursFenSimulVideo.add(visibiliteFenSimulVideoListener);
+	}
+	/**
+	 * indique aux objets ecouteurs qu'on desire ouvrir la fenetre de simulations avec video
+	 */
+	private void leverEvenFenetreSimulationAvecVideoVisible() {	
+		for(VisibiliteFenSimulVideoListener ecout : listeEcouteursFenSimulVideo ) {
+			ecout.rendreFenetreSimulationsAvecVideoVisible();
+		}
 	}
 }

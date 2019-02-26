@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -24,10 +25,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ecouteursperso.VisibiliteFenDepartListener;
+import ecouteursperso.VisibiliteFenParamListener;
 import sceneAnimee.SceneAnimee;
 
 public class FenetreSimulationAvecVideo extends JFrame {
-	////
 		private JPanel contentPane;
 		private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();
 		private FenetreFileChooser popup;
@@ -38,6 +40,10 @@ public class FenetreSimulationAvecVideo extends JFrame {
 		private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
 		private SceneAnimee sceneAnimee1;
 		private SceneAnimee sceneAnimee2;
+		//listes contenant les objets qui veulent ecouter à cet objet
+		private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();
+		private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();
+		private FenetreStatistiques fenStats;
 
 		/**
 		 * Launch the application.
@@ -59,6 +65,8 @@ public class FenetreSimulationAvecVideo extends JFrame {
 		 * Create the frame.
 		 */
 		public FenetreSimulationAvecVideo() {
+			//création de la fenêtre de statistiques
+			fenStats = new FenetreStatistiques();
 			setTitle("Simulation");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 788, 683);
@@ -73,12 +81,29 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			menuBar.add(mnMenu);
 
 			JMenuItem mntmMenuDeDpart = new JMenuItem("Menu de D\u00E9part");
+			mntmMenuDeDpart.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					leverEvenFenetreDepartVisible();
+				}
+			});
 			mnMenu.add(mntmMenuDeDpart);
 
 			JMenuItem mntmChangerParametres = new JMenuItem("Changer les param\u00E8tres de simulation");
+			mntmChangerParametres.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					leverEvenFenetreParametresListener();
+				}
+			});
 			mnMenu.add(mntmChangerParametres);
 
 			JMenuItem mntmStatisitques = new JMenuItem("Statisitques");
+			mntmStatisitques.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(!fenStats.isVisible()) {
+						fenStats.setVisible(true);
+					}
+				}
+			});
 			mnMenu.add(mntmStatisitques);
 
 			JMenuItem mntmQuitter = new JMenuItem("Quitter");
@@ -169,5 +194,35 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			sceneAnimee2 = new SceneAnimee();
 			sceneAnimee2.setBounds(174, 348, 260, 260);
 			pnSimulations.add(sceneAnimee2);
+		}
+		/**
+		 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
+		 * @param objEcouteur objet qui desire savoir quand on veut rouvrir la fenetre de depart
+		 */
+		public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
+			listeEcouteurs.add(objEcouteur);
+		}
+		/**
+		 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de depart
+		 */
+		private void leverEvenFenetreDepartVisible() {	
+			for(VisibiliteFenDepartListener ecout : listeEcouteurs ) {
+				ecout.rendreFenetreDepartVisible();
+			}
+		}
+		/**
+		 * ajoute in objet à la liste d'objet qui desire savoir quand on veut rouvrir la fenetre de parametres
+		 * @param visibiliteFenParamListener objet qui desire savoir quand on veut rouvrir la fenetre de parametres
+		 */
+		public void addVisibiliteFenParamListener(VisibiliteFenParamListener visibiliteFenParamListener) {
+			listeEcouteursFenParam.add(visibiliteFenParamListener);
+		}
+		/**
+		 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de parametres
+		 */
+		private void leverEvenFenetreParametresListener() {
+			for(VisibiliteFenParamListener ecout : listeEcouteursFenParam) {
+				ecout.rendreFenetreParamVisible();
+			}
 		}
 }
