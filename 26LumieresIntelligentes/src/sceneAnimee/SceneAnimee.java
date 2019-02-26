@@ -247,6 +247,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
 				if(v.getXVoiture() > (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX() && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					
 					v.setVoitureArretee(true);
 					System.out.println("lumiere rouge");
 				}
@@ -256,13 +257,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 				}
 				//Verifier l'etat de la voiture devant
 				//Si la liste contient plus qu'une voiture
-				if(voitures.indexOf(v)>0) {
-					Voiture voitureDevant = voitures.get(voitures.indexOf(v) -1);
-					if(Math.abs(v.getXVoiture() - voitureDevant.getXVoiture()) < this.LONGUEUR_VOITURE + this.DISTANCE_BORDURE ) {
-					v.setVoitureArretee(true);	
-					}
-				}
-				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+				
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive() && lumEst.getCouleur() == ROUGE) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
