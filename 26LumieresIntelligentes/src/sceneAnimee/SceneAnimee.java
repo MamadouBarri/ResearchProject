@@ -95,7 +95,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int couleur=0;
 	//couleur des lumieres pour les voies est et ouest
 	private int couleurInv=2; 
-	Lumiere lum1,lum2,lum3,lum4;
+	Lumiere lumSud,lumNord,lumOuest,lumEst;
 	private boolean voituresEnArret;
 	private int nbVoiesHorizontale = 1;
 
@@ -106,6 +106,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private boolean premiereFois = true;
 	
 	private double vitesse;
+	//Code des lumiere
+	private final int VERTE = 0;
+	private final int JAUNE = 1;
+	private final int ROUGE = 2;
 
 
 
@@ -183,21 +187,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 
-		lum1 = new Lumiere(0,0,75,couleur,4);
-		lum1.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lum1.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lum1.getLargeur()-5);
-		lum1.dessiner(g2d, mat);
+		lumSud = new Lumiere(0,0,75,couleur,4);
+		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumSud.getLargeur()-5);
+		lumSud.dessiner(g2d, mat);
 
-		lum2 = new Lumiere(0,0,75,couleur,1);
-		lum2.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0+5);
-		lum2.dessiner(g2d, mat);
+		lumNord = new Lumiere(0,0,75,couleur,1);
+		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0+5);
+		lumNord.dessiner(g2d, mat);
 
-		lum3 = new Lumiere(0,0,75,couleurInv,2);
-		lum3.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+lum3.getLargeur()/2.0-lum3.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lum3.getLongueur()/2.0-lum3.getLargeur()/2.0-5);
-		lum3.dessiner(g2d, mat);	
+		lumOuest = new Lumiere(0,0,75,couleurInv,2);
+		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
+		lumOuest.dessiner(g2d, mat);	
 
-		lum4 = new Lumiere(0,0,75,couleurInv,3);
-		lum4.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lum4.getLongueur()/2.0-lum4.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lum4.getLargeur()/2.0+lum4.getLongueur()/2.0+this.DISTANCE_BORDURE);
-		lum4.dessiner(g2d, mat);
+		lumEst = new Lumiere(0,0,75,couleurInv,3);
+		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
+		lumEst.dessiner(g2d, mat);
 		
 
 
@@ -226,22 +230,39 @@ public class SceneAnimee extends JPanel implements Runnable{
 		double nbRepetitionsPourVoitures = 0;
 		double nbRepetitionsPourLumieres = 0;
 		while (enCoursDAnimation) {	
-			if(voituresEnArret && deplacement>=0) {
-				deplacement = deplacement-TAUX_DECELERATION;
-				if(deplacement<0) {
-					deplacement =0;
-				}
-			}
 			//Commencer le thread de voiture pour chaque voiture de la liste
+			
+			//Convention des lumieres : 0 - > vert 1 | - > jaune | 2 -> rouge
+			
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				//Essaie pour voir si l'animation marche avec un seul thread
 				//v.demarrer();
-				v.setXVoiture((int)(v.getXVoiture()+deplacement));
-				
-				//Lorsque la voiture doit s'arreter
-				
+				if(v.isVoitureArretee() && deplacement>=0 ) {
+					//v.setXVoiture((int)(v.getXVoiture()+deplacement);
+				}
+				if(!v.isVoitureArretee()) {
+					v.setXVoiture((int)(v.getXVoiture()+deplacement));
+				}
+				//Lumiere est rouge 
+				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+				if(v.getXVoiture() > (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX() && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					v.setVoitureArretee(true);
+					System.out.println("lumiere rouge");
+				}
+				//Lorsque la lumiere redevient verte 
+				if(lumEst.getCouleur() == VERTE) {
+					v.setVoitureArretee(false);
+				}
+				//Verifier l'etat de la voiture devant
+				//Si la liste contient plus qu'une voiture
+				if(voitures.indexOf(v)>0) {
+					Voiture voitureDevant = voitures.get(voitures.indexOf(v) -1);
+					if(Math.abs(v.getXVoiture() - voitureDevant.getXVoiture()) < this.LONGUEUR_VOITURE + this.DISTANCE_BORDURE ) {
+					v.setVoitureArretee(true);	
+					}
+				}
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
@@ -249,7 +270,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 					v.setVoitureActive(false);
 				}
 			}//
-			//DIRECTION : 
+			
+			
+			//DIRECTION : SUD
 			for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				//Essaie pour voir si l'animation marche avec un seul thread
@@ -262,6 +285,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 					v.setVoitureActive(false);
 				}
 			}
+			
+			//DIRECTION : OUEST
 			for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				//Essaie pour voir si l'animation marche avec un seul thread
@@ -274,6 +299,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 					v.setVoitureActive(false);
 				}
 			}
+			
+			//DIRECTION : NORD
+			
 			for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				v.setYVoiture((int)(v.getYVoiture()-deplacement));
@@ -480,35 +508,35 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private void changeCouleurLumieres(){
 		if(couleur==0) {
 			couleur = (couleur+1)%3;
-			lum1.setCouleur(couleur);
-			lum2.setCouleur(couleur);
+			lumSud.setCouleur(couleur);
+			lumNord.setCouleur(couleur);
 		} else {
 			if(couleur==1) {
 				couleur = (couleur+1)%3;
 				couleurInv = (couleurInv+1)%3;
-				lum1.setCouleur(couleur);
-				lum2.setCouleur(couleur);
-				lum3.setCouleur(couleurInv);
-				lum4.setCouleur(couleurInv);
+				lumSud.setCouleur(couleur);
+				lumNord.setCouleur(couleur);
+				lumOuest.setCouleur(couleurInv);
+				lumEst.setCouleur(couleurInv);
 			} else {
 				if(couleur==2&&couleurInv==0) {
 					couleurInv = (couleurInv+1)%3;
-					lum3.setCouleur(couleurInv);
-					lum4.setCouleur(couleurInv);
+					lumOuest.setCouleur(couleurInv);
+					lumEst.setCouleur(couleurInv);
 				} else {
 					couleur = (couleur+1)%3;
 					couleurInv = (couleurInv+1)%3;
-					lum1.setCouleur(couleur);
-					lum2.setCouleur(couleur);
-					lum3.setCouleur(couleurInv);
-					lum4.setCouleur(couleurInv);
+					lumSud.setCouleur(couleur);
+					lumNord.setCouleur(couleur);
+					lumOuest.setCouleur(couleurInv);
+					lumEst.setCouleur(couleurInv);
 				}
 			}
 		}
-		/*lum1.setCouleur(couleur);
-	lum2.setCouleur(couleur);
-	lum3.setCouleur(couleurInv);
-	lum4.setCouleur(couleurInv);
+		/*lumSud.setCouleur(couleur);
+	lumNord.setCouleur(couleur);
+	lumOuest.setCouleur(couleurInv);
+	lumEst.setCouleur(couleurInv);
 	couleur = (couleur+1)%3;
 	couleurInv = (couleurInv+1)%3;*/
 	}
