@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 
+import ecouteursperso.ResultatsFenParamListener;
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenSimulListener;
 import ecouteursperso.VisibiliteFenSimulVideoListener;
@@ -57,6 +58,9 @@ public class FenetreParametres extends JFrame {
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteursFenDepart = new ArrayList<VisibiliteFenDepartListener>();
 	private ArrayList<VisibiliteFenSimulListener> listeEcouteursFenSimul = new ArrayList<VisibiliteFenSimulListener>();
 	private ArrayList<VisibiliteFenSimulVideoListener> listeEcouteursFenSimulVideo = new ArrayList<VisibiliteFenSimulVideoListener>();
+	private ArrayList<ResultatsFenParamListener> listeEcouteursDeParam = new ArrayList<ResultatsFenParamListener>();
+	//tableau contenant les voies avec traffic anormale
+	int[] tabTrafficAnom = new int[4];
 
 	/**
 	 * Launch the application.
@@ -152,17 +156,17 @@ public class FenetreParametres extends JFrame {
 		rdbtnVideo.setBounds(373, 133, 139, 23);
 		panel.add(rdbtnVideo);
 		
-		JLabel label = new JLabel("Vitesse moyenne :");
-		label.setBounds(21, 69, 123, 14);
-		panel.add(label);
+		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
+		lblVitesseMoyenne.setBounds(21, 69, 123, 14);
+		panel.add(lblVitesseMoyenne);
 		
-		JLabel label_1 = new JLabel("Nombre de voitures :");
-		label_1.setBounds(21, 116, 123, 14);
-		panel.add(label_1);
+		JLabel lblNbVoitures = new JLabel("Nombre de voitures :");
+		lblNbVoitures.setBounds(21, 116, 123, 14);
+		panel.add(lblNbVoitures);
 		
-		JLabel label_2 = new JLabel("Taux d'apparition :");
-		label_2.setBounds(21, 167, 123, 14);
-		panel.add(label_2);
+		JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
+		lblTauxDApparition.setBounds(21, 167, 123, 14);
+		panel.add(lblTauxDApparition);
 		
 		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
 		chkbxTrfcAnom.addChangeListener(new ChangeListener() {
@@ -172,43 +176,94 @@ public class FenetreParametres extends JFrame {
 				} else {
 					setEtatVoiesAnom(false);
 				}
+				leverEvenGetParams();
 			}
 		});
 		chkbxTrfcAnom.setBounds(373, 19, 112, 23);
 		panel.add(chkbxTrfcAnom);
 		
-		chkbxTrfcAnom1 = new JCheckBox("Voie 1");
+		chkbxTrfcAnom1 = new JCheckBox("Voie NORD");
+		chkbxTrfcAnom1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom1.isSelected()) {
+					tabTrafficAnom[0] = 1;
+				} else {
+					tabTrafficAnom[0] = 0;
+				}
+				leverEvenGetParams();
+			}
+		});
 		chkbxTrfcAnom1.setBounds(390, 54, 97, 23);
 		panel.add(chkbxTrfcAnom1);
 		
-		chkbxTrfcAnom2 = new JCheckBox("Voie 2");
+		chkbxTrfcAnom2 = new JCheckBox("Voie OUEST");
+		chkbxTrfcAnom2.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom2.isSelected()) {
+					tabTrafficAnom[1] = 2;
+				} else {
+					tabTrafficAnom[1] = 0;
+				}
+				leverEvenGetParams();
+			}
+		});
 		chkbxTrfcAnom2.setBounds(500, 54, 97, 23);
 		panel.add(chkbxTrfcAnom2);
 		
-		chkbxTrfcAnom3 = new JCheckBox("Voie 3");
+		chkbxTrfcAnom3 = new JCheckBox("Voie SUD");
+		chkbxTrfcAnom3.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom3.isSelected()) {
+					tabTrafficAnom[2] = 3;
+				} else {
+					tabTrafficAnom[2] = 3;
+				}
+				leverEvenGetParams();
+			}
+		});
 		chkbxTrfcAnom3.setBounds(390, 80, 97, 23);
 		panel.add(chkbxTrfcAnom3);
 		
-		chkbxTrfcAnom4 = new JCheckBox("Voie 4");
+		chkbxTrfcAnom4 = new JCheckBox("Voie EST");
+		chkbxTrfcAnom4.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom4.isSelected()) {
+					tabTrafficAnom[3] = 4;
+				} else {
+					tabTrafficAnom[3] = 0;
+				}
+				leverEvenGetParams();
+			}
+		});
 		chkbxTrfcAnom4.setBounds(500, 80, 97, 23);
 		panel.add(chkbxTrfcAnom4);
 		
 		setEtatVoiesAnom(false);
 		
-		JLabel label_3 = new JLabel("Voitures/Minute");
-		label_3.setBounds(186, 167, 126, 14);
-		panel.add(label_3);
+		JLabel lblUnitesTauxDApparition = new JLabel("Voitures/Minute");
+		lblUnitesTauxDApparition.setBounds(186, 167, 126, 14);
+		panel.add(lblUnitesTauxDApparition);
 		
-		JLabel label_4 = new JLabel("km/h");
-		label_4.setBounds(186, 69, 46, 14);
-		panel.add(label_4);
+		JLabel lblUniteVitesse = new JLabel("km/h");
+		lblUniteVitesse.setBounds(186, 69, 46, 14);
+		panel.add(lblUniteVitesse);
 		
 		spnVitesse = new JSpinner();
+		spnVitesse.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				leverEvenGetParams();
+			}
+		});
 		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), null, null, new Integer(1)));
 		spnVitesse.setBounds(128, 66, 48, 20);
 		panel.add(spnVitesse);
 		
 		spnTauxDApparition = new JSpinner();
+		spnTauxDApparition.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				leverEvenGetParams();
+			}
+		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
 		spnTauxDApparition.setBounds(128, 164, 48, 20);
 		panel.add(spnTauxDApparition);
@@ -296,6 +351,11 @@ public class FenetreParametres extends JFrame {
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();
+		spnNbVoitures.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				leverEvenGetParams();
+			}
+		});
 		spnNbVoitures.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
 		spnNbVoitures.setBounds(143, 113, 48, 20);
 		panel.add(spnNbVoitures);
@@ -357,6 +417,22 @@ public class FenetreParametres extends JFrame {
 	private void leverEvenFenetreSimulationAvecVideoVisible() {	
 		for(VisibiliteFenSimulVideoListener ecout : listeEcouteursFenSimulVideo ) {
 			ecout.rendreFenetreSimulationsAvecVideoVisible();
+		}
+	}
+	public void addResultatsFenParamListener(ResultatsFenParamListener resultatsFenPramListener) {
+	    listeEcouteursDeParam.add(resultatsFenPramListener);
+	}
+	private void leverEvenGetParams() {
+		for(ResultatsFenParamListener ecout : listeEcouteursDeParam) {
+			ecout.VitesseDesVoitures((int)spnVitesse.getValue());
+			ecout.NombreDeVoituresAGenerer((int)spnNbVoitures.getValue());
+			ecout.TauxDApparitionDesVoitures((int)spnTauxDApparition.getValue());
+			if(chkbxTrfcAnom.isSelected()) {
+				ecout.isTraficAnormal(true);
+			} else {
+				ecout.isTraficAnormal(false);
+			}
+			ecout.setVoiesAvecTraficAnormal(tabTrafficAnom);
 		}
 	}
 }

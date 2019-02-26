@@ -530,7 +530,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
 	}
 	public void addTrafficAnormale(int numDeVoie) {
-		if(this.enTrafficAnormale) {
+		if(this.enTrafficAnormale&&numDeVoie>0) {
 			int[] tabTemporaire = this.trafficAnormale;
 			this.trafficAnormale = new int[this.trafficAnormale.length+1];
 			for(int i = 0;i<tabTemporaire.length;i++) {
@@ -540,7 +540,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}
 	}
 	public void addTrafficNormale(int numDeVoie) {
-		if(this.enTrafficAnormale) {
+		if(this.enTrafficAnormale&&numDeVoie>0) {
 			int[] tabTemporaire = this.trafficAnormale;
 			this.trafficAnormale = new int[this.trafficAnormale.length-1];
 			for(int i = 0;i<tabTemporaire.length;i++) {

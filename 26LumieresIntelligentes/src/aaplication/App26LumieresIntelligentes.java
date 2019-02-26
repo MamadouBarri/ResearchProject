@@ -39,6 +39,7 @@ import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
 import ecouteursperso.VisibiliteFenSimulListener;
 import ecouteursperso.VisibiliteFenSimulVideoListener;
+import ecouteursperso.ResultatsFenParamListener;
 
 public class App26LumieresIntelligentes extends JFrame {
 
@@ -167,6 +168,39 @@ public class App26LumieresIntelligentes extends JFrame {
 				parametres.setVisible(false);
 				simulAvecVideo.setVisible(true);
 			}
+		});
+		parametres.addResultatsFenParamListener(new ResultatsFenParamListener() {
+
+			@Override
+			public void VitesseDesVoitures(int vitesse) {
+				// TODO Auto-generated method stub
+				simulSansVideo.setVitesse(vitesse);
+			}
+
+			@Override
+			public void TauxDApparitionDesVoitures(int taux) {
+				// TODO Auto-generated method stub
+				simulSansVideo.setTaux(taux);
+			}
+
+			@Override
+			public void NombreDeVoituresAGenerer(int nbVoitures) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void isTraficAnormal(boolean anormale) {
+				// TODO Auto-generated method stub
+				simulSansVideo.setTraficAnormal(anormale);
+			}
+
+			@Override
+			public void setVoiesAvecTraficAnormal(int[] listeVoiesAnormales) {
+				// TODO Auto-generated method stub
+				simulSansVideo.setVoieAnormale(listeVoiesAnormales);
+			}
+			
 		});
 		
 		setTitle("Lumi\u00E8res Intelligentes - Mamadou Barri, Reiner Luis Gayta\r\n");

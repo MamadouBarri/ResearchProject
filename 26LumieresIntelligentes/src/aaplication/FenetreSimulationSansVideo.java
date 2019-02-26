@@ -61,6 +61,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();
 	private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();
 	private FenetreStatistiques fenStats;
+	private JCheckBox chkbxTraficAnormal;
 
 	/**
 	 * Launch the application.
@@ -201,7 +202,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		lblVoituresParMinute.setBounds(1628, 193, 126, 14);
 		contentPane.add(lblVoituresParMinute);
 
-		chkbxVoie3 = new JCheckBox("Voie 3");
+		chkbxVoie3 = new JCheckBox("Voie SUD");
 		chkbxVoie3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie3.isSelected()) {
@@ -215,7 +216,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie3.setBounds(1479, 293, 97, 23);
 		contentPane.add(chkbxVoie3);
 
-		chkbxVoie4 = new JCheckBox("Voie 4");
+		chkbxVoie4 = new JCheckBox("Voie EST");
 		chkbxVoie4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie4.isSelected()) {
@@ -229,7 +230,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie4.setBounds(1589, 293, 97, 23);
 		contentPane.add(chkbxVoie4);
 
-		chkbxVoie2 = new JCheckBox("Voie 2");
+		chkbxVoie2 = new JCheckBox("Voie OUEST");
 		chkbxVoie2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie2.isSelected()) {
@@ -243,7 +244,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie2.setBounds(1589, 267, 97, 23);
 		contentPane.add(chkbxVoie2);
 
-		chkbxVoie1 = new JCheckBox("Voie 1");
+		chkbxVoie1 = new JCheckBox("Voie NORD");
 		chkbxVoie1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie1.isSelected()) {
@@ -257,10 +258,10 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie1.setBounds(1479, 267, 97, 23);
 		contentPane.add(chkbxVoie1);
 
-		JCheckBox checkBox_4 = new JCheckBox("Trafic anormal");
-		checkBox_4.addActionListener(new ActionListener() {
+		chkbxTraficAnormal = new JCheckBox("Trafic anormal");
+		chkbxTraficAnormal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(checkBox_4.isSelected()) {
+				if(chkbxTraficAnormal.isSelected()) {
 					sceneAnimee1.setTrafficAnormale(true);
 					sceneAnimee2.setTrafficAnormale(true);
 					chkbxVoie3.setEnabled(true);
@@ -277,8 +278,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 				}
 			}
 		});
-		checkBox_4.setBounds(1462, 232, 112, 23);
-		contentPane.add(checkBox_4);
+		chkbxTraficAnormal.setBounds(1462, 232, 112, 23);
+		contentPane.add(chkbxTraficAnormal);
 
 		JButton btnArret = new JButton("arret");
 		btnArret.addActionListener(new ActionListener() {
@@ -352,7 +353,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		nbVoituresAGenerer.setBounds(1650, 323, 17, 14);
 		contentPane.add(nbVoituresAGenerer);
 	}
-	
+
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
 	 * @param objEcouteur objet qui desire savoir si on veut rouvrir la fenetre de depart
@@ -376,11 +377,85 @@ public class FenetreSimulationSansVideo extends JFrame {
 		listeEcouteursFenParam.add(visibiliteFenParamListener);
 	}
 	/**
-	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de parametress
+	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de parametres
 	 */
 	private void leverEvenFenetreParametresListener() {
 		for(VisibiliteFenParamListener ecout : listeEcouteursFenParam) {
 			ecout.rendreFenetreParamVisible();
 		}
 	}
+	public void setTraficAnormal(boolean anom) {
+		sceneAnimee1.setTrafficAnormale(anom);
+		sceneAnimee2.setTrafficAnormale(anom);
+		chkbxVoie3.setEnabled(anom);
+		chkbxVoie4.setEnabled(anom);
+		chkbxVoie2.setEnabled(anom);
+		chkbxVoie1.setEnabled(anom);
+		chkbxTraficAnormal.setSelected(anom);
+	}
+	public void setVoieAnormale(int[] tabVoiesAnom) {
+		for(int i=0; i<tabVoiesAnom.length;i++) {
+			switch(tabVoiesAnom[i]) {
+			//indique qu'une voie a du trafic normal
+			case 0:
+				//indique à la scene la voie normale selon l'indice(ex: si la valeur de tab[1] = 0, on sait que la voie 2 (ou ouest) a du traffic normal
+				switch(i) {
+				case 0:
+					chkbxVoie1.setSelected(false);
+					sceneAnimee1.addTrafficNormale(1);
+					sceneAnimee2.addTrafficNormale(1);
+					break;
+				case 1:
+					chkbxVoie2.setSelected(false);
+					sceneAnimee1.addTrafficNormale(2);
+					sceneAnimee2.addTrafficNormale(2);
+					break;
+				case 2:
+					chkbxVoie3.setSelected(false);
+					sceneAnimee1.addTrafficNormale(3);
+					sceneAnimee2.addTrafficNormale(3);
+					break;
+				case 3:
+					chkbxVoie4.setSelected(false);
+					sceneAnimee1.addTrafficNormale(4);
+					sceneAnimee2.addTrafficNormale(4);
+					break;
+				}
+				break;
+				//si tab[i] vaut une valeur, cela veut dire qu'il y a une voie avec du traffic anormale
+				//on identifie cette voie avec la valeur de tab[i]
+			case 1:
+				chkbxVoie1.setSelected(true);
+				sceneAnimee1.addTrafficAnormale(1);
+				sceneAnimee2.addTrafficAnormale(1);
+				break;
+			case 2:
+				chkbxVoie2.setSelected(true);
+				sceneAnimee1.addTrafficAnormale(2);
+				sceneAnimee2.addTrafficAnormale(2);
+				break;
+			case 3:
+				chkbxVoie3.setSelected(true);
+				sceneAnimee1.addTrafficAnormale(3);
+				sceneAnimee2.addTrafficAnormale(3);
+				break;
+			case 4:
+				chkbxVoie4.setSelected(true);
+				sceneAnimee1.addTrafficAnormale(4);
+				sceneAnimee2.addTrafficAnormale(4);
+				break;
+			}
+		}
+
+	}
+	public void setVitesse(int vitesse) {
+		spnVitesse.setValue(vitesse);
+	}
+	public void setTaux(int taux) {
+		spnTauxDApparition.setValue(taux);
+	}
+	//public void setNbVoitures(int nbVoitures) {
+		//
+	//}
+	//A AJOUTER NBVOITURES
 }
