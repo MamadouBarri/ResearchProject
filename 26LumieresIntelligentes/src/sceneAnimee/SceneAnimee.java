@@ -117,6 +117,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 * Constructeur de la scène d'animation qui met le background en gris
 	 */
 	public SceneAnimee() {
+		this.vitesse = 20;
 		setBackground(Color.gray);
 		trafficAnormale = new int[1];
 		//On cree le bloc et ressort
@@ -179,8 +180,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 			//deplacement /=CONVERSION_KMH_MS;
 			//deplacement /= UNE_SECONDE_EN_MILLISECONDE ; //metre/miliseconde
 			//premiereFois= false;
-			calculerVitesse(); //A changer
+			premiereFois= false;
 		}
+		//On recalcule la vitesse des voitures a chaque paint
+		calculerVitesse();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
 		inter = new Intersection(this.LARGEUR_REELLE);
@@ -236,20 +239,20 @@ public class SceneAnimee extends JPanel implements Runnable{
 			
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
-				Voiture v = i.next();//
-				//Essaie pour voir si l'animation marche avec un seul thread
-				//v.demarrer();
-				if(v.isVoitureArretee() && deplacement>=0 ) {
-					//v.setXVoiture((int)(v.getXVoiture()+deplacement);
-				}
-				if(!v.isVoitureArretee()) {
-					v.setXVoiture((int)(v.getXVoiture()+deplacement));
-				}
+				Voiture v = i.next();//pour chaque voiture EST
+				v.setXVoiture(v.getXVoiture()+deplacement);
+				
+//				if(v.isVoitureArretee() && deplacement>=0 ) {
+//					//v.setXVoiture((int)(v.getXVoiture()+deplacement);
+//				}
+//				if(!v.isVoitureArretee()) {
+//					v.setXVoiture((v.getXVoiture()+deplacement));
+//				}
+				
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
 				if(v.getXVoiture() > (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX() && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
-					
-					v.setVoitureArretee(true);
+					//v.setVoitureArretee(true);
 					System.out.println("lumiere rouge");
 				}
 				//Lorsque la lumiere redevient verte 
@@ -265,15 +268,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
-			}//
+			}//fin est
 			
 			
 			//DIRECTION : SUD
 			for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 				Voiture v = i.next();
-				//Essaie pour voir si l'animation marche avec un seul thread
-				//v.demarrer();
-				v.setYVoiture((int)(v.getYVoiture()+deplacement));
+				v.setYVoiture(v.getYVoiture()+deplacement);
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
@@ -286,10 +287,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 			for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				//Essaie pour voir si l'animation marche avec un seul thread
-				//v.demarrer();
-				v.setXVoiture((int)(v.getXVoiture()-deplacement));
+				v.setXVoiture(v.getXVoiture()-deplacement);
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
 					v.setVoitureActive(false);
@@ -297,11 +296,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 			
 			//DIRECTION : NORD
-			
 			for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 				Voiture v = i.next();
-				v.setYVoiture((int)(v.getYVoiture()-deplacement));
-				System.out.println(deplacement);
+				v.setYVoiture(v.getYVoiture()-deplacement);
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
@@ -535,12 +532,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 	lumEst.setCouleur(couleurInv);
 	couleur = (couleur+1)%3;
 	couleurInv = (couleurInv+1)%3;*/
-	}
-	/**
-	 * La méthode qui set l'arret des voitures a vrai
-	 */
-	public void arreterVoitures() {
-		voituresEnArret = true;
 	}
 	/**
 	 * Setter qui change le nombre de voies horizontalemnt

@@ -29,13 +29,17 @@ public class Voiture implements Dessinable {
 	private int numImage = 1;
 
 	//Variables
-
+	
+	
+	//
+	double scaleX;
+	double scaleY;
 	//Trafic anormal
 	private int[] trafficAnormal;
 
 	//Positions de la voiture
-	private int xVoiture;
-	private int yVoiture;
+	private double xVoiture;
+	private double yVoiture;
 
 	//Dimensions de la voiture
 
@@ -132,6 +136,8 @@ public class Voiture implements Dessinable {
 		}
 		try {
 			imgVoiture = ImageIO.read(fichVoiture);
+			scaleX = (double)this.longueurVoiturePixels / imgVoiture.getWidth(null);
+	        scaleY = (double)this.largeurVoiturePixels/imgVoiture.getHeight(null);
 		} 
 		catch (IOException e) {
 			affichageAvecTemps("Erreur de lecture d'images");
@@ -244,10 +250,12 @@ public class Voiture implements Dessinable {
 		}
 
 		//Dessiner la voiture selon la direction
-		//Image imgVoitureRedimentionnee = imgVoiture.getScaledInstance(LONGUEUR_VOITURE, LARGEUR_VOITURE, Image.SCALE_SMOOTH);
-		g2d.drawImage(imgVoiture, xVoiture,yVoiture, (int)this.longueurVoiturePixels, (int)this.largeurVoiturePixels, null);
-		//g2d.setColor(Color.red);
-		//g2d.draw(new Ellipse2D.Double(xTest, 100, largeurVoiturePixels,largeurVoiturePixels ));
+		AffineTransform t = new AffineTransform();
+        t.translate(xVoiture, yVoiture); // = double
+        t.scale(scaleX, scaleY); // scale = 1 
+        g2d.drawImage(imgVoiture, t, null);
+        t.translate(-xVoiture, -yVoiture);
+        t.scale(1/scaleX, scaleY);
 		g2d.setTransform(matInitial);
 	}
 	/**
@@ -279,28 +287,28 @@ public class Voiture implements Dessinable {
 	/**
 	 * getter de la position de la voiture
 	 */
-	public int getXVoiture() {
+	public double getXVoiture() {
 		return(xVoiture);
 	}
 	/**
 	 * setter de la position X de la voiture
 	 * 
 	 */
-	public  void setXVoiture(int xVoiture) {
+	public  void setXVoiture(double xVoiture) {
 		this.xVoiture = xVoiture;
 	}
 
 	/**
 	 * getter de la position de la voiture
 	 */
-	public int getYVoiture() {
+	public double getYVoiture() {
 		return(yVoiture);
 	}
 	/**
 	 * setter de la position X de la voiture
 	 */
-	public  void setYVoiture(int xVoiture) {
-		this.yVoiture = xVoiture;
+	public  void setYVoiture(double d) {
+		this.yVoiture = d;
 	}
 
 	/**

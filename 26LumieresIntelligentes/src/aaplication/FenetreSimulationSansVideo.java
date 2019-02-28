@@ -172,7 +172,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 					//convertir les km/h en m/s (1m/s = (1km/h)*(1000m/km)/(3600s/h)
 					double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
 					//if()
-					sceneAnimee1.setVitesse((int)spnVitesse.getValue());
+					sceneAnimee1.setVitesse((int)VitesseMParSeconde);
+					sceneAnimee2.setVitesse((int)VitesseMParSeconde);
 				}
 			}
 		});
@@ -287,8 +288,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 		JButton btnArret = new JButton("arret");
 		btnArret.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee1.arreterVoitures();
-				sceneAnimee2.arreterVoitures();
 			}
 		});
 		btnArret.setBounds(1550, 355, 89, 23);
