@@ -54,6 +54,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private final int LARGEUR_VOITURE = 2;
 	private final int LONGUEUR_VOITURE = 4;
 	private final double DIMENSION_VOIE_REELLE = 10;
+	private final double DISTANCE_LIGNE_ARRET = 2; 
 	//Constante de conversion
 	private final double CONVERSION_KMH_MS = 3.6;
 	//Modele
@@ -240,70 +241,151 @@ public class SceneAnimee extends JPanel implements Runnable{
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 				Voiture v = i.next();//pour chaque voiture EST
-				v.setXVoiture(v.getXVoiture()+deplacement);
+				//Voiture arretee
+				if(v.isVoitureArretee() && deplacement >0 ) {
+					//Deceleration a ajouter
+//					double deplacementLocal = deplacement;
+//					deplacementLocal -=TAUX_DECELERATION;
+//					v.setXVoiture(v.getXVoiture()+deplacementLocal);
+					
+				}
 				
-//				if(v.isVoitureArretee() && deplacement>=0 ) {
-//					//v.setXVoiture((int)(v.getXVoiture()+deplacement);
-//				}
-//				if(!v.isVoitureArretee()) {
-//					v.setXVoiture((v.getXVoiture()+deplacement));
-//				}
-				
+				//Voiture en mouvement
+				if(!v.isVoitureArretee()) {
+					v.setXVoiture((v.getXVoiture()+deplacement));
+				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(v.getXVoiture() > (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX() && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
-					//v.setVoitureArretee(true);
-					System.out.println("lumiere rouge");
+				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					v.setVoitureArretee(true);
 				}
-				//Lorsque la lumiere redevient verte 
-				if(lumEst.getCouleur() == VERTE) {
-					v.setVoitureArretee(false);
+				
+				//Voiture devant trop proche
+				if(est.indexOf(v)!=0) {
+					Voiture voitureDevant = est.get(est.indexOf(v)-1);
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+						v.setVoitureArretee(true);
+					}
 				}
+
 				//Verifier l'etat de la voiture devant
 				//Si la liste contient plus qu'une voiture
 				
-				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive() && lumEst.getCouleur() == ROUGE) {
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
-			}//fin est
+				
+				//Lorsque la lumiere redevient verte 
+				if(lumEst.getCouleur() == VERTE) {
+					v.setVoitureArretee(false);
+				}
+			}//fin DIRECTION EST
 			
 			
 			//DIRECTION : SUD
 			for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 				Voiture v = i.next();
-				v.setYVoiture(v.getYVoiture()+deplacement);
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
+				
+				//Voiture en mouvement
+				if(!v.isVoitureArretee()) {
+					v.setYVoiture(v.getYVoiture()+deplacement);
+				}
+				//Lumiere est rouge 
+				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumSud.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					v.setVoitureArretee(true);
+				}
+				
+				//Voiture devant trop proche
+				if(sud.indexOf(v)!=0) {
+					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+						v.setVoitureArretee(true);
+					}
+				}
+				
+				//Lorsque la lumiere redevient verte 
+				if(lumSud.getCouleur() == VERTE) {
+					v.setVoitureArretee(false);
+				}
 			}
 			
 			//DIRECTION : OUEST
 			for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
 				Voiture v = i.next();
-				//Essaie pour voir si l'animation marche avec un seul thread
-				v.setXVoiture(v.getXVoiture()-deplacement);
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
 					v.setVoitureActive(false);
 				}
+				
+				//Voiture en mouvement
+				if(!v.isVoitureArretee()) {
+					v.setXVoiture(v.getXVoiture()-deplacement);
+				}
+				
+				//Lumiere est rouge 
+				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumOuest.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					v.setVoitureArretee(true);
+				}
+				
+				//Voiture devant trop proche
+				if(ouest.indexOf(v)!=0) {
+					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+						v.setVoitureArretee(true);
+					}
+				}
+				
+				//Lorsque la lumiere redevient verte 
+				if(lumOuest.getCouleur() == VERTE) {
+					v.setVoitureArretee(false);
+				}
+				
 			}
 			
 			//DIRECTION : NORD
 			for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 				Voiture v = i.next();
-				v.setYVoiture(v.getYVoiture()-deplacement);
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					voitures.remove(v);
 					v.setVoitureActive(false);
+				}
+				
+				//Voiture en mouvement
+				if(!v.isVoitureArretee()) {
+					v.setYVoiture(v.getYVoiture()-deplacement);
+				}
+				
+				//Lumiere est rouge 
+				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumNord.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					v.setVoitureArretee(true);
+				}
+				
+				//Voiture devant trop proche
+				if(nord.indexOf(v)!=0) {
+					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+						v.setVoitureArretee(true);
+					}
+				}
+				
+				//Lorsque la lumiere redevient verte 
+				if(lumNord.getCouleur() == VERTE) {
+					v.setVoitureArretee(false);
 				}
 			}
 			repaint();
