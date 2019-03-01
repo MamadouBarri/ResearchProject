@@ -64,6 +64,15 @@ public class Voiture implements Dessinable {
 	private double dimensionRoutePixels;
 	private double largeurVoie;
 	private double xTest;
+	//Boolean indiquant si la voiture tourne
+	private boolean enRotation = false;
+	//Integer indiquant si la voiture tourne à gauche ou à droite (0=tourne droite; 1=tourne gauche)
+	private int directionDeVirage;
+	//Angle de rotation de la voiture en radians
+	private double rotation;
+	 
+	//valeur de deplacement temporaire pour la rotation
+	private double deplacementTemp = 0;
 	//Tester le bug
 	public double getxTest() {
 		return xTest;
@@ -230,21 +239,43 @@ public class Voiture implements Dessinable {
 		case 1:
 			//se deplace vers l'est
 			//aucune rotation d'image
+			if(!enRotation) {
+			rotation = 0;
+			}else {
+			switch(this.directionDeVirage) {
+			case 0:
+			rotation = rotation + Math.toRadians(3);
+			if(rotation>=Math.PI/2.0) {
+				rotation = Math.PI/2.0;
+			}
+			break;
+			case 1:
+				rotation = rotation - Math.toRadians(1.5);
+			}
+			if(rotation<=-Math.PI/2.0) {
+				rotation = -Math.PI/2.0;
+			}
+			}
+			AffineTransform rotationMoins0 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+			g2d.setTransform(rotationMoins0);
 			break;
 		case 2:
 			//se deplace vers le sud
-			AffineTransform rotationMoins90 = AffineTransform.getRotateInstance(Math.PI/2.0, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+			rotation = Math.PI/2.0;
+			AffineTransform rotationMoins90 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotationMoins90);
 			break;
 		case 3:
 			//se deplace vers l'ouest
 			//Rotation de l'image
-			AffineTransform rotation180 = AffineTransform.getRotateInstance(Math.PI, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+			rotation = Math.PI;
+			AffineTransform rotation180 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotation180);
 			break;
 		case 4:
 			//se deplace vers le nord
-			AffineTransform rotation90 = AffineTransform.getRotateInstance(-Math.PI/2.0, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
+			rotation = -Math.PI/2.0;
+			AffineTransform rotation90 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotation90);
 			break;
 		}
@@ -362,5 +393,26 @@ public class Voiture implements Dessinable {
 	 */
 	public void setVoitureArretee(boolean voitureArretee) {
 		this.voitureArretee = voitureArretee;
+	}
+	/**
+	 * Setter pour le boolean indiquant si la voiture tourne ou non
+	 * @param enRotation boolean indiquant si la voiture tourne
+	 */
+	public void setEnRotation(boolean enRotation,int directionDeVirage) {
+		this.enRotation = enRotation;
+		this.directionDeVirage = directionDeVirage;
+	}
+	/**
+	 * Getter qui retourne vrai si la voiture tourne
+	 * @return
+	 */
+	public boolean getEnRotation() {
+		return this.enRotation;
+	}
+	public double getDeplacement() {
+		return this.deplacementTemp;
+	}
+	public void setDeplacement(double deplacement) {
+		this.deplacementTemp = deplacement;
 	}
 }

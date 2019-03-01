@@ -39,6 +39,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 
 	private double deplacement = 30; //km/h pour convertir en m/s diviser par 3.6
+	private double deplacementTemp = 0;
 	/**
 	 * Variables
 	 */
@@ -191,19 +192,19 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 
-		lumSud = new Lumiere(0,0,75,couleur,4);
+		lumSud = new Lumiere(0,0,75,couleurInv,4);
 		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumSud.getLargeur()-5);
 		lumSud.dessiner(g2d, mat);
 
-		lumNord = new Lumiere(0,0,75,couleur,1);
+		lumNord = new Lumiere(0,0,75,couleurInv,1);
 		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0+5);
 		lumNord.dessiner(g2d, mat);
 
-		lumOuest = new Lumiere(0,0,75,couleurInv,2);
+		lumOuest = new Lumiere(0,0,75,couleur,2);
 		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
 		lumOuest.dessiner(g2d, mat);	
 
-		lumEst = new Lumiere(0,0,75,couleurInv,3);
+		lumEst = new Lumiere(0,0,75,couleur,3);
 		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lumEst.dessiner(g2d, mat);
 		
@@ -249,14 +250,41 @@ public class SceneAnimee extends JPanel implements Runnable{
 //					v.setXVoiture(v.getXVoiture()+deplacementLocal);
 					
 				}
-				
 				//Voiture en mouvement
-				if(!v.isVoitureArretee()) {
+				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					//code pour tourner à droite
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 					v.setXVoiture((v.getXVoiture()+deplacement));
+					}
+					if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true,0);
+					}
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setYVoiture(v.getYVoiture()+v.getDeplacement());
+					}
+					
+					//code pour tourner à gauche
+					
+					/*if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+					v.setXVoiture((v.getXVoiture()+deplacement));
+					}
+					if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true,1);
+					}
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setYVoiture(v.getYVoiture()-v.getDeplacement());
+					}*/
+					 
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE&&v.getEnRotation()==false) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
 				
