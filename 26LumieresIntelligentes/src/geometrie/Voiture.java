@@ -29,8 +29,8 @@ public class Voiture implements Dessinable {
 	private int numImage = 1;
 
 	//Variables
-	
-	
+
+
 	//
 	double scaleX;
 	double scaleY;
@@ -57,8 +57,8 @@ public class Voiture implements Dessinable {
 	//Distances relatives des voitures
 	private boolean voitureProche=false;
 	private boolean voitureArretee = false;
-	
-	
+
+
 	//Description de la voiture
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
@@ -66,11 +66,11 @@ public class Voiture implements Dessinable {
 	private double xTest;
 	//Boolean indiquant si la voiture tourne
 	private boolean enRotation = false;
-	//Integer indiquant si la voiture tourne à gauche ou à droite (0=tourne droite; 1=tourne gauche)
+	//Integer indiquant si la voiture tourne à gauche ou à droite (0=tout droit; 1=tourne droite; 2=tourne gauche)
 	private int directionDeVirage;
 	//Angle de rotation de la voiture en radians
 	private double rotation;
-	 
+
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 	//Tester le bug
@@ -95,6 +95,8 @@ public class Voiture implements Dessinable {
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
 		this.longueurVoiturePixels = longueurVoiturePixels;
+		//génère un nombre entre 0 et 2 pour déterminer si la voiture tourne ou non et, si oui, dans quelle direction
+		this.directionDeVirage=((int)(Math.random()*3));
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
 		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
@@ -135,6 +137,8 @@ public class Voiture implements Dessinable {
 		this.largeurVoiturePixels = largeurVoiturePixels;
 		this.longueurVoiturePixels = longueurVoiturePixels;
 		this.trafficAnormal = trafficAnormal;
+		//génère un nombre entre 0 et 2 pour déterminer si la voiture tourne ou non et, si oui, dans quelle direction
+		this.directionDeVirage=((int)(Math.random()*3));
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
 		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
@@ -146,7 +150,7 @@ public class Voiture implements Dessinable {
 		try {
 			imgVoiture = ImageIO.read(fichVoiture);
 			scaleX = (double)this.longueurVoiturePixels / imgVoiture.getWidth(null);
-	        scaleY = (double)this.largeurVoiturePixels/imgVoiture.getHeight(null);
+			scaleY = (double)this.largeurVoiturePixels/imgVoiture.getHeight(null);
 		} 
 		catch (IOException e) {
 			affichageAvecTemps("Erreur de lecture d'images");
@@ -200,7 +204,7 @@ public class Voiture implements Dessinable {
 	//	public void arreter() {
 	//		enCoursDAnimation = false;
 	//	}//fin methode
-//
+	//
 	/**
 	 * 
 	 */
@@ -238,43 +242,120 @@ public class Voiture implements Dessinable {
 		{
 		case 1:
 			//se deplace vers l'est
-			//aucune rotation d'image
 			if(!enRotation) {
-			rotation = 0;
+				//aucune rotation d'image
+				rotation = 0;
 			}else {
-			switch(this.directionDeVirage) {
-			case 0:
-			rotation = rotation + Math.toRadians(3);
-			if(rotation>=Math.PI/2.0) {
-				rotation = Math.PI/2.0;
-			}
-			break;
-			case 1:
-				rotation = rotation - Math.toRadians(1.5);
-			}
-			if(rotation<=-Math.PI/2.0) {
-				rotation = -Math.PI/2.0;
-			}
+				switch(this.directionDeVirage) {
+				//aucune rotation d'image, car la voiture ne tourne pas
+				case 0:
+					rotation = 0;
+					break;
+				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
+				case 1:
+					rotation = rotation + Math.toRadians(3);
+					if(rotation>=Math.PI/2.0) {
+						rotation = Math.PI/2.0;
+					}
+					break;
+				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
+				case 2:
+					rotation = rotation - Math.toRadians(1.5);
+				}
+				if(rotation<=-Math.PI/2.0) {
+					rotation = -Math.PI/2.0;
+				}
 			}
 			AffineTransform rotationMoins0 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotationMoins0);
 			break;
 		case 2:
 			//se deplace vers le sud
-			rotation = Math.PI/2.0;
+			if(!enRotation) {
+				rotation = Math.PI/2.0;
+			}else {
+				switch(this.directionDeVirage) {
+				//aucune rotation d'image, car la voiture ne tourne pas
+				case 0:
+					rotation = Math.PI/2.0;
+					break;
+				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
+				case 1:
+					rotation = rotation + Math.toRadians(3);
+					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
+					if(rotation>=Math.PI) {
+						rotation = Math.PI;
+					}
+					break;
+				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
+				case 2:
+					rotation = rotation - Math.toRadians(1.5);
+					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
+					if(rotation<=0) {
+						rotation = 0;
+					}
+				}
+			}
 			AffineTransform rotationMoins90 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotationMoins90);
 			break;
 		case 3:
 			//se deplace vers l'ouest
-			//Rotation de l'image
-			rotation = Math.PI;
+			if(!enRotation) {
+				rotation = Math.PI;
+			}else {
+				switch(this.directionDeVirage) {
+				//aucune rotation d'image, car la voiture ne tourne pas
+				case 0:
+					rotation = 0;
+					break;
+				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
+				case 1:
+					rotation = rotation + Math.toRadians(3);
+					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
+					if(rotation>=3*Math.PI/2.0) {
+						rotation = 3*Math.PI/2.0;
+					}
+					break;
+				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
+				case 2:
+					rotation = rotation - Math.toRadians(1.5);
+					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
+				}
+				if(rotation<=Math.PI/2.0) {
+					rotation = Math.PI/2.0;
+				}
+			}
 			AffineTransform rotation180 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotation180);
 			break;
 		case 4:
 			//se deplace vers le nord
-			rotation = -Math.PI/2.0;
+			if(!enRotation) {
+				rotation = -Math.PI/2.0;
+			}else {
+				switch(this.directionDeVirage) {
+				//aucune rotation d'image, car la voiture ne tourne pas
+				case 0:
+					rotation = -Math.PI/2.0;
+					break;
+				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
+				case 1:
+					rotation = rotation + Math.toRadians(4);
+					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
+					if(rotation>=0) {
+						rotation = 0;
+					}
+					break;
+				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
+				case 2:
+					rotation = rotation - Math.toRadians(2);
+					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
+					if(rotation<=-Math.PI) {
+						rotation = -Math.PI;
+					}
+				}
+			}
 			AffineTransform rotation90 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotation90);
 			break;
@@ -282,11 +363,11 @@ public class Voiture implements Dessinable {
 
 		//Dessiner la voiture selon la direction
 		AffineTransform t = new AffineTransform();
-        t.translate(xVoiture, yVoiture); // = double
-        t.scale(scaleX, scaleY); // scale = 1 
-        g2d.drawImage(imgVoiture, t, null);
-        t.translate(-xVoiture, -yVoiture);
-        t.scale(1/scaleX, scaleY);
+		t.translate(xVoiture, yVoiture); // = double
+		t.scale(scaleX, scaleY); // scale = 1 
+		g2d.drawImage(imgVoiture, t, null);
+		t.translate(-xVoiture, -yVoiture);
+		t.scale(1/scaleX, scaleY);
 		g2d.setTransform(matInitial);
 	}
 	/**
@@ -351,14 +432,14 @@ public class Voiture implements Dessinable {
 	}
 	/**
 	 * getter du tableau du traffic anormal
-	 * @param trafficAnormal
+	 * @param trafficAnormal tableau contenant les direction ayant du trafic anormal
 	 */
 	public void setAnormale(int[] trafficAnormal) {
 		this.trafficAnormal = trafficAnormal;
 	}
 	/**
 	 * Getter de la probabilite de generation pour la premiere voiture
-	 * @return
+	 * @return direction.getProbVoie1 int representant la probabilité qu'une voiture se déplace vers le sud
 	 */
 	public int getProbVoie1() {
 		return direction.getProbVoie1();
@@ -397,22 +478,41 @@ public class Voiture implements Dessinable {
 	/**
 	 * Setter pour le boolean indiquant si la voiture tourne ou non
 	 * @param enRotation boolean indiquant si la voiture tourne
+	 * @author Gayta
 	 */
-	public void setEnRotation(boolean enRotation,int directionDeVirage) {
+	public void setEnRotation(boolean enRotation) {
 		this.enRotation = enRotation;
-		this.directionDeVirage = directionDeVirage;
 	}
 	/**
 	 * Getter qui retourne vrai si la voiture tourne
-	 * @return
+	 * @return enRotation boolean qui indique si la voiture tourne ou non
+	 * @author Gayta
 	 */
 	public boolean getEnRotation() {
 		return this.enRotation;
 	}
+	/**
+	 * Getter qui retourne la valeur de déplacement d'une voiture
+	 * @return deplacementTemp la valeur de déplacement d'une voiture
+	 * @author Gayta
+	 */
 	public double getDeplacement() {
 		return this.deplacementTemp;
 	}
+	/**
+	 * Setter qui modifie la valeur de déplacement d'une voiture
+	 * @param deplacement la valeur de déplacement d'une voiture
+	 * @author Gayta
+	 */
 	public void setDeplacement(double deplacement) {
 		this.deplacementTemp = deplacement;
+	}
+	/**
+	 * Getter qui retourne la direction de virage d'une voiture en valeur int (0=tout droit; 1=tourne droite; 2=tourne gauche)
+	 * @return directionDeVirage int représentant la direction de virage d'une voiture
+	 * @author Gayta
+	 */
+	public int getDirectionDeVirage() {
+		return this.directionDeVirage;
 	}
 }

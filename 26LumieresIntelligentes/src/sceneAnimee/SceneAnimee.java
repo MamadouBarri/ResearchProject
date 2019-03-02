@@ -30,8 +30,8 @@ import modele.ModeleAffichage;
  *
  */
 public class SceneAnimee extends JPanel implements Runnable{
-	
-	
+
+
 
 	//
 	/**
@@ -84,11 +84,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbVoituresGenerees =0;
 	private int nbVoituresMax = 100;
 	//Lumieres 
-	private double nbBouclesAvantLumiereJaune = 2400;
-	
-
-	private double nbBouclesAvantLumiereVerte = 2700;
-	private double nbBouclesAvantLumiereRouge = 5100;
+	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres
+	private double nbBouclesAvantChangement1 = 2400;
+	private double nbBouclesAvantChangement2 = 2700;
+	private double nbBouclesAvantChangement3 = 5100;
+	//À cette derniere boucle, on retourne le compteur à 0
+	private double nbBouclesAvantChangement4 = 5400;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
 	private  final double TAUX_DECELERATION = 0.1;
@@ -106,7 +107,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int[] trafficAnormaleTemp= new int[1];
 	private boolean enTrafficAnormale;
 	private boolean premiereFois = true;
-	
+
 	private double vitesse;
 	//Code des lumiere
 	private final int VERTE = 0;
@@ -155,7 +156,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 
 		});	
-		
+
 		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -207,7 +208,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		lumEst = new Lumiere(0,0,75,couleur,3);
 		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lumEst.dessiner(g2d, mat);
-		
+
 
 
 		//Dessiner l'échelle
@@ -232,477 +233,636 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	@Override
 	public void run() {
+		//compteur pour savoir quand on génère une nouvelle voiture selon le nombre de boucles de run faits
 		double nbRepetitionsPourVoitures = 0;
+		//compteur pour savoir quand on faire avancer le cycle de lumiere selon le nombre de boucles de run faits
 		double nbRepetitionsPourLumieres = 0;
 		while (enCoursDAnimation) {	
 			//Commencer le thread de voiture pour chaque voiture de la liste
-			
+
 			//Convention des lumieres : 0 - > vert 1 | - > jaune | 2 -> rouge
-			
+
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 				Voiture v = i.next();//pour chaque voiture EST
 				//Voiture arretee
 				if(v.isVoitureArretee() && deplacement >0 ) {
 					//Deceleration a ajouter
-//					double deplacementLocal = deplacement;
-//					deplacementLocal -=TAUX_DECELERATION;
-//					v.setXVoiture(v.getXVoiture()+deplacementLocal);
-					
+					//					double deplacementLocal = deplacement;
+					//					deplacementLocal -=TAUX_DECELERATION;
+					//					v.setXVoiture(v.getXVoiture()+deplacementLocal);
+
 				}
-				//Voiture en mouvement
+				switch(v.getDirectionDeVirage()){
+				case 0:
+					//La voiture continue tout droite, car elle n'effectue pas de virage
+					if(!v.isVoitureArretee()) {
+						v.setXVoiture((v.getXVoiture()+deplacement));
+					}
+					break;
+				case 1:
+					//La voiture tourne à droite
+					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							v.setXVoiture((v.getXVoiture()+deplacement));
+						}
+						//La voiture commence sa rotation après avoir dépassé sa lumiere
+						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
+							v.setEnRotation(true);
+						}
+						//La voiture commence graduellement à avancer vers sa nouvelle direction 
+						if(v.getEnRotation()) {
+							if(v.getDeplacement() < deplacement) {
+								v.setDeplacement(v.getDeplacement()+0.05);
+							}
+							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
+						}
+					}
+					break;
+				case 2:
+					//La voiture tourne à gauche
+					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							v.setXVoiture((v.getXVoiture()+deplacement));
+						}
+						//La voiture commence sa rotation après avoir dépassé sa lumiere
+						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
+							v.setEnRotation(true);
+						}
+						//La voiture commence graduellement à avancer vers sa nouvelle direction 
+						if(v.getEnRotation()) {
+							if(v.getDeplacement() < deplacement) {
+								v.setDeplacement(v.getDeplacement()+0.05);
+							}
+							v.setYVoiture(v.getYVoiture()-v.getDeplacement());
+						}
+						break;
+					}
+				}
+			//Lumiere est rouge 
+			//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+			if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE&&v.getEnRotation()==false) { // Lorsque voiture est devant l'intersection
+				v.setVoitureArretee(true);
+			}
+
+			//Voiture devant trop proche
+			if(est.indexOf(v)!=0) {
+				Voiture voitureDevant = est.get(est.indexOf(v)-1);
+				if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+					v.setVoitureArretee(true);
+				}
+			}
+
+			//Verifier l'etat de la voiture devant
+			//Si la liste contient plus qu'une voiture
+
+			if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+				//v.arreter();
+				affichageAvecTemps("voiture enlevée");
+				voitures.remove(v);
+				v.setVoitureActive(false);
+			}
+
+			//Lorsque la lumiere redevient verte 
+			if(lumEst.getCouleur() == VERTE) {
+				v.setVoitureArretee(false);
+			}
+		}//fin DIRECTION EST
+
+
+		//DIRECTION : SUD
+		for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
+				//v.arreter();
+				affichageAvecTemps("voiture enlevée");
+				voitures.remove(v);
+				v.setVoitureActive(false);
+			}
+
+			//Voiture en mouvement
+			switch(v.getDirectionDeVirage()){
+			//La voiture continue tout droite, car elle n'effectue aucun virage
+			case 0:
+				if(!v.isVoitureArretee()) {
+					v.setYVoiture((v.getYVoiture()+deplacement));
+				}
+				break;
+			case 1:
+				//La voiture tourne à droite
 				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
-					//code pour tourner à droite
-					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
-					v.setXVoiture((v.getXVoiture()+deplacement));
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
+						v.setYVoiture((v.getYVoiture()+deplacement));
 					}
-					if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
-						v.setEnRotation(true,0);
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true);
 					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setXVoiture(v.getXVoiture()-v.getDeplacement());
+					}
+				}
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
+						v.setYVoiture((v.getYVoiture()+deplacement));
+					}
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.03);
+						}
+						v.setXVoiture(v.getXVoiture()+v.getDeplacement());
+					}
+				}
+					break;
+			}
+			//Lumiere est rouge 
+			//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+			if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumSud.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+				v.setVoitureArretee(true);
+			}
+
+			//Voiture devant trop proche
+			if(sud.indexOf(v)!=0) {
+				Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
+				if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+					v.setVoitureArretee(true);
+				}
+			}
+
+			//Lorsque la lumiere redevient verte 
+			if(lumSud.getCouleur() == VERTE) {
+				v.setVoitureArretee(false);
+			}
+		}
+
+		//DIRECTION : OUEST
+		for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+				affichageAvecTemps("voiture enlevée");
+				voitures.remove(v);
+				v.setVoitureActive(false);
+			}
+			//Voiture en mouvement
+			
+			switch(v.getDirectionDeVirage()){
+			case 0:
+				//La voiture continue tout droite, car elle n'effectue aucun virage
+				if(!v.isVoitureArretee()) {
+					v.setXVoiture((v.getXVoiture()-deplacement));
+				}
+				break;
+			case 1:
+				//La voiture tourne à droite
+				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0+this.LARGEUR_VOITURE/2.0)*modele.getPixelsParUniteX()) {
+						v.setXVoiture((v.getXVoiture()-deplacement));
+					}
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setYVoiture(v.getYVoiture()-v.getDeplacement());
+					}
+				}
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						v.setXVoiture((v.getXVoiture()-deplacement));
+					}
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
 					if(v.getEnRotation()) {
 						if(v.getDeplacement() < deplacement) {
 							v.setDeplacement(v.getDeplacement()+0.05);
 						}
 						v.setYVoiture(v.getYVoiture()+v.getDeplacement());
 					}
-					
-					//code pour tourner à gauche
-					
-					/*if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-					v.setXVoiture((v.getXVoiture()+deplacement));
+				}
+				break;
+			}
+
+			//Lumiere est rouge 
+			//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+			if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumOuest.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+				v.setVoitureArretee(true);
+			}
+
+			//Voiture devant trop proche
+			if(ouest.indexOf(v)!=0) {
+				Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
+				if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
+					v.setVoitureArretee(true);
+				}
+			}
+
+			//Lorsque la lumiere redevient verte 
+			if(lumOuest.getCouleur() == VERTE) {
+				v.setVoitureArretee(false);
+			}
+
+		}
+
+		//DIRECTION : NORD
+		for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+				//v.arreter();
+				affichageAvecTemps("voiture enlevée");
+				voitures.remove(v);
+				v.setVoitureActive(false);
+			}
+
+			//Voiture en mouvement
+			
+			switch(v.getDirectionDeVirage()){
+			case 0:
+				//La voiture continue tout droite, car elle n'effectue aucun virage
+				if(!v.isVoitureArretee()) {
+					v.setYVoiture((v.getYVoiture()-deplacement));
+				}
+				break;
+			case 1:
+				//La voiture tourne à droite
+				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/4.0)*modele.getPixelsParUniteY()) {
+						v.setYVoiture((v.getYVoiture()-deplacement));
 					}
-					if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
-						v.setEnRotation(true,1);
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/3.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true);
+						//System.out.println("I WANNA TURN");
 					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
 					if(v.getEnRotation()) {
 						if(v.getDeplacement() < deplacement) {
 							v.setDeplacement(v.getDeplacement()+0.05);
 						}
-						v.setYVoiture(v.getYVoiture()-v.getDeplacement());
-					}*/
-					 
-				}
-				//Lumiere est rouge 
-				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE&&v.getEnRotation()==false) { // Lorsque voiture est devant l'intersection
-					v.setVoitureArretee(true);
-				}
-				
-				//Voiture devant trop proche
-				if(est.indexOf(v)!=0) {
-					Voiture voitureDevant = est.get(est.indexOf(v)-1);
-					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
+						v.setXVoiture(v.getXVoiture()+v.getDeplacement());
 					}
 				}
-
-				//Verifier l'etat de la voiture devant
-				//Si la liste contient plus qu'une voiture
-				
-				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-					//v.arreter();
-					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
-					v.setVoitureActive(false);
-				}
-				
-				//Lorsque la lumiere redevient verte 
-				if(lumEst.getCouleur() == VERTE) {
-					v.setVoitureArretee(false);
-				}
-			}//fin DIRECTION EST
-			
-			
-			//DIRECTION : SUD
-			for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
-				Voiture v = i.next();
-				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
-					//v.arreter();
-					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
-					v.setVoitureActive(false);
-				}
-				
-				//Voiture en mouvement
-				if(!v.isVoitureArretee()) {
-					v.setYVoiture(v.getYVoiture()+deplacement);
-				}
-				//Lumiere est rouge 
-				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumSud.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
-					v.setVoitureArretee(true);
-				}
-				
-				//Voiture devant trop proche
-				if(sud.indexOf(v)!=0) {
-					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
-					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
+						v.setYVoiture((v.getYVoiture()-deplacement));
+					}
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/3.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setXVoiture(v.getXVoiture()-v.getDeplacement());
 					}
 				}
-				
-				//Lorsque la lumiere redevient verte 
-				if(lumSud.getCouleur() == VERTE) {
-					v.setVoitureArretee(false);
-				}
+					break;
 			}
-			
-			//DIRECTION : OUEST
-			for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
-				Voiture v = i.next();
-				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
-					v.setVoitureActive(false);
-				}
-				
-				//Voiture en mouvement
-				if(!v.isVoitureArretee()) {
-					v.setXVoiture(v.getXVoiture()-deplacement);
-				}
-				
-				//Lumiere est rouge 
-				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumOuest.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+
+			//Lumiere est rouge 
+			//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+			if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumNord.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+				v.setVoitureArretee(true);
+			}
+
+			//Voiture devant trop proche
+			if(nord.indexOf(v)!=0) {
+				Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
+				if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
 					v.setVoitureArretee(true);
 				}
-				
-				//Voiture devant trop proche
-				if(ouest.indexOf(v)!=0) {
-					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
-					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
-					}
-				}
-				
-				//Lorsque la lumiere redevient verte 
-				if(lumOuest.getCouleur() == VERTE) {
-					v.setVoitureArretee(false);
-				}
-				
 			}
-			
-			//DIRECTION : NORD
-			for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
-				Voiture v = i.next();
-				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-					//v.arreter();
-					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
-					v.setVoitureActive(false);
-				}
-				
-				//Voiture en mouvement
-				if(!v.isVoitureArretee()) {
-					v.setYVoiture(v.getYVoiture()-deplacement);
-				}
-				
-				//Lumiere est rouge 
-				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumNord.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
-					v.setVoitureArretee(true);
-				}
-				
-				//Voiture devant trop proche
-				if(nord.indexOf(v)!=0) {
-					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
-					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
-					}
-				}
-				
-				//Lorsque la lumiere redevient verte 
-				if(lumNord.getCouleur() == VERTE) {
-					v.setVoitureArretee(false);
-				}
+
+			//Lorsque la lumiere redevient verte 
+			if(lumNord.getCouleur() == VERTE) {
+				v.setVoitureArretee(false);
 			}
-			repaint();
-			try {
-				Thread.sleep(tempsDuSleep);
-				nbRepetitionsPourVoitures++;
-				nbRepetitionsPourLumieres++;
-				//System.out.println(nbRepetitionsPourLumieres);
-				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
-				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
-					ajouterNouvelleVoiture();
-					nbRepetitionsPourVoitures=0;
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereJaune) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereVerte) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantLumiereRouge) {
-					changeCouleurLumieres();
-					repaint();
-					nbRepetitionsPourLumieres =0;
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-		}//fin while
-		System.out.println("Le thread est mort...");
-	}
-
-	/**
-	 * Calcul des nouvelles positions pour
-	 * tous les objets de la scène
-	 */
-	private void calculerUneIterationPhysique() {
-		//tempsTotalEcoule += deltaT;
-		//System.out.println("\nTemps total écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé)");
-		//blocEtRessort.unPasEuler( deltaT );
-		///forceDeFriction = MoteurPhysique.calculerForceFriction(blocEtRessort.getMasseBlocEnKg(), blocEtRessort.getVitesse(), coefficientDeFriction);
-		//forceDeRappel = MoteurPhysique.calculerForceRappel(blocEtRessort.getPosition(), constanteDeRappel);
-		//blocEtRessort.setSommeDesForces(MoteurPhysique.sommeDesForces(forceDeFriction, forceDeRappel) );
-		//System.out.println(forceDeFriction);
-
-	}
-	/**
-	 * Affichage a la console avec le temps precis
-	 * @param affichage Ce qu'on veut afficher a la console
-	 */
-	public void affichageAvecTemps(String affichage){
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date maintenant = new Date();
-		String strDate = sdfDate.format(maintenant);
-		System.out.println("[" + strDate + "] " + affichage);
-	}
-
-	/**
-	 * Méthode qui ajoute une nouvelle voiture dans l'intersection
-	 */
-	public void ajouterNouvelleVoiture() {
-		//On ajoute au nombre de voitures generees
-		nbVoituresGenerees++;
-		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale );
-		//Quelle direction?
-		int direction = voiture.getDirection().getNumDirection();
-		switch (direction)
-		{
-		case 1:
-			//se deplace vers le est
-			est.add(voiture);
-			break;
-		case 2:
-			//se deplace vers le sud
-			sud.add(voiture);
-			break;
-		case 3:
-			//se deplace vers louest
-			ouest.add(voiture);
-			break;
-		case 4:
-			//se deplace vers le nord
-			nord.add(voiture);
-			break;
 		}
-		//pour linstants jajoute dans voitures general
-		voitures.add(voiture);
-	}
-
-	/**
-	 * Demarre le thread s'il n'est pas deja demarre
-	 */
-	public void demarrer() {
-		if (!enCoursDAnimation) { 
-			Thread proc = new Thread(this);
-			proc.start();
-			enCoursDAnimation = true;
-		}
-	}//fin methode
-
-	/**
-	 * Demande l'arret du thread (prochain tour de boucle)
-	 */
-	public void arreter() {
-		enCoursDAnimation = false;
-		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
-			Voiture v = i.next();
-			//v.arreter();
-		}
-	}//fin methode
-
-	/**
-	 * Arrête l'animation et reinitialise tout comme au début
-	 */
-	public void reinitialiser() {
-		arreter();
-		//blocEtRessort.setPosition(new Vecteur(positionXInitaleBloc,0));
-		//blocEtRessort.setVitesse(new Vecteur());
-		//tempsTotalEcoule = 0;
 		repaint();
+		try {
+			Thread.sleep(tempsDuSleep);
+			nbRepetitionsPourVoitures++;
+			nbRepetitionsPourLumieres++;
+			//System.out.println(nbRepetitionsPourLumieres);
+			//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
+			if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
+				ajouterNouvelleVoiture();
+				nbRepetitionsPourVoitures=0;
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantChangement1) {
+				changeCouleurLumieres();
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantChangement2) {
+				changeCouleurLumieres();
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantChangement3) {
+				changeCouleurLumieres();
+				repaint();
+			}
+			if(nbRepetitionsPourLumieres == nbBouclesAvantChangement4) {
+				changeCouleurLumieres();
+				repaint();
+				nbRepetitionsPourLumieres =0;
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}//fin while
+	System.out.println("Le thread est mort...");
+}
+
+/**
+ * Calcul des nouvelles positions pour
+ * tous les objets de la scène
+ */
+private void calculerUneIterationPhysique() {
+	//tempsTotalEcoule += deltaT;
+	//System.out.println("\nTemps total écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé)");
+	//blocEtRessort.unPasEuler( deltaT );
+	///forceDeFriction = MoteurPhysique.calculerForceFriction(blocEtRessort.getMasseBlocEnKg(), blocEtRessort.getVitesse(), coefficientDeFriction);
+	//forceDeRappel = MoteurPhysique.calculerForceRappel(blocEtRessort.getPosition(), constanteDeRappel);
+	//blocEtRessort.setSommeDesForces(MoteurPhysique.sommeDesForces(forceDeFriction, forceDeRappel) );
+	//System.out.println(forceDeFriction);
+
+}
+/**
+ * Affichage a la console avec le temps precis
+ * @param affichage Ce qu'on veut afficher a la console
+ */
+public void affichageAvecTemps(String affichage){
+	SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date maintenant = new Date();
+	String strDate = sdfDate.format(maintenant);
+	System.out.println("[" + strDate + "] " + affichage);
+}
+
+/**
+ * Méthode qui ajoute une nouvelle voiture dans l'intersection
+ */
+public void ajouterNouvelleVoiture() {
+	//On ajoute au nombre de voitures generees
+	nbVoituresGenerees++;
+	Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale );
+	//Quelle direction?
+	int direction = voiture.getDirection().getNumDirection();
+	switch (direction)
+	{
+	case 1:
+		//se deplace vers le est
+		est.add(voiture);
+		break;
+	case 2:
+		//se deplace vers le sud
+		sud.add(voiture);
+		break;
+	case 3:
+		//se deplace vers louest
+		ouest.add(voiture);
+		break;
+	case 4:
+		//se deplace vers le nord
+		nord.add(voiture);
+		break;
 	}
+	//pour linstants jajoute dans voitures general
+	voitures.add(voiture);
+}
+
+/**
+ * Demarre le thread s'il n'est pas deja demarre
+ */
+public void demarrer() {
+	if (!enCoursDAnimation) { 
+		Thread proc = new Thread(this);
+		proc.start();
+		enCoursDAnimation = true;
+	}
+}//fin methode
+
+/**
+ * Demande l'arret du thread (prochain tour de boucle)
+ */
+public void arreter() {
+	enCoursDAnimation = false;
+	for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+		Voiture v = i.next();
+		//v.arreter();
+	}
+}//fin methode
+
+/**
+ * Arrête l'animation et reinitialise tout comme au début
+ */
+public void reinitialiser() {
+	arreter();
+	//blocEtRessort.setPosition(new Vecteur(positionXInitaleBloc,0));
+	//blocEtRessort.setVitesse(new Vecteur());
+	//tempsTotalEcoule = 0;
+	repaint();
+}
 
 
-	/**
-	 * Avance la simulation d'une unique image 
-	 */
-	public void prochaineImage() {
+/**
+ * Avance la simulation d'une unique image 
+ */
+public void prochaineImage() {
 
-		//à completer....
+	//à completer....
 
-		calculerUneIterationPhysique();
-		repaint();
+	calculerUneIterationPhysique();
+	repaint();
 
-	}
+}
 
-	/**
-	 * Getter vrai si en cours d'animation et faux sinon
-	 * @return enCoursDAnimation boul qui spécifie si on est en cours d'animation
-	 */
-	public boolean getEnCoursDAnimation() {
-		return enCoursDAnimation;
-	}
-	/**
-	 * Change le temps pour le sleep du thread
-	 * @param tempsDuSleep Nouveua temps a appliquer au sleep
-	 */
-	public void setTempsDuSleep(int tempsDuSleep) {
-		this.tempsDuSleep = tempsDuSleep;
-	}
-	/**
-	 * Retourne le temps de sleep actuel
-	 * @return temps du sleep actuel
-	 */
-	public int getTempsDuSleep() {
-		return (int) tempsDuSleep;
-	}
-	/**
-	 * Modifie le pas (intervalle) de la simulation
-	 * @param deltaT le pas (intervalle) de la simulation, exprime en secondes
-	 */
-	public void setDeltaT(double deltaT) {
-		this.deltaT = deltaT;
+/**
+ * Getter vrai si en cours d'animation et faux sinon
+ * @return enCoursDAnimation boul qui spécifie si on est en cours d'animation
+ */
+public boolean getEnCoursDAnimation() {
+	return enCoursDAnimation;
+}
+/**
+ * Change le temps pour le sleep du thread
+ * @param tempsDuSleep Nouveua temps a appliquer au sleep
+ */
+public void setTempsDuSleep(int tempsDuSleep) {
+	this.tempsDuSleep = tempsDuSleep;
+}
+/**
+ * Retourne le temps de sleep actuel
+ * @return temps du sleep actuel
+ */
+public int getTempsDuSleep() {
+	return (int) tempsDuSleep;
+}
+/**
+ * Modifie le pas (intervalle) de la simulation
+ * @param deltaT le pas (intervalle) de la simulation, exprime en secondes
+ */
+public void setDeltaT(double deltaT) {
+	this.deltaT = deltaT;
 
-	}
-	/**
-	 * Retourne le pas intervalle) de la simulation
-	 * @return le pas intervalle) de la simulation, exprime en secondes
-	 */
-	public double getDeltaT() {
-		return (deltaT);
-	}
-	/**
-	 * Modifie le nombre de boucles nécessaires avant de créer une voiture
-	 * @param taux Le taux d'apparition des voitures en voitures/secondes.
-	 */
-	public void setTauxDApparition(double tauxParMinute) {
-		double tauxParSeconde = tauxParMinute/60.0;
-		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
-		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
-		System.out.println("Nombre de boucle sleep avant une nouvelle voiture : " + this.nbBouclesAvantNouvelleVoiture); //Test
-		
-	}
-	/**
-	 * Getter de la largeur reelle
-	 * @return LARGEUR_REELLE retourne la constante de la largeur reelle
-	 */
-	public double getLARGEUR_REELLE() {
-		return LARGEUR_REELLE;
-	}
-	/**
-	 * Méthode qui change la couleur des lumières
-	 */
-	private void changeCouleurLumieres(){
-		if(couleur==0) {
+}
+/**
+ * Retourne le pas intervalle) de la simulation
+ * @return le pas intervalle) de la simulation, exprime en secondes
+ */
+public double getDeltaT() {
+	return (deltaT);
+}
+/**
+ * Modifie le nombre de boucles nécessaires avant de créer une voiture
+ * @param taux Le taux d'apparition des voitures en voitures/secondes.
+ */
+public void setTauxDApparition(double tauxParMinute) {
+	double tauxParSeconde = tauxParMinute/60.0;
+	double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
+	this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
+	System.out.println("Nombre de boucle sleep avant une nouvelle voiture : " + this.nbBouclesAvantNouvelleVoiture); //Test
+
+}
+/**
+ * Getter de la largeur reelle
+ * @return LARGEUR_REELLE retourne la constante de la largeur reelle
+ */
+public double getLARGEUR_REELLE() {
+	return LARGEUR_REELLE;
+}
+/**
+ * Méthode qui change la couleur des lumières
+ */
+private void changeCouleurLumieres(){
+	if(couleur==0) {
+		couleur = (couleur+1)%3;
+		lumSud.setCouleur(couleur);
+		lumNord.setCouleur(couleur);
+	} else {
+		if(couleur==1) {
 			couleur = (couleur+1)%3;
+			couleurInv = (couleurInv+1)%3;
 			lumSud.setCouleur(couleur);
 			lumNord.setCouleur(couleur);
+			lumOuest.setCouleur(couleurInv);
+			lumEst.setCouleur(couleurInv);
 		} else {
-			if(couleur==1) {
+			if(couleur==2&&couleurInv==0) {
+				couleurInv = (couleurInv+1)%3;
+				lumOuest.setCouleur(couleurInv);
+				lumEst.setCouleur(couleurInv);
+			} else {
 				couleur = (couleur+1)%3;
 				couleurInv = (couleurInv+1)%3;
 				lumSud.setCouleur(couleur);
 				lumNord.setCouleur(couleur);
 				lumOuest.setCouleur(couleurInv);
 				lumEst.setCouleur(couleurInv);
-			} else {
-				if(couleur==2&&couleurInv==0) {
-					couleurInv = (couleurInv+1)%3;
-					lumOuest.setCouleur(couleurInv);
-					lumEst.setCouleur(couleurInv);
-				} else {
-					couleur = (couleur+1)%3;
-					couleurInv = (couleurInv+1)%3;
-					lumSud.setCouleur(couleur);
-					lumNord.setCouleur(couleur);
-					lumOuest.setCouleur(couleurInv);
-					lumEst.setCouleur(couleurInv);
-				}
 			}
 		}
-		/*lumSud.setCouleur(couleur);
+	}
+	/*lumSud.setCouleur(couleur);
 	lumNord.setCouleur(couleur);
 	lumOuest.setCouleur(couleurInv);
 	lumEst.setCouleur(couleurInv);
 	couleur = (couleur+1)%3;
 	couleurInv = (couleurInv+1)%3;*/
+}
+/**
+ * Setter qui change le nombre de voies horizontalemnt
+ * @param nbVoiesHorizontale le nombre de voie a l'horizontale
+ */
+public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
+	this.nbVoiesHorizontale= nbVoiesHorizontale; 
+}
+/**
+ * Méthode qui converti les vitesses en m/s à des vitesses en pixels/boucle de run
+ * @param vitesse
+ */
+public void setVitesse(double vitesse) {
+	this.vitesse = vitesse;
+}
+public void calculerVitesse() {
+	this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
+}
+public void addTrafficAnormale(int numDeVoie) {
+	if(this.enTrafficAnormale&&numDeVoie>0) {
+		int[] tabTemporaire = this.trafficAnormale;
+		this.trafficAnormale = new int[this.trafficAnormale.length+1];
+		for(int i = 0;i<tabTemporaire.length;i++) {
+			this.trafficAnormale[i] = tabTemporaire[i]; 
+		}
+		this.trafficAnormale[tabTemporaire.length] = numDeVoie;
 	}
-	/**
-	 * Setter qui change le nombre de voies horizontalemnt
-	 * @param nbVoiesHorizontale le nombre de voie a l'horizontale
-	 */
-	public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
-		this.nbVoiesHorizontale= nbVoiesHorizontale; 
-	}
-	/**
-	 * Méthode qui converti les vitesses en m/s à des vitesses en pixels/boucle de run
-	 * @param vitesse
-	 */
-	public void setVitesse(double vitesse) {
-		this.vitesse = vitesse;
-	}
-	public void calculerVitesse() {
-		this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
-	}
-	public void addTrafficAnormale(int numDeVoie) {
-		if(this.enTrafficAnormale&&numDeVoie>0) {
-			int[] tabTemporaire = this.trafficAnormale;
-			this.trafficAnormale = new int[this.trafficAnormale.length+1];
-			for(int i = 0;i<tabTemporaire.length;i++) {
-				this.trafficAnormale[i] = tabTemporaire[i]; 
+}
+public void addTrafficNormale(int numDeVoie) {
+	if(this.enTrafficAnormale&&numDeVoie>0) {
+		int[] tabTemporaire = this.trafficAnormale;
+		this.trafficAnormale = new int[this.trafficAnormale.length-1];
+		for(int i = 0;i<tabTemporaire.length;i++) {
+			if(tabTemporaire[i]!=numDeVoie) {
+				this.trafficAnormale[i] = tabTemporaire[i];
 			}
-			this.trafficAnormale[tabTemporaire.length] = numDeVoie;
 		}
 	}
-	public void addTrafficNormale(int numDeVoie) {
-		if(this.enTrafficAnormale&&numDeVoie>0) {
-			int[] tabTemporaire = this.trafficAnormale;
-			this.trafficAnormale = new int[this.trafficAnormale.length-1];
-			for(int i = 0;i<tabTemporaire.length;i++) {
-				if(tabTemporaire[i]!=numDeVoie) {
-					this.trafficAnormale[i] = tabTemporaire[i];
-				}
-			}
-		}
+}
+public void setTrafficAnormale(boolean enTrafficAnormale) {
+	if(enTrafficAnormale) {
+		this.trafficAnormale = this.trafficAnormaleTemp;
+		this.enTrafficAnormale = true;
+	} else {
+		this.trafficAnormaleTemp = this.trafficAnormale;
+		this.trafficAnormale = new int[1];
+		this.enTrafficAnormale = false;
 	}
-	public void setTrafficAnormale(boolean enTrafficAnormale) {
-		if(enTrafficAnormale) {
-			this.trafficAnormale = this.trafficAnormaleTemp;
-			this.enTrafficAnormale = true;
-		} else {
-			this.trafficAnormaleTemp = this.trafficAnormale;
-			this.trafficAnormale = new int[1];
-			this.enTrafficAnormale = false;
-		}
-	}
-	public int getNbVoituresGenerees() {
-		return nbVoituresGenerees;
-	}
+}
+public int getNbVoituresGenerees() {
+	return nbVoituresGenerees;
+}
 
-	public void setNbVoituresGenerees(int nbVoituresGenerees) {
-		this.nbVoituresGenerees = nbVoituresGenerees;
-	}
-	public int getNbVoituresMax() {
-		return nbVoituresMax;
-	}
+public void setNbVoituresGenerees(int nbVoituresGenerees) {
+	this.nbVoituresGenerees = nbVoituresGenerees;
+}
+public int getNbVoituresMax() {
+	return nbVoituresMax;
+}
 
-	public void setNbVoituresMax(int nbVoituresMax) {
-		this.nbVoituresMax = nbVoituresMax;
-	}
+public void setNbVoituresMax(int nbVoituresMax) {
+	this.nbVoituresMax = nbVoituresMax;
+}
 }
