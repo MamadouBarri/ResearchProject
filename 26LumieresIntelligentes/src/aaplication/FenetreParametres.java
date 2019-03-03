@@ -40,10 +40,6 @@ public class FenetreParametres extends JFrame {
 	private final ButtonGroup btngrpChoixDeTypeDeSimulation = new ButtonGroup();
 	private JSpinner spnVitesse;
 	private JSpinner spnTauxDApparition;
-	private JSpinner spnNbVoiesNord;
-	private JSpinner spnNbVoiesOuest;
-	private JSpinner spnNbVoiesEst;
-	private JSpinner spnNbVoiesSud;
 	private JCheckBox chkbxTrfcAnom1;
 	private JCheckBox chkbxTrfcAnom2;
 	private JCheckBox chkbxTrfcAnom4;
@@ -286,68 +282,25 @@ public class FenetreParametres extends JFrame {
 		btnConfirmer.setBounds(258, 550, 105, 23);
 		panel.add(btnConfirmer);
 		
-		spnNbVoiesSud = new JSpinner();
-		spnNbVoiesSud.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				//Changement du nombre de voies 
-			}
-		});
-		spnNbVoiesSud.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
-		spnNbVoiesSud.setBounds(299, 496, 29, 20);
-		panel.add(spnNbVoiesSud);
-		
 		SceneAnimee sceneAnimee = new SceneAnimee();
 		sceneAnimee.setBounds(190, 250, 242, 243);
 		panel.add(sceneAnimee);
 		sceneAnimee.setLayout(null);
 		
-		spnNbVoiesNord = new JSpinner();
-		spnNbVoiesNord.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				
-			}
-		});
-		spnNbVoiesNord.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
-		spnNbVoiesNord.setBounds(299, 224, 29, 20);
-		panel.add(spnNbVoiesNord);
-		
-		spnNbVoiesOuest = new JSpinner();
-		spnNbVoiesOuest.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				if(spnNbVoiesOuest.getValue().equals(2)){
-					sceneAnimee.setNbVoiesHorizontale((int)(spnNbVoiesOuest.getValue()));
-					sceneAnimee.repaint();
-				}
-			}
-		});
-		spnNbVoiesOuest.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
-		spnNbVoiesOuest.setBounds(151, 359, 29, 20);
-		panel.add(spnNbVoiesOuest);
-		
-		spnNbVoiesEst = new JSpinner();
-		spnNbVoiesEst.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				
-			}
-		});
-		spnNbVoiesEst.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
-		spnNbVoiesEst.setBounds(442, 359, 29, 20);
-		panel.add(spnNbVoiesEst);
-		
 		JLabel lblVoieNord = new JLabel("Voie NORD");
-		lblVoieNord.setBounds(292, 207, 52, 14);
+		lblVoieNord.setBounds(287, 225, 89, 14);
 		panel.add(lblVoieNord);
 		
 		lblVoieEst = new JLabel("Voie EST");
-		lblVoieEst.setBounds(481, 362, 46, 14);
+		lblVoieEst.setBounds(438, 362, 84, 14);
 		panel.add(lblVoieEst);
 		
 		lblVoieOuest = new JLabel("Voie OUEST");
-		lblVoieOuest.setBounds(81, 362, 63, 14);
+		lblVoieOuest.setBounds(113, 362, 89, 14);
 		panel.add(lblVoieOuest);
 		
 		lblVoieSud = new JLabel("Voie SUD");
-		lblVoieSud.setBounds(292, 519, 46, 14);
+		lblVoieSud.setBounds(292, 505, 84, 14);
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();

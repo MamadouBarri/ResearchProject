@@ -181,7 +181,7 @@ public class App26LumieresIntelligentes extends JFrame {
 
 			@Override
 			public void NombreDeVoituresAGenerer(int nbVoitures) {
-				
+				simulSansVideo.setNombreDeVoituresMax(nbVoitures);
 			}
 
 			@Override

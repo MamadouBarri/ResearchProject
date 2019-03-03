@@ -62,6 +62,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();
 	private FenetreStatistiques fenStats;
 	private JCheckBox chkbxTraficAnormal;
+	private int nbVoituresMax;
 
 	/**
 	 * Launch the application.
@@ -108,6 +109,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		mntmChangerParametres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				leverEvenFenetreParametresListener();
+				
 			}
 		});
 		mnMenu.add(mntmChangerParametres);
@@ -171,7 +173,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 					double VitesseKmParHeure = (Integer)spnVitesse.getValue();
 					//convertir les km/h en m/s (1m/s = (1km/h)*(1000m/km)/(3600s/h)
 					double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
-					//if()
 					sceneAnimee1.setVitesse((int)VitesseMParSeconde);
 					sceneAnimee2.setVitesse((int)VitesseMParSeconde);
 				}
@@ -192,7 +193,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		spnTauxDApparition = new JSpinner();
 		spnTauxDApparition.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				//On modifie le taux pour les deux fenêtres d'animation
+				//On modifie le taux pour les deux fenêtres d'animation ainsi que le nombre de voitures dans le même écouteur
 				sceneAnimee1.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 				sceneAnimee2.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 				//System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
@@ -285,16 +286,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxTraficAnormal.setBounds(1462, 232, 112, 23);
 		contentPane.add(chkbxTraficAnormal);
 
-		JButton btnArret = new JButton("arret");
-		btnArret.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnArret.setBounds(1550, 355, 89, 23);
-		contentPane.add(btnArret);
-
 		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setBounds(1537, 410, 142, 414);
+		pnEmplacementsDesBoutons.setBounds(1503, 338, 142, 414);
 		contentPane.add(pnEmplacementsDesBoutons);
 		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
 		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
@@ -345,15 +338,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 		});//À CHANGER 
 		btnRecommencer.setBounds(34, 311, 76, 76);
 		pnEmplacementsDesBoutons.add(btnRecommencer);
-
-		JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
-		lblNombreDeVoituresAGenerer.setBounds(1425, 323, 214, 14);
-		contentPane.add(lblNombreDeVoituresAGenerer);
-
-		JLabel nbVoituresAGenerer = new JLabel("");
-		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
-		nbVoituresAGenerer.setBounds(1650, 323, 17, 14);
-		contentPane.add(nbVoituresAGenerer);
 	}
 
 	/**
@@ -456,8 +440,13 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public void setTaux(int taux) {
 		spnTauxDApparition.setValue(taux);
 	}
-	//public void setNbVoitures(int nbVoitures) {
-		//
-	//}
-	//A AJOUTER NBVOITURES
+	public void setNombreDeVoituresMax(int nbVoitures) {
+		this.nbVoituresMax = nbVoitures;
+		System.out.println("Le nombre de voitures générées sera : " + nbVoitures);
+		sceneAnimee1.setNbVoituresMax(nbVoitures);
+		sceneAnimee2.setNbVoituresMax(nbVoitures);
+	}
+	public int getNombreDeVoituresMax() {
+		return(this.nbVoituresMax);
+	}
 }
