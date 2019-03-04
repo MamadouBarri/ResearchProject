@@ -4,15 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.AffineTransform;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Queue;
 import javax.swing.JPanel;
 
 import geometrie.Direction;
@@ -143,18 +139,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//Dessiner l'échelle
 		g2d.setColor(Color.cyan);
 		g2d.drawString("Échelle: " + LARGEUR_REELLE + " m", (float)DISTANCE_BORDURE, (float)(LARGEUR_REELLE * modele.getPixelsParUniteY() - DISTANCE_BORDURE));
-
-
-		//g2d.setColor(Color.yellow);
-		//g2d.fill( new Ellipse2D.Double (xVoiture, xVoiture, largeurVoiture, largeurVoiture) );
+		
+		//Parcourir et dessiner chaque voiture
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 			Voiture v = i.next();
 			v.dessiner(g2d, mat);
 		}	
-		//if(!v.getVoitureActive()) {
-		//Utiliser le remove sur l'iterrateur pour eviter les erreurs concurrentModification
-		//	i.remove();
-		//}
 	}//fin paintComponent
 
 	/**
@@ -173,15 +163,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
-				Voiture v = i.next();//pour chaque voiture EST
-				//Voiture arretee
-				if(v.isVoitureArretee() && deplacement >0 ) {
-					//Deceleration a ajouter
-					//					double deplacementLocal = deplacement;
-					//					deplacementLocal -=TAUX_DECELERATION;
-					//					v.setXVoiture(v.getXVoiture()+deplacementLocal);
-
-				}
+				Voiture v = i.next();//pour chaque voiture qui s'en vers l'EST
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue pas de virage
@@ -536,23 +518,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
-
 	/**
-	 * Calcul des nouvelles positions pour
-	 * tous les objets de la scène
-	 */
-	private void calculerUneIterationPhysique() {
-		//tempsTotalEcoule += deltaT;
-		//System.out.println("\nTemps total écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé)");
-		//blocEtRessort.unPasEuler( deltaT );
-		///forceDeFriction = MoteurPhysique.calculerForceFriction(blocEtRessort.getMasseBlocEnKg(), blocEtRessort.getVitesse(), coefficientDeFriction);
-		//forceDeRappel = MoteurPhysique.calculerForceRappel(blocEtRessort.getPosition(), constanteDeRappel);
-		//blocEtRessort.setSommeDesForces(MoteurPhysique.sommeDesForces(forceDeFriction, forceDeRappel) );
-		//System.out.println(forceDeFriction);
-
-	}
-	/**
-	 * Affichage a la console avec le temps precis
+	 * Méthode qui fait l'affichage a la console avec le temps precisé
 	 * @param affichage Ce qu'on veut afficher a la console
 	 */
 	public void affichageAvecTemps(String affichage){
@@ -603,14 +570,14 @@ public class SceneAnimee extends JPanel implements Runnable{
 			proc.start();
 			enCoursDAnimation = true;
 		}
-	}//fin methode
+	}
 
 	/**
 	 * Demande l'arret du thread (prochain tour de boucle)
 	 */
 	public void arreter() {
 		enCoursDAnimation = false;
-	}//fin methode
+	}
 
 	/**
 	 * Arrête l'animation et reinitialise tout comme au début
@@ -619,20 +586,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 		arreter();
 		repaint();
 	}
-
-
-	/**
-	 * Avance la simulation d'une unique image 
-	 */
-	public void prochaineImage() {
-
-		//à completer....
-
-		calculerUneIterationPhysique();
-		repaint();
-
-	}
-
 	/**
 	 * Getter vrai si en cours d'animation et faux sinon
 	 * @return enCoursDAnimation boul qui spécifie si on est en cours d'animation
@@ -746,6 +699,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.trafficAnormale[tabTemporaire.length] = numDeVoie;
 		}
 	}
+	/**
+	 * Méthode qui permet d'ajouter du traffic anormal a une voie
+	 * @param numDeVoie la voie qui aura  du traffic anormal
+	 */
 	public void addTrafficNormale(int numDeVoie) {
 		if(this.enTrafficAnormale&&numDeVoie>0) {
 			int[] tabTemporaire = this.trafficAnormale;
@@ -757,6 +714,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 		}
 	}
+	/**
+	 * Méthode qui permet de spécifier si il y a du traffic anormal
+	 * @param enTrafficAnormale boolean qui indique s'il y a du traffic anormal
+	 */
 	public void setTrafficAnormale(boolean enTrafficAnormale) {
 		if(enTrafficAnormale) {
 			this.trafficAnormale = this.trafficAnormaleTemp;
@@ -767,17 +728,32 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.enTrafficAnormale = false;
 		}
 	}
+	/**
+	 * Methode qui retourne les voitures qui ont deja ete generees
+	 * @return le nombre de voitures deja generees
+	 */
 	public int getNbVoituresGenerees() {
 		return nbVoituresGenerees;
 	}
-
+	/**
+	 * Methode qui permet de specifier le nombre de voitures generees
+	 * @param nbVoituresGenerees le nombre de voitures generees
+	 */
 	public void setNbVoituresGenerees(int nbVoituresGenerees) {
 		this.nbVoituresGenerees = nbVoituresGenerees;
 	}
+	/**
+	 * Methode qui permet de get le nombre de voitures max a generer pendant 
+	 * la simulation
+	 * @return le nombre de voitures max a generer
+	 */
 	public int getNbVoituresMax() {
 		return nbVoituresMax;
 	}
-
+	/**
+	 * Methode qui permet de specifier le nombre de voitures max a generer pendant
+	 * @param nbVoituresMax le nombre de voitures max quon desire generer
+	 */
 	public void setNbVoituresMax(int nbVoituresMax) {
 		this.nbVoituresMax = nbVoituresMax;
 	}
