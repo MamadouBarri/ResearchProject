@@ -17,13 +17,11 @@ import geometrie.Lumiere;
 import geometrie.Voiture;
 import modele.ModeleAffichage;
 /**
- * Classe de la scène d'animation de l'intersection
+ * Classe de la scène d'animation d'une intersection simple et isolée sur laquelle des voitures avec
+ * des directions aleatoires et des actions aleatoires sont generees.
  * @author Mamadou
- *
  */
 public class SceneAnimee extends JPanel implements Runnable{
-
-
 	/**
 	 * Numero par defaut
 	 */

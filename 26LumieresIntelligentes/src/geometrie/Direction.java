@@ -1,9 +1,12 @@
 package geometrie;
 
 import java.util.Random;
-
+/**
+ * Cette classe va gerer la generation du parametre Direction de chaque voiture avec des probabilites selon le traffic mis en place
+ * @author Mamadou Barri
+ *
+ */
 public class Direction extends Ligne {
-	//
 	//varbiales
 	private String descriptionDirection="";
 	private int numDirection;
@@ -13,7 +16,10 @@ public class Direction extends Ligne {
 	private int probVoie4 = 25;
 	private int probabiliteTotale=100;
 	private int nbVoiesNormales=4;
-
+	//Mamadou
+	/**
+	 * Constructeur de la direction, qui genere une direction aleatoire et associe une description en chaine
+	 */
 	public Direction() {
 		genererDirectionVoiture();
 		switch (numDirection)
@@ -36,13 +42,28 @@ public class Direction extends Ligne {
 			break;
 		}
 	}
+	//Mamadou
+	/**
+	 * Methode qui retourne la chaine descriptif de la direction
+	 * @return la direction en chaine
+	 */
 	public String toString() {
 		return(descriptionDirection);
 	}
+	//Mamadou
+	/**
+	 * Methode qui permet de specifier la direction d'un objet direction
+	 * @param numDirection le numero de la direction
+	 */
 	public void setDirection(int numDirection) {
 		this.numDirection = numDirection;
 
 	}
+	//Mamadou
+	/**
+	 * Methode qui permet de get la direction de l'objet
+	 * @return le numero de la direction
+	 */
 	public int getNumDirection() {
 		return numDirection;
 	}
@@ -69,6 +90,7 @@ public class Direction extends Ligne {
 			}
 		}
 	}
+	//Reiner
 	/**
 	 * Double la chance qu'une voiture ait la direction choisie
 	 * @param numDeVoie Voie qu'on désire doubler la probabilité qu'une voiture apparait dessus
@@ -95,6 +117,7 @@ public class Direction extends Ligne {
 			nbVoiesNormales--;
 		}
 	}
+	//Reiner
 	/**
 	 * Normalize la chance qu'une voiture ait une certaine direction choisie
 	 * @param numDeVoie Voie qu'on désire normaliser la probabilité qu'une voiture apparait dessus
@@ -121,6 +144,7 @@ public class Direction extends Ligne {
 			nbVoiesNormales++;
 		}
 	}
+	//Reiner
 	public void setToutNormal() {
 		probVoie1 = 25;
 		probVoie2 = 25;
