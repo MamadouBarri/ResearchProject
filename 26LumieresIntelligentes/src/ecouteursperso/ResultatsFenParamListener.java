@@ -2,6 +2,11 @@ package ecouteursperso;
 
 import java.util.EventListener;
 
+/**
+ * Écouteur personnel qui permet à la fenêtre de paramètres de communiquer les paramètres de la simulation avec la fenêtre de départ
+ * @author Gayta
+ */
+
 public interface ResultatsFenParamListener extends EventListener{
 	
 	public void VitesseDesVoitures(int vitesse);

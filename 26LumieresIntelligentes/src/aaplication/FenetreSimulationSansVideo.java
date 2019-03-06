@@ -38,8 +38,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
-
-
+/**
+ * JFrame qui compare notre algorithme à une intersection normale dans la vraie vie
+ * avec une video d'une intersection et des simulations
+ * @author Gayta
+ *
+ */
 public class FenetreSimulationSansVideo extends JFrame {
 	////
 	private JPanel contentPane;

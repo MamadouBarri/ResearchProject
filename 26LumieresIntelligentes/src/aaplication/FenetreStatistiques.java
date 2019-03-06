@@ -9,7 +9,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
-
+/**
+ * JFrame contenant des statistiques qui comparent notre algorithme à des feux de circulations normals
+ * @author Gayta
+ *
+ */
 public class FenetreStatistiques extends JFrame {
 
 	private JPanel contentPane;

@@ -19,7 +19,7 @@ import modele.ModeleAffichage;
 /**
  * Classe de la scène d'animation d'une intersection simple et isolée sur laquelle des voitures avec
  * des directions aleatoires et des actions aleatoires sont generees.
- * @author Mamadou
+ * @author Mamadou & Reiner
  */
 public class SceneAnimee extends JPanel implements Runnable{
 	/**
@@ -90,7 +90,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Code des lumiere
 	private final int VERTE = 0;
 	private final int ROUGE = 2;
-
+	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
 	 */
@@ -99,6 +99,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		setBackground(Color.gray);
 		trafficAnormale = new int[1];
 	}
+	//Mamadou et Reiner
 	/**
 	 * Dessine l'intersection avec les voitures, les lumièrs et la route 
 	 * @param g Le conexte graphique
@@ -144,7 +145,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			v.dessiner(g2d, mat);
 		}	
 	}//fin paintComponent
-
+	//Mamadou et Reiner
 	/**
 	 * Animation de la balle
 	 */
@@ -448,7 +449,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture((v.getYVoiture()-deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE/3.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/3.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -516,6 +517,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
+	//Mamadou
 	/**
 	 * Méthode qui fait l'affichage a la console avec le temps precisé
 	 * @param affichage Ce qu'on veut afficher a la console
@@ -526,7 +528,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		String strDate = sdfDate.format(maintenant);
 		System.out.println("[" + strDate + "] " + affichage);
 	}
-
+	//Mamadou
 	/**
 	 * Méthode qui ajoute une nouvelle voiture dans l'intersection
 	 */
@@ -558,7 +560,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//pour linstants jajoute dans voitures general
 		voitures.add(voiture);
 	}
-
+	//Mamadou
 	/**
 	 * Demarre le thread s'il n'est pas deja demarre
 	 */
@@ -569,14 +571,14 @@ public class SceneAnimee extends JPanel implements Runnable{
 			enCoursDAnimation = true;
 		}
 	}
-
+	//Mamadou
 	/**
 	 * Demande l'arret du thread (prochain tour de boucle)
 	 */
 	public void arreter() {
 		enCoursDAnimation = false;
 	}
-
+	//Mamadou
 	/**
 	 * Arrête l'animation et reinitialise tout comme au début
 	 */
@@ -584,6 +586,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		arreter();
 		repaint();
 	}
+	//Mamadou
 	/**
 	 * Getter vrai si en cours d'animation et faux sinon
 	 * @return enCoursDAnimation boul qui spécifie si on est en cours d'animation
@@ -591,6 +594,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public boolean getEnCoursDAnimation() {
 		return enCoursDAnimation;
 	}
+	//Mamdou
 	/**
 	 * Change le temps pour le sleep du thread
 	 * @param tempsDuSleep Nouveua temps a appliquer au sleep
@@ -598,6 +602,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setTempsDuSleep(int tempsDuSleep) {
 		this.tempsDuSleep = tempsDuSleep;
 	}
+	//Mamadou
 	/**
 	 * Retourne le temps de sleep actuel
 	 * @return temps du sleep actuel
@@ -605,6 +610,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public int getTempsDuSleep() {
 		return (int) tempsDuSleep;
 	}
+	//Mamadou
 	/**
 	 * Modifie le pas (intervalle) de la simulation
 	 * @param deltaT le pas (intervalle) de la simulation, exprime en secondes
@@ -613,6 +619,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		this.deltaT = deltaT;
 
 	}
+	//Mamadou
 	/**
 	 * Retourne le pas intervalle) de la simulation
 	 * @return le pas intervalle) de la simulation, exprime en secondes
@@ -620,6 +627,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public double getDeltaT() {
 		return (deltaT);
 	}
+	//Reiner
 	/**
 	 * Modifie le nombre de boucles nécessaires avant de créer une voiture
 	 * @param taux Le taux d'apparition des voitures en voitures/secondes.
@@ -631,6 +639,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		System.out.println("Nombre de boucle sleep avant une nouvelle voiture : " + this.nbBouclesAvantNouvelleVoiture); //Test
 
 	}
+	//Mamadou
 	/**
 	 * Getter de la largeur reelle
 	 * @return LARGEUR_REELLE retourne la constante de la largeur reelle
@@ -638,8 +647,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public double getLARGEUR_REELLE() {
 		return LARGEUR_REELLE;
 	}
+	//Reiner
 	/**
-	 * Méthode qui change la couleur des lumières
+	 * Méthode qui change la couleur des lumières en faisant avancer le cycle
 	 */
 	private void changeCouleurLumieres(){
 		if(couleur==0) {
@@ -670,6 +680,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 		}
 	}
+	//Mamadou
 	/**
 	 * Setter qui change le nombre de voies horizontalemnt
 	 * @param nbVoiesHorizontale le nombre de voie a l'horizontale
@@ -678,15 +689,24 @@ public class SceneAnimee extends JPanel implements Runnable{
 		this.nbVoiesHorizontale= nbVoiesHorizontale; 
 	}
 	/**
-	 * Méthode qui converti les vitesses en m/s à des vitesses en pixels/boucle de run
+	 * Setter qui modifie la paramètre de vitesse de la scène
 	 * @param vitesse
 	 */
 	public void setVitesse(double vitesse) {
 		this.vitesse = vitesse;
 	}
+	//Reiner
+	/**
+	 *Méthode qui converti les vitesses en m/s à des vitesses en pixels/boucle de run
+	 */
 	public void calculerVitesse() {
 		this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
 	}
+	//Reiner
+	/**
+	 * Méthode qui rend le traffic d'une voie normale
+	 * @param numDeVoie int indiquant la voie qu'on veut remettre à normal
+	 */
 	public void addTrafficAnormale(int numDeVoie) {
 		if(this.enTrafficAnormale&&numDeVoie>0) {
 			int[] tabTemporaire = this.trafficAnormale;
@@ -697,9 +717,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.trafficAnormale[tabTemporaire.length] = numDeVoie;
 		}
 	}
+	//Reiner
 	/**
 	 * Méthode qui permet d'ajouter du traffic anormal a une voie
-	 * @param numDeVoie la voie qui aura  du traffic anormal
+	 * @param numDeVoie int indiquant la voie qui aura  du traffic anormal
 	 */
 	public void addTrafficNormale(int numDeVoie) {
 		if(this.enTrafficAnormale&&numDeVoie>0) {
@@ -712,6 +733,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 		}
 	}
+	//Reiner
 	/**
 	 * Méthode qui permet de spécifier si il y a du traffic anormal
 	 * @param enTrafficAnormale boolean qui indique s'il y a du traffic anormal
@@ -726,6 +748,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			this.enTrafficAnormale = false;
 		}
 	}
+	//Mamadou
 	/**
 	 * Methode qui retourne les voitures qui ont deja ete generees
 	 * @return le nombre de voitures deja generees
@@ -733,6 +756,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public int getNbVoituresGenerees() {
 		return nbVoituresGenerees;
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de specifier le nombre de voitures generees
 	 * @param nbVoituresGenerees le nombre de voitures generees
@@ -740,6 +764,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setNbVoituresGenerees(int nbVoituresGenerees) {
 		this.nbVoituresGenerees = nbVoituresGenerees;
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de get le nombre de voitures max a generer pendant 
 	 * la simulation
@@ -748,6 +773,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public int getNbVoituresMax() {
 		return nbVoituresMax;
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de specifier le nombre de voitures max a generer pendant
 	 * @param nbVoituresMax le nombre de voitures max quon desire generer

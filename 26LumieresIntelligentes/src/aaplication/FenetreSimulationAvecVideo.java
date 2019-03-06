@@ -28,7 +28,12 @@ import javax.swing.event.ChangeListener;
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
 import sceneAnimee.SceneAnimee;
-
+/**
+ * JFrame qui compare notre algorithme à un système de feux de circulations normales 
+ * avec des simulations
+ * @author Gayta
+ *
+ */
 public class FenetreSimulationAvecVideo extends JFrame {
 		private JPanel contentPane;
 		private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();

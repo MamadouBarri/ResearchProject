@@ -11,7 +11,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * JFrame permettant l'utilisateur de choisir une vidéo d'une intersection dans l'ordinateur
+ * @author Gayta
+ *
+ */
 public class FenetreFileChooser extends JFrame {
 
 	private JPanel contentPane;

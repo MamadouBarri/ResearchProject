@@ -24,7 +24,8 @@ public class ModeleAffichage {
 	private double pixelsParUniteY;
 	private AffineTransform matMC;
 	
-	
+
+	//Mamadou
 	/**
 	 * Permet de créer un objet ModelAffichage, pouvant mémoriser la matrice (et autres valeurs) de transformation pour passer du monde vers le composant. les dimensions du monde 
 	 * réel sont passées en paramètre (largeur et hauteur). Si le rapport entre les dimensions en pixels n'est pas identique au rapport entre les dimensions réelles, il y aura distortion.
@@ -56,7 +57,8 @@ public class ModeleAffichage {
 		this.matMC = mat; //on mémorise la matrice (qui pourra être retournée via le getter associé)
 		
 	}
-	
+
+	//Mamadou
 	/**
 	 * Permet de créer un objet ModeleAffichage, pouvant mémoriser la matrice (et autres valeurs) de transformation pour passer du monde vers le composant. Une des dimensions du monde 
 	 * réel est passée en paramètre (largeur ou hauteur). L'autre dimension sera  calculée de façon à n'introduire aucune distortion.
@@ -102,7 +104,8 @@ public class ModeleAffichage {
 		
 	}//fin constructeur
 
-	
+
+	//Mamadou
 	/**
 	 * Création d'un objet ModeleAffichage où la dimension passée en paramètre est forcément la largeur du monde
 	 * 
@@ -116,7 +119,8 @@ public class ModeleAffichage {
 		this( largPixels, hautPixels, xOrigUnitesReelle, yOrigUnitesReelle, dimensionEnUnitesReelles, true);
 	}
 	
-	
+
+	//Mamadou
 	/**
 	 * Création d'un objet ModeleAffichage où l'origine du monde réel est à 0,0
 	 * 
@@ -128,7 +132,8 @@ public class ModeleAffichage {
 	public ModeleAffichage(double largPixels, double hautPixels, double dimensionEnUnitesReelles, boolean typeLargeur) {
 		this(largPixels, hautPixels, 0, 0, dimensionEnUnitesReelles, typeLargeur);
 	}
-	
+
+	//Mamadou
 	/**
 	 *  Création d'un objet ModeleAffichage où l'origine du monde réel est à 0,0, et où la dimension passée en paramètre est forcément la largeur du monde
 	 *  
@@ -141,7 +146,8 @@ public class ModeleAffichage {
 	public ModeleAffichage(double largPixels, double hautPixels, double dimensionEnUnitesReelles) {
 		this(largPixels, hautPixels, 0, 0, dimensionEnUnitesReelles, true);
 	}
-	
+
+	//Mamadou
 	/**
 	 * Retourne une copie de la matrice monde-vers-composant qui a été calculée dans le constructeur
 	 * @return La matrice monde-vers-composant
@@ -150,7 +156,8 @@ public class ModeleAffichage {
 		//on décide de retourner une copie de celle qui est mémorisée, pour éviter qu'elle soit modifiée
 		return new AffineTransform (matMC);
 	}
-	
+
+	//Mamadou
 	/**
 	 * Retourne la hauteur du monde, en unités réelles
 	 * @return La hauteur du monde, en unités réelles
@@ -158,6 +165,7 @@ public class ModeleAffichage {
 	public double getHautUnitesReelles() {
 		return hautUnitesReelles;
 	}
+	//Mamadou
 
 	/**
 	 * Retourne la largeur du monde, en unités réelles
@@ -167,6 +175,7 @@ public class ModeleAffichage {
 		return largUnitesReelles;
 	}
 
+	//Mamadou
 	/**
 	 * Retourne le nombre de pixels contenus dans une unité du monde réel, en x
 	 * @return Le nombre de pixels contenus dans une unité du monde réel, en x
@@ -174,6 +183,7 @@ public class ModeleAffichage {
 	public double getPixelsParUniteX() {
 		return pixelsParUniteX;
 	}
+	//Mamadou
 
 	/**
 	 * Retourne le nombre de pixels contenus dans une unité du monde réel, en y
@@ -182,6 +192,7 @@ public class ModeleAffichage {
 	public double getPixelsParUniteY() {
 		return pixelsParUniteY;
 	}
+	//Mamadou
 
 	/**
 	 * Retourne la largeur en pixels du composant auquel s'appliquera la transformation 
@@ -190,6 +201,7 @@ public class ModeleAffichage {
 	public double getLargPixels() {
 		return largPixels;
 	}
+	//Mamadou
 
 	/**
 	 * Retourne la hauteur en pixels du composant auquel s'appliquera la transformation 
@@ -198,6 +210,7 @@ public class ModeleAffichage {
 	public double getHautPixels() {
 		return hautPixels;
 	}
+	//Mamadou
 
 	/**
 	 * Retourne l'origine, en x, de la portion du monde réel considérée
@@ -206,6 +219,7 @@ public class ModeleAffichage {
 	public double getxOrigUnitesReelle() {
 		return xOrigUnitesReelle;
 	}
+	//Mamadou
 
 	/**
 	 * Retourne l'origine, en y, de la portion du monde réel considérée

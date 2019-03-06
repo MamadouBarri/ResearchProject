@@ -8,7 +8,13 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import interfaces.Dessinable;
-import interfaces.LumiereListener;
+
+/**
+ * Cette classe est une classe dessinable et dessine une lumiere de circulation en fonction
+ * de son emplacement dans une scène et de sa couleur
+ * @author Reiner Gayta
+ *
+ */
 
 public class Lumiere implements Dessinable{
 

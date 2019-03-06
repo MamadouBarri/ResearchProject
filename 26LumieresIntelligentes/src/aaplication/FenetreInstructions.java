@@ -19,7 +19,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-
+/**
+ * JFrame contenant les instructions qui indiquent comment utiliser l'application
+ * @author Gayta
+ *
+ */
 public class FenetreInstructions extends JFrame {
 	//listes contenant les objets qui veulent ecouter à cet objet
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();

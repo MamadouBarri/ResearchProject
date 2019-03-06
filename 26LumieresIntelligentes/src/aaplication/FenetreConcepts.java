@@ -20,7 +20,11 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-
+/**
+ * JFrame contenant les concepts scientifiques utilisés pour ce projet
+ * @author Gayta
+ *
+ */
 public class FenetreConcepts extends JFrame {
 	
 	//Listes contenant les objets qui veulent écouter à cette fenetre

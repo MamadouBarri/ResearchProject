@@ -16,7 +16,7 @@ import interfaces.Dessinable;
 /**
  * Cette classe génère l'image, la direction et l'action d'une voiture de façon aléatoire.
  * C'est également un objet dessinable et on le dessine en fonction de sa direction et de l'image.
- * @author Mamadou Barri
+ * @author Mamadou Barri & Reiner Gayta
  */
 public class Voiture implements Dessinable {
 	//Image de la voiture

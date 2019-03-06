@@ -33,7 +33,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
+/**
+ * JFrame qui permet l'utilisateur de modifier les paramètres de la simulation
+ * @author Gayta
+ *
+ */
 public class FenetreParametres extends JFrame {
 
 	private JPanel contentPane;

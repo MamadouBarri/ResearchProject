@@ -40,7 +40,11 @@ import ecouteursperso.VisibiliteFenParamListener;
 import ecouteursperso.VisibiliteFenSimulListener;
 import ecouteursperso.VisibiliteFenSimulVideoListener;
 import ecouteursperso.ResultatsFenParamListener;
-
+/**
+ * JFrame de départ permettant l'utilisateur d'accéder tous les fenêtres de notre application
+ * @author Gayta
+ *
+ */
 public class App26LumieresIntelligentes extends JFrame {
 
 	private JPanel contentPane;
