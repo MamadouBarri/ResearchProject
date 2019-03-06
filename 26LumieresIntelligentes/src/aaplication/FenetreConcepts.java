@@ -48,10 +48,10 @@ public class FenetreConcepts extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+	//Reiner
+		/**
+		 * Constructeur de la fenêtre
+		 */
 	public FenetreConcepts() {
 		setTitle("Concepts scientifiques");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

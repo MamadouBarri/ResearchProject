@@ -11,6 +11,10 @@ public class Action {
 	//variables
 	private String descriptionAction;
 	private int numAction;
+	//Mamadou
+	/**
+	 * Constructeur de l'action aléatoire d'une voiture
+	 */
 	public Action() {
 		genererActionVoiture();
 		switch (numAction)
@@ -27,7 +31,7 @@ public class Action {
 		}
 		
 	}
-
+	//Mamadou
 	/**
 	 * toString de l'action qui retourne la chaine descriptive
 	 * return descriptionAction une chaine decrivant l'action de la voiture
@@ -35,6 +39,7 @@ public class Action {
 	public String toString() {
 		return(descriptionAction);
 	}
+	//Mamadou
 	/**
 	 * Methode qui genere une direction aleatoire pour la voitre, champ: -1 a 1
 	 */

@@ -34,9 +34,10 @@ public class FenetreStatistiques extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Reiner
+		/**
+		 * Constructeur de la fenêtre
+		 */
 	public FenetreStatistiques() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 454, 650);

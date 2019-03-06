@@ -61,6 +61,7 @@ public class Voiture implements Dessinable {
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 
+	//Mamadou
 	/**
 	 * Constructeur de la voiture qui génère: image, direction et action
 	 * @param longueurVoiturePixels longueur d'une voiture en pixels
@@ -101,8 +102,9 @@ public class Voiture implements Dessinable {
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
 	}
 
+	//Mamadou et Reiner
 	/**
-	 * Constructeur d'une voiture avec traffic anormal
+	 * Constructeur de la voiture qui génère: image, direction et action, avec traffic anormal
 	 * @param longueurVoiturePixels longueur d'une voiture en pixels
 	 * @param largeurVoiturePixels largeur d'une voiture en pixels
 	 * @param dimensionRoutePixels dimension d'une route en pixels
@@ -146,6 +148,7 @@ public class Voiture implements Dessinable {
 		action = new Action();
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
 	}
+	//Mamadou & Reiner
 	/**
 	 * Permet de dessiner la voiture en forme d'une image aleatoire qui aura
 	 * un scale pour transformer les coordonnees en double et
@@ -314,6 +317,7 @@ public class Voiture implements Dessinable {
 		t.scale(1/scaleX, scaleY);
 		g2d.setTransform(matInitial);
 	}
+	//Mamadou
 	/**
 	 * Gener une image qui va representer la voiture
 	 */
@@ -322,6 +326,7 @@ public class Voiture implements Dessinable {
 		int aleatoire = rn.nextInt(9)+ 1;
 		numImage = aleatoire;
 	}
+	//Mamadou
 	/**
 	 * Methode qui get si la voiture est active ou pas
 	 * @return boolean decrivant si la voiture est active
@@ -329,6 +334,7 @@ public class Voiture implements Dessinable {
 	public boolean getVoitureActive() {
 		return(voitureActive);
 	}
+	//Mamadou
 	/**
 	 * Methode qui set le boolean indiquant si la voiture est active ou pas
 	 * @param voitureActive boolean decrivant si la voiture est active
@@ -336,6 +342,7 @@ public class Voiture implements Dessinable {
 	public void setVoitureActive(boolean voitureActive) {
 		this.voitureActive = voitureActive;
 	}
+	//Mamadou
 	/**
 	 * Affichage a la console avec le temps precis
 	 * @param affichage Ce qu'on veut afficher a la console
@@ -346,6 +353,7 @@ public class Voiture implements Dessinable {
 		String strDate = sdfDate.format(maintenant);
 		System.out.println("[" + strDate + "] " + affichage);
 	}
+	//Mamadou
 
 	/**
 	 * Methode qui permet de get la position de la voiture
@@ -353,6 +361,7 @@ public class Voiture implements Dessinable {
 	public double getXVoiture() {
 		return(xVoiture);
 	}
+	//Mamadou
 	/**
 	 * Methde qui permet de set la position X de la voiture
 	 * 
@@ -360,6 +369,7 @@ public class Voiture implements Dessinable {
 	public  void setXVoiture(double xVoiture) {
 		this.xVoiture = xVoiture;
 	}
+	//Mamadou
 
 	/**
 	 * Methode qui permet de get la position de la voiture
@@ -367,13 +377,14 @@ public class Voiture implements Dessinable {
 	public double getYVoiture() {
 		return(yVoiture);
 	}
+	//Mamadou
 	/**
 	 * setter de la position X de la voiture
 	 */
 	public  void setYVoiture(double d) {
 		this.yVoiture = d;
 	}
-
+	//Reiner
 	/**
 	 * getter de la direction
 	 * @return la direction direciton de la voiture en quesiton
@@ -381,6 +392,7 @@ public class Voiture implements Dessinable {
 	public Direction getDirection() {
 		return(this.direction);
 	}
+	//Reiner
 	/**
 	 * getter du tableau du traffic anormal
 	 * @param trafficAnormal tableau contenant les direction ayant du trafic anormal
@@ -388,6 +400,7 @@ public class Voiture implements Dessinable {
 	public void setAnormale(int[] trafficAnormal) {
 		this.setTrafficAnormal(trafficAnormal);
 	}
+	//Reiner
 	/**
 	 * Getter de la probabilite de generation pour la premiere voiture
 	 * @return direction.getProbVoie1 int representant la probabilité qu'une voiture se déplace vers le sud
@@ -395,6 +408,7 @@ public class Voiture implements Dessinable {
 	public int getProbVoie1() {
 		return direction.getProbVoie1();
 	}
+	//Mamadou
 	/**
 	 * Getter du boolean qui dit si la voiture est proche de celle devant
 	 * @return boolean indiquant si la voiture devant est trop proche
@@ -402,7 +416,7 @@ public class Voiture implements Dessinable {
 	public boolean isVoitureProche() {
 		return voitureProche;
 	}
-
+	//Mamadou
 	/**
 	 * Setter de la proximite de la voiture devant
 	 * @param voitureProche boolean indiquant si la voiture devant se trouve trop proche
@@ -410,7 +424,7 @@ public class Voiture implements Dessinable {
 	public void setVoitureProche(boolean voitureProche) {
 		this.voitureProche = voitureProche;
 	}
-
+	//Mamadou
 	/**
 	 * Getter qui retourne vrai si la voiuture est arretee
 	 * @return voitureArretee vrai si la voiture est en etat d'arret
@@ -418,7 +432,7 @@ public class Voiture implements Dessinable {
 	public boolean isVoitureArretee() {
 		return voitureArretee;
 	}
-
+	//Mamadou
 	/**
 	 * Setter de l'arret de la voiture
 	 * @param voitureArretee l'etat d'arret de la voiture
@@ -426,26 +440,26 @@ public class Voiture implements Dessinable {
 	public void setVoitureArretee(boolean voitureArretee) {
 		this.voitureArretee = voitureArretee;
 	}
+	//Reiner
 	/**
 	 * Setter pour le boolean indiquant si la voiture tourne ou non
 	 * @param enRotation boolean indiquant si la voiture tourne
-	 * @author Gayta
 	 */
 	public void setEnRotation(boolean enRotation) {
 		this.enRotation = enRotation;
 	}
+	//Reiner
 	/**
 	 * Getter qui retourne vrai si la voiture tourne
 	 * @return enRotation boolean qui indique si la voiture tourne ou non
-	 * @author Gayta
 	 */
 	public boolean getEnRotation() {
 		return this.enRotation;
 	}
+	//Reiner
 	/**
 	 * Getter qui retourne la valeur de déplacement d'une voiture
 	 * @return deplacementTemp la valeur de déplacement d'une voiture
-	 * @author Gayta
 	 */
 	public double getDeplacement() {
 		return this.deplacementTemp;
@@ -453,19 +467,19 @@ public class Voiture implements Dessinable {
 	/**
 	 * Setter qui modifie la valeur de déplacement d'une voiture
 	 * @param deplacement la valeur de déplacement d'une voiture
-	 * @author Gayta
 	 */
 	public void setDeplacement(double deplacement) {
 		this.deplacementTemp = deplacement;
 	}
+	//Reiner
 	/**
 	 * Getter qui retourne la direction de virage d'une voiture en valeur int (0=tout droit; 1=tourne droite; 2=tourne gauche)
 	 * @return directionDeVirage int représentant la direction de virage d'une voiture
-	 * @author Gayta
 	 */
 	public int getDirectionDeVirage() {
 		return this.directionDeVirage;
 	}
+	//Reiner
 	/**
 	 * Getter qui retourne le tableau du traffic anormal
 	 * @return tableau du traffic anormal
@@ -473,6 +487,7 @@ public class Voiture implements Dessinable {
 	public int[] getTrafficAnormal() {
 		return trafficAnormal;
 	}
+	//Reiner
 	/**
 	 * Setter qui met change le traffic anormal
 	 * @param trafficAnormal 	tableau du traffic anormal

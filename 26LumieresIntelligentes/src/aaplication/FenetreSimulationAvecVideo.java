@@ -66,8 +66,9 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			});
 		}
 
+		//Reiner
 		/**
-		 * Create the frame.
+		 * Constructeur de la fenêtre
 		 */
 		public FenetreSimulationAvecVideo() {
 			//création de la fenêtre de statistiques
@@ -200,6 +201,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			sceneAnimee2.setBounds(174, 348, 260, 260);
 			pnSimulations.add(sceneAnimee2);
 		}
+		//Reiner
 		/**
 		 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
 		 * @param objEcouteur objet qui desire savoir quand on veut rouvrir la fenetre de depart
@@ -207,6 +209,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 		public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
 			listeEcouteurs.add(objEcouteur);
 		}
+		//Reiner
 		/**
 		 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de depart
 		 */
@@ -215,6 +218,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 				ecout.rendreFenetreDepartVisible();
 			}
 		}
+		//Reiner
 		/**
 		 * ajoute in objet à la liste d'objet qui desire savoir quand on veut rouvrir la fenetre de parametres
 		 * @param visibiliteFenParamListener objet qui desire savoir quand on veut rouvrir la fenetre de parametres
@@ -222,6 +226,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 		public void addVisibiliteFenParamListener(VisibiliteFenParamListener visibiliteFenParamListener) {
 			listeEcouteursFenParam.add(visibiliteFenParamListener);
 		}
+		//Reiner
 		/**
 		 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de parametres
 		 */

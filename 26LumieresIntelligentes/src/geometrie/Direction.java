@@ -144,6 +144,9 @@ public class Direction extends Ligne {
 		}
 	}
 	//Reiner
+	/**
+	 * Setter qui rend tous les voies normales
+	 */
 	public void setToutNormal() {
 		probVoie1 = 25;
 		probVoie2 = 25;
@@ -151,15 +154,35 @@ public class Direction extends Ligne {
 		probVoie4 = 25;
 		nbVoiesNormales = 4;
 	}
+	//Reiner
+	/**
+	 * Getter qui retourne la probabilité qu'une voiture se déplace vers la direction nord
+	 * @return probVoie1 la probabilité qu'une voiture se déplace vers la direction nord
+	 */
 	public int getProbVoie1() {
 		return probVoie1;
 	}
+	//Reiner
+	/**
+	 * Getter qui retourne la probabilité qu'une voiture se déplace vers la direction ouest
+	 * @return probVoie2 la probabilité qu'une voiture se déplace vers la direction ouest
+	 */
 	public int getProbVoie2() {
 		return probVoie2;
 	}
+	//Reiner
+	/**
+	 * Getter qui retourne la probabilité qu'une voiture se déplace vers la direction sud
+	 * @return probVoie3 la probabilité qu'une voiture se déplace vers la direction sud
+	 */
 	public int getProbVoie3() {
 		return probVoie3;
 	}
+	//Reiner
+	/**
+	 * Getter qui retourne la probabilité qu'une voiture se déplace vers la direction est
+	 * @return probVoie4 la probabilité qu'une voiture se déplace vers la direction est
+	 */
 	public int getProbVoie4() {
 		return probVoie4;
 	}

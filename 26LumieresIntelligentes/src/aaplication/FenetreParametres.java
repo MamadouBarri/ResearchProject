@@ -78,10 +78,10 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+	//Reiner
+		/**
+		 * Constructeur de la fenêtre
+		 */
 	public FenetreParametres() {
 		setTitle("Modifier les param\u00E8tres de la simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -319,7 +319,11 @@ public class FenetreParametres extends JFrame {
 		spnNbVoitures.setBounds(154, 113, 48, 20);
 		panel.add(spnNbVoitures);
 	}
-	
+	//Reiner
+	/**
+	 * Setter qui permet de changer l'état des composantes qui modifient la simulaion
+	 * @param etat boolean indiquant l'état des composantes qui modifient la simulaion
+	 */
 	public void setEtatParams(boolean etat) {
 		spnTauxDApparition.setEnabled(etat);
 		spnVitesse.setEnabled(etat);
@@ -327,12 +331,18 @@ public class FenetreParametres extends JFrame {
 		chkbxTrfcAnom.setEnabled(etat);
 		btnChoisirVideo.setEnabled(!etat);
 	}
+	//Reiner
+	/**
+	 * Setter qui permet de changer l'état des composantes qui modifient le trafic de la simulaion
+	 * @param etat boolean indiquant l'état des composantes qui modifient le trafic de la simulaion
+	 */
 	public void setEtatVoiesAnom(boolean etat) {
 		chkbxTrfcAnom1.setEnabled(etat);
 		chkbxTrfcAnom2.setEnabled(etat);
 		chkbxTrfcAnom3.setEnabled(etat);
 		chkbxTrfcAnom4.setEnabled(etat);
 	}
+	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
 	 * @param objEcouteur objet ecouteur qui desire savoir quand on veut rouvrir la fenetre de depart
@@ -340,6 +350,7 @@ public class FenetreParametres extends JFrame {
 	public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
 		listeEcouteursFenDepart.add(objEcouteur);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de depart
 	 */
@@ -348,6 +359,7 @@ public class FenetreParametres extends JFrame {
 			ecout.rendreFenetreDepartVisible();
 		}
 	}
+	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de simulations sans video
 	 * @param visibiliteFenSimulListener objet qui desire savoir quand on veut ouvrir la fenetre de simulations sans video
@@ -355,6 +367,7 @@ public class FenetreParametres extends JFrame {
 	public void addVisibiliteFenSimulListener(VisibiliteFenSimulListener visibiliteFenSimulListener) {
 		listeEcouteursFenSimul.add(visibiliteFenSimulListener);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs qu'on desire ouvrir la fenetre de simulations sans video
 	 */
@@ -363,6 +376,7 @@ public class FenetreParametres extends JFrame {
 			ecout.rendreFenetreSimulationsSansVideoVisible();
 		}
 	}
+	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de simulations avec video
 	 * @param visibiliteFenSimulVideoListener objet qui desire savoir quand on veut ouvrir la fenetre de simulations avec video
@@ -370,6 +384,7 @@ public class FenetreParametres extends JFrame {
 	public void addVisibiliteFenSimulVideoListener(VisibiliteFenSimulVideoListener visibiliteFenSimulVideoListener) {
 		listeEcouteursFenSimulVideo.add(visibiliteFenSimulVideoListener);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs qu'on desire ouvrir la fenetre de simulations avec video
 	 */
@@ -378,9 +393,19 @@ public class FenetreParametres extends JFrame {
 			ecout.rendreFenetreSimulationsAvecVideoVisible();
 		}
 	}
+	//Reiner
+	/**
+	 * /**
+	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut modifier les pararmètres des simulations la fenetre de simulations avec video
+	 *  @param resultatsFenPramListener objet qui desire savoir quand on veut modifier les pararmètres des simulations la fenetre de simulations avec video
+	 */
 	public void addResultatsFenParamListener(ResultatsFenParamListener resultatsFenPramListener) {
 	    listeEcouteursDeParam.add(resultatsFenPramListener);
 	}
+	//Reiner
+		/**
+		 * indique aux objets ecouteurs les paramètres de la fenetre de simulations avec video
+		 */
 	private void leverEvenGetParams() {
 		for(ResultatsFenParamListener ecout : listeEcouteursDeParam) {
 			ecout.VitesseDesVoitures((int)spnVitesse.getValue());

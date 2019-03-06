@@ -83,9 +83,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 			}
 		});
 	}
-
+	//Reiner
 	/**
-	 * Create the frame.
+	 * Constructeur de la fenêtre
 	 */
 	public FenetreSimulationSansVideo(){
 		setTitle("Simulation");
@@ -352,6 +352,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		contentPane.add(nbVoituresAGenerer);
 	}
 
+	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
 	 * @param objEcouteur objet qui desire savoir si on veut rouvrir la fenetre de depart
@@ -359,6 +360,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
 		listeEcouteurs.add(objEcouteur);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de depart
 	 */
@@ -367,6 +369,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			ecout.rendreFenetreDepartVisible();
 		}
 	}
+	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objet qui desirent savoir quand on veut rouvrir la fenetre de parametres
 	 * @param visibiliteFenParamListener objet qui desire savoir quand on veut rouvrir la fenetre de parametres
@@ -374,6 +377,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public void addVisibiliteFenParamListener(VisibiliteFenParamListener visibiliteFenParamListener) {
 		listeEcouteursFenParam.add(visibiliteFenParamListener);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de parametres
 	 */
@@ -382,15 +386,25 @@ public class FenetreSimulationSansVideo extends JFrame {
 			ecout.rendreFenetreParamVisible();
 		}
 	}
+	//Reiner
+	/**
+	 * Setter qui indique à la scène qu'il y a du trafic anormal
+	 * @param anom boolean qui indique à la scène qu'il y a du trafic anormal
+	 */
 	public void setTraficAnormal(boolean anom) {
-		//sceneAnimee1.setTrafficAnormale(anom);
-		//sceneAnimee2.setTrafficAnormale(anom);
+		sceneAnimee1.setTrafficAnormale(anom);
+		sceneAnimee2.setTrafficAnormale(anom);
 		chkbxVoie3.setEnabled(anom);
 		chkbxVoie4.setEnabled(anom);
 		chkbxVoie2.setEnabled(anom);
 		chkbxVoie1.setEnabled(anom);
 		chkbxTraficAnormal.setSelected(anom);
 	}
+	//Reiner
+	/**
+	 * Setter qui donne du trafic anormale au liste contenant des numéros qui représentes une voie
+	 * @param tabVoiesAnom liste contenant des numéros qui représentes une voie 
+	 */
 	public void setVoieAnormale(int[] tabVoiesAnom) {
 		for(int i=0; i<tabVoiesAnom.length;i++) {
 			switch(tabVoiesAnom[i]) {
@@ -446,18 +460,38 @@ public class FenetreSimulationSansVideo extends JFrame {
 		}
 
 	}
+	//Reiner 
+	/**
+	 * Setter qui modifie la vitesse des voitures de la scène
+	 * @param vitesse la vitesse des voitures de la scène
+	 */
 	public void setVitesse(int vitesse) {
 		spnVitesse.setValue(vitesse);
 	}
+	//Reiner
+	/**
+	 * Setter qui modifie le taux d'apparition des voitures de la scène
+	 * @param taux le taux d'apparition des voitures de la scène
+	 */
 	public void setTaux(int taux) {
 		spnTauxDApparition.setValue(taux);
 	}
+	//Reiner
+	/**
+	 * Setter qui modifie le nombre de voitures générées par la scène
+	 * @param nbVoitures le nombre de voitures générées par la scène
+	 */
 	public void setNombreDeVoituresMax(int nbVoitures) {
 		this.nbVoituresMax = nbVoitures;
 		System.out.println("Le nombre de voitures générées sera : " + nbVoitures);
 		sceneAnimee1.setNbVoituresMax(nbVoitures);
 		sceneAnimee2.setNbVoituresMax(nbVoitures);
 	}
+	//Reiner
+		/**
+		 * Setter qui modifie le nombre de voitures maximum générées par la scène
+		 * @param nbVoitures le nombre de voitures maximum générées par la scène
+		 */
 	public int getNombreDeVoituresMax() {
 		return(this.nbVoituresMax);
 	}

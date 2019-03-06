@@ -23,6 +23,7 @@ public class Intersection implements Dessinable {
 	private final double largeurReelle; //En metres
 	//Geometrie
 	private Line2D.Double ligne;
+	//Mamadou
 	/**
 	 * Constructeur ou la position, la vitesse et l'acceleration  initiales sont spécifiés
 	 * @param position Vecteur incluant les positions en x et y du coin superieur-gauche
@@ -34,6 +35,7 @@ public class Intersection implements Dessinable {
 		this.largeurReelle = largeurReelle;
 		moitieRouteReelle = largeurReelle / 2.0;
 	}
+	//Mamadou
 	/**
 	 * Permet de dessiner la balle, sur le contexte graphique passe en parametre.
 	 * @param g2d contexte graphique
@@ -86,13 +88,15 @@ public class Intersection implements Dessinable {
 		}
 		
 	}//fin methode//
-	
+
+	//Mamadou
 	/**
 	 * Methode qui permet de creer les axes de la route
 	 */
 	public void creerAxes() {
 		ligne =new Line2D.Double(moitieRouteReelle, 0, moitieRouteReelle, moitieRouteReelle-DIMENSION_DIRECTION_REELLE/2.0);
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de get la moitie de la largeur reelle de la route
 	 * @return la moitie de la largeur reelle de la route
@@ -101,6 +105,7 @@ public class Intersection implements Dessinable {
 		return(moitieRouteReelle);
 	}
 	//Getters et setters
+	//Mamadou
 	/**
 	 * Methode qui permet de get le nombre de voies horizontales
 	 * @return nombre de voies horizontales
@@ -108,6 +113,7 @@ public class Intersection implements Dessinable {
 	public int getNbVoiesHorizontale() {
 		return nbVoiesHorizontale;
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de get le nombre de voies verticales
 	 * @return nombre de voies verticales

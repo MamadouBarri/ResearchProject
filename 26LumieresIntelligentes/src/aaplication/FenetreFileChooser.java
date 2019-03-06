@@ -36,10 +36,10 @@ public class FenetreFileChooser extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+	//Reiner
+		/**
+		 * Constructeur de la fenêtre
+		 */
 	public FenetreFileChooser() {
 		setTitle("Choisir une vid\u00E9o");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

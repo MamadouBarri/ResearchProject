@@ -46,10 +46,10 @@ public class FenetreInstructions extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+	//Reiner
+		/**
+		 * Constructeur de la fenêtre
+		 */
 	public FenetreInstructions() {
 		setTitle("Instructions");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

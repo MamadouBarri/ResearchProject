@@ -70,10 +70,10 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+	//Reiner
+		/**
+		 * Constructeur de la fenêtre
+		 */
 	public App26LumieresIntelligentes() {
 		//creation de la fentre de simulations avec video
 		simulAvecVideo = new FenetreSimulationAvecVideo();

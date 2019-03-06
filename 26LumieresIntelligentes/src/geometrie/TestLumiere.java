@@ -7,9 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import sceneAnimee.SceneAnimee;
-
+/**
+ * JFrame contenant une intersection avec des lumières
+ * permet de tester le dessinage, l'emplacement et la couleur des lumières de circulation
+ * @author Gayta
+ *
+ */
 public class TestLumiere extends JFrame {
-
 	private JPanel contentPane;
 
 	/**

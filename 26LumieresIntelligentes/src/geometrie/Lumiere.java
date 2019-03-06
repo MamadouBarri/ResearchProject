@@ -23,12 +23,19 @@ public class Lumiere implements Dessinable{
 	Ellipse2D.Double lumiereJaune;
 	Ellipse2D.Double lumiereRouge;
 	double x,y;
-	int direction,couleur;
+	int direction,couleur;//Code de couleur : 0=vert; 1=jaune; 2=rouge
 	Color rouge, jaune, vert;
 	double largeur, longueur, diametre, rayon;
 	boolean isInverse, isMaitre;
 	Lumiere maitre;
-	
+	/**
+	 * Constructeur de la lumière
+	 * @param x position de la lumière en x
+	 * @param y position de la lumière en y
+	 * @param largeur largeur de la lumière en pixels
+	 * @param couleur int indiquant la couleur de la lumière allumée (voir code de couleur en haut)
+	 * @param direction int indiquant la direction de la voie qu'elle dirige
+	 */
 	public Lumiere(double x, double y, double largeur, int couleur, int direction){
 		this.direction = direction;
 		this.couleur = couleur;
@@ -42,6 +49,11 @@ public class Lumiere implements Dessinable{
 		jaune = new Color(75,75,0);
 		vert = new Color(0,75,0);
 	}
+	/**
+	 * Permet de dessiner une lumière ayant des couleurs et directions différentes selon ses paramètres
+	 * @param g2d contexte graphique
+	 * @param matMC matrice de transformation monde-vers-composant
+	 */
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
 		AffineTransform matInitial = g2d.getTransform();
@@ -93,63 +105,93 @@ public class Lumiere implements Dessinable{
 		g2d.fill(lumiereVerte);
 		g2d.setTransform(matInitial);
 	}
-	//allume la lumiere rouge
+	//Reiner
+	/**
+	 * Change la couleur des cercles représentant les lumières pour donner l'impression
+	 * que la lumière rouge est allumée et que les autres sont éteintes
+	 */
 	public void setCouleurRouge() {
 		rouge = new Color(255,0,0);
 		jaune = new Color(75,75,0);
 		vert = new Color(0,75,0);
 	}
-	//allume la lumiere jaune
+	//Reiner
+		/**
+		 * Change la couleur des cercles représentant les lumières pour donner l'impression
+		 * que la lumière jaune est allumée et que les autres sont éteintes
+		 */
 	public void setCouleurJaune() {
 		rouge = new Color(75,0,0);
 		jaune = new Color(255,255,0);
 		vert = new Color(0,75,0);
 	}
-	//allume la lumiere verte
+	//Reiner
+		/**
+		 * Change la couleur des cercles représentant les lumières pour donner l'impression
+		 * que la lumière verte est allumée et que les autres sont éteintes
+		 */
 	public void setCouleurVert() {
 		rouge = new Color(75,0,0);
 		jaune = new Color(75,75,0);
 		vert = new Color(0,255,0);
 	}
-	//change la lumiere allumee
+	//Reiner
+	/**
+	 * Setter qui change la paramètre couleur de la lumière
+	 * @param couleur int indiquant la couleur de la lumière (voir code de couleur en haut)
+	 */
 	public void setCouleur(int couleur) {
 		this.couleur = couleur;
 	}
-	
+	//Reiner
+	/**
+	 * Getter qui retourne la couleur de lumière en forme de int (voir code de couleur en haut)
+	 * @return coueleur int indiquant al couleur de la lumière (voir code de couleur en haut)
+	 */
 	public int getCouleur() {
 		return this.couleur;
 	}
-	
+	//Reiner
+	/**
+	 * Getter qui retourne la longueur de la lumière en pixels
+	 * @return longueur de la lumière en pixels
+	 */
 	public double getLongueur() {
 		return this.longueur;
 	}
-	
+	//Reiner
+	/**
+	 * Getter qui retourne la largeur de la lumière en pixels
+	 * @return largeur de la lumière en pixels
+	 */
 	public double getLargeur() {
 		return this.largeur;
 	}
-	
+	//Reiner
+	/**
+	 * Setter qui permet de modifier l'emplacement X de la lumière
+	 * @param x position de la lumière en x
+	 */
 	public void setX(double x) {
 		this.x = x;
 	}
-	
+	//Reiner
+	/**
+	 * Setter qui permet de modifier l'emplacement Y de la lumière
+	 * @param y position de la lumière en y
+	 */
 	public void setY(double y) {
 		this.y = y;
 	}
-	
+	//Reiner
+	/**
+	 * Setter qui permet de modifier l'emplacement de la lumière
+	 * @param x position de la lumière en x
+	 * @param y position de la lumière en y
+	 */
 	public void setPosition(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
-
-	/*public void addLumiereListener( LumiereListener objEcout) {
-		listeEcouteurs.add(objEcout);
-	}
-	
-	private void leverEvenChangeCouleur() {
-		for (LumiereListener ecout : listeEcouteurs) {
-			ecout.changeDeCouleur(this.couleur);
-		}
-	}
-*/
 
 }
