@@ -147,7 +147,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	}//fin paintComponent
 	//Mamadou et Reiner
 	/**
-	 * Animation de la balle
+	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST
 	 */
 	@Override
 	public void run() {
@@ -697,7 +697,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	}
 	//Reiner
 	/**
-	 *Méthode qui converti les vitesses en m/s à des vitesses en pixels/boucle de run
+	 * Methode qui permet de calculer le deplacement avec la vitesse donnee
 	 */
 	public void calculerVitesse() {
 		this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
