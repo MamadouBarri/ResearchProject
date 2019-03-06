@@ -20,7 +20,7 @@ public class Intersection implements Dessinable {
 	//CONSTANTES
 	private final double DIMENSION_DIRECTION_REELLE = 10;
 	private final double DIMENSION_VOIE_REELLE = DIMENSION_DIRECTION_REELLE/2.0;
-	private final double LARGEUR_REELLE; //En metres
+	private final double largeurReelle; //En metres
 	//Geometrie
 	private Line2D.Double ligne;
 	/**
@@ -31,9 +31,8 @@ public class Intersection implements Dessinable {
 	 * @param diametre diametre (unites du monde reel)
 	 */
 	public Intersection(double largeurReelle) {
-		this.LARGEUR_REELLE = largeurReelle;
-		moitieRouteReelle = LARGEUR_REELLE / 2.0;
-		//nbTraits = (int)(moitieRouteReelle/2.0-DIMENSION_DIRECTION_REELLE)/LARGEUR_TRAITS;
+		this.largeurReelle = largeurReelle;
+		moitieRouteReelle = largeurReelle / 2.0;
 	}
 	/**
 	 * Permet de dessiner la balle, sur le contexte graphique passe en parametre.
@@ -54,35 +53,35 @@ public class Intersection implements Dessinable {
 		g2d.draw(matLocale.createTransformedShape(ligne));
 		ligne = new Line2D.Double(0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0,moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0);
 		g2d.draw(matLocale.createTransformedShape(ligne));
-		ligne = new Line2D.Double(moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0,LARGEUR_REELLE);
+		ligne = new Line2D.Double(moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0,largeurReelle);
 		g2d.draw(matLocale.createTransformedShape(ligne));
-		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0,LARGEUR_REELLE);
+		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0,largeurReelle);
 		g2d.draw(matLocale.createTransformedShape(ligne));
-		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0, LARGEUR_REELLE,moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0);
+		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0, largeurReelle,moitieRouteReelle - DIMENSION_DIRECTION_REELLE/2.0);
 		g2d.draw(matLocale.createTransformedShape(ligne));
-		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, LARGEUR_REELLE,moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0);
+		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0, largeurReelle,moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0);
 		g2d.draw(matLocale.createTransformedShape(ligne));
 		//dessiner les lignes jaunes
 		g2d.setColor(Color.yellow);
 		ligne =new Line2D.Double(moitieRouteReelle, 0, moitieRouteReelle, moitieRouteReelle-DIMENSION_DIRECTION_REELLE/2.0);
 		g2d.draw(matLocale.createTransformedShape(ligne));
-		ligne =new Line2D.Double(moitieRouteReelle,moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle, LARGEUR_REELLE);
+		ligne =new Line2D.Double(moitieRouteReelle,moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0 , moitieRouteReelle, largeurReelle);
 		g2d.draw(matLocale.createTransformedShape(ligne));
 		ligne= new Line2D.Double(0,moitieRouteReelle , moitieRouteReelle-DIMENSION_DIRECTION_REELLE/2.0, moitieRouteReelle);
 		g2d.draw(matLocale.createTransformedShape(ligne));
-		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0,moitieRouteReelle , LARGEUR_REELLE, moitieRouteReelle);
+		ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_DIRECTION_REELLE/2.0,moitieRouteReelle , largeurReelle, moitieRouteReelle);
 		g2d.draw(matLocale.createTransformedShape(ligne));
 		//dessiner les voies si il y a lieu
 		if(nbVoiesHorizontale == 2) {
 			g2d.setColor(Color.black);
 			ligne = new Line2D.Double(0,moitieRouteReelle + DIMENSION_VOIE_REELLE/2.0, moitieRouteReelle - DIMENSION_VOIE_REELLE, moitieRouteReelle + DIMENSION_VOIE_REELLE/2.0);
 			g2d.draw(matLocale.createTransformedShape(ligne));
-			ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_VOIE_REELLE,moitieRouteReelle + DIMENSION_VOIE_REELLE/2.0, LARGEUR_REELLE, moitieRouteReelle + DIMENSION_VOIE_REELLE/2.0);
+			ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_VOIE_REELLE,moitieRouteReelle + DIMENSION_VOIE_REELLE/2.0, largeurReelle, moitieRouteReelle + DIMENSION_VOIE_REELLE/2.0);
 			g2d.draw(matLocale.createTransformedShape(ligne));
 			//Deuxieme
 			ligne = new Line2D.Double(0,moitieRouteReelle - DIMENSION_VOIE_REELLE/2.0, moitieRouteReelle - DIMENSION_VOIE_REELLE, moitieRouteReelle - DIMENSION_VOIE_REELLE/2.0);
 			g2d.draw(matLocale.createTransformedShape(ligne));
-			ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_VOIE_REELLE,moitieRouteReelle - DIMENSION_VOIE_REELLE/2.0, LARGEUR_REELLE, moitieRouteReelle - DIMENSION_VOIE_REELLE/2.0);
+			ligne = new Line2D.Double(moitieRouteReelle + DIMENSION_VOIE_REELLE,moitieRouteReelle - DIMENSION_VOIE_REELLE/2.0, largeurReelle, moitieRouteReelle - DIMENSION_VOIE_REELLE/2.0);
 			g2d.draw(matLocale.createTransformedShape(ligne));
 		}
 		

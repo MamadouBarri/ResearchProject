@@ -19,7 +19,7 @@ import modele.ModeleAffichage;
 /**
  * Classe de la scène d'animation d'une intersection simple et isolée sur laquelle des voitures avec
  * des directions aleatoires et des actions aleatoires sont generees.
- * @author Mamadou
+ * @author Mamadou Barri
  */
 public class SceneAnimee extends JPanel implements Runnable{
 	/**
@@ -146,7 +146,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	}//fin paintComponent
 
 	/**
-	 * Animation de la balle
+	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST
 	 */
 	@Override
 	public void run() {
@@ -684,9 +684,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setVitesse(double vitesse) {
 		this.vitesse = vitesse;
 	}
+	/**
+	 * Methode qui permet de calculer le deplacement avec la vitesse donnee
+	 */
 	public void calculerVitesse() {
 		this.deplacement = vitesse*modele.getPixelsParUniteX()/(this.UNE_SECONDE_EN_MILLISECONDE/this.tempsDuSleep);
 	}
+	/**
+	 * Methode qui permet d'ajouter du traffic anormal
+	 * @param numDeVoie le numero de la voie
+	 */
 	public void addTrafficAnormale(int numDeVoie) {
 		if(this.enTrafficAnormale&&numDeVoie>0) {
 			int[] tabTemporaire = this.trafficAnormale;

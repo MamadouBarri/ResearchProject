@@ -3,8 +3,7 @@ package geometrie;
 import java.util.Random;
 /**
  * Cette classe va gerer la generation du parametre Direction de chaque voiture avec des probabilites selon le traffic mis en place
- * @author Mamadou Barri
- *
+ * @author Mamadou Barri et Reiner
  */
 public class Direction extends Ligne {
 	//varbiales
@@ -67,10 +66,10 @@ public class Direction extends Ligne {
 	public int getNumDirection() {
 		return numDirection;
 	}
+	//Mamadou
 	/**
 	 * Generer un cote aleatoire pour la voitre, champ: 1 a 4
 	 */
-	//Mamadou
 	public void genererDirectionVoiture( ) {
 		Random rn = new Random();
 		//génère un nombre entre 1 et la probabilité totale
