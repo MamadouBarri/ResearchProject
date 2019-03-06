@@ -352,7 +352,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 
 		JLabel nbVoituresAGenerer = new JLabel("");
 		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
-		nbVoituresAGenerer.setBounds(1650, 323, 17, 14);
+		nbVoituresAGenerer.setBounds(1619, 323, 48, 14);
 		contentPane.add(nbVoituresAGenerer);
 	}
 
@@ -455,6 +455,10 @@ public class FenetreSimulationSansVideo extends JFrame {
 	}
 	public void setTaux(int taux) {
 		spnTauxDApparition.setValue(taux);
+	}
+	public void setNbVoitures(int nbVoitures) {
+		sceneAnimee1.setNbVoituresMax(nbVoitures);
+		sceneAnimee2.setNbVoituresMax(nbVoitures);
 	}
 	//public void setNbVoitures(int nbVoitures) {
 		//

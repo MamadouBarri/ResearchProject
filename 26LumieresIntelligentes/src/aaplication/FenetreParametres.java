@@ -61,6 +61,7 @@ public class FenetreParametres extends JFrame {
 	private ArrayList<ResultatsFenParamListener> listeEcouteursDeParam = new ArrayList<ResultatsFenParamListener>();
 	//tableau contenant les voies avec traffic anormale
 	int[] tabTrafficAnom = new int[4];
+	int nbVoituresMax = 0;
 
 	/**
 	 * Launch the application.
@@ -353,6 +354,7 @@ public class FenetreParametres extends JFrame {
 		spnNbVoitures = new JSpinner();
 		spnNbVoitures.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				nbVoituresMax = (int)spnNbVoitures.getValue();
 				leverEvenGetParams();
 			}
 		});
@@ -433,6 +435,7 @@ public class FenetreParametres extends JFrame {
 				ecout.isTraficAnormal(false);
 			}
 			ecout.setVoiesAvecTraficAnormal(tabTrafficAnom);
+			ecout.NombreDeVoituresAGenerer(nbVoituresMax);
 		}
 	}
 }

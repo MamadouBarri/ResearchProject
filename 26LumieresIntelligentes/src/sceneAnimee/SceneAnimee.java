@@ -83,6 +83,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbBouclesAvantNouvelleVoiture = 100;
 	private int nbVoituresGenerees =0;
 	private int nbVoituresMax = 100;
+	private boolean peutTournerGauche = true;
 	//Lumieres 
 	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres
 	private double nbBouclesAvantChangement1 = 2400;
@@ -245,6 +246,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 			//DIRECTION : EST
 			for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 				Voiture v = i.next();//pour chaque voiture EST
+				//verifie si on doit enlever la voiture
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+					affichageAvecTemps("voiture enlevée");
+					voitures.remove(v);
+					v.setVoitureActive(false);
+					est.remove(v);
+				}
 				//Voiture arretee
 				if(v.isVoitureArretee() && deplacement >0 ) {
 					//Deceleration a ajouter
@@ -253,6 +261,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//					v.setXVoiture(v.getXVoiture()+deplacementLocal);
 
 				}
+				//vérifie si la voiture peut tourner gauche
+				//retourne vrai s'il n'y a pas de voiture qui va bloquer son chemin ou si la voiture a déjà effectué le virage
+				/*for(Iterator<Voiture> iOppose = this.ouest.iterator();iOppose.hasNext();) {
+					Voiture vOppose = iOppose.next();
+					if((vOppose.getXVoiture()<this.getLARGEUR_REELLE()/2.0*modele.getPixelsParUniteX()&&vOppose.getXVoiture()>(this.getLARGEUR_REELLE()/2.0+this.DIMENSION_VOIE_REELLE*2.0)*modele.getPixelsParUniteX())||v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						this.peutTournerGauche = true;
+					} else {
+						this.peutTournerGauche = false;
+					}
+				}*/
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue pas de virage
@@ -282,7 +300,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if((!v.isVoitureArretee()||v.getEnRotation() == true)&&peutTournerGauche) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
@@ -308,7 +326,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 
 			//Voiture devant trop proche
-			if(est.indexOf(v)!=0) {
+			if(est.indexOf(v)>0) {
 				Voiture voitureDevant = est.get(est.indexOf(v)-1);
 				if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
 					v.setVoitureArretee(true);
@@ -318,12 +336,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			//Verifier l'etat de la voiture devant
 			//Si la liste contient plus qu'une voiture
 
-			if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-				//v.arreter();
-				affichageAvecTemps("voiture enlevée");
-				voitures.remove(v);
-				v.setVoitureActive(false);
-			}
+			
 
 			//Lorsque la lumiere redevient verte 
 			if(lumEst.getCouleur() == VERTE) {
@@ -340,6 +353,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				affichageAvecTemps("voiture enlevée");
 				voitures.remove(v);
 				v.setVoitureActive(false);
+				sud.remove(v);
 			}
 
 			//Voiture en mouvement
@@ -398,7 +412,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 
 			//Voiture devant trop proche
-			if(sud.indexOf(v)!=0) {
+			if(sud.indexOf(v)>0) {
 				Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
 				if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
 					v.setVoitureArretee(true);
@@ -418,6 +432,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				affichageAvecTemps("voiture enlevée");
 				voitures.remove(v);
 				v.setVoitureActive(false);
+				ouest.remove(v);
 			}
 			//Voiture en mouvement
 			
@@ -477,7 +492,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 
 			//Voiture devant trop proche
-			if(ouest.indexOf(v)!=0) {
+			if(ouest.indexOf(v)>0) {
 				Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
 				if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
 					v.setVoitureArretee(true);
@@ -499,6 +514,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				affichageAvecTemps("voiture enlevée");
 				voitures.remove(v);
 				v.setVoitureActive(false);
+				nord.remove(v);
 			}
 
 			//Voiture en mouvement
@@ -552,6 +568,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 				}
 					break;
 			}
+			
+			
 
 			//Lumiere est rouge 
 			//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
@@ -560,7 +578,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 
 			//Voiture devant trop proche
-			if(nord.indexOf(v)!=0) {
+			if(nord.indexOf(v)>0) {
 				Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
 				if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
 					v.setVoitureArretee(true);
