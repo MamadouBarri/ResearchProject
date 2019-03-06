@@ -1,11 +1,8 @@
 package geometrie;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -13,11 +10,9 @@ import java.util.Date;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.naming.directory.ModificationItem;
 
 import actions.Action;
 import interfaces.Dessinable;
-import modele.ModeleAffichage;
 /**
  * Cette classe génère l'image, la direction et l'action d'une voiture de façon aléatoire.
  * C'est également un objet dessinable et on le dessine en fonction de sa direction et de l'image.
@@ -27,11 +22,7 @@ public class Voiture implements Dessinable {
 	//Image de la voiture
 	private Image imgVoiture = null;
 	private int numImage = 1;
-
-	//Variables
-
-
-	//
+	//Scale des images
 	double scaleX;
 	double scaleY;
 	//Trafic anormal
@@ -48,7 +39,6 @@ public class Voiture implements Dessinable {
 
 	//Les booleans
 	private boolean premiereFois = true;
-	private boolean enCoursDAnimation = false;
 	private boolean voitureActive = true;
 
 	//Objets de la voiture
@@ -58,29 +48,18 @@ public class Voiture implements Dessinable {
 	private boolean voitureProche=false;
 	private boolean voitureArretee = false;
 
-
 	//Description de la voiture
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
 	private double largeurVoie;
-	private double xTest;
 	//Boolean indiquant si la voiture tourne
 	private boolean enRotation = false;
 	//Integer indiquant si la voiture tourne à gauche ou à droite (0=tout droit; 1=tourne droite; 2=tourne gauche)
 	private int directionDeVirage;
 	//Angle de rotation de la voiture en radians
 	private double rotation;
-
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
-	//Tester le bug
-	public double getxTest() {
-		return xTest;
-	}
-
-	public void setxTest(double xTest) {
-		this.xTest = xTest;
-	}
 
 	/**
 	 * Constructeur de la voiture qui génère: image, direction et action
@@ -118,16 +97,16 @@ public class Voiture implements Dessinable {
 		direction = new Direction();
 		descriptionDirection = direction.toString();
 		//Traduire l'action
-		String descriptionAction = "";
 		action = new Action();
-		descriptionAction = action.toString();
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
-		//
-		//Ou mettre la voiture?
 	}
 
 	/**
-	 * Constructeur d'une voiture 
+	 * Constructeur d'une voiture avec traffic anormal
+	 * @param longueurVoiturePixels longueur d'une voiture en pixels
+	 * @param largeurVoiturePixels largeur d'une voiture en pixels
+	 * @param dimensionRoutePixels dimension d'une route en pixels
+	 * @param largeurVoie la largeur d'une voie en pixels
 	 * @param trafficAnormal tableau du traffic anormal
 	 */
 	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal) {
@@ -136,13 +115,12 @@ public class Voiture implements Dessinable {
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
 		this.longueurVoiturePixels = longueurVoiturePixels;
-		this.trafficAnormal = trafficAnormal;
+		this.setTrafficAnormal(trafficAnormal);
 		//génère un nombre entre 0 et 2 pour déterminer si la voiture tourne ou non et, si oui, dans quelle direction
 		this.directionDeVirage=((int)(Math.random()*3));
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
 		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
-
 		if (fichVoiture == null) {
 			affichageAvecTemps("**ERREUR** : Incapable de lire un fichier d'image");
 			return;
@@ -165,54 +143,20 @@ public class Voiture implements Dessinable {
 		}
 		descriptionDirection = direction.toString();
 		//Traduire l'action
-		String descriptionAction = "";
 		action = new Action();
-		descriptionAction = action.toString();
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
-		//
-		//Ou mettre la voiture?
 	}
-
-	//	/**
-	//	 * 
-	//	 */
-	//	@Override
-	//	public void run() {
-	//		//calculerUneIterationPhysique();
-	//		while (enCoursDAnimation) {
-	//			}
-	//			try {
-	//				Thread.sleep(10);
-	//			} catch (InterruptedException e) {
-	//				e.printStackTrace();
-	//			}
-	//		}
-	//	/**
-	//	 * Demarre le thread s'il n'est pas deja demarre
-	//	 */
-	//	public void demarrer() {
-	//		if (!enCoursDAnimation ) { 
-	//			Thread proc = new Thread(this);
-	//			proc.start();
-	//			enCoursDAnimation = true;
-	//		}
-	//	}//fin methode
-	//
-	//	/**
-	//	 * Demande l'arret du thread (prochain tour de boucle)
-	//	 */
-	//	public void arreter() {
-	//		enCoursDAnimation = false;
-	//	}//fin methode
-	//
 	/**
-	 * 
+	 * Permet de dessiner la voiture en forme d'une image aleatoire qui aura
+	 * un scale pour transformer les coordonnees en double et
+	 * selon la position et la direction va subir des rotations
+	 * @param g2d contexte graphique
+	 * @param matMC matrice de transformation monde-vers-composant
 	 */
 	@Override
 	public void dessiner(Graphics2D g2d, AffineTransform mat) {
 		//Dessiner la voiture;
 		//Si premiere fois 
-		AffineTransform matLocale = new AffineTransform(mat);
 		AffineTransform matInitial = g2d.getTransform();
 		if (premiereFois) {
 			switch (this.direction.getNumDirection())
@@ -373,15 +317,22 @@ public class Voiture implements Dessinable {
 	/**
 	 * Gener une image qui va representer la voiture
 	 */
-	//Mamadou
 	public void genererImageVoitre() {
 		Random rn = new Random();
 		int aleatoire = rn.nextInt(9)+ 1;
 		numImage = aleatoire;
 	}
+	/**
+	 * Methode qui get si la voiture est active ou pas
+	 * @return boolean decrivant si la voiture est active
+	 */
 	public boolean getVoitureActive() {
 		return(voitureActive);
 	}
+	/**
+	 * Methode qui set le boolean indiquant si la voiture est active ou pas
+	 * @param voitureActive boolean decrivant si la voiture est active
+	 */
 	public void setVoitureActive(boolean voitureActive) {
 		this.voitureActive = voitureActive;
 	}
@@ -397,13 +348,13 @@ public class Voiture implements Dessinable {
 	}
 
 	/**
-	 * getter de la position de la voiture
+	 * Methode qui permet de get la position de la voiture
 	 */
 	public double getXVoiture() {
 		return(xVoiture);
 	}
 	/**
-	 * setter de la position X de la voiture
+	 * Methde qui permet de set la position X de la voiture
 	 * 
 	 */
 	public  void setXVoiture(double xVoiture) {
@@ -411,7 +362,7 @@ public class Voiture implements Dessinable {
 	}
 
 	/**
-	 * getter de la position de la voiture
+	 * Methode qui permet de get la position de la voiture
 	 */
 	public double getYVoiture() {
 		return(yVoiture);
@@ -425,7 +376,7 @@ public class Voiture implements Dessinable {
 
 	/**
 	 * getter de la direction
-	 * @return la direction
+	 * @return la direction direciton de la voiture en quesiton
 	 */
 	public Direction getDirection() {
 		return(this.direction);
@@ -435,7 +386,7 @@ public class Voiture implements Dessinable {
 	 * @param trafficAnormal tableau contenant les direction ayant du trafic anormal
 	 */
 	public void setAnormale(int[] trafficAnormal) {
-		this.trafficAnormal = trafficAnormal;
+		this.setTrafficAnormal(trafficAnormal);
 	}
 	/**
 	 * Getter de la probabilite de generation pour la premiere voiture
@@ -446,7 +397,7 @@ public class Voiture implements Dessinable {
 	}
 	/**
 	 * Getter du boolean qui dit si la voiture est proche de celle devant
-	 * @return
+	 * @return boolean indiquant si la voiture devant est trop proche
 	 */
 	public boolean isVoitureProche() {
 		return voitureProche;
@@ -454,7 +405,7 @@ public class Voiture implements Dessinable {
 
 	/**
 	 * Setter de la proximite de la voiture devant
-	 * @param voitureProche
+	 * @param voitureProche boolean indiquant si la voiture devant se trouve trop proche
 	 */
 	public void setVoitureProche(boolean voitureProche) {
 		this.voitureProche = voitureProche;
@@ -462,7 +413,7 @@ public class Voiture implements Dessinable {
 
 	/**
 	 * Getter qui retourne vrai si la voiuture est arretee
-	 * @return
+	 * @return voitureArretee vrai si la voiture est en etat d'arret
 	 */
 	public boolean isVoitureArretee() {
 		return voitureArretee;
@@ -470,7 +421,7 @@ public class Voiture implements Dessinable {
 
 	/**
 	 * Setter de l'arret de la voiture
-	 * @param voitureArretee
+	 * @param voitureArretee l'etat d'arret de la voiture
 	 */
 	public void setVoitureArretee(boolean voitureArretee) {
 		this.voitureArretee = voitureArretee;
@@ -514,5 +465,19 @@ public class Voiture implements Dessinable {
 	 */
 	public int getDirectionDeVirage() {
 		return this.directionDeVirage;
+	}
+	/**
+	 * Getter qui retourne le tableau du traffic anormal
+	 * @return tableau du traffic anormal
+	 */
+	public int[] getTrafficAnormal() {
+		return trafficAnormal;
+	}
+	/**
+	 * Setter qui met change le traffic anormal
+	 * @param trafficAnormal 	tableau du traffic anormal
+	 */
+	public void setTrafficAnormal(int[] trafficAnormal) {
+		this.trafficAnormal = trafficAnormal;
 	}
 }

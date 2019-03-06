@@ -1,9 +1,13 @@
 package actions;
 
 import java.util.Random;
-
+/**
+ * Cette classe va permettre de generer une action aleatoire pour les voitures. Les actions possibles sont les suivantes : 
+ * aller tout droit, tourner a gauche et tourner a droite.
+ * @author Barri Mamadou
+ *
+ */
 public class Action {
-
 	//variables
 	private String descriptionAction;
 	private int numAction;
@@ -12,30 +16,28 @@ public class Action {
 		switch (numAction)
 		{
 			case -1:
-				//se deplace vers le nord
 				descriptionAction = "tourner gauche";
 				break;
 			case 0:
-				//se deplace vers l'ouest
 				descriptionAction = "tout droit";
 				break;
 			case 1:
-				//se deplace vers le sud
 				descriptionAction = "tourner droite";
 				break;
 		}
 		
 	}
+
 	/**
-	 * toString de l'action, on retourne la description
+	 * toString de l'action qui retourne la chaine descriptive
+	 * return descriptionAction une chaine decrivant l'action de la voiture
 	 */
 	public String toString() {
 		return(descriptionAction);
 	}
 	/**
-	 * Generer une direction aleatoire pour la voitre, champ: -1 a 1
+	 * Methode qui genere une direction aleatoire pour la voitre, champ: -1 a 1
 	 */
-	//Mamadou
 	public void genererActionVoiture() {
 		Random rn = new Random();
 		int aleatoire = rn.nextInt(3) - 1;

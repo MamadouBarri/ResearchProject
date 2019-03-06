@@ -2,46 +2,26 @@ package geometrie;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 import interfaces.Dessinable;
-import modele.ModeleAffichage;
 
 /**
- * Cette classe va dessiner le bloc + ressort + sol + ligne de zéro + l'affichage de l'échelle
- * @author Mamadou Barri et Caroline Houle
+ * Cette classe va dessiner l'intersection c'est a dire : les voies et les rues.
+ * @author Mamadou Barri
  *
  */
-//
 public class Intersection implements Dessinable {
 	
-	//Variables a initialiser au debut 
-	
-	
-	//Constantes modifiables
-
+	//Variables a initialiser au debut
 	private double moitieRouteReelle;
 	
-	private int nbTraits;
-	
-	//Variables monde des pixels
-	private double moitieRouteReellePixels;
-	//
 	private int nbVoiesHorizontale =1;
-	
 	//CONSTANTES
 	private final double DIMENSION_DIRECTION_REELLE = 10;
 	private final double DIMENSION_VOIE_REELLE = DIMENSION_DIRECTION_REELLE/2.0;
-	private final int LARGEUR_TRAITS = 1;
-		//Modele
 	private final double LARGEUR_REELLE; //En metres
 	//Geometrie
-	private Path2D.Double axe; 
 	private Line2D.Double ligne;
 	/**
 	 * Constructeur ou la position, la vitesse et l'acceleration  initiales sont spécifiés
@@ -53,7 +33,7 @@ public class Intersection implements Dessinable {
 	public Intersection(double largeurReelle) {
 		this.LARGEUR_REELLE = largeurReelle;
 		moitieRouteReelle = LARGEUR_REELLE / 2.0;
-		nbTraits = (int)(moitieRouteReelle/2.0-DIMENSION_DIRECTION_REELLE)/LARGEUR_TRAITS;
+		//nbTraits = (int)(moitieRouteReelle/2.0-DIMENSION_DIRECTION_REELLE)/LARGEUR_TRAITS;
 	}
 	/**
 	 * Permet de dessiner la balle, sur le contexte graphique passe en parametre.
@@ -108,18 +88,31 @@ public class Intersection implements Dessinable {
 		
 	}//fin methode//
 	
-	
+	/**
+	 * Methode qui permet de creer les axes de la route
+	 */
 	public void creerAxes() {
 		ligne =new Line2D.Double(moitieRouteReelle, 0, moitieRouteReelle, moitieRouteReelle-DIMENSION_DIRECTION_REELLE/2.0);
-		
 	}
+	/**
+	 * Methode qui permet de get la moitie de la largeur reelle de la route
+	 * @return la moitie de la largeur reelle de la route
+	 */
 	public double getMoitieLargeurReelle() {
 		return(moitieRouteReelle);
 	}
 	//Getters et setters
+	/**
+	 * Methode qui permet de get le nombre de voies horizontales
+	 * @return nombre de voies horizontales
+	 */
 	public int getNbVoiesHorizontale() {
 		return nbVoiesHorizontale;
 	}
+	/**
+	 * Methode qui permet de get le nombre de voies verticales
+	 * @return nombre de voies verticales
+	 */
 	public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
 		this.nbVoiesHorizontale = nbVoiesHorizontale;
 	}
