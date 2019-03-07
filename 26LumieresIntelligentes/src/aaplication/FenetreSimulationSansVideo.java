@@ -348,7 +348,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 
 		JLabel nbVoituresAGenerer = new JLabel("");
 		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
-		nbVoituresAGenerer.setBounds(1619, 323, 48, 14);
+		nbVoituresAGenerer.setBounds(1651, 323, 48, 14);
 		contentPane.add(nbVoituresAGenerer);
 	}
 

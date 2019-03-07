@@ -64,7 +64,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Variables pour génération des voitures
 	private int nbBouclesAvantNouvelleVoiture = 100;
 	private int nbVoituresGenerees =0;
-	private int nbVoituresMax ;
+	private int nbVoituresMax = 60 ;
 
 	//Lumieres 
 	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres
