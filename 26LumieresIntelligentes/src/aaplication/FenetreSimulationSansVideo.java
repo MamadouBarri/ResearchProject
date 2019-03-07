@@ -29,6 +29,8 @@ import ecouteursperso.VisibiliteFenParamListener;
 
 import javax.swing.event.ChangeEvent;
 import sceneAnimee.SceneAnimee;
+import sceneAnimee.SceneAnimeeAvecAlgo;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private java.net.URL  urlRecommencer = getClass().getClassLoader().getResource("replay.png");
 	private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
 	private SceneAnimee sceneAnimee1;
-	private SceneAnimee sceneAnimee2;
+	private SceneAnimeeAvecAlgo sceneAnimee2;
 	private JCheckBox chkbxVoie4;
 	private JCheckBox chkbxVoie3;
 	private JCheckBox chkbxVoie2;
@@ -150,7 +152,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		lblSimulationSansLAlgorithme.setBounds(229, 25, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 
-		sceneAnimee2 = new SceneAnimee();
+		sceneAnimee2 = new SceneAnimeeAvecAlgo();
 		sceneAnimee2.setBounds(698, 109, 600, 600);
 		pnSimulations.add(sceneAnimee2);
 
@@ -327,17 +329,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
 		btnRecommencer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee1.arreter();
-				sceneAnimee2.arreter();
-				sceneAnimee1 = new SceneAnimee();
-				sceneAnimee1.setBounds(174, 51, 260, 260);
-				pnSimulations.add(sceneAnimee1);
-				sceneAnimee2 = new SceneAnimee();
-				sceneAnimee2.setBounds(174, 371, 260, 260);
-				pnSimulations.add(sceneAnimee2);
-				sceneAnimee1.repaint();
-				sceneAnimee2.repaint();
-
+				sceneAnimee1.reinitialiser();
+				sceneAnimee2.reinitialiser();
 			}
 		});//À CHANGER 
 		btnRecommencer.setBounds(34, 311, 76, 76);

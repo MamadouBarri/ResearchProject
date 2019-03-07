@@ -28,6 +28,7 @@ import javax.swing.event.ChangeListener;
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
 import sceneAnimee.SceneAnimee;
+import sceneAnimee.SceneAnimeeAvecAlgo;
 /**
  * JFrame qui compare notre algorithme à un système de feux de circulations normales 
  * avec des simulations
@@ -44,7 +45,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 		private java.net.URL  urlRecommencer = getClass().getClassLoader().getResource("replay.png");
 		private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
 		private SceneAnimee sceneAnimee1;
-		private SceneAnimee sceneAnimee2;
+		private SceneAnimeeAvecAlgo sceneAnimee2;
 		//listes contenant les objets qui veulent ecouter à cet objet
 		private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();
 		private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();
@@ -169,16 +170,8 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
 			btnRecommencer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					sceneAnimee1.arreter();
-					sceneAnimee2.arreter();
-					sceneAnimee1 = new SceneAnimee();
-					sceneAnimee1.setBounds(174, 51, 260, 260);
-					pnSimulations.add(sceneAnimee1);
-					sceneAnimee2 = new SceneAnimee();
-					sceneAnimee2.setBounds(174, 371, 260, 260);
-					pnSimulations.add(sceneAnimee2);
-					sceneAnimee1.repaint();
-					sceneAnimee2.repaint();
+					sceneAnimee1.reinitialiser();
+					sceneAnimee2.reinitialiser();
 
 				}
 			});//À CHANGER 
@@ -197,7 +190,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			sceneAnimee1.setBounds(174, 51, 260, 260);
 			pnSimulations.add(sceneAnimee1);
 
-			sceneAnimee2 = new SceneAnimee();
+			sceneAnimee2 = new SceneAnimeeAvecAlgo();
 			sceneAnimee2.setBounds(174, 348, 260, 260);
 			pnSimulations.add(sceneAnimee2);
 		}

@@ -21,7 +21,7 @@ import modele.ModeleAffichage;
  * des directions aleatoires et des actions aleatoires sont generees.
  * @author Mamadou & Reiner
  */
-public class SceneAnimee extends JPanel implements Runnable{
+public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	/**
 	 * Numero par defaut
 	 */
@@ -67,12 +67,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbVoituresMax = 60 ;
 
 	//Lumieres 
-	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres
-	private double nbBouclesAvantChangement1 = 2400;
-	private double nbBouclesAvantChangement2 = 2700;
-	private double nbBouclesAvantChangement3 = 5100;
-	//À cette derniere boucle, on retourne le compteur à 0
-	private double nbBouclesAvantChangement4 = 5400;
+	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres après que l'algorithme à décider d'inverser le "flow"
+	private double nbBouclesAvantChangement2 = 300;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
 
@@ -95,7 +91,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
 	 */
-	public SceneAnimee() {
+	public SceneAnimeeAvecAlgo() {
 		this.vitesse = 20;
 		setBackground(Color.gray);
 		trafficAnormale = new int[1];
@@ -155,7 +151,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//compteur pour savoir quand on génère une nouvelle voiture selon le nombre de boucles de run faits
 		double nbRepetitionsPourVoitures = 0;
 		//compteur pour savoir quand on faire avancer le cycle de lumiere selon le nombre de boucles de run faits
+		double nbRepetitionsPourChangement = 0;
 		double nbRepetitionsPourLumieres = 0;
+		int densiteHorizontale = 0;
+		int densiteVerticale = 0;
 		while (enCoursDAnimation) {	
 			//Commencer le thread de voiture pour chaque voiture de la liste
 
@@ -398,7 +397,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
 				}
-
 			}
 
 			//DIRECTION : NORD
@@ -486,29 +484,76 @@ public class SceneAnimee extends JPanel implements Runnable{
 			try {
 				Thread.sleep(tempsDuSleep);
 				nbRepetitionsPourVoitures++;
-				nbRepetitionsPourLumieres++;
-				//System.out.println(nbRepetitionsPourLumieres);
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
 					ajouterNouvelleVoiture();
 					nbRepetitionsPourVoitures=0;
 				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement1) {
-					changeCouleurLumieres();
-					repaint();
+				if(nbRepetitionsPourLumieres>=500) {
+					densiteHorizontale = 0;
+					densiteVerticale = 0;
+					for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getXVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							densiteHorizontale++;
+						}
+					}
+					for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getXVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							densiteHorizontale++;
+						}
+					}
+					for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getYVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							densiteVerticale++;
+						}
+					}for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getYVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							densiteVerticale++;
+						}
+					}
+				nbRepetitionsPourLumieres=0;
+				System.out.println("nbRep = " + nbRepetitionsPourLumieres);
+				System.out.println("DensHor = " + densiteHorizontale);
+				System.out.println("DensVer = " + densiteVerticale);
+				} else {
+					nbRepetitionsPourLumieres++;
 				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement2) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement3) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement4) {
-					changeCouleurLumieres();
-					repaint();
-					nbRepetitionsPourLumieres =0;
+				if(densiteHorizontale>densiteVerticale&&lumEst.getCouleur()==ROUGE) {
+					//Changement de vert à jaune
+					if(lumNord.getCouleur()==VERTE) {
+						changeCouleurLumieres();
+					} else {
+						//petite pause avant de changer de jaune à rouge
+						if(nbRepetitionsPourChangement!=nbBouclesAvantChangement2) {
+							nbRepetitionsPourChangement++;
+						} else {
+							changeCouleurLumieres();
+							nbRepetitionsPourChangement = 0;
+						}
+					}
+				} else {
+					if(densiteVerticale>densiteHorizontale&&lumNord.getCouleur()==ROUGE) {
+						//Changement de vert à jaune
+						if(lumEst.getCouleur()==VERTE) {
+						changeCouleurLumieres();
+						} else {
+							//petite pause avant de changer de jaune à rouge
+							if(nbRepetitionsPourChangement!=nbBouclesAvantChangement2) {
+								nbRepetitionsPourChangement++;
+							} else {
+								changeCouleurLumieres();
+								nbRepetitionsPourChangement = 0;
+							}
+						}
+					} else {
+						if(densiteVerticale==densiteHorizontale) {
+							//On ne change rien
+						}
+					}
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -786,5 +831,4 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setNbVoituresMax(int nbVoituresMax) {
 		this.nbVoituresMax = nbVoituresMax;
 	}
-	
 }
