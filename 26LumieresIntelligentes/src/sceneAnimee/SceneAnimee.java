@@ -213,7 +213,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE&&v.getEnRotation()==false) { // Lorsque voiture est devant l'intersection
+				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
 
@@ -268,7 +268,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture((v.getYVoiture()+deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -288,7 +288,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture((v.getYVoiture()+deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -346,7 +346,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setXVoiture((v.getXVoiture()-deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET){
+						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX())+1 < DISTANCE_LIGNE_ARRET){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -366,7 +366,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setXVoiture((v.getXVoiture()-deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET){
+						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX())+1 < DISTANCE_LIGNE_ARRET){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -377,7 +377,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
 						}
 					}
-					break;
 				}
 
 				//Lumiere est rouge 
