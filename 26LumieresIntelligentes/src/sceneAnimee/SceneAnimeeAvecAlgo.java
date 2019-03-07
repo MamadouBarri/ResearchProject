@@ -135,7 +135,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		//Dessiner l'échelle
 		g2d.setColor(Color.cyan);
 		g2d.drawString("Échelle: " + LARGEUR_REELLE + " m", (float)DISTANCE_BORDURE, (float)(LARGEUR_REELLE * modele.getPixelsParUniteY() - DISTANCE_BORDURE));
-		
+
 		//Parcourir et dessiner chaque voiture
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 			Voiture v = i.next();
@@ -489,45 +489,60 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					ajouterNouvelleVoiture();
 					nbRepetitionsPourVoitures=0;
 				}
+				//on vérifie la densité des voies à chaque 5 secondes
 				if(nbRepetitionsPourLumieres>=500) {
+					//on remet les densités à zéro quand on décide de recalculer la densité
 					densiteHorizontale = 0;
 					densiteVerticale = 0;
+					//On vérifie les voitures ayant est comme direction
 					for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 						Voiture v = i.next();
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
 						if(v.getXVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							//si oui, on l'ajoute à la densité de voitures des voies horizontales
 							densiteHorizontale++;
 						}
 					}
+					//On vérifie les voitures ayant ouest comme direction
 					for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
 						Voiture v = i.next();
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
 						if(v.getXVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							//si oui, on l'ajoute à la densité de voitures des voies horizontales
 							densiteHorizontale++;
 						}
 					}
+					//On vérifie les voitures ayant nord comme direction
 					for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 						Voiture v = i.next();
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
 						if(v.getYVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							//si oui, on l'ajoute à la densité de voitures des voies verticales
 							densiteVerticale++;
 						}
+					//On vérifie les voitures ayant sud comme direction
 					}for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 						Voiture v = i.next();
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
 						if(v.getYVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							//si oui, on l'ajoute à la densité de voitures des voies verticales
 							densiteVerticale++;
 						}
 					}
-				nbRepetitionsPourLumieres=0;
-				System.out.println("nbRep = " + nbRepetitionsPourLumieres);
-				System.out.println("DensHor = " + densiteHorizontale);
-				System.out.println("DensVer = " + densiteVerticale);
+					nbRepetitionsPourLumieres=0;
+					System.out.println("nbRep = " + nbRepetitionsPourLumieres);
+					System.out.println("DensHor = " + densiteHorizontale);
+					System.out.println("DensVer = " + densiteVerticale);
 				} else {
 					nbRepetitionsPourLumieres++;
 				}
+				//on vérifie si les voies avec les densités supérieurs ont la lumière verte
 				if(densiteHorizontale>densiteVerticale&&lumEst.getCouleur()==ROUGE) {
-					//Changement de vert à jaune
+					//Sinon, on change la lumière opposée de vert à jaune
 					if(lumNord.getCouleur()==VERTE) {
 						changeCouleurLumieres();
 					} else {
-						//petite pause avant de changer de jaune à rouge
+						//petite pause avant de changer la lumière opposée de jaune à rouge
 						if(nbRepetitionsPourChangement!=nbBouclesAvantChangement2) {
 							nbRepetitionsPourChangement++;
 						} else {
@@ -539,7 +554,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					if(densiteVerticale>densiteHorizontale&&lumNord.getCouleur()==ROUGE) {
 						//Changement de vert à jaune
 						if(lumEst.getCouleur()==VERTE) {
-						changeCouleurLumieres();
+							changeCouleurLumieres();
 						} else {
 							//petite pause avant de changer de jaune à rouge
 							if(nbRepetitionsPourChangement!=nbBouclesAvantChangement2) {
