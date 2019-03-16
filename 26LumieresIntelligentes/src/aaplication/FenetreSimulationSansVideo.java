@@ -315,8 +315,13 @@ public class FenetreSimulationSansVideo extends JFrame {
 		JButton btnPause = new JButton(new ImageIcon(urlPause));
 		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(sceneAnimee1.getEnCoursDAnimation()) {
 				sceneAnimee1.arreter();
 				sceneAnimee2.arreter();
+				} else {
+					sceneAnimee1.prochainImage();
+					sceneAnimee2.prochainImage();
+				}
 			}
 		});
 		btnPause.setBounds(34, 117, 76, 76);

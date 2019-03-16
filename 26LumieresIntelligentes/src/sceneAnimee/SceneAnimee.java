@@ -59,6 +59,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private boolean enCoursDAnimation = false;
 	private long tempsDuSleep = 10; 
 	private double deltaT;
+	private boolean veutProchainImage = false;
 	//Objets
 	Intersection inter;
 	//Variables pour génération des voitures
@@ -513,7 +514,11 @@ public class SceneAnimee extends JPanel implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
+			//arrete l'animation apres un tour de run si l'utilisateur veut faire avancer l'animation pas a pas
+			if(veutProchainImage) {
+				enCoursDAnimation = false;
+				veutProchainImage = false;
+			}
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
@@ -786,5 +791,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setNbVoituresMax(int nbVoituresMax) {
 		this.nbVoituresMax = nbVoituresMax;
 	}
-	
+	//Reiner
+		/**
+		 * Methode qui fait avancer l'animaiton d'un pas
+		 */
+		public void prochainImage() {
+			if (!enCoursDAnimation) { 
+				Thread proc = new Thread(this);
+				proc.start();
+				veutProchainImage = true;
+				enCoursDAnimation = true;
+			}
+		}
 }

@@ -47,7 +47,8 @@ public class Voiture implements Dessinable {
 	//Distances relatives des voitures
 	private boolean voitureProche=false;
 	private boolean voitureArretee = false;
-
+	private boolean peutTournerGauche = true;
+	
 	//Description de la voiture
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
@@ -494,5 +495,19 @@ public class Voiture implements Dessinable {
 	 */
 	public void setTrafficAnormal(int[] trafficAnormal) {
 		this.trafficAnormal = trafficAnormal;
+	}
+	//Reiner
+	/**Getter qui indique si oui ou non la voiture peut tourner à gauche
+	 * @return the peutTournerGauche boolean qui indique si oui ou non la voiture peut tourner à gauche
+	 */
+	public boolean getPeutTournerGauche() {
+		return peutTournerGauche;
+	}
+	//Reiner
+	/**Setter qui dit si oui ou non la voiture peut tourner à gauche
+	 * @param peutTournerGauche boolean qui indique si oui ou non la voiture peut tourner à gauche
+	 */
+	public void setPeutTournerGauche(boolean peutTournerGauche) {
+		this.peutTournerGauche = peutTournerGauche;
 	}
 }

@@ -59,6 +59,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	private boolean enCoursDAnimation = false;
 	private long tempsDuSleep = 10; 
 	private double deltaT;
+	private boolean veutProchainImage = false;
 	//Objets
 	Intersection inter;
 	//Variables pour génération des voitures
@@ -87,6 +88,8 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	private final int VERTE = 0;
 	private final int JAUNE = 1;
 	private final int ROUGE = 2;
+	//Voiture
+	private boolean ilYAVoitureQuiBloque = false;
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -192,7 +195,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if((!v.isVoitureArretee()||v.getEnRotation() == true)) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
@@ -573,6 +576,11 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			//arrete l'animation apres un tour de run si l'utilisateur veut faire avancer l'animation pas a pas
+			if(veutProchainImage) {
+				enCoursDAnimation = false;
+				veutProchainImage = false;
+			}
 
 		}//fin while
 		System.out.println("Le thread est mort...");
@@ -845,5 +853,17 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	 */
 	public void setNbVoituresMax(int nbVoituresMax) {
 		this.nbVoituresMax = nbVoituresMax;
+	}
+	//Reiner
+	/**
+	 * Methode qui fait avancer l'animaiton d'un pas
+	 */
+	public void prochainImage() {
+		if (!enCoursDAnimation) { 
+			Thread proc = new Thread(this);
+			proc.start();
+			veutProchainImage = true;
+			enCoursDAnimation = true;
+		}
 	}
 }
