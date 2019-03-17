@@ -40,6 +40,7 @@ import ecouteursperso.VisibiliteFenParamListener;
 import ecouteursperso.VisibiliteFenSimulListener;
 import ecouteursperso.VisibiliteFenSimulVideoListener;
 import ecouteursperso.ResultatsFenParamListener;
+import ecouteursperso.VisibiliteFenStatistiquesListener;
 /**
  * JFrame de départ permettant l'utilisateur d'accéder tous les fenêtres de notre application
  * @author Gayta
@@ -54,7 +55,7 @@ public class App26LumieresIntelligentes extends JFrame {
 	FenetreParametres parametres;
 	FenetreSimulationSansVideo simulSansVideo;
 	FenetreSimulationAvecVideo simulAvecVideo;
-
+	FenetreStatistiques fenetreStats;
 	/**
 	 * Launch the application.
 	 */
@@ -85,6 +86,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			}
 			
 		});
+		
 		//ecouteur qui permet l'utilisateur de revenir à la fenetre de parametres à partir de la fenêtre de simulations avec video
 		simulAvecVideo.addVisibiliteFenParamListener(new VisibiliteFenParamListener(){
 			public void rendreFenetreParamVisible() {

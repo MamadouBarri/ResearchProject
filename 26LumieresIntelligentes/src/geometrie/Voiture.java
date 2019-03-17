@@ -158,7 +158,7 @@ public class Voiture implements Dessinable {
 		descriptionDirection = direction.toString();
 		//Traduire l'action
 		action = new Action();
-		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
+		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | type :  " + typeImages + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
 	}
 	//Mamadou & Reiner
 	/**

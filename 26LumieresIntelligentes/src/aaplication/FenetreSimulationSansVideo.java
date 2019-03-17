@@ -26,6 +26,8 @@ import javax.swing.event.ChangeListener;
 
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
+import ecouteursperso.VisibiliteFenStatistiquesListener;
+import ecouteursperso.VisibiliteFenStatistiquesListener;
 
 import javax.swing.event.ChangeEvent;
 import sceneAnimee.SceneAnimee;
@@ -117,7 +119,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 		mntmChangerParametres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				leverEvenFenetreParametresListener();
-				
 			}
 		});
 		mnMenu.add(mntmChangerParametres);
@@ -159,6 +160,13 @@ public class FenetreSimulationSansVideo extends JFrame {
 		pnSimulations.add(sceneAnimee2);
 
 		sceneAnimee1 = new SceneAnimee();
+		sceneAnimee1.addVisibiliteFenStatistiquesListener(new VisibiliteFenStatistiquesListener() {
+			//Mamadou
+			public void rendreFenetreStatistiquesVisible() {
+				//creation de la fenetre de stats
+				fenStats.setVisible(true);
+			}
+		});
 		sceneAnimee1.setBounds(37, 109, 600, 600);
 		pnSimulations.add(sceneAnimee1);
 
@@ -376,6 +384,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public void addVisibiliteFenParamListener(VisibiliteFenParamListener visibiliteFenParamListener) {
 		listeEcouteursFenParam.add(visibiliteFenParamListener);
 	}
+	
 	//Reiner
 	/**
 	 * indique aux objets ecouteurs qu'on desire rouvrir la fenetre de parametres

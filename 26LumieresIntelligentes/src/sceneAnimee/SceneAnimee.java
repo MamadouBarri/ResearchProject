@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.swing.JPanel;
 
+import ecouteursperso.VisibiliteFenStatistiquesListener;
 import geometrie.Direction;
 import geometrie.Intersection;
 import geometrie.Lumiere;
@@ -95,6 +96,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private final int ROUGE = 2;
 	private int typeImages = 0;
 	private int nbRepetitionsPourMenage = 0;
+	//Gestion de l'arret de l'animation
+	private ArrayList<VisibiliteFenStatistiquesListener> listeEcouteursFenStats = new ArrayList<VisibiliteFenStatistiquesListener>();
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -143,7 +146,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//Dessiner l'échelle
 		g2d.setColor(Color.cyan);
 		g2d.drawString("Échelle: " + LARGEUR_REELLE + " m", (float)DISTANCE_BORDURE, (float)(LARGEUR_REELLE * modele.getPixelsParUniteY() - DISTANCE_BORDURE));
-		
+
 		//Parcourir et dessiner chaque voiture
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 			Voiture v = i.next();
@@ -498,6 +501,19 @@ public class SceneAnimee extends JPanel implements Runnable{
 					ajouterNouvelleVoiture();
 					nbRepetitionsPourVoitures=0;
 				}
+				if(nbVoituresGenerees>=nbVoituresMax){//Toutes les voitures ont été générées, donc find de la simulation
+					boolean aucuneVoiture = true;
+					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getVoitureActive()){//Il reste aucune voiture active
+							aucuneVoiture = false;
+						}
+					}
+					if(aucuneVoiture) {
+						this.arreter();
+						leverEvenFenetreStatistiquesVisible();
+					}
+				}
 				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement1) {
 					changeCouleurLumieres();
 					repaint();
@@ -596,6 +612,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public void arreter() {
 		enCoursDAnimation = false;
+
+
 	}
 	//Mamadou
 	/**
@@ -704,6 +722,23 @@ public class SceneAnimee extends JPanel implements Runnable{
 			}
 		}
 	}
+	//Ecouteurs
+	//Mamadou
+	/**
+	 * Methode permettant a un objet de s'enregistrer comme ecouteur
+	 */
+	public void addVisibiliteFenStatistiquesListener( VisibiliteFenStatistiquesListener visibiliteFenStats) {
+		listeEcouteursFenStats.add(visibiliteFenStats);
+	}
+	//Mamadou
+	/**
+	 * methode qui appelle la methode voulu pour chacun des objets qui sont enregistres
+	 */
+	public void leverEvenFenetreStatistiquesVisible() {
+		for(VisibiliteFenStatistiquesListener ecout : listeEcouteursFenStats ) {
+			ecout.rendreFenetreStatistiquesVisible();
+		}
+	}
 	//Mamadou
 	/**
 	 * Setter qui change le nombre de voies horizontalemnt
@@ -806,23 +841,23 @@ public class SceneAnimee extends JPanel implements Runnable{
 		this.nbVoituresMax = nbVoituresMax;
 	}
 	//Reiner
-		/**
-		 * Methode qui fait avancer l'animaiton d'un pas
-		 */
-		public void prochainImage() {
-			if (!enCoursDAnimation) { 
-				Thread proc = new Thread(this);
-				proc.start();
-				veutProchainImage = true;
-				enCoursDAnimation = true;
-			}
+	/**
+	 * Methode qui fait avancer l'animaiton d'un pas
+	 */
+	public void prochainImage() {
+		if (!enCoursDAnimation) { 
+			Thread proc = new Thread(this);
+			proc.start();
+			veutProchainImage = true;
+			enCoursDAnimation = true;
 		}
+	}
 	/**
 	 * Methode qui set le type d'images a generer
 	 * @param typeImages type d'images
 	 */
 	//Mamadou
 	public void setTypeImages(int typeImages) {
-			this.typeImages  = typeImages;
+		this.typeImages  = typeImages;
 	}
 }
