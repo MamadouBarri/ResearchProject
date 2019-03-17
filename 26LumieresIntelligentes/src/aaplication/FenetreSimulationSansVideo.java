@@ -332,9 +332,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 				if(sceneAnimee1.getEnCoursDAnimation()) {
 				sceneAnimee1.arreter();
 				sceneAnimee2.arreter();
-				} else {
-					sceneAnimee1.prochainImage();
-					sceneAnimee2.prochainImage();
 				}
 			}
 		});
@@ -342,6 +339,17 @@ public class FenetreSimulationSansVideo extends JFrame {
 		pnEmplacementsDesBoutons.add(btnPause);
 
 		JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
+		btnProchainImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(sceneAnimee1.getEnCoursDAnimation()) {
+					sceneAnimee1.arreter();
+					sceneAnimee2.arreter();
+					} else {
+						sceneAnimee1.prochainImage();
+						sceneAnimee2.prochainImage();
+					}
+				}
+		});
 		btnProchainImage.setBounds(34, 222, 76, 76);
 		pnEmplacementsDesBoutons.add(btnProchainImage);
 
