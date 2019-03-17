@@ -90,6 +90,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	private final int ROUGE = 2;
 	//Voiture
 	private boolean ilYAVoitureQuiBloque = false;
+	private int typeImages = 0;
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -234,7 +235,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 
@@ -251,7 +252,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 
@@ -329,7 +330,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				Voiture v = i.next();
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 				//Voiture en mouvement
@@ -408,7 +409,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 
@@ -603,7 +604,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	public void ajouterNouvelleVoiture() {
 		//On ajoute au nombre de voitures generees
 		nbVoituresGenerees++;
-		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale );
+		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale, typeImages );
 		//Quelle direction?
 		int direction = voiture.getDirection().getNumDirection();
 		switch (direction)
@@ -865,5 +866,13 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 			veutProchainImage = true;
 			enCoursDAnimation = true;
 		}
+	}
+	/**
+	 * Methode qui set le type d'images a generer
+	 * @param typeImages le type d'images
+	 */
+	//Mamadou
+	public void setTypeImages(int typeImages) {
+		this.typeImages  = typeImages;
 	}
 }

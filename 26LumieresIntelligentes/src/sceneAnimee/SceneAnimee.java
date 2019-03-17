@@ -64,6 +64,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	Intersection inter;
 	//Variables pour génération des voitures
 	private int nbBouclesAvantNouvelleVoiture = 100;
+	private int nbBouclesAvantMenage = 1000;
 	private int nbVoituresGenerees =0;
 	private int nbVoituresMax = 60 ;
 
@@ -92,6 +93,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private final int VERTE = 0;
 	private final int JAUNE = 1;
 	private final int ROUGE = 2;
+	private int typeImages = 0;
+	private int nbRepetitionsPourMenage = 0;
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -233,7 +236,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 
@@ -250,7 +253,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 
@@ -328,7 +331,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 				//Voiture en mouvement
@@ -408,7 +411,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
-					voitures.remove(v);
+					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
 
@@ -488,6 +491,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Thread.sleep(tempsDuSleep);
 				nbRepetitionsPourVoitures++;
 				nbRepetitionsPourLumieres++;
+				nbRepetitionsPourMenage++;
 				//System.out.println(nbRepetitionsPourLumieres);
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
@@ -510,6 +514,15 @@ public class SceneAnimee extends JPanel implements Runnable{
 					changeCouleurLumieres();
 					repaint();
 					nbRepetitionsPourLumieres =0;
+				}
+				if(nbRepetitionsPourVoitures == nbBouclesAvantMenage) {
+					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(!v.getVoitureActive()){
+							voitures.remove(v);
+						}
+					}	
+					nbRepetitionsPourMenage=0;
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -540,7 +553,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void ajouterNouvelleVoiture() {
 		//On ajoute au nombre de voitures generees
 		nbVoituresGenerees++;
-		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale );
+		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale, typeImages );
 		//Quelle direction?
 		int direction = voiture.getDirection().getNumDirection();
 		switch (direction)
@@ -571,6 +584,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public void demarrer() {
 		if (!enCoursDAnimation) { 
+			System.out.println("demarrer");
 			Thread proc = new Thread(this);
 			proc.start();
 			enCoursDAnimation = true;
@@ -803,4 +817,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 				enCoursDAnimation = true;
 			}
 		}
+	/**
+	 * Methode qui set le type d'images a generer
+	 * @param typeImages type d'images
+	 */
+	//Mamadou
+	public void setTypeImages(int typeImages) {
+			this.typeImages  = typeImages;
+	}
 }

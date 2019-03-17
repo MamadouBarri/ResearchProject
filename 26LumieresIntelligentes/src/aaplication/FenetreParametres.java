@@ -64,6 +64,8 @@ public class FenetreParametres extends JFrame {
 	int[] tabTrafficAnom = new int[4];
 	int nbVoituresMax = 0;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	//booleans des images des voitures
+	private int typeImages = 0; // 0 : images normales ; 1 : images de voitures de sport ; 2 : images de voitures classiques; 
 
 	/**
 	 * Launch the application.
@@ -322,34 +324,62 @@ public class FenetreParametres extends JFrame {
 		panel.add(spnNbVoitures);
 		
 		JRadioButton rdbtnVoituresNormales = new JRadioButton("voitures normales");
+		rdbtnVoituresNormales.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if(rdbtnVoituresNormales.isSelected()) {
+					typeImages = 0;
+					leverEvenGetParams();
+				}
+			}
+		});
+		rdbtnVoituresNormales.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
+		rdbtnVoituresNormales.setForeground(Color.BLACK);
 		rdbtnVoituresNormales.setSelected(true);
 		buttonGroup.add(rdbtnVoituresNormales);
-		rdbtnVoituresNormales.setBounds(33, 221, 125, 23);
+		rdbtnVoituresNormales.setBounds(35, 221, 127, 23);
 		panel.add(rdbtnVoituresNormales);
 		
 		JRadioButton rdbtnVoituresDeSport = new JRadioButton("voitures de sport");
+		rdbtnVoituresDeSport.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(rdbtnVoituresDeSport.isSelected()) {
+					typeImages = 1;
+					leverEvenGetParams();
+				}
+			}
+		});
+		rdbtnVoituresDeSport.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresDeSport);
 		rdbtnVoituresDeSport.setBounds(35, 334, 125, 23);
 		panel.add(rdbtnVoituresDeSport);
 		
 		JRadioButton rdbtnVoituresClassiques = new JRadioButton("voitures classiques");
+		rdbtnVoituresClassiques.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(rdbtnVoituresClassiques.isSelected()) {
+					typeImages = 2;
+					leverEvenGetParams();
+				}
+			}
+		});
+		rdbtnVoituresClassiques.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresClassiques);
-		rdbtnVoituresClassiques.setBounds(33, 446, 127, 23);
+		rdbtnVoituresClassiques.setBounds(35, 441, 141, 23);
 		panel.add(rdbtnVoituresClassiques);
 		
 		JLabel lblImageVoitureNormal = new JLabel("New label");
-		lblImageVoitureNormal.setIcon(new ImageIcon("C:\\Users\\Barry_000\\git\\other\\26lumieresintelligentes\\26LumieresIntelligentes\\ressources\\iconeNormal.jpg"));
-		lblImageVoitureNormal.setBounds(33, 250, 127, 77);
+		lblImageVoitureNormal.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeNormal.jpg")));
+		lblImageVoitureNormal.setBounds(40, 250, 120, 70);
 		panel.add(lblImageVoitureNormal);
 		
 		JLabel lblImageVoitureSport = new JLabel("New label");
-		lblImageVoitureSport.setIcon(new ImageIcon("C:\\Users\\Barry_000\\git\\other\\26lumieresintelligentes\\26LumieresIntelligentes\\ressources\\iconeSport.jpg"));
-		lblImageVoitureSport.setBounds(33, 362, 127, 77);
+		lblImageVoitureSport.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeSport.jpg")));
+		lblImageVoitureSport.setBounds(40, 362, 120, 70);
 		panel.add(lblImageVoitureSport);
 		
 		JLabel lblImageVoitureClassique = new JLabel("New label");
-		lblImageVoitureClassique.setIcon(new ImageIcon("C:\\Users\\Barry_000\\git\\other\\26lumieresintelligentes\\26LumieresIntelligentes\\ressources\\iconeClassique.jpg"));
-		lblImageVoitureClassique.setBounds(33, 477, 127, 77);
+		lblImageVoitureClassique.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeClassique.jpg")));
+		lblImageVoitureClassique.setBounds(40, 476, 120, 70);
 		panel.add(lblImageVoitureClassique);
 	}
 	//Reiner
@@ -441,6 +471,8 @@ public class FenetreParametres extends JFrame {
 		 */
 	private void leverEvenGetParams() {
 		for(ResultatsFenParamListener ecout : listeEcouteursDeParam) {
+			System.out.println("on leve evenement");
+			ecout.typeImages(typeImages);
 			ecout.VitesseDesVoitures((int)spnVitesse.getValue());
 			ecout.NombreDeVoituresAGenerer((int)spnNbVoitures.getValue());
 			ecout.TauxDApparitionDesVoitures((int)spnTauxDApparition.getValue());
@@ -450,7 +482,7 @@ public class FenetreParametres extends JFrame {
 				ecout.isTraficAnormal(false);
 			}
 			ecout.setVoiesAvecTraficAnormal(tabTrafficAnom);
-			ecout.NombreDeVoituresAGenerer(nbVoituresMax);
+			//ecout.NombreDeVoituresAGenerer(nbVoituresMax);
 		}
 	}
 }

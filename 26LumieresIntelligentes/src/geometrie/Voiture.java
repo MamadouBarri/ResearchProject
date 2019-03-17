@@ -61,6 +61,7 @@ public class Voiture implements Dessinable {
 	private double rotation;
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
+	private int typeImages;
 
 	//Mamadou
 	/**
@@ -111,9 +112,11 @@ public class Voiture implements Dessinable {
 	 * @param dimensionRoutePixels dimension d'une route en pixels
 	 * @param largeurVoie la largeur d'une voie en pixels
 	 * @param trafficAnormal tableau du traffic anormal
+	 * @param typeImages 
 	 */
-	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal) {
+	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal, int typeImages) {
 		//Initialisation des parametres de la voiture
+		this.typeImages  = typeImages;
 		this.largeurVoie = largeurVoie;
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
@@ -123,9 +126,17 @@ public class Voiture implements Dessinable {
 		this.directionDeVirage=((int)(Math.random()*3));
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
-		URL fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
+		URL fichVoiture;
+		if(typeImages == 0) {
+			System.out.println("on genere voiture normal");
+			fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
+		}else if(typeImages == 1) {
+			fichVoiture = getClass().getClassLoader().getResource("sport" + numImage +".jpg");
+		}else { // ==2
+			fichVoiture = getClass().getClassLoader().getResource("classique" + numImage +".jpg");
+		}
 		if (fichVoiture == null) {
-			affichageAvecTemps("**ERREUR** : Incapable de lire un fichier d'image");
+			affichageAvecTemps("**ERREUR** : Incapable de lire un fichier d'image" + typeImages);
 			return;
 		}
 		try {
@@ -324,7 +335,7 @@ public class Voiture implements Dessinable {
 	 */
 	public void genererImageVoitre() {
 		Random rn = new Random();
-		int aleatoire = rn.nextInt(9)+ 1;
+		int aleatoire = rn.nextInt(5)+ 1;
 		numImage = aleatoire;
 	}
 	//Mamadou

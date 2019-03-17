@@ -19,4 +19,6 @@ public interface ResultatsFenParamListener extends EventListener{
 	
 	public void setVoiesAvecTraficAnormal(int[] listeVoiesAnormales);
 
+	public void typeImages(int typeImages);
+
 }

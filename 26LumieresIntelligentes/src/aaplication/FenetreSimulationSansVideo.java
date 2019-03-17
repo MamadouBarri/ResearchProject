@@ -69,6 +69,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private FenetreStatistiques fenStats;
 	private JCheckBox chkbxTraficAnormal;
 	private int nbVoituresMax;
+	private int typeImages;
+	private JLabel nbVoituresAGenerer;
 
 	/**
 	 * Launch the application.
@@ -165,7 +167,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		pnSimulations.add(lblSimulationAvecLalgorithme);
 
 		JLabel lblVideo = new JLabel("Param\u00E8tres");
-		lblVideo.setBounds(1550, 98, 123, 14);
+		lblVideo.setBounds(1551, 93, 123, 14);
 		contentPane.add(lblVideo);
 
 		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
@@ -293,7 +295,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		contentPane.add(chkbxTraficAnormal);
 
 		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setBounds(1503, 338, 142, 414);
+		pnEmplacementsDesBoutons.setBounds(1502, 381, 142, 414);
 		contentPane.add(pnEmplacementsDesBoutons);
 		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
 		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
@@ -341,12 +343,11 @@ public class FenetreSimulationSansVideo extends JFrame {
 		btnRecommencer.setBounds(34, 311, 76, 76);
 		pnEmplacementsDesBoutons.add(btnRecommencer);
 		JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
-		lblNombreDeVoituresAGenerer.setBounds(1425, 323, 214, 14);
+		lblNombreDeVoituresAGenerer.setBounds(1462, 343, 214, 14);
 		contentPane.add(lblNombreDeVoituresAGenerer);
 
-		JLabel nbVoituresAGenerer = new JLabel("");
-		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
-		nbVoituresAGenerer.setBounds(1651, 323, 48, 14);
+		nbVoituresAGenerer = new JLabel("");
+		nbVoituresAGenerer.setBounds(1678, 343, 48, 14);
 		contentPane.add(nbVoituresAGenerer);
 	}
 
@@ -492,5 +493,18 @@ public class FenetreSimulationSansVideo extends JFrame {
 		 */
 	public int getNombreDeVoituresMax() {
 		return(this.nbVoituresMax);
+	}
+	/**
+	 * Setter du type des images des voitures
+	 * @param typeImages type des images
+	 */
+	//Mamadou
+	public void setTypeImages(int typeImages) {
+			this.typeImages = typeImages;
+			sceneAnimee1.setTypeImages(typeImages);
+			sceneAnimee2.setTypeImages(typeImages);
+	}
+	public void miseAJourText() {
+		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
 	}
 }

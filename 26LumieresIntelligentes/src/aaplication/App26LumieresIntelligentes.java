@@ -161,6 +161,7 @@ public class App26LumieresIntelligentes extends JFrame {
 			@Override
 			public void rendreFenetreSimulationsSansVideoVisible() {
 				parametres.setVisible(false);
+				simulSansVideo.miseAJourText();
 				simulSansVideo.setVisible(true);
 			}
 			
@@ -170,6 +171,7 @@ public class App26LumieresIntelligentes extends JFrame {
 
 			public void rendreFenetreSimulationsAvecVideoVisible() {
 				parametres.setVisible(false);
+				simulSansVideo.miseAJourText();
 				simulAvecVideo.setVisible(true);
 			}
 		});
@@ -196,6 +198,11 @@ public class App26LumieresIntelligentes extends JFrame {
 			@Override
 			public void setVoiesAvecTraficAnormal(int[] listeVoiesAnormales) {
 				simulSansVideo.setVoieAnormale(listeVoiesAnormales);
+			}
+
+			@Override
+			public void typeImages(int typeImages) {
+				simulSansVideo.setTypeImages(typeImages);
 			}
 			
 		});
