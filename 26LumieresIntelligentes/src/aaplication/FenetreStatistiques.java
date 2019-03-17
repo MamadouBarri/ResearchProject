@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import stats.PlanCartesien;
 /**
  * JFrame contenant des statistiques qui comparent notre algorithme à des feux de circulations normals
  * @author Gayta
@@ -16,8 +17,11 @@ import javax.swing.JTextPane;
  */
 public class FenetreStatistiques extends JFrame {
 
+	/**
+	 * numero par defaut
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
 	/**
 	 * Launch the application.
 	 */
@@ -35,20 +39,39 @@ public class FenetreStatistiques extends JFrame {
 	}
 
 	//Reiner
-		/**
-		 * Constructeur de la fenêtre
-		 */
+	/**
+	 * Constructeur de la fenêtre
+	 */
 	public FenetreStatistiques() {
+		setTitle("Statistiques\r\n");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 454, 650);
+		setBounds(100, 100, 909, 676);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JTextPane txtpnDensitDeVoitures = new JTextPane();
 		txtpnDensitDeVoitures.setText("Densit\u00E9 de voitures\r\n   Temps d'arr\u00EAt\r\n    Nombre de voitures pass\u00E9es par intervale de temps\r\n    Vitesse moyenne de tous les voiture\r\n\r\n");
-		txtpnDensitDeVoitures.setBounds(50, 106, 312, 328);
+		txtpnDensitDeVoitures.setBounds(306, 59, 312, 70);
 		contentPane.add(txtpnDensitDeVoitures);
+
+		JLabel lblTempsArret = new JLabel("temps d'arr\u00EAt en fonction du temps");
+		lblTempsArret.setBounds(570, 184, 195, 14);
+		contentPane.add(lblTempsArret);
+
+		PlanCartesien graphiqueTempsArret = new PlanCartesien();
+		graphiqueTempsArret.setBounds(51, 221, 300, 300);
+		contentPane.add(graphiqueTempsArret);
+
+		JLabel lblNbVoituresEnAttente = new JLabel("Nombre de voitures arr\u00EAt\u00E9es \r\nen fonction du temps");
+		lblNbVoituresEnAttente.setBounds(134, 184, 312, 14);
+		contentPane.add(lblNbVoituresEnAttente);
+		
+		JTextPane txtpnCourbeVerte = new JTextPane();
+		txtpnCourbeVerte.setText("COURBE VERTE : avec notre algorithme\r\n\r\nCOURBE ROUGE : sans l'algorithme");
+		txtpnCourbeVerte.setBounds(430, 295, 158, 87);
+		contentPane.add(txtpnCourbeVerte);
+
 	}
 }

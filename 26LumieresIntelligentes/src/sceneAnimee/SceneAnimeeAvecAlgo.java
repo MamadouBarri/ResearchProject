@@ -91,6 +91,10 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	//Voiture
 	private boolean ilYAVoitureQuiBloque = false;
 	private int typeImages = 0;
+	private int nbRepetitionsStats = 0;
+	private int nbRepetitionsMaxStats = 100;
+	//Pour les statistiques
+	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -170,13 +174,13 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue pas de virage
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setXVoiture((v.getXVoiture()+deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
@@ -196,7 +200,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if((!v.isVoitureArretee()||v.getEnRotation() == true)) {
+					if((!v.getVoitureArretee()||v.getEnRotation() == true)) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
@@ -260,13 +264,13 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				//La voiture continue tout droite, car elle n'effectue aucun virage
 				case 0:
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setYVoiture((v.getYVoiture()+deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()+deplacement));
@@ -286,7 +290,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()+deplacement));
@@ -338,13 +342,13 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setXVoiture((v.getXVoiture()-deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0+this.LARGEUR_VOITURE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()-deplacement));
@@ -364,7 +368,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()-deplacement));
@@ -418,13 +422,13 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setYVoiture((v.getYVoiture()-deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/4.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()-deplacement));
@@ -445,7 +449,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()-deplacement));
@@ -488,10 +492,25 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 			try {
 				Thread.sleep(tempsDuSleep);
 				nbRepetitionsPourVoitures++;
+				nbRepetitionsStats ++;
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
 					ajouterNouvelleVoiture();
 					nbRepetitionsPourVoitures=0;
+				}
+				//Lorsque une seconde passe, donc on prend une nouvelle valeur pour les statistiques
+				if(nbRepetitionsStats  == nbRepetitionsMaxStats ) {
+					//On calcule les voitures en attente
+					int voituresEnAttenteTotal = 0;
+					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getVoitureArretee()) {
+							voituresEnAttenteTotal++;
+						}
+					}						//On ajoute la valeur dans la liste
+					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
+					nbVoituresEnAttente.add(voituresEnAttenteTotal);
+					nbRepetitionsStats=0; //On remet le compteur a 0
 				}
 				//on vérifie la densité des voies à chaque 5 secondes
 				if(nbRepetitionsPourLumieres>=500) {

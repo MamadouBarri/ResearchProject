@@ -72,12 +72,14 @@ public class FenetreSimulationAvecVideo extends JFrame {
 		 * Constructeur de la fenêtre
 		 */
 		public FenetreSimulationAvecVideo() {
-			//création de la fenêtre de statistiques
-			fenStats = new FenetreStatistiques();
 			setTitle("Simulation");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 788, 683);
 
+
+			//création de la fenêtre de statistiques
+			fenStats = new FenetreStatistiques();
+			
 			/*popup = new FenetreFileChooser();
 			popup.setVisible(false);*/
 
@@ -193,6 +195,7 @@ public class FenetreSimulationAvecVideo extends JFrame {
 			sceneAnimee2 = new SceneAnimeeAvecAlgo();
 			sceneAnimee2.setBounds(174, 348, 260, 260);
 			pnSimulations.add(sceneAnimee2);
+			
 		}
 		//Reiner
 		/**

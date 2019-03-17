@@ -98,8 +98,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1800, 900);
 
-		fenStats = new FenetreStatistiques();
-		fenStats.setVisible(false);
+		
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -169,7 +168,12 @@ public class FenetreSimulationSansVideo extends JFrame {
 		});
 		sceneAnimee1.setBounds(37, 109, 600, 600);
 		pnSimulations.add(sceneAnimee1);
-
+		
+		
+		fenStats = new FenetreStatistiques();
+		fenStats.setVisible(false);
+		
+		
 		JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme");
 		lblSimulationAvecLalgorithme.setBounds(928, 65, 144, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithme);

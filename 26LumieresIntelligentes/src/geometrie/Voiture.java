@@ -441,7 +441,7 @@ public class Voiture implements Dessinable {
 	 * Getter qui retourne vrai si la voiuture est arretee
 	 * @return voitureArretee vrai si la voiture est en etat d'arret
 	 */
-	public boolean isVoitureArretee() {
+	public boolean getVoitureArretee() {
 		return voitureArretee;
 	}
 	//Mamadou

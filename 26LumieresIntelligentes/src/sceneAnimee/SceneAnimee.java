@@ -3,6 +3,7 @@ package sceneAnimee;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.text.SimpleDateFormat;
@@ -98,6 +99,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbRepetitionsPourMenage = 0;
 	//Gestion de l'arret de l'animation
 	private ArrayList<VisibiliteFenStatistiquesListener> listeEcouteursFenStats = new ArrayList<VisibiliteFenStatistiquesListener>();
+	
+	//Pour les statistiques
+	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
+	private int nbRepetitionsMaxStats = 100;
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -163,6 +168,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 		double nbRepetitionsPourVoitures = 0;
 		//compteur pour savoir quand on faire avancer le cycle de lumiere selon le nombre de boucles de run faits
 		double nbRepetitionsPourLumieres = 0;
+		//compteur pour savoir quand prendre les statistiques
+		int nbRepetitionsStats = 0;
 		while (enCoursDAnimation) {	
 			//Commencer le thread de voiture pour chaque voiture de la liste
 
@@ -174,13 +181,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue pas de virage
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setXVoiture((v.getXVoiture()+deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
@@ -200,7 +207,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
@@ -264,13 +271,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				//La voiture continue tout droite, car elle n'effectue aucun virage
 				case 0:
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setYVoiture((v.getYVoiture()+deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()+deplacement));
@@ -290,7 +297,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()+deplacement));
@@ -342,13 +349,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setXVoiture((v.getXVoiture()-deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0+this.LARGEUR_VOITURE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()-deplacement));
@@ -368,7 +375,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							v.setXVoiture((v.getXVoiture()-deplacement));
@@ -423,13 +430,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.isVoitureArretee()) {
+					if(!v.getVoitureArretee()) {
 						v.setYVoiture((v.getYVoiture()-deplacement));
 					}
 					break;
 				case 1:
 					//La voiture tourne à droite
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/4.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()-deplacement));
@@ -450,7 +457,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					break;
 				case 2:
 					//La voiture tourne à gauche
-					if(!v.isVoitureArretee()||v.getEnRotation() == true) {
+					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
 							v.setYVoiture((v.getYVoiture()-deplacement));
@@ -494,6 +501,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Thread.sleep(tempsDuSleep);
 				nbRepetitionsPourVoitures++;
 				nbRepetitionsPourLumieres++;
+				nbRepetitionsStats++;
 				nbRepetitionsPourMenage++;
 				//System.out.println(nbRepetitionsPourLumieres);
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
@@ -501,12 +509,27 @@ public class SceneAnimee extends JPanel implements Runnable{
 					ajouterNouvelleVoiture();
 					nbRepetitionsPourVoitures=0;
 				}
+				
+				//Lorsque une seconde passe, donc on prend une nouvelle valeur pour les statistiques
+				if(nbRepetitionsStats == nbRepetitionsMaxStats) {
+					//On calcule les voitures en attente
+					int voituresEnAttenteTotal = 0;
+					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						if(v.getVoitureArretee()) {
+							voituresEnAttenteTotal++;
+						}
+					}						//On ajoute la valeur dans la liste
+					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
+					nbVoituresEnAttente.add(voituresEnAttenteTotal);
+					nbRepetitionsStats=0; //On remet le compteur a 0
+				}
 				if(nbVoituresGenerees>=nbVoituresMax){//Toutes les voitures ont été générées, donc find de la simulation
 					boolean aucuneVoiture = true;
 					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 						Voiture v = i.next();
 						if(v.getVoitureActive()){//Il reste aucune voiture active
-							aucuneVoiture = false;
+							//aucuneVoiture = false;
 						}
 					}
 					if(aucuneVoiture) {
@@ -859,5 +882,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Mamadou
 	public void setTypeImages(int typeImages) {
 		this.typeImages  = typeImages;
+	}
+	/**
+	 * Methode qui retourne le array list contenat les valeurs des voitures arretes
+	 * @return	nbVoituresEnAttente la liste contenant les nombres des voitures arretes
+	 */
+	public ArrayList<Integer> getListeVoituresEnArret() {
+		return this.nbVoituresEnAttente;
 	}
 }
