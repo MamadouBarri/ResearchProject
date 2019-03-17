@@ -14,6 +14,11 @@ import sceneAnimee.SceneAnimeeAvecAlgo;
 
 import javax.swing.JPanel;
 
+/**
+ * Cette classe permet de dessiner une fonctoin sur un plan cartésien
+ * @author Mamadou Barri et Caroline Houle (pour la squelette de la classe)
+ *
+ */
 public class PlanCartesien extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -89,7 +94,6 @@ public class PlanCartesien extends JPanel {
 	/**
 	 * Méthode pour créer la grille
 	 * @param g l'objet Graphics2D qui sera utilisé pour dessiner les graduations
-	 * @author Mamadou
 	 */
 	private void creerGraduations(Graphics2D g) {
 		//variables
