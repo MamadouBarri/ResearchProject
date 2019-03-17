@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.ImageIcon;
 /**
  * JFrame qui permet l'utilisateur de modifier les paramètres de la simulation
  * @author Gayta
@@ -62,6 +63,7 @@ public class FenetreParametres extends JFrame {
 	//tableau contenant les voies avec traffic anormale
 	int[] tabTrafficAnom = new int[4];
 	int nbVoituresMax = 0;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -288,24 +290,24 @@ public class FenetreParametres extends JFrame {
 		panel.add(btnConfirmer);
 		
 		SceneAnimee sceneAnimee = new SceneAnimee();
-		sceneAnimee.setBounds(190, 250, 242, 243);
+		sceneAnimee.setBounds(258, 250, 242, 243);
 		panel.add(sceneAnimee);
 		sceneAnimee.setLayout(null);
 		
 		JLabel lblVoieNord = new JLabel("Voie NORD");
-		lblVoieNord.setBounds(287, 225, 89, 14);
+		lblVoieNord.setBounds(355, 225, 89, 14);
 		panel.add(lblVoieNord);
 		
 		lblVoieEst = new JLabel("Voie EST");
-		lblVoieEst.setBounds(438, 362, 84, 14);
+		lblVoieEst.setBounds(514, 362, 84, 14);
 		panel.add(lblVoieEst);
 		
 		lblVoieOuest = new JLabel("Voie OUEST");
-		lblVoieOuest.setBounds(113, 362, 89, 14);
+		lblVoieOuest.setBounds(187, 362, 89, 14);
 		panel.add(lblVoieOuest);
 		
 		lblVoieSud = new JLabel("Voie SUD");
-		lblVoieSud.setBounds(292, 505, 84, 14);
+		lblVoieSud.setBounds(360, 504, 84, 14);
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();
@@ -318,6 +320,37 @@ public class FenetreParametres extends JFrame {
 		spnNbVoitures.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
 		spnNbVoitures.setBounds(154, 113, 48, 20);
 		panel.add(spnNbVoitures);
+		
+		JRadioButton rdbtnVoituresNormales = new JRadioButton("voitures normales");
+		rdbtnVoituresNormales.setSelected(true);
+		buttonGroup.add(rdbtnVoituresNormales);
+		rdbtnVoituresNormales.setBounds(33, 221, 125, 23);
+		panel.add(rdbtnVoituresNormales);
+		
+		JRadioButton rdbtnVoituresDeSport = new JRadioButton("voitures de sport");
+		buttonGroup.add(rdbtnVoituresDeSport);
+		rdbtnVoituresDeSport.setBounds(35, 334, 125, 23);
+		panel.add(rdbtnVoituresDeSport);
+		
+		JRadioButton rdbtnVoituresClassiques = new JRadioButton("voitures classiques");
+		buttonGroup.add(rdbtnVoituresClassiques);
+		rdbtnVoituresClassiques.setBounds(33, 446, 127, 23);
+		panel.add(rdbtnVoituresClassiques);
+		
+		JLabel lblImageVoitureNormal = new JLabel("New label");
+		lblImageVoitureNormal.setIcon(new ImageIcon("C:\\Users\\Barry_000\\git\\other\\26lumieresintelligentes\\26LumieresIntelligentes\\ressources\\iconeNormal.jpg"));
+		lblImageVoitureNormal.setBounds(33, 250, 127, 77);
+		panel.add(lblImageVoitureNormal);
+		
+		JLabel lblImageVoitureSport = new JLabel("New label");
+		lblImageVoitureSport.setIcon(new ImageIcon("C:\\Users\\Barry_000\\git\\other\\26lumieresintelligentes\\26LumieresIntelligentes\\ressources\\iconeSport.jpg"));
+		lblImageVoitureSport.setBounds(33, 362, 127, 77);
+		panel.add(lblImageVoitureSport);
+		
+		JLabel lblImageVoitureClassique = new JLabel("New label");
+		lblImageVoitureClassique.setIcon(new ImageIcon("C:\\Users\\Barry_000\\git\\other\\26lumieresintelligentes\\26LumieresIntelligentes\\ressources\\iconeClassique.jpg"));
+		lblImageVoitureClassique.setBounds(33, 477, 127, 77);
+		panel.add(lblImageVoitureClassique);
 	}
 	//Reiner
 	/**
