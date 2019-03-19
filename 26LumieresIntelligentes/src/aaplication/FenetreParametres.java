@@ -179,7 +179,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), null, null, new Integer(1)));
+		spnVitesse.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
 		spnVitesse.setBounds(128, 66, 48, 20);
 		panel.add(spnVitesse);
 		
