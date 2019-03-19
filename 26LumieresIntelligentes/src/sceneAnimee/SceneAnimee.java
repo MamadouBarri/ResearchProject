@@ -186,7 +186,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
 					Voiture vOppose = iOppose.next();
 					//entre si la voiture est pret à tourner à gauche
-					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
 						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
 						switch(vOppose.getDirectionDeVirage()) {
 						case 0:
