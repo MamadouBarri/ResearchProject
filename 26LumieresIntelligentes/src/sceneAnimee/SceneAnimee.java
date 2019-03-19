@@ -714,7 +714,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 						Voiture v = i.next();
 						if(!v.getVoitureActive()){
-							voitures.remove(v);
+							//voitures.remove(v);
 						}
 					}	
 					nbRepetitionsPourMenage=0;

@@ -61,7 +61,7 @@ public class FenetreStatistiques extends JFrame {
 		contentPane.add(lblTempsArret);
 
 		PlanCartesien graphiqueTempsArret = new PlanCartesien();
-		graphiqueTempsArret.setBounds(51, 221, 300, 300);
+		graphiqueTempsArret.setBounds(62, 209,400, 400);
 		contentPane.add(graphiqueTempsArret);
 
 		JLabel lblNbVoituresEnAttente = new JLabel("Nombre de voitures arr\u00EAt\u00E9es \r\nen fonction du temps");
@@ -70,7 +70,7 @@ public class FenetreStatistiques extends JFrame {
 		
 		JTextPane txtpnCourbeVerte = new JTextPane();
 		txtpnCourbeVerte.setText("COURBE VERTE : avec notre algorithme\r\n\r\nCOURBE ROUGE : sans l'algorithme");
-		txtpnCourbeVerte.setBounds(430, 295, 158, 87);
+		txtpnCourbeVerte.setBounds(570, 313, 158, 87);
 		contentPane.add(txtpnCourbeVerte);
 
 	}
