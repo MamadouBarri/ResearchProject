@@ -50,6 +50,7 @@ import javax.swing.SpinnerNumberModel;
  */
 public class FenetreSimulationSansVideo extends JFrame {
 	////
+	
 	private JPanel contentPane;
 	private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();
 	private FenetreFileChooser popup;
