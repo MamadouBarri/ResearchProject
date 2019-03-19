@@ -78,7 +78,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//À cette derniere boucle, on retourne le compteur à 0
 	private double nbBouclesAvantChangement4 = 5400;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
-	private final double DISTANCE_BORDURE = 10; ///En pixels pour le drawString 
+	private final double DISTANCE_BORDURE = 8; ///En pixels pour le drawString 
 
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
 	//couleur des lumieres pour les voies nord et sud

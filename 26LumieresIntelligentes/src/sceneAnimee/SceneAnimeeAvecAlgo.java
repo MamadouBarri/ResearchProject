@@ -71,7 +71,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres après que l'algorithme à décider d'inverser le "flow"
 	private double nbBouclesAvantChangement2 = 300;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
-	private final double DISTANCE_BORDURE = 5; ///En pixels pour le drawString 
+	private final double DISTANCE_BORDURE = 8; ///En pixels pour le drawString 
 
 	//Les couleurs des lumieres sont determines par des valeurs int : 0=vert; 1=jaune; 2=rouge
 	//couleur des lumieres pour les voies nord et sud
