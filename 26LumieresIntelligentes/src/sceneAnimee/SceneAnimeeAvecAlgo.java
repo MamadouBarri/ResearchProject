@@ -177,7 +177,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
 					Voiture vOppose = iOppose.next();
 					//entre si la voiture est pret à tourner à gauche
-					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
 						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
 						switch(vOppose.getDirectionDeVirage()) {
 						case 0:
@@ -186,7 +186,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							}
 							break;
 						case 1:
-							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
 								ilYAVoitureQuiBloque = true;
 							}
 						}
@@ -258,14 +258,6 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					v.setVoitureArretee(true);
 				}
 
-				//Voiture devant trop proche
-				if(est.indexOf(v)!=0) {
-					Voiture voitureDevant = est.get(est.indexOf(v)-1);
-					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
-					}
-				}
-
 				//Verifier l'etat de la voiture devant
 				//Si la liste contient plus qu'une voiture
 
@@ -279,6 +271,13 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
+				}
+				//Voiture devant trop proche
+				if(est.indexOf(v)!=0) {
+					Voiture voitureDevant = est.get(est.indexOf(v)-1);
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&v.getYVoiture()==voitureDevant.getYVoiture()) {
+						v.setVoitureArretee(true);
+					}
 				}
 			}//fin DIRECTION EST
 
@@ -301,7 +300,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							}
 							break;
 						case 1:
-							if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
 								ilYAVoitureQuiBloque = true;
 							}
 						}
@@ -381,17 +380,16 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					v.setVoitureArretee(true);
 				}
 
-				//Voiture devant trop proche
-				if(sud.indexOf(v)!=0) {
-					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
-					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
-					}
-				}
-
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumSud.getCouleur() == VERTE||lumSud.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
+				}
+				//Voiture devant trop proche
+				if(sud.indexOf(v)!=0) {
+					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&v.getXVoiture()==voitureDevant.getXVoiture()) {
+						v.setVoitureArretee(true);
+					}
 				}
 			}
 
@@ -404,17 +402,16 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
 					Voiture vOppose = iOppose.next();
 					//entre si la voiture est pret à tourner à gauche
-					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
 						switch(vOppose.getDirectionDeVirage()) {
 						case 0:
 							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 								ilYAVoitureQuiBloque = true;
-								System.out.println("You shall not pass");
 							}
 							break;
 						case 1:
-							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
 								ilYAVoitureQuiBloque = true;
 							}
 						}
@@ -493,17 +490,16 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					v.setVoitureArretee(true);
 				}
 
-				//Voiture devant trop proche
-				if(ouest.indexOf(v)!=0) {
-					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
-					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
-					}
-				}
-
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
+				}
+				//Voiture devant trop proche
+				if(ouest.indexOf(v)!=0) {
+					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&v.getYVoiture()==voitureDevant.getYVoiture()) {
+						v.setVoitureArretee(true);
+					}
 				}
 			}
 
@@ -525,7 +521,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							}
 							break;
 						case 1:
-							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
 								ilYAVoitureQuiBloque = true;
 							}
 						}
@@ -583,7 +579,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						if(v.getPeutTournerGauche()) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
+						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()+LARGEUR_VOITURE/2.0) {
 							v.setYVoiture((v.getYVoiture()-deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -608,18 +604,19 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					v.setVoitureArretee(true);
 				}
 
-				//Voiture devant trop proche
-				if(nord.indexOf(v)!=0) {
-					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
-					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE) {
-						v.setVoitureArretee(true);
-					}
-				}
-
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumNord.getCouleur() == VERTE||lumNord.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
 				}
+
+				//Voiture devant trop proche
+				if(nord.indexOf(v)!=0) {
+					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&v.getXVoiture()==voitureDevant.getXVoiture()) {
+						v.setVoitureArretee(true);
+					}
+				}
+
 			}
 			repaint();
 			try {

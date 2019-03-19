@@ -219,7 +219,9 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
+					if(peutTournerGauche) {
 					rotation = rotation - Math.toRadians(1.5);
+					}
 				}
 				if(rotation<=-Math.PI/2.0) {
 					rotation = -Math.PI/2.0;
@@ -248,7 +250,9 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
-					rotation = rotation - Math.toRadians(1.5);
+					if(peutTournerGauche) {
+					rotation = rotation - Math.toRadians(2);
+				}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation<=0) {
 						rotation = 0;
@@ -278,7 +282,9 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
+					if(peutTournerGauche) {
 					rotation = rotation - Math.toRadians(1.5);
+					}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 				}
 				if(rotation<=Math.PI/2.0) {
@@ -308,7 +314,9 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
+					if(peutTournerGauche) {
 					rotation = rotation - Math.toRadians(2);
+					}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation<=-Math.PI) {
 						rotation = -Math.PI;
