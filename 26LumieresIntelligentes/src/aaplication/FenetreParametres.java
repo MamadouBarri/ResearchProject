@@ -36,7 +36,7 @@ import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
 /**
  * JFrame qui permet l'utilisateur de modifier les paramètres de la simulation
- * @author Gayta
+ * @author Gayta//
  *
  */
 public class FenetreParametres extends JFrame {

@@ -46,6 +46,7 @@ import ecouteursperso.VisibiliteFenStatistiquesListener;
  * @author Gayta
  *
  */
+
 public class App26LumieresIntelligentes extends JFrame {
 
 	private JPanel contentPane;

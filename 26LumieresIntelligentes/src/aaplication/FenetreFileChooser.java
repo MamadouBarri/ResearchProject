@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
  * @author Gayta
  *
  */
+
 public class FenetreFileChooser extends JFrame {
 
 	private JPanel contentPane;

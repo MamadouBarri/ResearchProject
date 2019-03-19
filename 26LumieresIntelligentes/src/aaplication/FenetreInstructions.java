@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
  * @author Gayta
  *
  */
+
 public class FenetreInstructions extends JFrame {
 	//listes contenant les objets qui veulent ecouter à cet objet
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();

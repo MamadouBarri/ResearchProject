@@ -508,6 +508,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		sceneAnimee1.setNbVoituresMax(nbVoitures);
 		sceneAnimee2.setNbVoituresMax(nbVoitures);
 	}
+	
 	//Reiner
 		/**
 		 * Setter qui modifie le nombre de voitures maximum générées par la scène

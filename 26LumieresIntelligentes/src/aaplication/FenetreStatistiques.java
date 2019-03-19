@@ -37,7 +37,7 @@ public class FenetreStatistiques extends JFrame {
 			}
 		});
 	}
-
+//
 	//Reiner
 	/**
 	 * Constructeur de la fenêtre

@@ -35,6 +35,7 @@ import sceneAnimee.SceneAnimeeAvecAlgo;
  * @author Gayta
  *
  */
+
 public class FenetreSimulationAvecVideo extends JFrame {
 		private JPanel contentPane;
 		private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();
