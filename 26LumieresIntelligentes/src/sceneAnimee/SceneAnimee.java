@@ -567,7 +567,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				this.ilYAVoitureQuiBloque = false;
 				}
 				//fin de la verification
-				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					//voitures.remove(v);

@@ -103,7 +103,7 @@ public class PlanCartesien extends JPanel {
 		int valeurX = (int)xMin;
 		for(int k=0; k<=(int)xMax-(int)xMin;k++) {
 			//dessine la dernière graduation en X
-			g.setFont(new Font("TimesRoman",Font.PLAIN,6));
+			g.setFont(new Font("TimesRoman",Font.PLAIN,8));
 			g.drawString(valeurX+"", (float)posX, (float) (getHeight()) - DISTANCE_GRADUATION);
 			valeurX++;
 			posX+=pixelsXParUnite;
