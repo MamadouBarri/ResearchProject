@@ -123,7 +123,9 @@ public class Voiture implements Dessinable {
 		this.longueurVoiturePixels = longueurVoiturePixels;
 		this.setTrafficAnormal(trafficAnormal);
 		//génère un nombre entre 0 et 2 pour déterminer si la voiture tourne ou non et, si oui, dans quelle direction
-		this.directionDeVirage=((int)(Math.random()*3));
+		//this.directionDeVirage=((int)(Math.random()*3));
+		action = new Action();
+		this.directionDeVirage = action.getNumAction();
 		//Generer l'image aleatoire de la voiture
 		genererImageVoitre();
 		URL fichVoiture;
@@ -220,7 +222,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(1.5);
+					rotation = rotation - Math.toRadians(2);
 					}
 				}
 				if(rotation<=-Math.PI/2.0) {

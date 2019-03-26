@@ -99,21 +99,31 @@ public class Direction extends Ligne {
 			switch(numDeVoie) {
 			case 1:
 				probVoie1 = probVoie1*2;
+				//ajoute à la probabilité totale pour compenser l'augmentation des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale+25;
 				break;
 			case 2:
 				probVoie2 = probVoie2*2;
+				//ajoute à la probabilité totale pour compenser l'augmentation des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale+25;
 				break;
 			case 3:
 				probVoie3 = probVoie3*2;
+				//ajoute à la probabilité totale pour compenser l'augmentation des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale+25;
 				break;
 			case 4:
 				probVoie4 = probVoie4*2;
+				//ajoute à la probabilité totale pour compenser l'augmentation des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale+25;
 				break;
 			}
-			//ajoute à la probabilité totale pour compenser l'augmentation des chances de la voie choisie 
-			probabiliteTotale = probabiliteTotale+25;
 			//assure qu'on ne peut pas avoir plus que 4 voies anormales
 			nbVoiesNormales--;
+			System.out.println("prob1: " + probVoie1+"/"+probabiliteTotale);
+			System.out.println("prob2: " + probVoie2+"/"+probabiliteTotale);
+			System.out.println("prob3: " + probVoie3+"/"+probabiliteTotale);
+			System.out.println("prob4: " + probVoie4+"/"+probabiliteTotale);
 		}
 	}
 	//Reiner
@@ -126,22 +136,32 @@ public class Direction extends Ligne {
 			switch(numDeVoie) {
 			case 1:
 				probVoie1 = probVoie1/2;
+				//Soustrait de la probabilité totale pour compenser la diminution des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale-25;
 				break;
 			case 2:
 				probVoie2 = probVoie2/2;
+				//Soustrait de la probabilité totale pour compenser la diminution des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale-25;
 				break;
 			case 3:
 				probVoie3 = probVoie3/2;
+				//Soustrait de la probabilité totale pour compenser la diminution des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale-25;
 				break;
 			case 4:
 				probVoie4 = probVoie4/2;
+				//Soustrait de la probabilité totale pour compenser la diminution des chances de la voie choisie 
+				probabiliteTotale = probabiliteTotale-25;
 				break;
 			}
-			//Soustrait de la probabilité totale pour compenser la diminution des chances de la voie choisie 
-			probabiliteTotale = probabiliteTotale-25;
 			//assure qu'on ne peut pas avoir plus que 4 voies normales
 			nbVoiesNormales++;
 		}
+		System.out.println("prob1: " + probVoie1/probabiliteTotale);
+		System.out.println("prob2: " + probVoie2/probabiliteTotale);
+		System.out.println("prob3: " + probVoie3/probabiliteTotale);
+		System.out.println("prob4: " + probVoie4/probabiliteTotale);
 	}
 	//Reiner
 	/**

@@ -232,9 +232,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie3.isSelected()) {
-					sceneAnimee1.addTrafficAnormale(3);
+					setTrafficAnormal(3);
 				}else {
-					sceneAnimee1.addTrafficNormale(3);
+					setTrafficNormal(3);
 				}
 			}
 		});
@@ -246,9 +246,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie4.isSelected()) {
-					sceneAnimee1.addTrafficAnormale(4);
+					setTrafficAnormal(4);
 				}else {
-					sceneAnimee1.addTrafficNormale(4);
+					setTrafficNormal(4);
 				}
 			}
 		});
@@ -260,9 +260,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie2.isSelected()) {
-					sceneAnimee1.addTrafficAnormale(2);
+					setTrafficAnormal(2);
 				}else {
-					sceneAnimee1.addTrafficNormale(2);
+					setTrafficNormal(2);
 				}
 			}
 		});
@@ -274,9 +274,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 		chkbxVoie1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxVoie1.isSelected()) {
-					sceneAnimee1.addTrafficAnormale(1);
+					setTrafficAnormal(1);
 				} else {
-					sceneAnimee1.addTrafficNormale(1);
+					setTrafficNormal(1);
 				}
 			}
 		});
@@ -291,16 +291,40 @@ public class FenetreSimulationSansVideo extends JFrame {
 					sceneAnimee1.setTrafficAnormale(true);
 					sceneAnimee2.setTrafficAnormale(true);
 					chkbxVoie3.setEnabled(true);
+					if(chkbxVoie3.isSelected()) {
+						setTrafficAnormal(3);
+					}
 					chkbxVoie4.setEnabled(true);
+					if(chkbxVoie4.isSelected()) {
+						setTrafficAnormal(4);
+					}
 					chkbxVoie2.setEnabled(true);
+					if(chkbxVoie2.isSelected()) {
+						setTrafficAnormal(2);
+					}
 					chkbxVoie1.setEnabled(true);
+					if(chkbxVoie1.isSelected()) {
+						setTrafficAnormal(1);
+					}
 				} else {
 					sceneAnimee1.setTrafficAnormale(false);
 					sceneAnimee2.setTrafficAnormale(false);
 					chkbxVoie3.setEnabled(false);
+					if(chkbxVoie3.isSelected()) {
+						setTrafficNormal(3);
+					}
 					chkbxVoie4.setEnabled(false);
+					if(chkbxVoie4.isSelected()) {
+						setTrafficNormal(4);
+					}
 					chkbxVoie2.setEnabled(false);
+					if(chkbxVoie2.isSelected()) {
+						setTrafficNormal(2);
+					}
 					chkbxVoie1.setEnabled(false);
+					if(chkbxVoie1.isSelected()) {
+						setTrafficNormal(1);
+					}
 				}
 			}
 		});
@@ -431,7 +455,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			switch(tabVoiesAnom[i]) {
 			//indique qu'une voie a du trafic normal
 			case 0:
-				//indique à la scene la voie normale selon l'indice(ex: si la valeur de tab[1] = 0, on sait que la voie 2 (ou ouest) a du traffic normal
+				//indique à la scene la voie normale selon l'indice(ex: si la valeur de tab[1] = 0, on sait que la voie 2 (ou ouest) a du trafic normal
 				switch(i) {
 				case 0:
 					chkbxVoie1.setSelected(false);
@@ -529,5 +553,13 @@ public class FenetreSimulationSansVideo extends JFrame {
 	}
 	public void miseAJourText() {
 		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
+	}
+	public void setTrafficAnormal(int voie) {
+		sceneAnimee1.addTrafficAnormale(voie);
+		sceneAnimee2.addTrafficAnormale(voie);
+	}
+	public void setTrafficNormal(int voie) {
+		sceneAnimee1.addTrafficNormale(voie);
+		sceneAnimee2.addTrafficNormale(voie);
 	}
 }

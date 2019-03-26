@@ -19,7 +19,7 @@ public class Action {
 		genererActionVoiture();
 		switch (numAction)
 		{
-			case -1:
+			case 2:
 				descriptionAction = "tourner gauche";
 				break;
 			case 0:
@@ -41,11 +41,18 @@ public class Action {
 	}
 	//Mamadou
 	/**
-	 * Methode qui genere une direction aleatoire pour la voitre, champ: -1 a 1
+	 * Methode qui genere une direction aleatoire pour la voitre, champ: 0 a 2
 	 */
 	public void genererActionVoiture() {
 		Random rn = new Random();
-		int aleatoire = rn.nextInt(3) - 1;
+		int aleatoire = rn.nextInt(3);
 		numAction = aleatoire;
+	}
+	//Reiner
+	/**Méthode qui retourne un int représentant l'action de la voiture
+	 * @return the numAction int représentant l'action de la voiture
+	 */
+	public int getNumAction() {
+		return numAction;
 	}
 }

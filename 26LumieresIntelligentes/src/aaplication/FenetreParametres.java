@@ -200,7 +200,7 @@ public class FenetreParametres extends JFrame {
 		chkbxTrfcAnom1 = new JCheckBox("Voie NORD");
 		chkbxTrfcAnom1.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom1.isSelected()) {
+				if(chkbxTrfcAnom1.isSelected()) {
 					tabTrafficAnom[0] = 1;
 				} else {
 					tabTrafficAnom[0] = 0;
@@ -214,7 +214,7 @@ public class FenetreParametres extends JFrame {
 		chkbxTrfcAnom2 = new JCheckBox("Voie OUEST");
 		chkbxTrfcAnom2.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom2.isSelected()) {
+				if(chkbxTrfcAnom2.isSelected()) {
 					tabTrafficAnom[1] = 2;
 				} else {
 					tabTrafficAnom[1] = 0;
@@ -228,10 +228,10 @@ public class FenetreParametres extends JFrame {
 		chkbxTrfcAnom3 = new JCheckBox("Voie SUD");
 		chkbxTrfcAnom3.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom3.isSelected()) {
+				if(chkbxTrfcAnom3.isSelected()) {
 					tabTrafficAnom[2] = 3;
 				} else {
-					tabTrafficAnom[2] = 3;
+					tabTrafficAnom[2] = 0;
 				}
 				leverEvenGetParams();
 			}
@@ -242,7 +242,7 @@ public class FenetreParametres extends JFrame {
 		chkbxTrfcAnom4 = new JCheckBox("Voie EST");
 		chkbxTrfcAnom4.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if(chkbxTrfcAnom.isSelected()&&chkbxTrfcAnom4.isSelected()) {
+				if(chkbxTrfcAnom4.isSelected()) {
 					tabTrafficAnom[3] = 4;
 				} else {
 					tabTrafficAnom[3] = 0;
@@ -481,8 +481,10 @@ public class FenetreParametres extends JFrame {
 			} else {
 				ecout.isTraficAnormal(false);
 			}
+			if(chkbxTrfcAnom1.isSelected()||chkbxTrfcAnom2.isSelected()||chkbxTrfcAnom3.isSelected()||chkbxTrfcAnom4.isSelected()) {
 			ecout.setVoiesAvecTraficAnormal(tabTrafficAnom);
-			//ecout.NombreDeVoituresAGenerer(nbVoituresMax);
+			}
+			System.out.println(listeEcouteursDeParam.size());
 		}
 	}
 }

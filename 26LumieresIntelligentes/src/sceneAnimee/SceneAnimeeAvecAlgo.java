@@ -80,8 +80,8 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	private int couleurInv=2; 
 	Lumiere lumSud,lumNord,lumOuest,lumEst;
 	private int nbVoiesHorizontale = 1;
-	private int[] trafficAnormale = new int[1];
-	private int[] trafficAnormaleTemp= new int[1];
+	private int[] trafficAnormale = new int[0];
+	private int[] trafficAnormaleTemp= new int[0];
 	private boolean enTrafficAnormale;
 	private double vitesse;
 	//Code des lumiere
@@ -189,6 +189,11 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
 								ilYAVoitureQuiBloque = true;
 							}
+							break;
+						case 2:
+							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+								ilYAVoitureQuiBloque = true;
+							}
 						}
 					}
 					}
@@ -238,7 +243,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							v.setXVoiture((v.getXVoiture()+deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()+1) < DISTANCE_LIGNE_ARRET){
+						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -301,6 +306,11 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							break;
 						case 1:
 							if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 2:
+							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
 								ilYAVoitureQuiBloque = true;
 							}
 						}
@@ -946,10 +956,10 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	 * @param numDeVoie int indiquant la voie qui aura  du traffic anormal
 	 */
 	public void addTrafficNormale(int numDeVoie) {
-		if(this.enTrafficAnormale&&numDeVoie>0) {
+		if(this.enTrafficAnormale&&numDeVoie>0&&this.trafficAnormale.length>1) {
 			int[] tabTemporaire = this.trafficAnormale;
 			this.trafficAnormale = new int[this.trafficAnormale.length-1];
-			for(int i = 0;i<tabTemporaire.length;i++) {
+			for(int i = 0;i<this.trafficAnormale.length;i++) {
 				if(tabTemporaire[i]!=numDeVoie) {
 					this.trafficAnormale[i] = tabTemporaire[i];
 				}
