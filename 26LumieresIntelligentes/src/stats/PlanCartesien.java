@@ -71,6 +71,7 @@ public class PlanCartesien extends JPanel {
 		AffineTransform mat = new AffineTransform();
 		mat.scale(pixelsXParUnite, pixelsYParUnite);
 		creerAxes();
+		
 		creerApproxCourbeSansAlgo();
 		creerApproxCourbeAvecAlgo();
 		

@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import stats.PlanCartesien;
+import stats.PlanCartesien1;
 /**
  * JFrame contenant des statistiques qui comparent notre algorithme à des feux de circulations normals
  * @author Gayta
@@ -60,9 +61,9 @@ public class FenetreStatistiques extends JFrame {
 		lblTempsArret.setBounds(570, 184, 195, 14);
 		contentPane.add(lblTempsArret);
 
-		PlanCartesien graphiqueTempsArret = new PlanCartesien();
-		graphiqueTempsArret.setBounds(62, 209,400, 400);
-		contentPane.add(graphiqueTempsArret);
+		//PlanCartesien graphiqueTempsArret = new PlanCartesien();
+		//graphiqueTempsArret.setBounds(62, 209,400, 400);
+		//contentPane.add(graphiqueTempsArret);
 
 		JLabel lblNbVoituresEnAttente = new JLabel("Nombre de voitures arr\u00EAt\u00E9es \r\nen fonction du temps");
 		lblNbVoituresEnAttente.setBounds(134, 184, 312, 14);
@@ -72,6 +73,10 @@ public class FenetreStatistiques extends JFrame {
 		txtpnCourbeVerte.setText("COURBE VERTE : avec notre algorithme\r\n\r\nCOURBE ROUGE : sans l'algorithme");
 		txtpnCourbeVerte.setBounds(570, 313, 158, 87);
 		contentPane.add(txtpnCourbeVerte);
+		
+		PlanCartesien1 planCartesien1 = new PlanCartesien1();
+		planCartesien1.setBounds(29, 216, 200, 50);
+		contentPane.add(planCartesien1);
 
 	}
 }
