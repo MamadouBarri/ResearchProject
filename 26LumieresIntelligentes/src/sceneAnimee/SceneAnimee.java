@@ -182,38 +182,38 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();//pour chaque voiture qui s'en vers l'EST
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-				for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
-					Voiture vOppose = iOppose.next();
-					//entre si la voiture est pret à tourner à gauche
-					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
-						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-						switch(vOppose.getDirectionDeVirage()) {
-						case 0:
-							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
-								ilYAVoitureQuiBloque = true;
-							}
-							break;
-						case 1:
-							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
-								ilYAVoitureQuiBloque = true;
-							}
-							break;
-						case 2:
-							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
-								ilYAVoitureQuiBloque = true;
+					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+					for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
+						Voiture vOppose = iOppose.next();
+						//entre si la voiture est pret à tourner à gauche
+						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+							switch(vOppose.getDirectionDeVirage()) {
+							case 0:
+								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+									ilYAVoitureQuiBloque = true;
+								}
+								break;
+							case 1:
+								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+									ilYAVoitureQuiBloque = true;
+								}
+								break;
+							case 2:
+								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+									ilYAVoitureQuiBloque = true;
+								}
 							}
 						}
 					}
+					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+					if(ilYAVoitureQuiBloque) {
+						v.setPeutTournerGauche(false);
+					} else {
+						v.setPeutTournerGauche(true);
 					}
-				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-				if(ilYAVoitureQuiBloque) {
-					v.setPeutTournerGauche(false);
-				} else {
-					v.setPeutTournerGauche(true);
-				}
-				//On remet le boolean à sa valeur initiale
-				this.ilYAVoitureQuiBloque = false;
+					//On remet le boolean à sa valeur initiale
+					this.ilYAVoitureQuiBloque = false;
 				}
 				//fin de la verification
 				switch(v.getDirectionDeVirage()){
@@ -231,7 +231,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setXVoiture((v.getXVoiture()+deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()-1) < DISTANCE_LIGNE_ARRET){
+						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -250,21 +250,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//La voiture tourne à gauche
 					if((!v.getVoitureArretee()||v.getEnRotation() == true)) {
 						if(v.getPeutTournerGauche()) {
-						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-							v.setXVoiture((v.getXVoiture()+deplacement));
-						}
-						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()+1) < DISTANCE_LIGNE_ARRET){
-							v.setEnRotation(true);
-						}
-						//La voiture commence graduellement à avancer vers sa nouvelle direction 
-						if(v.getEnRotation()) {
-							if(v.getDeplacement() < deplacement) {
-								v.setDeplacement(v.getDeplacement()+0.05);
+							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+							if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+								v.setXVoiture((v.getXVoiture()+deplacement));
 							}
-							v.setYVoiture(v.getYVoiture()-v.getDeplacement());
-						}
+							//La voiture commence sa rotation après avoir dépassé sa lumiere
+							if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()){
+								v.setEnRotation(true);
+							}
+							//La voiture commence graduellement à avancer vers sa nouvelle direction 
+							if(v.getEnRotation()) {
+								if(v.getDeplacement() < deplacement) {
+									v.setDeplacement(v.getDeplacement()+0.05);
+								}
+								v.setYVoiture(v.getYVoiture()-v.getDeplacement());
+							}
 						}
 						if(v.getYVoiture()<=0&&v.getVoitureActive()) {
 							v.setVoitureActive(false);
@@ -272,13 +272,18 @@ public class SceneAnimee extends JPanel implements Runnable{
 						break;
 					}
 				}
+
+				//Lorsque la lumiere redevient verte ou est jaune
+				if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
+					v.setVoitureArretee(false);
+				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
 				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
 
-				
+
 				//Verifier l'etat de la voiture devant
 				//Si la liste contient plus qu'une voiture
 
@@ -289,10 +294,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 					v.setVoitureActive(false);
 				}
 
-				//Lorsque la lumiere redevient verte ou est jaune
-				if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
-					v.setVoitureArretee(false);
-				}
 				//Voiture devant trop proche
 				if(est.indexOf(v)!=0) {
 					Voiture voitureDevant = est.get(est.indexOf(v)-1);
@@ -309,38 +310,38 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-				for(Iterator<Voiture> iOppose = nord.iterator();iOppose.hasNext();) {
-					Voiture vOppose = iOppose.next();
-					//entre si la voiture est pret à tourner à gauche
-					if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&v.getYVoiture()<this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()) {
-						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-						switch(vOppose.getDirectionDeVirage()) {
-						case 0:
-							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
-								ilYAVoitureQuiBloque = true;
-							}
-							break;
-						case 1:
-							if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
-								ilYAVoitureQuiBloque = true;
-							}
-							break;
-						case 2:
-							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
-								ilYAVoitureQuiBloque = true;
+					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+					for(Iterator<Voiture> iOppose = nord.iterator();iOppose.hasNext();) {
+						Voiture vOppose = iOppose.next();
+						//entre si la voiture est pret à tourner à gauche
+						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&v.getYVoiture()<this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()) {
+							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+							switch(vOppose.getDirectionDeVirage()) {
+							case 0:
+								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
+									ilYAVoitureQuiBloque = true;
+								}
+								break;
+							case 1:
+								if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
+									ilYAVoitureQuiBloque = true;
+								}
+								break;
+							case 2:
+								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
+									ilYAVoitureQuiBloque = true;
+								}
 							}
 						}
 					}
+					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+					if(ilYAVoitureQuiBloque) {
+						v.setPeutTournerGauche(false);
+					} else {
+						v.setPeutTournerGauche(true);
 					}
-				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-				if(ilYAVoitureQuiBloque) {
-					v.setPeutTournerGauche(false);
-				} else {
-					v.setPeutTournerGauche(true);
-				}
-				//On remet le boolean à sa valeur initiale
-				this.ilYAVoitureQuiBloque = false;
+					//On remet le boolean à sa valeur initiale
+					this.ilYAVoitureQuiBloque = false;
 				}
 				//fin de la verification
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -366,7 +367,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture((v.getYVoiture()+deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -385,21 +386,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//La voiture tourne à gauche
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						if(v.getPeutTournerGauche()) {
-						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
-							v.setYVoiture((v.getYVoiture()+deplacement));
-						}
-						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
-							v.setEnRotation(true);
-						}
-						//La voiture commence graduellement à avancer vers sa nouvelle direction 
-						if(v.getEnRotation()) {
-							if(v.getDeplacement() < deplacement) {
-								v.setDeplacement(v.getDeplacement()+0.03);
+							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DISTANCE_BORDURE/4.0)*modele.getPixelsParUniteY()) {
+								v.setYVoiture((v.getYVoiture()+deplacement));
 							}
-							v.setXVoiture(v.getXVoiture()+v.getDeplacement());
-						}
+							//La voiture commence sa rotation après avoir dépassé sa lumiere
+							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()){
+								v.setEnRotation(true);
+							}
+							//La voiture commence graduellement à avancer vers sa nouvelle direction 
+							if(v.getEnRotation()) {
+								if(v.getDeplacement() < deplacement) {
+									v.setDeplacement(v.getDeplacement()+0.03);
+								}
+								v.setXVoiture(v.getXVoiture()+v.getDeplacement());
+							}
 						}
 					}
 					if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
@@ -407,17 +408,17 @@ public class SceneAnimee extends JPanel implements Runnable{
 					}
 					break;
 				}
+				//Lorsque la lumiere redevient verte ou est jaune
+				if(lumSud.getCouleur() == VERTE||lumSud.getCouleur() == JAUNE) {
+					v.setVoitureArretee(false);
+				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
 				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumSud.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
 
-				//Lorsque la lumiere redevient verte ou est jaune
-				if(lumSud.getCouleur() == VERTE||lumSud.getCouleur() == JAUNE) {
-					v.setVoitureArretee(false);
-				}
-				
+
 				//Voiture devant trop proche
 				if(sud.indexOf(v)!=0) {
 					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
@@ -432,33 +433,33 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-				for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
-					Voiture vOppose = iOppose.next();
-					//entre si la voiture est pret à tourner à gauche
-					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
-						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-						switch(vOppose.getDirectionDeVirage()) {
-						case 0:
-							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
-								ilYAVoitureQuiBloque = true;
-							}
-							break;
-						case 1:
-							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
-								ilYAVoitureQuiBloque = true;
+					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+					for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
+						Voiture vOppose = iOppose.next();
+						//entre si la voiture est pret à tourner à gauche
+						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+							switch(vOppose.getDirectionDeVirage()) {
+							case 0:
+								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+									ilYAVoitureQuiBloque = true;
+								}
+								break;
+							case 1:
+								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) {
+									ilYAVoitureQuiBloque = true;
+								}
 							}
 						}
 					}
+					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+					if(ilYAVoitureQuiBloque) {
+						v.setPeutTournerGauche(false);
+					} else {
+						v.setPeutTournerGauche(true);
 					}
-				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-				if(ilYAVoitureQuiBloque) {
-					v.setPeutTournerGauche(false);
-				} else {
-					v.setPeutTournerGauche(true);
-				}
-				//On remet le boolean à sa valeur initiale
-				this.ilYAVoitureQuiBloque = false;
+					//On remet le boolean à sa valeur initiale
+					this.ilYAVoitureQuiBloque = false;
 				}
 				//fin de la verification
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
@@ -483,7 +484,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setXVoiture((v.getXVoiture()-deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX())+1 < DISTANCE_LIGNE_ARRET){
+						if(lumOuest.getCouleur()!=ROUGE&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>0){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -502,26 +503,31 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//La voiture tourne à gauche
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						if(v.getPeutTournerGauche()) {
-						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
-							v.setXVoiture((v.getXVoiture()-deplacement));
-						}
-						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX())+1 < DISTANCE_LIGNE_ARRET){
-							v.setEnRotation(true);
-						}
-						//La voiture commence graduellement à avancer vers sa nouvelle direction 
-						if(v.getEnRotation()) {
-							if(v.getDeplacement() < deplacement) {
-								v.setDeplacement(v.getDeplacement()+0.05);
+							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+							if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+								v.setXVoiture((v.getXVoiture()-deplacement));
 							}
-							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
+							//La voiture commence sa rotation après avoir dépassé sa lumiere
+							if(lumOuest.getCouleur()!=ROUGE&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&v.getXVoiture()>0){
+								v.setEnRotation(true);
+							}
+							//La voiture commence graduellement à avancer vers sa nouvelle direction 
+							if(v.getEnRotation()) {
+								if(v.getDeplacement() < deplacement) {
+									v.setDeplacement(v.getDeplacement()+0.05);
+								}
+								v.setYVoiture(v.getYVoiture()+v.getDeplacement());
+							}
 						}
-					}
 					}
 					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
 						v.setVoitureActive(false);
 					}
+				}
+
+				//Lorsque la lumiere redevient verte ou est jaune
+				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur()==JAUNE) {
+					v.setVoitureArretee(false);
 				}
 
 				//Lumiere est rouge 
@@ -530,10 +536,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 					v.setVoitureArretee(true);
 				}
 
-				//Lorsque la lumiere redevient verte ou est jaune
-				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur() == JAUNE) {
-					v.setVoitureArretee(false);
-				}
 				//Voiture devant trop proche
 				if(ouest.indexOf(v)!=0) {
 					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
@@ -548,33 +550,33 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-				for(Iterator<Voiture> iOppose = sud.iterator();iOppose.hasNext();) {
-					Voiture vOppose = iOppose.next();
-					//entre si la voiture est pret à tourner à gauche
-					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&v.getYVoiture()>this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()) {
-						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-						switch(vOppose.getDirectionDeVirage()) {
-						case 0:
-							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
-								ilYAVoitureQuiBloque = true;
-							}
-							break;
-						case 1:
-							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
-								ilYAVoitureQuiBloque = true;
+					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+					for(Iterator<Voiture> iOppose = sud.iterator();iOppose.hasNext();) {
+						Voiture vOppose = iOppose.next();
+						//entre si la voiture est pret à tourner à gauche
+						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&v.getYVoiture()>this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()) {
+							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+							switch(vOppose.getDirectionDeVirage()) {
+							case 0:
+								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+									ilYAVoitureQuiBloque = true;
+								}
+								break;
+							case 1:
+								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()) {
+									ilYAVoitureQuiBloque = true;
+								}
 							}
 						}
 					}
+					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+					if(ilYAVoitureQuiBloque) {
+						v.setPeutTournerGauche(false);
+					} else {
+						v.setPeutTournerGauche(true);
 					}
-				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-				if(ilYAVoitureQuiBloque) {
-					v.setPeutTournerGauche(false);
-				} else {
-					v.setPeutTournerGauche(true);
-				}
-				//On remet le boolean à sa valeur initiale
-				this.ilYAVoitureQuiBloque = false;
+					//On remet le boolean à sa valeur initiale
+					this.ilYAVoitureQuiBloque = false;
 				}
 				//fin de la verification
 				if(v.getYVoiture()<-this.LARGEUR_VOITURE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -601,7 +603,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture((v.getYVoiture()-deplacement));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/3.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
+						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
 							v.setEnRotation(true);
 							//System.out.println("I WANNA TURN");
 						}
@@ -621,21 +623,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//La voiture tourne à gauche
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						if(v.getPeutTournerGauche()) {
-						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
-							v.setYVoiture((v.getYVoiture()-deplacement));
-						}
-						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/3.0)*modele.getPixelsParUniteY()-1) < DISTANCE_LIGNE_ARRET){
-							v.setEnRotation(true);
-						}
-						//La voiture commence graduellement à avancer vers sa nouvelle direction 
-						if(v.getEnRotation()) {
-							if(v.getDeplacement() < deplacement) {
-								v.setDeplacement(v.getDeplacement()+0.05);
+							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
+								v.setYVoiture((v.getYVoiture()-deplacement));
 							}
-							v.setXVoiture(v.getXVoiture()-v.getDeplacement());
-						}
+							//La voiture commence sa rotation après avoir dépassé sa lumiere
+							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
+								v.setEnRotation(true);
+							}
+							//La voiture commence graduellement à avancer vers sa nouvelle direction 
+							if(v.getEnRotation()) {
+								if(v.getDeplacement() < deplacement) {
+									v.setDeplacement(v.getDeplacement()+0.05);
+								}
+								v.setXVoiture(v.getXVoiture()-v.getDeplacement());
+							}
 						}
 					}
 					if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
@@ -644,16 +646,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 					break;
 				}
 
+				//Lorsque la lumiere redevient verte ou est jaune
+				if(lumNord.getCouleur() == VERTE||lumNord.getCouleur() == JAUNE) {
+					v.setVoitureArretee(false);
+				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
 				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE - LARGEUR_VOITURE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumNord.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
 
-				//Lorsque la lumiere redevient verte ou est jaune
-				if(lumNord.getCouleur() == VERTE||lumNord.getCouleur() == JAUNE) {
-					v.setVoitureArretee(false);
-				}
 				//Voiture devant trop proche
 				if(nord.indexOf(v)!=0) {
 					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
@@ -1055,5 +1057,20 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public ArrayList<Integer> getListeVoituresEnArret() {
 		return this.nbVoituresEnAttente;
+	}
+	//Reiner 
+	/**
+	 * Méthode qui calcule le temps d'arrêt moyen de tous les voitures générées
+	 * @return tempsDArretMoyen temps d'arrêt moyen de tous les voitures générées en secondes
+	 */
+	public double tempsDArretMoyen() {
+		double tempsDArretTotale = 0;
+		double tempsDArretMoyen;
+		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			tempsDArretTotale += v.getTempsDArret();
+		}
+		tempsDArretMoyen = tempsDArretTotale/(double)nbVoituresGenerees;
+		return tempsDArretMoyen;
 	}
 }

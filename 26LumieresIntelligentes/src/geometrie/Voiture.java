@@ -62,6 +62,8 @@ public class Voiture implements Dessinable {
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 	private int typeImages;
+	//valeur du temps d'arrêt totale d'une voiture
+	private double tempsDArret = 0;
 
 	//Mamadou
 	/**
@@ -338,6 +340,9 @@ public class Voiture implements Dessinable {
 		t.translate(-xVoiture, -yVoiture);
 		t.scale(1/scaleX, scaleY);
 		g2d.setTransform(matInitial);
+		if(this.voitureArretee) {
+			this.tempsDArret++;
+		}
 	}
 	//Mamadou
 	/**
@@ -531,4 +536,12 @@ public class Voiture implements Dessinable {
 	public void setPeutTournerGauche(boolean peutTournerGauche) {
 		this.peutTournerGauche = peutTournerGauche;
 	}
+	//Reiner
+	/**Méthode qui retourne le temps totale que la voiture est arrêtée
+	 * @return the tempsDArret temps totale en secondes que la voiture est arrêtée
+	 */
+	public double getTempsDArret() {
+		return tempsDArret/100.0;
+	}
+
 }
