@@ -810,10 +810,11 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public void reinitialiser() {
 		arreter();
-		voitures.removeAll(est);
-		voitures.removeAll(ouest);
-		voitures.removeAll(nord);
-		voitures.removeAll(sud);
+		est.clear();
+		ouest.clear();
+		nord.clear();
+		sud.clear();
+		voitures.clear();
 		this.nbVoituresGenerees = 0;
 		repaint();
 	}

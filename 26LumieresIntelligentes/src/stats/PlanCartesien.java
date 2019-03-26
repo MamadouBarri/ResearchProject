@@ -77,7 +77,7 @@ public class PlanCartesien extends JPanel {
 		
 		creerGraduations(g2d);
 		//Translation
-		g2d.translate(1, getHeight()- DISTANCE_GRADUATION);
+		g2d.translate(DISTANCE_GRADUATION, getHeight()- DISTANCE_GRADUATION);
 		g2d.scale(1, -1);
 		//on dessine les axes
 		g2d.setColor(Color.blue);

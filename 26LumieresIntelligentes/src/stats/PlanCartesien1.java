@@ -26,18 +26,22 @@ public class PlanCartesien1 extends JPanel {
 	private ArrayList<Integer> nbVoituresEnAttenteParSecSansAlgo;
 	private ArrayList<Integer> nbVoituresEnAttenteParSecAvecAlgo;
 
+	//
+	//62, 209,400, 400
 	//coordonnes de l'axe des X
 	private final int COORD_INITIAL_X_AXE_X = 50;
-	private final int COORD_FINALE_X_AXE_X = 600;
-	private final int COORD_Y_AXE_X = 600;
+	private final int COORD_FINALE_X_AXE_X = 350;
+	private final int COORD_Y_AXE_X = 350;
 
 	//coordonnes de l'axe des Y
 	private  final int COORD_INITIAL_Y_AXE_Y = 50;
-	private  final int COORD_FINALE_Y_AXE_Y= 600;
+	private  final int COORD_FINALE_Y_AXE_Y= 350;
 	private  final int COORD_X_AXE_Y = 50;
 
+	
+	
 	//Largeur des points
-	private final int LARGEUR_POINT = 10;
+	private final int LARGEUR_POINT = 5;
 
 	//Distance entre axe et numéraux
 	public final int DISTANCE_AXE_ECRITURE = 20;
@@ -47,7 +51,9 @@ public class PlanCartesien1 extends JPanel {
 	private int largeurEntreX;
 
 	//Pour les fleches
-	public static final int SECOND_LENGHT = 5;
+	 // now we are define length of cathetas of that triangle
+	 public static final int FIRST_LENGHT = 10;
+	 public static final int SECOND_LENGHT = 5;
 
 	//Approximation
 	private int nbSegmentsPourApproximerAvecAlgo;
@@ -58,13 +64,9 @@ public class PlanCartesien1 extends JPanel {
 	 */
 	public PlanCartesien1() {
 		// numerate axis
-		xNbCoord = 10;
-		yNbCoord = 10;
+	
 		setBackground(Color.white);
-		largeurEntreX = (COORD_FINALE_X_AXE_X - COORD_INITIAL_X_AXE_X)
-				/ xNbCoord;
-		largeurEntreY = (COORD_FINALE_Y_AXE_Y - COORD_INITIAL_Y_AXE_Y)
-				/ yNbCoord;
+
 	}//fin du constructeur
 
 
@@ -80,7 +82,12 @@ public class PlanCartesien1 extends JPanel {
 		//Determiner le nombre de Y max
 		int nbMaxEnAttenteSansAlgo = Collections.max(nbVoituresEnAttenteParSecSansAlgo);
 		int nbMaxEnAttenteAvecAlgo = Collections.max(nbVoituresEnAttenteParSecAvecAlgo);
-		yNbCoord= Math.max(nbMaxEnAttenteSansAlgo, nbMaxEnAttenteAvecAlgo);
+		yNbCoord= Math.max(nbMaxEnAttenteSansAlgo, nbMaxEnAttenteAvecAlgo) + 1 ; // On se garde une unité pour la visibilité
+		//Calculer la largeur entre les x et y
+		largeurEntreX = (COORD_FINALE_X_AXE_X - COORD_INITIAL_X_AXE_X)
+				/ xNbCoord;
+		largeurEntreY = (COORD_FINALE_Y_AXE_Y - COORD_INITIAL_Y_AXE_Y)
+				/ yNbCoord;
 		//Nombre de segements pour approximation
 		nbSegmentsPourApproximerSansAlgo = nbVoituresEnAttenteParSecSansAlgo.size();
 		nbSegmentsPourApproximerAvecAlgo = nbVoituresEnAttenteParSecAvecAlgo.size();
@@ -88,6 +95,23 @@ public class PlanCartesien1 extends JPanel {
 		//Améliorer la qualité des dessins
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
+
+		//les fleches
+		// x-axis arrow
+		g2d.drawLine(COORD_FINALE_X_AXE_X - FIRST_LENGHT,
+				COORD_Y_AXE_X - SECOND_LENGHT,
+				COORD_FINALE_X_AXE_X, COORD_Y_AXE_X);
+		g2d.drawLine(COORD_FINALE_X_AXE_X - FIRST_LENGHT,
+				COORD_Y_AXE_X + SECOND_LENGHT,
+				COORD_FINALE_X_AXE_X, COORD_Y_AXE_X);
+
+		// y-axis arrow
+		g2d.drawLine(COORD_X_AXE_Y - SECOND_LENGHT,
+				COORD_INITIAL_Y_AXE_Y + FIRST_LENGHT,
+				COORD_X_AXE_Y, COORD_INITIAL_Y_AXE_Y);
+		g2d.drawLine(COORD_X_AXE_Y + SECOND_LENGHT, 
+				COORD_INITIAL_Y_AXE_Y + FIRST_LENGHT,
+				COORD_X_AXE_Y, COORD_INITIAL_Y_AXE_Y);
 		// AXE DES X
 		g2d.drawLine(COORD_INITIAL_X_AXE_X, COORD_Y_AXE_X,
 				COORD_FINALE_X_AXE_X, COORD_Y_AXE_X);
@@ -100,25 +124,17 @@ public class PlanCartesien1 extends JPanel {
 				COORD_INITIAL_X_AXE_X - (LARGEUR_POINT / 2), 
 				COORD_FINALE_Y_AXE_Y - (LARGEUR_POINT / 2),
 				LARGEUR_POINT, LARGEUR_POINT);
-
+		
+		//Changer le font
+		g2d.setFont(new Font("TimesRoman",Font.PLAIN,15));
 		// draw text "X" and draw text "Y"
-		g2d.drawString("X", COORD_FINALE_X_AXE_X - DISTANCE_AXE_ECRITURE / 2,
+		g2d.drawString("t", COORD_FINALE_X_AXE_X - DISTANCE_AXE_ECRITURE / 2,
 				COORD_Y_AXE_X + DISTANCE_AXE_ECRITURE);
-		g2d.drawString("Y", COORD_X_AXE_Y - DISTANCE_AXE_ECRITURE,
+		g2d.drawString("N", COORD_X_AXE_Y - DISTANCE_AXE_ECRITURE,
 				COORD_INITIAL_Y_AXE_Y + DISTANCE_AXE_ECRITURE / 2);
+		g2d.setFont(new Font("TimesRoman",Font.PLAIN,8));
 		g2d.drawString("(0, 0)", COORD_INITIAL_X_AXE_X - DISTANCE_AXE_ECRITURE,
 				COORD_FINALE_Y_AXE_Y + DISTANCE_AXE_ECRITURE);
-
-		// draw x-axis numbers
-		for(int i = 1; i < xNbCoord; i++) {
-			g2d.drawLine(COORD_INITIAL_X_AXE_X + (i * largeurEntreX),
-					COORD_Y_AXE_X - SECOND_LENGHT,
-					COORD_INITIAL_X_AXE_X + (i * largeurEntreX),
-					COORD_Y_AXE_X + SECOND_LENGHT);
-			g2d.drawString(Integer.toString(i), 
-					COORD_INITIAL_X_AXE_X + (i * largeurEntreX) - 3,
-					COORD_Y_AXE_X + DISTANCE_AXE_ECRITURE);
-		}
 		this.numeroterAxeX(g2d);
 		this.numeroterAxeY(g2d);
 		//On cree les courbes
@@ -156,6 +172,7 @@ public class PlanCartesien1 extends JPanel {
 	 * @param g l'objet Graphics2D qui sera utilisé pour dessiner les graduations
 	 */
 	private void numeroterAxeY(Graphics2D g) {
+		
 		for(int i = 1; i < yNbCoord; i++) {
 			g.drawLine(COORD_X_AXE_Y - SECOND_LENGHT,
 					COORD_FINALE_Y_AXE_Y - (i * largeurEntreY), 
@@ -175,14 +192,14 @@ public class PlanCartesien1 extends JPanel {
 		double x, y;
 
 		ligneBriseeSansAlgo = new Path2D.Double();
-		x = 0;  //on commence a l'extreme gauche
-		y = 0;
+		x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
+		y = this.COORD_Y_AXE_X;
 		ligneBriseeSansAlgo.moveTo( x, y );
 
-		for (int k=1; k<=nbSegmentsPourApproximerSansAlgo; k++) {
+		for (int k=0; k<nbSegmentsPourApproximerSansAlgo; k++) {
 
-			x++;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-			y = this.nbVoituresEnAttenteParSecSansAlgo.get((int) x-1); //modifier cette ligne!!!
+			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
+			y = this.getHeight() - this.COORD_X_AXE_Y- this.nbVoituresEnAttenteParSecSansAlgo.get(k)* this.largeurEntreY;
 			ligneBriseeSansAlgo.lineTo( x, y);
 		}//fin for
 	}
@@ -194,14 +211,14 @@ public class PlanCartesien1 extends JPanel {
 		double x, y;
 
 		ligneBriseeAvecAlgo = new Path2D.Double();
-		x = 0;  //on commence a l'extreme gauche
-		y = 0;
+		x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
+		y = this.COORD_Y_AXE_X;
 		ligneBriseeAvecAlgo.moveTo( x, y );
 
-		for (int k=1; k<=nbSegmentsPourApproximerAvecAlgo; k++) {
+		for (int k=0; k<nbSegmentsPourApproximerAvecAlgo; k++) {
 
-			x++;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-			y = this.nbVoituresEnAttenteParSecAvecAlgo.get((int) x-1); //modifier cette ligne!!!
+			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
+			y = this.getHeight() - this.COORD_X_AXE_Y- this.nbVoituresEnAttenteParSecAvecAlgo.get(k) * this.largeurEntreY;
 			ligneBriseeAvecAlgo.lineTo( x, y);
 		}//fin for
 	}
