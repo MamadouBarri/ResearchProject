@@ -23,8 +23,8 @@ public class PlanCartesien1 extends JPanel {
 	//Les lignes
 	private Path2D.Double axes, ligneBriseeSansAlgo,ligneBriseeAvecAlgo;
 	//Les listes
-	private ArrayList<Integer> nbVoituresEnAttenteParSecSansAlgo;
-	private ArrayList<Integer> nbVoituresEnAttenteParSecAvecAlgo;
+	private ArrayList<Integer> donneesSansAlgo;
+	private ArrayList<Integer> donneesAvecAlgo;
 
 	//
 	//62, 209,400, 400
@@ -38,8 +38,8 @@ public class PlanCartesien1 extends JPanel {
 	private  final int COORD_FINALE_Y_AXE_Y= 350;
 	private  final int COORD_X_AXE_Y = 50;
 
-	
-	
+
+
 	//Largeur des points
 	private final int LARGEUR_POINT = 5;
 
@@ -51,20 +51,23 @@ public class PlanCartesien1 extends JPanel {
 	private int largeurEntreX;
 
 	//Pour les fleches
-	 // now we are define length of cathetas of that triangle
-	 public static final int FIRST_LENGHT = 10;
-	 public static final int SECOND_LENGHT = 5;
+	// now we are define length of cathetas of that triangle
+	public static final int FIRST_LENGHT = 10;
+	public static final int SECOND_LENGHT = 5;
 
 	//Approximation
 	private int nbSegmentsPourApproximerAvecAlgo;
 	private int nbSegmentsPourApproximerSansAlgo;
+	//Le type de donnees
+	private int typeDonnees;
 	/**
 	 * Constructeur : cree le composant et fixe la couleur de fond
 	 * @param arrayList les statistiques à afficher
 	 */
-	public PlanCartesien1() {
+	public PlanCartesien1(int typeDonnees) {
+		//Les donnees a afficher sur le plan cartesien
+		this.typeDonnees = typeDonnees; 
 		// numerate axis
-	
 		setBackground(Color.white);
 
 	}//fin du constructeur
@@ -74,16 +77,40 @@ public class PlanCartesien1 extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
-		//Initialisation des donne
-		nbVoituresEnAttenteParSecSansAlgo = new ArrayList<Integer>(SceneAnimee.moyenneDesVitesse); //Creer un arrayList local pour les stats
-		nbVoituresEnAttenteParSecAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.moyenneDesVitesse);
-		//Determiner le nombre de X max
-		xNbCoord = Math.max(nbVoituresEnAttenteParSecSansAlgo.size(), nbVoituresEnAttenteParSecAvecAlgo.size());//Le nombre de donnees
-		//Determiner le nombre de Y max
-		int nbMaxEnAttenteSansAlgo = Collections.max(nbVoituresEnAttenteParSecSansAlgo);
-		int nbMaxEnAttenteAvecAlgo = Collections.max(nbVoituresEnAttenteParSecAvecAlgo);
+		//Initialisation des donnees
+		//Creer un arrayList local pour les stats
+		switch(typeDonnees) {
+			case 0 : //le nombre de voitures arretees en fonction du temps
+				donneesSansAlgo = new ArrayList<Integer>(SceneAnimee.nbVoituresEnAttente); 
+				donneesAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.nbVoituresEnAttente);
+				System.out.println("TYPE DONEEES 1 ");
+				break;
+			case 1 ://la vitesse moyenne en fonction du temps
+				donneesSansAlgo = new ArrayList<Integer>(SceneAnimee.moyenneDesVitesse); 
+				donneesAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.moyenneDesVitesse);
+				System.out.println("TYPE DONEEES 2 ");
+				break;
+			case 2 :
+				donneesSansAlgo = new ArrayList<Integer>();
+				donneesAvecAlgo = new ArrayList<Integer>();
+				for(int k =0;k<10;k++) {
+					donneesSansAlgo.add(k);
+					donneesAvecAlgo.add(k*2);
+				}
+				break;
+			case 3:
+				break;
+			default:
+				System.out.println("LES DONNEES N'ONT PAS ETE LUES");
+		}
 		
-		yNbCoord= Math.max(nbMaxEnAttenteSansAlgo, nbMaxEnAttenteAvecAlgo) + 1 ; // On se garde une unité pour la visibilité
+		//Determiner le nombre de X max
+		xNbCoord = Math.max(donneesSansAlgo.size(), donneesAvecAlgo.size());//Le nombre de donnees
+		//Determiner le nombre de Y max
+		int valeurMaxSansAlgo = Collections.max(donneesSansAlgo);
+		int valeurMaxAvecAlgo = Collections.max(donneesAvecAlgo);
+
+		yNbCoord= Math.max(valeurMaxSansAlgo, valeurMaxAvecAlgo) + 1 ; // On se garde une unité pour la visibilité
 		System.out.println("LE NOMBRE Y MAX" +yNbCoord );
 		//Calculer la largeur entre les x et y
 		largeurEntreX = (COORD_FINALE_X_AXE_X - COORD_INITIAL_X_AXE_X)
@@ -91,8 +118,8 @@ public class PlanCartesien1 extends JPanel {
 		largeurEntreY = (COORD_FINALE_Y_AXE_Y - COORD_INITIAL_Y_AXE_Y)
 				/ yNbCoord;
 		//Nombre de segements pour approximation
-		nbSegmentsPourApproximerSansAlgo = nbVoituresEnAttenteParSecSansAlgo.size();
-		nbSegmentsPourApproximerAvecAlgo = nbVoituresEnAttenteParSecAvecAlgo.size();
+		nbSegmentsPourApproximerSansAlgo = donneesSansAlgo.size();
+		nbSegmentsPourApproximerAvecAlgo = donneesAvecAlgo.size();
 
 		//Améliorer la qualité des dessins
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
@@ -126,13 +153,13 @@ public class PlanCartesien1 extends JPanel {
 				COORD_INITIAL_X_AXE_X - (LARGEUR_POINT / 2), 
 				COORD_FINALE_Y_AXE_Y - (LARGEUR_POINT / 2),
 				LARGEUR_POINT, LARGEUR_POINT);
-		
+
 		//Changer le font
 		g2d.setFont(new Font("TimesRoman",Font.PLAIN,15));
 		// draw text "X" and draw text "Y"
 		g2d.drawString("t", COORD_FINALE_X_AXE_X - DISTANCE_AXE_ECRITURE / 2,
 				COORD_Y_AXE_X + DISTANCE_AXE_ECRITURE);
-		g2d.drawString("N", COORD_X_AXE_Y - DISTANCE_AXE_ECRITURE,
+		g2d.drawString("f(t)", COORD_X_AXE_Y - DISTANCE_AXE_ECRITURE*2,
 				COORD_INITIAL_Y_AXE_Y + DISTANCE_AXE_ECRITURE / 2);
 		g2d.setFont(new Font("TimesRoman",Font.PLAIN,8));
 		g2d.drawString("(0, 0)", COORD_INITIAL_X_AXE_X - DISTANCE_AXE_ECRITURE,
@@ -174,7 +201,7 @@ public class PlanCartesien1 extends JPanel {
 	 * @param g l'objet Graphics2D qui sera utilisé pour dessiner les graduations
 	 */
 	private void numeroterAxeY(Graphics2D g) {
-		
+
 		for(int i = 1; i < yNbCoord; i++) {
 			g.drawLine(COORD_X_AXE_Y - SECOND_LENGHT,
 					COORD_FINALE_Y_AXE_Y - (i * largeurEntreY), 
@@ -201,7 +228,7 @@ public class PlanCartesien1 extends JPanel {
 		for (int k=0; k<nbSegmentsPourApproximerSansAlgo; k++) {
 
 			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-			y = this.getHeight() - this.COORD_X_AXE_Y- this.nbVoituresEnAttenteParSecSansAlgo.get(k)* this.largeurEntreY;
+			y = this.getHeight() - this.COORD_X_AXE_Y- this.donneesSansAlgo.get(k)* this.largeurEntreY;
 			ligneBriseeSansAlgo.lineTo( x, y);
 		}//fin for
 	}
@@ -220,7 +247,7 @@ public class PlanCartesien1 extends JPanel {
 		for (int k=0; k<nbSegmentsPourApproximerAvecAlgo; k++) {
 
 			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-			y = this.getHeight() - this.COORD_X_AXE_Y- this.nbVoituresEnAttenteParSecAvecAlgo.get(k) * this.largeurEntreY;
+			y = this.getHeight() - this.COORD_X_AXE_Y- this.donneesAvecAlgo.get(k) * this.largeurEntreY;
 			ligneBriseeAvecAlgo.lineTo( x, y);
 		}//fin for
 	}

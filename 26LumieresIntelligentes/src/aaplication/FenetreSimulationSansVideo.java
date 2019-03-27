@@ -165,6 +165,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 			public void rendreFenetreStatistiquesVisible() {
 				//creation de la fenetre de stats
 				fenStats.setVisible(true);
+				fenStats.creerLesGraphiques();
+				fenStats.repaint();
+				
 			}
 		});
 		sceneAnimee1.setBounds(37, 109, 600, 600);
