@@ -25,6 +25,8 @@ public class PlanCartesien1 extends JPanel {
 	//Les listes
 	private ArrayList<Integer> donneesSansAlgo;
 	private ArrayList<Integer> donneesAvecAlgo;
+	private ArrayList<Double> donneesSansAlgoDouble;
+	private ArrayList<Double> donneesAAlgoDouble;
 
 	//
 	//62, 209,400, 400
@@ -93,9 +95,11 @@ public class PlanCartesien1 extends JPanel {
 			case 2 :
 				donneesSansAlgo = new ArrayList<Integer>();
 				donneesAvecAlgo = new ArrayList<Integer>();
-				for(int k =0;k<10;k++) {
-					donneesSansAlgo.add(k);
-					donneesAvecAlgo.add(k*2);
+				for(double d : SceneAnimee.tempsDArretMoyen) {
+					donneesSansAlgo.add((int)d);
+				}
+				for(double d : SceneAnimeeAvecAlgo.tempsDArretMoyen) {
+					donneesAvecAlgo.add((int)d);
 				}
 				break;
 			case 3:
