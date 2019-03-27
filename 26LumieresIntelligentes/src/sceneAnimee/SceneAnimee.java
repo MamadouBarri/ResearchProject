@@ -105,6 +105,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Pour les statistiques
 	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
 	public static ArrayList<Integer> moyenneDesVitesse = new ArrayList<Integer>();
+	public static ArrayList<Double> tempsDArretMoyen = new ArrayList<Double>();
 	private int nbRepetitionsMaxStats = 100;
 	private int nbVoituresActives = 0;
 	private double vitessesTotales = 0;
@@ -721,6 +722,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
 					//On ajoute la valeur dans la liste
 					nbVoituresEnAttente.add(voituresEnAttenteTotal);
+					tempsDArretMoyen.add(this.calculeTempsDArretMoyen());
 					nbRepetitionsStats=0; //On remet le compteur a 0
 				}
 				if(nbVoituresGenerees>=nbVoituresMax){//Toutes les voitures ont été générées, donc find de la simulation
@@ -1095,7 +1097,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 * Méthode qui calcule le temps d'arrêt moyen de tous les voitures générées
 	 * @return tempsDArretMoyen temps d'arrêt moyen de tous les voitures générées en secondes
 	 */
-	public double tempsDArretMoyen() {
+	public double calculeTempsDArretMoyen() {
 		double tempsDArretTotale = 0;
 		double tempsDArretMoyen;
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {

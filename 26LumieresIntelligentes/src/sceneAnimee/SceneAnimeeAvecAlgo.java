@@ -98,6 +98,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	//Pour les statistiques
 	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
 	public static ArrayList<Integer> moyenneDesVitesse = new ArrayList<Integer>();
+	public static ArrayList<Double> tempsDArretMoyen = new ArrayList<Double>();
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -677,6 +678,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					//On ajoute la valeur dans la liste
 					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
 					nbVoituresEnAttente.add(voituresEnAttenteTotal);
+					tempsDArretMoyen.add(this.calculeTempsDArretMoyen());
 					nbRepetitionsStats=0; //On remet le compteur a 0
 				}
 				//on vérifie la densité des voies à chaque 5 secondes
@@ -1066,7 +1068,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	 * Méthode qui calcule le temps d'arrêt moyen de tous les voitures générées
 	 * @return tempsDArretMoyen temps d'arrêt moyen de tous les voitures générées en secondes
 	 */
-	public double tempsDArretMoyen() {
+	public double calculeTempsDArretMoyen() {
 		double tempsDArretTotale = 0;
 		double tempsDArretMoyen;
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
