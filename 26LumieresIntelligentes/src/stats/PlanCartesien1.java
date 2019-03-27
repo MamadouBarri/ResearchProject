@@ -75,14 +75,16 @@ public class PlanCartesien1 extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 
 		//Initialisation des donne
-		nbVoituresEnAttenteParSecSansAlgo = new ArrayList<Integer>(SceneAnimee.nbVoituresEnAttente); //Creer un arrayList local pour les stats
-		nbVoituresEnAttenteParSecAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.nbVoituresEnAttente);
+		nbVoituresEnAttenteParSecSansAlgo = new ArrayList<Integer>(SceneAnimee.moyenneDesVitesse); //Creer un arrayList local pour les stats
+		nbVoituresEnAttenteParSecAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.moyenneDesVitesse);
 		//Determiner le nombre de X max
 		xNbCoord = Math.max(nbVoituresEnAttenteParSecSansAlgo.size(), nbVoituresEnAttenteParSecAvecAlgo.size());//Le nombre de donnees
 		//Determiner le nombre de Y max
 		int nbMaxEnAttenteSansAlgo = Collections.max(nbVoituresEnAttenteParSecSansAlgo);
 		int nbMaxEnAttenteAvecAlgo = Collections.max(nbVoituresEnAttenteParSecAvecAlgo);
+		
 		yNbCoord= Math.max(nbMaxEnAttenteSansAlgo, nbMaxEnAttenteAvecAlgo) + 1 ; // On se garde une unité pour la visibilité
+		System.out.println("LE NOMBRE Y MAX" +yNbCoord );
 		//Calculer la largeur entre les x et y
 		largeurEntreX = (COORD_FINALE_X_AXE_X - COORD_INITIAL_X_AXE_X)
 				/ xNbCoord;

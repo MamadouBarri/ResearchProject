@@ -104,7 +104,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 	//Pour les statistiques
 	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
+	public static ArrayList<Integer> moyenneDesVitesse = new ArrayList<Integer>();
 	private int nbRepetitionsMaxStats = 100;
+	private int nbVoituresActives = 0;
+	private double vitessesTotales = 0;
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
@@ -671,6 +674,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				nbRepetitionsPourLumieres++;
 				nbRepetitionsStats++;
 				nbRepetitionsPourMenage++;
+				double vitesse;
 				//System.out.println(nbRepetitionsPourLumieres);
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
@@ -682,13 +686,40 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(nbRepetitionsStats == nbRepetitionsMaxStats) {
 					//On calcule les voitures en attente
 					int voituresEnAttenteTotal = 0;
+					//On remet le nombre de voitures actives a 0
+					nbVoituresActives = 0;
+					//On remet le total des vitesse a 0
+					vitessesTotales = 0;
 					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 						Voiture v = i.next();
+						//  1 )   Calculons le TEMPS ACTIF SUR L'INTERSECTION
+						if(v.getVoitureActive()) {
+							nbVoituresActives++; // On a le nombre de voitures actives
+							if(!v.getVoitureArretee()) {
+								vitesse = this.vitesse;
+								System.out.println("la vitesse"+ vitesse);
+								vitessesTotales+= (vitesse); //Pour plus de 
+							}
+							v.setTempsSurIntersection(v.getTempsSurIntersection()+1);//On augmente le temps passe sur intersection de 1 sec
+						}
+						//  2 )   Calculons le NOMBRE DE VOITURES EN ARRET
 						if(v.getVoitureArretee()) {
 							voituresEnAttenteTotal++;
 						}
-					}						//On ajoute la valeur dans la liste
+					}					
+					
+					//On divise le total des vitesses par le nombre de voitures actives
+					double moyenneDesVitessesChaqueSeconde;
+					if(nbVoituresActives!=0) {
+						moyenneDesVitessesChaqueSeconde = vitessesTotales * 1.0/(double)nbVoituresActives;
+					}else {
+						moyenneDesVitessesChaqueSeconde = 0;
+					}
+					//On met dans la liste à chaque seconde
+					System.out.println(moyenneDesVitesse.toString());
+					moyenneDesVitesse.add((int)moyenneDesVitessesChaqueSeconde);
 					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
+					//On ajoute la valeur dans la liste
 					nbVoituresEnAttente.add(voituresEnAttenteTotal);
 					nbRepetitionsStats=0; //On remet le compteur a 0
 				}

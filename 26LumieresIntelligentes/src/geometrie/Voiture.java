@@ -64,6 +64,10 @@ public class Voiture implements Dessinable {
 	private int typeImages;
 	//valeur du temps d'arrêt totale d'une voiture
 	private double tempsDArret = 0;
+	//statistiques pour les vitesses moyennes
+	private double tempsSurIntersection = 0;
+
+	
 
 	//Mamadou
 	/**
@@ -542,6 +546,22 @@ public class Voiture implements Dessinable {
 	 */
 	public double getTempsDArret() {
 		return tempsDArret/100.0;
+	}
+	//Mamadou
+	/**
+	 * Methode qui retourne le temps sur l'intersection de la voiture
+	 * @return  tempsSurIntersection le temps passe sur l'intersection
+	 */
+	public double getTempsSurIntersection() {
+		return tempsSurIntersection;
+	}
+	//Mamadou
+	/**
+	 * Methode qui set le temps d'attente de la voiture
+	 * @param tempsSurIntersection le temps passe sur l'intersection
+	 */
+	public void setTempsSurIntersection(double tempsSurIntersection) {
+		this.tempsSurIntersection = tempsSurIntersection;
 	}
 
 }
