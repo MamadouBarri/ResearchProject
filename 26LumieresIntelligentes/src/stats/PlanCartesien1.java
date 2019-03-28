@@ -14,6 +14,7 @@ import java.util.Collections;
 
 import sceneAnimee.SceneAnimee;
 import sceneAnimee.SceneAnimeeAvecAlgo;
+import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
 
 import javax.swing.JPanel;
 
@@ -21,10 +22,11 @@ import javax.swing.JPanel;
 public class PlanCartesien1 extends JPanel {
 
 	//Les lignes
-	private Path2D.Double axes, ligneBriseeSansAlgo,ligneBriseeAvecAlgo;
+	private Path2D.Double axes, ligneBrisee,ligneBriseeAvecAlgo;
 	//Les listes
 	private ArrayList<Integer> donneesSansAlgo;
-	private ArrayList<Integer> donneesAvecAlgo;
+	private ArrayList<Integer> donneesAvecAlgoDensite;
+	private ArrayList<Integer> donneesAvecAlgoDensiteTempsArret;
 	private ArrayList<Double> donneesSansAlgoDouble;
 	private ArrayList<Double> donneesAAlgoDouble;
 
@@ -58,7 +60,8 @@ public class PlanCartesien1 extends JPanel {
 	public static final int SECOND_LENGHT = 5;
 
 	//Approximation
-	private int nbSegmentsPourApproximerAvecAlgo;
+	private int nbSegmentsPourApproximerAvecAlgoDensite;
+	private int nbSegmentsPourApproximerAvecAlgoDensiteTempsArret;
 	private int nbSegmentsPourApproximerSansAlgo;
 	//Le type de donnees
 	private int typeDonnees;
@@ -84,22 +87,28 @@ public class PlanCartesien1 extends JPanel {
 		switch(typeDonnees) {
 			case 0 : //le nombre de voitures arretees en fonction du temps
 				donneesSansAlgo = new ArrayList<Integer>(SceneAnimee.nbVoituresEnAttente); 
-				donneesAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.nbVoituresEnAttente);
+				donneesAvecAlgoDensite = new ArrayList<Integer>(SceneAnimeeAvecAlgo.nbVoituresEnAttente);
+				donneesAvecAlgoDensiteTempsArret = new ArrayList<Integer>(SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente);
 				System.out.println("TYPE DONEEES 1 ");
 				break;
 			case 1 ://la vitesse moyenne en fonction du temps
 				donneesSansAlgo = new ArrayList<Integer>(SceneAnimee.moyenneDesVitesse); 
-				donneesAvecAlgo = new ArrayList<Integer>(SceneAnimeeAvecAlgo.moyenneDesVitesse);
+				donneesAvecAlgoDensite = new ArrayList<Integer>(SceneAnimeeAvecAlgo.moyenneDesVitesse);
+				donneesAvecAlgoDensiteTempsArret = new ArrayList<Integer>(SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse);
 				System.out.println("TYPE DONEEES 2 ");
 				break;
 			case 2 :
 				donneesSansAlgo = new ArrayList<Integer>();
-				donneesAvecAlgo = new ArrayList<Integer>();
+				donneesAvecAlgoDensite = new ArrayList<Integer>();
+				donneesAvecAlgoDensiteTempsArret = new ArrayList<Integer>();
 				for(double d : SceneAnimee.tempsDArretMoyen) {
 					donneesSansAlgo.add((int)d);
 				}
 				for(double d : SceneAnimeeAvecAlgo.tempsDArretMoyen) {
-					donneesAvecAlgo.add((int)d);
+					donneesAvecAlgoDensite.add((int)d);
+				}
+				for(double d : SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen) {
+					donneesAvecAlgoDensiteTempsArret.add((int)d);
 				}
 				break;
 			case 3:
@@ -109,12 +118,13 @@ public class PlanCartesien1 extends JPanel {
 		}
 		
 		//Determiner le nombre de X max
-		xNbCoord = Math.max(donneesSansAlgo.size(), donneesAvecAlgo.size());//Le nombre de donnees
+		xNbCoord = Math.max(Math.max(donneesSansAlgo.size(), donneesAvecAlgoDensite.size()), donneesAvecAlgoDensiteTempsArret.size());//Le nombre de donnees
 		//Determiner le nombre de Y max
 		int valeurMaxSansAlgo = Collections.max(donneesSansAlgo);
-		int valeurMaxAvecAlgo = Collections.max(donneesAvecAlgo);
+		int valeurMaxAvecAlgoDensite = Collections.max(donneesAvecAlgoDensite);
+		int valeurMaxAvecAlgoDensiteTempsArret = Collections.max(donneesAvecAlgoDensiteTempsArret);
 
-		yNbCoord= Math.max(valeurMaxSansAlgo, valeurMaxAvecAlgo) + 1 ; // On se garde une unité pour la visibilité
+		yNbCoord= Math.max(Math.max(valeurMaxSansAlgo, valeurMaxAvecAlgoDensite), valeurMaxAvecAlgoDensiteTempsArret) + 1 ; // On se garde une unité pour la visibilité
 		System.out.println("LE NOMBRE Y MAX" +yNbCoord );
 		//Calculer la largeur entre les x et y
 		largeurEntreX = (COORD_FINALE_X_AXE_X - COORD_INITIAL_X_AXE_X)
@@ -123,7 +133,8 @@ public class PlanCartesien1 extends JPanel {
 				/ yNbCoord;
 		//Nombre de segements pour approximation
 		nbSegmentsPourApproximerSansAlgo = donneesSansAlgo.size();
-		nbSegmentsPourApproximerAvecAlgo = donneesAvecAlgo.size();
+		nbSegmentsPourApproximerAvecAlgoDensite = donneesAvecAlgoDensite.size();
+		nbSegmentsPourApproximerAvecAlgoDensiteTempsArret = donneesAvecAlgoDensiteTempsArret.size();
 
 		//Améliorer la qualité des dessins
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
@@ -170,17 +181,19 @@ public class PlanCartesien1 extends JPanel {
 				COORD_FINALE_Y_AXE_Y + DISTANCE_AXE_ECRITURE);
 		this.numeroterAxeX(g2d);
 		this.numeroterAxeY(g2d);
-		//On cree les courbes
-		creerApproxCourbeSansAlgo();
-		creerApproxCourbeAvecAlgo();
-
-		//on dessine la courbe 
+		//On cree les courbes et on les dessine
+		//Sans algo
+		creerApproxCourbe(nbSegmentsPourApproximerSansAlgo,donneesSansAlgo);
 		g2d.setColor(Color.red);
-		g2d.draw(ligneBriseeSansAlgo);  
+		g2d.draw(ligneBrisee); 
+		//Densite
+		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensite,donneesAvecAlgoDensite);
 		g2d.setColor(Color.green);
-		g2d.draw(ligneBriseeAvecAlgo);  
-
-
+		g2d.draw(ligneBrisee);
+		//Densite et temps d'arret
+		g2d.setColor(Color.cyan);
+		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensiteTempsArret,donneesAvecAlgoDensiteTempsArret);
+		g2d.draw(ligneBrisee);
 	}
 
 	/**
@@ -221,39 +234,38 @@ public class PlanCartesien1 extends JPanel {
 	 * Creation d'une approximation de la courbe
 	 * Le resultat est place dans le Path2D "ligneBrisee"
 	 */
-	private void creerApproxCourbeSansAlgo() {
+	private void creerApproxCourbe(int nbSegments, ArrayList<Integer> donnees) {
 		double x, y;
-
-		ligneBriseeSansAlgo = new Path2D.Double();
+		ligneBrisee = new Path2D.Double();
 		x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
 		y = this.COORD_Y_AXE_X;
-		ligneBriseeSansAlgo.moveTo( x, y );
+		ligneBrisee.moveTo( x, y );
 
-		for (int k=0; k<nbSegmentsPourApproximerSansAlgo; k++) {
+		for (int k=0; k<nbSegments; k++) {
 
 			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-			y = this.getHeight() - this.COORD_X_AXE_Y- this.donneesSansAlgo.get(k)* this.largeurEntreY;
-			ligneBriseeSansAlgo.lineTo( x, y);
+			y = this.getHeight() - this.COORD_X_AXE_Y- donnees.get(k)* this.largeurEntreY;
+			ligneBrisee.lineTo( x, y);
 		}//fin for
 	}
 	/**
 	 * Creation d'une approximation de la courbe
 	 * Le resultat est place dans le Path2D "ligneBrisee"
 	 */
-	private void creerApproxCourbeAvecAlgo() {
-		double x, y;
+//	private void creerApproxCourbeAvecAlgo() {
+		//double x, y;
 
-		ligneBriseeAvecAlgo = new Path2D.Double();
-		x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
-		y = this.COORD_Y_AXE_X;
-		ligneBriseeAvecAlgo.moveTo( x, y );
+	//	ligneBriseeAvecAlgo = new Path2D.Double();
+	//	x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
+	//	y = this.COORD_Y_AXE_X;
+	//	ligneBriseeAvecAlgo.moveTo( x, y );
 
-		for (int k=0; k<nbSegmentsPourApproximerAvecAlgo; k++) {
-
-			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-			y = this.getHeight() - this.COORD_X_AXE_Y- this.donneesAvecAlgo.get(k) * this.largeurEntreY;
-			ligneBriseeAvecAlgo.lineTo( x, y);
-		}//fin for
-	}
+	//	for (int k=0; k<nbSegmentsPourApproximerAvecAlgoDensite; k++) {
+//
+	//		x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
+	//		y = this.getHeight() - this.COORD_X_AXE_Y- this.donneesAvecAlgoDensite.get(k) * this.largeurEntreY;
+	//		ligneBriseeAvecAlgo.lineTo( x, y);
+	//	}//fin for
+	//}
 }
 
