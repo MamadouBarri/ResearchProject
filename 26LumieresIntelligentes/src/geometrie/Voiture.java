@@ -61,7 +61,9 @@ public class Voiture implements Dessinable {
 	private double rotation;
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
+	//type de voiture
 	private int typeImages;
+	private boolean voitureDUrgence = false;
 	//valeur du temps d'arrêt totale d'une voiture
 	private double tempsDArret = 0;
 	//statistiques pour les vitesses moyennes
@@ -120,7 +122,7 @@ public class Voiture implements Dessinable {
 	 * @param trafficAnormal tableau du traffic anormal
 	 * @param typeImages 
 	 */
-	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal, int typeImages) {
+	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal, int typeImages, boolean inclureVoituresDUrgence) {
 		//Initialisation des parametres de la voiture
 		this.typeImages  = typeImages;
 		this.largeurVoie = largeurVoie;
@@ -142,6 +144,16 @@ public class Voiture implements Dessinable {
 			fichVoiture = getClass().getClassLoader().getResource("sport" + numImage +".jpg");
 		}else { // ==2
 			fichVoiture = getClass().getClassLoader().getResource("classique" + numImage +".jpg");
+		}
+		if(inclureVoituresDUrgence) {
+			Random rn = new Random();
+			//génère un nombre entre 0 et 99
+			int aleatoire = rn.nextInt(100);
+			//5% de chance que la voiture soit un véhicule d'urgence
+			if(aleatoire>=95) {
+				fichVoiture = getClass().getClassLoader().getResource("vehiculeDUrgence.jpg");
+				voitureDUrgence = true; 
+			}
 		}
 		if (fichVoiture == null) {
 			affichageAvecTemps("**ERREUR** : Incapable de lire un fichier d'image" + typeImages);
@@ -562,6 +574,14 @@ public class Voiture implements Dessinable {
 	 */
 	public void setTempsSurIntersection(double tempsSurIntersection) {
 		this.tempsSurIntersection = tempsSurIntersection;
+	}
+	//Reiner
+	/**
+	 * Getter qui retourne vrai si la voiture en question est une voiture d'urgence
+	 * @return voitureDUrgence boolean qui indique si la voiture en question est une voiture d'urgence
+	 */
+	public boolean estVoitureDUrgence() {
+		return voitureDUrgence;
 	}
 
 }

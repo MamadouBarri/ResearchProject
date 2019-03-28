@@ -636,6 +636,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				nbRepetitionsPourLumieres++;
 				nbRepetitionsStats++;
 				double vitesse;
+				//booleans pour déterminer si on a des voitures d'urgences sur l'intersection
+				boolean ilYAVoitureDUrgenceVert = false;
+				boolean ilYAVoitureDUrgenceHoriz = false;
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
 					ajouterNouvelleVoiture();
@@ -686,6 +689,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					//on remet les densités à zéro quand on décide de recalculer la densité
 					densiteHorizontale = 0;
 					densiteVerticale = 0;
+					//On réinitialise nos booleans
+					ilYAVoitureDUrgenceVert = false;
+					ilYAVoitureDUrgenceHoriz = false;
 					//On vérifie les voitures ayant est comme direction
 					for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 						Voiture v = i.next();
@@ -693,6 +699,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 						if(v.getXVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							//si oui, on l'ajoute à la densité de voitures des voies horizontales
 							densiteHorizontale++;
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceHoriz = true;
+							}
 						}
 					}
 					//On vérifie les voitures ayant ouest comme direction
@@ -702,6 +711,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 						if(v.getXVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							//si oui, on l'ajoute à la densité de voitures des voies horizontales
 							densiteHorizontale++;
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceHoriz = true;
+							}
 						}
 					}
 					//On vérifie les voitures ayant nord comme direction
@@ -711,6 +723,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 						if(v.getYVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
 							//si oui, on l'ajoute à la densité de voitures des voies verticales
 							densiteVerticale++;
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceVert = true;
+							}
 						}
 						//On vérifie les voitures ayant sud comme direction
 					}for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
@@ -719,6 +734,20 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 						if(v.getYVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
 							//si oui, on l'ajoute à la densité de voitures des voies verticales
 							densiteVerticale++;
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceVert = true;
+							}
+						}
+					}
+					if(ilYAVoitureDUrgenceHoriz){
+						//s'il y a une voiture d'urgence sur une des voies horizontales, on fait comme si ces voies avait une plus grande densité
+						densiteHorizontale = 1;
+						densiteVerticale = 0;
+					} else {
+						if(ilYAVoitureDUrgenceVert) {
+							//s'il y a une voiture d'urgence sur une des voies verticales, on fait comme si ces voies avait une plus grande densité
+							densiteHorizontale = 0;
+							densiteVerticale = 1;
 						}
 					}
 					nbRepetitionsPourLumieres=0;
@@ -792,7 +821,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	public void ajouterNouvelleVoiture() {
 		//On ajoute au nombre de voitures generees
 		nbVoituresGenerees++;
-		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale, typeImages );
+		Voiture voiture = new Voiture(modele.getPixelsParUniteX() * LONGUEUR_VOITURE, modele.getPixelsParUniteY() * LARGEUR_VOITURE, modele.getLargPixels(), DIMENSION_VOIE_REELLE, trafficAnormale, typeImages,true );
 		//Quelle direction?
 		int direction = voiture.getDirection().getNumDirection();
 		switch (direction)

@@ -42,6 +42,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
+import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
 /**
  * JFrame qui compare notre algorithme à une intersection normale dans la vraie vie
  * avec une video d'une intersection et des simulations
@@ -61,6 +62,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
 	private SceneAnimee sceneAnimee1;
 	private SceneAnimeeAvecAlgo sceneAnimee2;
+	private SceneAnimeeAvecAlgoTempsDArret sceneAnimee3; 
 	private JCheckBox chkbxVoie4;
 	private JCheckBox chkbxVoie3;
 	private JCheckBox chkbxVoie2;
@@ -97,7 +99,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public FenetreSimulationSansVideo(){
 		setTitle("Simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1800, 900);
+		setBounds(100, 100, 1920, 1080);
 
 		
 
@@ -147,16 +149,16 @@ public class FenetreSimulationSansVideo extends JFrame {
 
 		JPanel pnSimulations = new JPanel();
 		pnSimulations.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Simulations", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnSimulations.setBounds(0, 0, 1308, 829);
+		pnSimulations.setBounds(0, 0, 1904, 730);
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
-		lblSimulationSansLAlgorithme.setBounds(229, 25, 214, 14);
+		lblSimulationSansLAlgorithme.setBounds(224, 70, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 
 		sceneAnimee2 = new SceneAnimeeAvecAlgo();
-		sceneAnimee2.setBounds(698, 109, 600, 600);
+		sceneAnimee2.setBounds(639, 109, 600, 600);
 		pnSimulations.add(sceneAnimee2);
 
 		sceneAnimee1 = new SceneAnimee();
@@ -170,7 +172,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 				
 			}
 		});
-		sceneAnimee1.setBounds(37, 109, 600, 600);
+		sceneAnimee1.setBounds(10, 109, 600, 600);
 		pnSimulations.add(sceneAnimee1);
 		
 		
@@ -178,16 +180,24 @@ public class FenetreSimulationSansVideo extends JFrame {
 		fenStats.setVisible(false);
 		
 		
-		JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme");
-		lblSimulationAvecLalgorithme.setBounds(928, 65, 144, 14);
+		JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme bas\u00E9e sur la densit\u00E9 de voitures\r\n");
+		lblSimulationAvecLalgorithme.setBounds(742, 70, 386, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithme);
+		
+		sceneAnimee3 = new SceneAnimeeAvecAlgoTempsDArret();
+		sceneAnimee3.setBounds(1282, 109, 600, 600);
+		pnSimulations.add(sceneAnimee3);
+		
+		JLabel lblSimulationAvecLalgorithmeTempsDArret = new JLabel("Simulation avec l'algorithme bas\u00E9e sur le temps d'arr\u00EAt des voitures\r\n\r\n");
+		lblSimulationAvecLalgorithmeTempsDArret.setBounds(1366, 70, 386, 14);
+		pnSimulations.add(lblSimulationAvecLalgorithmeTempsDArret);
 
 		JLabel lblVideo = new JLabel("Param\u00E8tres");
-		lblVideo.setBounds(1551, 93, 123, 14);
+		lblVideo.setBounds(762, 855, 123, 14);
 		contentPane.add(lblVideo);
 
 		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
-		lblVitesseMoyenne.setBounds(1462, 144, 123, 14);
+		lblVitesseMoyenne.setBounds(762, 904, 123, 14);
 		contentPane.add(lblVitesseMoyenne);
 
 		spnVitesse = new JSpinner();
@@ -199,19 +209,20 @@ public class FenetreSimulationSansVideo extends JFrame {
 					double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
 					sceneAnimee1.setVitesse((int)VitesseMParSeconde);
 					sceneAnimee2.setVitesse((int)VitesseMParSeconde);
+					sceneAnimee3.setVitesse((int)VitesseMParSeconde);
 				}
 			}
 		});
 		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), new Integer(0), null, new Integer(1)));
-		spnVitesse.setBounds(1569, 141, 48, 20);
+		spnVitesse.setBounds(869, 901, 48, 20);
 		contentPane.add(spnVitesse);
 
 		JLabel lblKmParHeure = new JLabel("km/h");
-		lblKmParHeure.setBounds(1627, 144, 46, 14);
+		lblKmParHeure.setBounds(927, 904, 46, 14);
 		contentPane.add(lblKmParHeure);
 
 		JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
-		lblTauxDApparition.setBounds(1463, 193, 123, 14);
+		lblTauxDApparition.setBounds(763, 953, 123, 14);
 		contentPane.add(lblTauxDApparition);
 
 		spnTauxDApparition = new JSpinner();
@@ -220,15 +231,16 @@ public class FenetreSimulationSansVideo extends JFrame {
 				//On modifie le taux pour les deux fenêtres d'animation ainsi que le nombre de voitures dans le même écouteur
 				sceneAnimee1.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 				sceneAnimee2.setTauxDApparition((Integer)spnTauxDApparition.getValue());
+				sceneAnimee3.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 				//System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
 			}
 		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
-		spnTauxDApparition.setBounds(1570, 190, 48, 20);
+		spnTauxDApparition.setBounds(870, 950, 48, 20);
 		contentPane.add(spnTauxDApparition);
 
 		JLabel lblVoituresParMinute = new JLabel("Voitures/Minute");
-		lblVoituresParMinute.setBounds(1628, 193, 126, 14);
+		lblVoituresParMinute.setBounds(928, 953, 126, 14);
 		contentPane.add(lblVoituresParMinute);
 
 		chkbxVoie3 = new JCheckBox("Voie SUD");
@@ -242,7 +254,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			}
 		});
 		chkbxVoie3.setEnabled(false);
-		chkbxVoie3.setBounds(1479, 293, 97, 23);
+		chkbxVoie3.setBounds(1081, 916, 97, 23);
 		contentPane.add(chkbxVoie3);
 
 		chkbxVoie4 = new JCheckBox("Voie EST");
@@ -256,7 +268,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			}
 		});
 		chkbxVoie4.setEnabled(false);
-		chkbxVoie4.setBounds(1589, 293, 97, 23);
+		chkbxVoie4.setBounds(1191, 916, 97, 23);
 		contentPane.add(chkbxVoie4);
 
 		chkbxVoie2 = new JCheckBox("Voie OUEST");
@@ -270,7 +282,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			}
 		});
 		chkbxVoie2.setEnabled(false);
-		chkbxVoie2.setBounds(1589, 267, 97, 23);
+		chkbxVoie2.setBounds(1191, 890, 97, 23);
 		contentPane.add(chkbxVoie2);
 
 		chkbxVoie1 = new JCheckBox("Voie NORD");
@@ -284,7 +296,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			}
 		});
 		chkbxVoie1.setEnabled(false);
-		chkbxVoie1.setBounds(1479, 267, 97, 23);
+		chkbxVoie1.setBounds(1081, 890, 97, 23);
 		contentPane.add(chkbxVoie1);
 
 		chkbxTraficAnormal = new JCheckBox("Trafic anormal");
@@ -293,6 +305,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 				if(chkbxTraficAnormal.isSelected()) {
 					sceneAnimee1.setTrafficAnormale(true);
 					sceneAnimee2.setTrafficAnormale(true);
+					sceneAnimee3.setTrafficAnormale(true);
 					chkbxVoie3.setEnabled(true);
 					if(chkbxVoie3.isSelected()) {
 						setTrafficAnormal(3);
@@ -312,6 +325,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 				} else {
 					sceneAnimee1.setTrafficAnormale(false);
 					sceneAnimee2.setTrafficAnormale(false);
+					sceneAnimee3.setTrafficAnormale(false);
 					chkbxVoie3.setEnabled(false);
 					if(chkbxVoie3.isSelected()) {
 						setTrafficNormal(3);
@@ -331,11 +345,11 @@ public class FenetreSimulationSansVideo extends JFrame {
 				}
 			}
 		});
-		chkbxTraficAnormal.setBounds(1462, 232, 112, 23);
+		chkbxTraficAnormal.setBounds(1064, 855, 112, 23);
 		contentPane.add(chkbxTraficAnormal);
 
 		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setBounds(1502, 381, 142, 414);
+		pnEmplacementsDesBoutons.setBounds(762, 741, 350, 103);
 		contentPane.add(pnEmplacementsDesBoutons);
 		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
 		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
@@ -347,11 +361,12 @@ public class FenetreSimulationSansVideo extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				//On fait juste une scene pour l'instant
 				sceneAnimee1.demarrer();
-				sceneAnimee2.demarrer();				
+				sceneAnimee2.demarrer();
+				sceneAnimee3.demarrer();
 				//sceneAnimee2.demarrer();
 			}
 		});
-		btnAnimer.setBounds(34, 16, 76, 76);
+		btnAnimer.setBounds(10, 16, 76, 76);
 		pnEmplacementsDesBoutons.add(btnAnimer);
 
 		JButton btnPause = new JButton(new ImageIcon(urlPause));
@@ -360,10 +375,11 @@ public class FenetreSimulationSansVideo extends JFrame {
 				if(sceneAnimee1.getEnCoursDAnimation()) {
 				sceneAnimee1.arreter();
 				sceneAnimee2.arreter();
+				sceneAnimee3.arreter();
 				}
 			}
 		});
-		btnPause.setBounds(34, 117, 76, 76);
+		btnPause.setBounds(96, 16, 76, 76);
 		pnEmplacementsDesBoutons.add(btnPause);
 
 		JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
@@ -372,13 +388,15 @@ public class FenetreSimulationSansVideo extends JFrame {
 				if(sceneAnimee1.getEnCoursDAnimation()) {
 					sceneAnimee1.arreter();
 					sceneAnimee2.arreter();
+					sceneAnimee3.arreter();
 					} else {
 						sceneAnimee1.prochainImage();
 						sceneAnimee2.prochainImage();
+						sceneAnimee3.prochainImage();
 					}
 				}
 		});
-		btnProchainImage.setBounds(34, 222, 76, 76);
+		btnProchainImage.setBounds(182, 16, 76, 76);
 		pnEmplacementsDesBoutons.add(btnProchainImage);
 
 		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
@@ -386,16 +404,17 @@ public class FenetreSimulationSansVideo extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				sceneAnimee1.reinitialiser();
 				sceneAnimee2.reinitialiser();
+				sceneAnimee3.reinitialiser();
 			}
 		});//À CHANGER 
-		btnRecommencer.setBounds(34, 311, 76, 76);
+		btnRecommencer.setBounds(268, 16, 76, 76);
 		pnEmplacementsDesBoutons.add(btnRecommencer);
 		JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
-		lblNombreDeVoituresAGenerer.setBounds(1462, 343, 214, 14);
+		lblNombreDeVoituresAGenerer.setBounds(1064, 966, 214, 14);
 		contentPane.add(lblNombreDeVoituresAGenerer);
 
 		nbVoituresAGenerer = new JLabel("");
-		nbVoituresAGenerer.setBounds(1678, 343, 48, 14);
+		nbVoituresAGenerer.setBounds(1280, 966, 48, 14);
 		contentPane.add(nbVoituresAGenerer);
 	}
 
@@ -442,6 +461,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public void setTraficAnormal(boolean anom) {
 		sceneAnimee1.setTrafficAnormale(anom);
 		sceneAnimee2.setTrafficAnormale(anom);
+		sceneAnimee3.setTrafficAnormale(anom);
 		chkbxVoie3.setEnabled(anom);
 		chkbxVoie4.setEnabled(anom);
 		chkbxVoie2.setEnabled(anom);
@@ -464,21 +484,25 @@ public class FenetreSimulationSansVideo extends JFrame {
 					chkbxVoie1.setSelected(false);
 					sceneAnimee1.addTrafficNormale(1);
 					sceneAnimee2.addTrafficNormale(1);
+					sceneAnimee3.addTrafficNormale(1);
 					break;
 				case 1:
 					chkbxVoie2.setSelected(false);
 					sceneAnimee1.addTrafficNormale(2);
 					sceneAnimee2.addTrafficNormale(2);
+					sceneAnimee3.addTrafficNormale(2);
 					break;
 				case 2:
 					chkbxVoie3.setSelected(false);
 					sceneAnimee1.addTrafficNormale(3);
 					sceneAnimee2.addTrafficNormale(3);
+					sceneAnimee3.addTrafficNormale(3);
 					break;
 				case 3:
 					chkbxVoie4.setSelected(false);
 					sceneAnimee1.addTrafficNormale(4);
 					sceneAnimee2.addTrafficNormale(4);
+					sceneAnimee3.addTrafficNormale(4);
 					break;
 				}
 				break;
@@ -488,21 +512,25 @@ public class FenetreSimulationSansVideo extends JFrame {
 				chkbxVoie1.setSelected(true);
 				sceneAnimee1.addTrafficAnormale(1);
 				sceneAnimee2.addTrafficAnormale(1);
+				sceneAnimee3.addTrafficAnormale(1);
 				break;
 			case 2:
 				chkbxVoie2.setSelected(true);
 				sceneAnimee1.addTrafficAnormale(2);
 				sceneAnimee2.addTrafficAnormale(2);
+				sceneAnimee3.addTrafficAnormale(2);
 				break;
 			case 3:
 				chkbxVoie3.setSelected(true);
 				sceneAnimee1.addTrafficAnormale(3);
 				sceneAnimee2.addTrafficAnormale(3);
+				sceneAnimee3.addTrafficAnormale(3);
 				break;
 			case 4:
 				chkbxVoie4.setSelected(true);
 				sceneAnimee1.addTrafficAnormale(4);
 				sceneAnimee2.addTrafficAnormale(4);
+				sceneAnimee3.addTrafficAnormale(4);
 				break;
 			}
 		}
@@ -534,6 +562,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		System.out.println("Le nombre de voitures générées sera : " + nbVoitures);
 		sceneAnimee1.setNbVoituresMax(nbVoitures);
 		sceneAnimee2.setNbVoituresMax(nbVoitures);
+		sceneAnimee3.setNbVoituresMax(nbVoitures);
 	}
 	
 	//Reiner
@@ -553,6 +582,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 			this.typeImages = typeImages;
 			sceneAnimee1.setTypeImages(typeImages);
 			sceneAnimee2.setTypeImages(typeImages);
+			sceneAnimee3.setTypeImages(typeImages);
 	}
 	public void miseAJourText() {
 		nbVoituresAGenerer.setText(Integer.toString(sceneAnimee1.getNbVoituresMax()));
@@ -560,9 +590,11 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public void setTrafficAnormal(int voie) {
 		sceneAnimee1.addTrafficAnormale(voie);
 		sceneAnimee2.addTrafficAnormale(voie);
+		sceneAnimee3.addTrafficAnormale(voie);
 	}
 	public void setTrafficNormal(int voie) {
 		sceneAnimee1.addTrafficNormale(voie);
 		sceneAnimee2.addTrafficNormale(voie);
+		sceneAnimee3.addTrafficNormale(voie);
 	}
 }

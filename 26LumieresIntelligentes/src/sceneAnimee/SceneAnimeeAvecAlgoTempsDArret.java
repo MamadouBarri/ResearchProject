@@ -3,7 +3,6 @@ package sceneAnimee;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.text.SimpleDateFormat;
@@ -12,7 +11,6 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.swing.JPanel;
 
-import ecouteursperso.VisibiliteFenStatistiquesListener;
 import geometrie.Direction;
 import geometrie.Intersection;
 import geometrie.Lumiere;
@@ -23,7 +21,7 @@ import modele.ModeleAffichage;
  * des directions aleatoires et des actions aleatoires sont generees.
  * @author Mamadou & Reiner
  */
-public class SceneAnimee extends JPanel implements Runnable{
+public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 	/**
 	 * Numero par defaut
 	 */
@@ -66,17 +64,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 	Intersection inter;
 	//Variables pour génération des voitures
 	private int nbBouclesAvantNouvelleVoiture = 100;
-	private int nbBouclesAvantMenage = 1000;
 	private int nbVoituresGenerees =0;
 	private int nbVoituresMax = 60 ;
 
 	//Lumieres 
-	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres
-	private double nbBouclesAvantChangement1 = 2400;
-	private double nbBouclesAvantChangement2 = 2700;
-	private double nbBouclesAvantChangement3 = 5100;
-	//À cette derniere boucle, on retourne le compteur à 0
-	private double nbBouclesAvantChangement4 = 5400;
+	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres après que l'algorithme à décider d'inverser le "flow"
+	private double nbBouclesAvantChangement2 = 300;
 	private final double UNE_SECONDE_EN_MILLISECONDE = 1000;
 	private final double DISTANCE_BORDURE = 8; ///En pixels pour le drawString 
 
@@ -95,25 +88,22 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private final int VERTE = 0;
 	private final int JAUNE = 1;
 	private final int ROUGE = 2;
-	private int typeImages = 0;
-	private int nbRepetitionsPourMenage = 0;
 	//Voiture
 	private boolean ilYAVoitureQuiBloque = false;
-	//Gestion de l'arret de l'animation
-	private ArrayList<VisibiliteFenStatistiquesListener> listeEcouteursFenStats = new ArrayList<VisibiliteFenStatistiquesListener>();
-
+	private int typeImages = 0;
+	private int nbRepetitionsStats = 0;
+	private int nbRepetitionsMaxStats = 100;
+	private int nbVoituresActives;
+	private int vitessesTotales;
 	//Pour les statistiques
 	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
 	public static ArrayList<Integer> moyenneDesVitesse = new ArrayList<Integer>();
 	public static ArrayList<Double> tempsDArretMoyen = new ArrayList<Double>();
-	private int nbRepetitionsMaxStats = 100;
-	private int nbVoituresActives = 0;
-	private double vitessesTotales = 0;
 	//Mamadou
 	/**
 	 * Constructeur de la scène d'animation qui met le background en gris
 	 */
-	public SceneAnimee() {
+	public SceneAnimeeAvecAlgoTempsDArret() {
 		this.vitesse = 20;
 		setBackground(Color.gray);
 		trafficAnormale = new int[1];
@@ -173,9 +163,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 		//compteur pour savoir quand on génère une nouvelle voiture selon le nombre de boucles de run faits
 		double nbRepetitionsPourVoitures = 0;
 		//compteur pour savoir quand on faire avancer le cycle de lumiere selon le nombre de boucles de run faits
+		double nbRepetitionsPourChangement = 0;
 		double nbRepetitionsPourLumieres = 0;
-		//compteur pour savoir quand prendre les statistiques
-		int nbRepetitionsStats = 0;
+		double densiteHorizontale = 0;
+		double densiteVerticale = 0;
 		while (enCoursDAnimation) {	
 			//Commencer le thread de voiture pour chaque voiture de la liste
 
@@ -246,9 +237,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
 						}
 					}
-					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -270,23 +258,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 								v.setYVoiture(v.getYVoiture()-v.getDeplacement());
 							}
 						}
-						if(v.getYVoiture()<=0&&v.getVoitureActive()) {
-							v.setVoitureActive(false);
-						}
 						break;
 					}
 				}
-
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
+				/*if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+					v.setVoitureArretee(true);
+				}*/
 				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
-
 
 				//Verifier l'etat de la voiture devant
 				//Si la liste contient plus qu'une voiture
@@ -297,7 +283,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//voitures.remove(v);
 					v.setVoitureActive(false);
 				}
-
 				//Voiture devant trop proche
 				if(est.indexOf(v)!=0) {
 					Voiture voitureDevant = est.get(est.indexOf(v)-1);
@@ -305,7 +290,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 						v.setVoitureArretee(true);
 					}
 				}
-
 			}//fin DIRECTION EST
 
 
@@ -382,9 +366,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setXVoiture(v.getXVoiture()-v.getDeplacement());
 						}
 					}
-					if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -407,9 +388,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							}
 						}
 					}
-					if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 					break;
 				}
 				//Lorsque la lumiere redevient verte ou est jaune
@@ -421,8 +399,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 - DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumSud.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
-
-
 				//Voiture devant trop proche
 				if(sud.indexOf(v)!=0) {
 					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
@@ -441,7 +417,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
 						Voiture vOppose = iOppose.next();
 						//entre si la voiture est pret à tourner à gauche
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
 							switch(vOppose.getDirectionDeVirage()) {
 							case 0:
@@ -499,9 +475,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setYVoiture(v.getYVoiture()-v.getDeplacement());
 						}
 					}
-					if(v.getYVoiture()<=0&&v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -524,22 +497,16 @@ public class SceneAnimee extends JPanel implements Runnable{
 							}
 						}
 					}
-					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 				}
-
 				//Lorsque la lumiere redevient verte ou est jaune
-				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur()==JAUNE) {
+				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
 				}
-
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
 				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumOuest.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
-
 				//Voiture devant trop proche
 				if(ouest.indexOf(v)!=0) {
 					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
@@ -583,7 +550,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					this.ilYAVoitureQuiBloque = false;
 				}
 				//fin de la verification
-				if(v.getYVoiture()<-this.LARGEUR_VOITURE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
 					//v.arreter();
 					affichageAvecTemps("voiture enlevée");
 					//voitures.remove(v);
@@ -619,16 +586,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 							v.setXVoiture(v.getXVoiture()+v.getDeplacement());
 						}
 					}
-					if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						if(v.getPeutTournerGauche()) {
 							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()) {
+							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-DISTANCE_BORDURE/2.0)*modele.getPixelsParUniteY()+LARGEUR_VOITURE/2.0) {
 								v.setYVoiture((v.getYVoiture()-deplacement));
 							}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -644,9 +608,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							}
 						}
 					}
-					if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
 					break;
 				}
 
@@ -659,7 +620,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 				if(Math.abs(v.getYVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE - LARGEUR_VOITURE)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumNord.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
-
 				//Voiture devant trop proche
 				if(nord.indexOf(v)!=0) {
 					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
@@ -667,6 +627,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 						v.setVoitureArretee(true);
 					}
 				}
+
 			}
 			repaint();
 			try {
@@ -674,17 +635,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 				nbRepetitionsPourVoitures++;
 				nbRepetitionsPourLumieres++;
 				nbRepetitionsStats++;
-				nbRepetitionsPourMenage++;
 				double vitesse;
-				//System.out.println(nbRepetitionsPourLumieres);
+				//booleans pour déterminer si on a des voitures d'urgences sur l'intersection
+				boolean ilYAVoitureDUrgenceVert = false;
+				boolean ilYAVoitureDUrgenceHoriz = false;
+				//Le temps d'arrêt de la voiture qui a attendu le plus
+				double tempsDArretMaxHoriz = 0;
+				double tempsDArretMaxVert = 0;
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
 					ajouterNouvelleVoiture();
+					
 					nbRepetitionsPourVoitures=0;
 				}
-
 				//Lorsque une seconde passe, donc on prend une nouvelle valeur pour les statistiques
-				if(nbRepetitionsStats == nbRepetitionsMaxStats) {
+				if(nbRepetitionsStats  == nbRepetitionsMaxStats ) {
 					//On calcule les voitures en attente
 					int voituresEnAttenteTotal = 0;
 					//On remet le nombre de voitures actives a 0
@@ -693,76 +658,164 @@ public class SceneAnimee extends JPanel implements Runnable{
 					vitessesTotales = 0;
 					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 						Voiture v = i.next();
+
 						//  1 )   Calculons le TEMPS ACTIF SUR L'INTERSECTION
 						if(v.getVoitureActive()) {
 							nbVoituresActives++; // On a le nombre de voitures actives
 							if(!v.getVoitureArretee()) {
 								vitesse = this.vitesse;
-								System.out.println("la vitesse"+ vitesse);
-								vitessesTotales+= (vitesse); //Pour plus de 
+								vitessesTotales+=vitesse; //Pour plus de 
 							}
 							v.setTempsSurIntersection(v.getTempsSurIntersection()+1);//On augmente le temps passe sur intersection de 1 sec
-						}
+						}						
 						//  2 )   Calculons le NOMBRE DE VOITURES EN ARRET
 						if(v.getVoitureArretee()) {
 							voituresEnAttenteTotal++;
 						}
-					}					
-					
+					}
 					//On divise le total des vitesses par le nombre de voitures actives
-					double moyenneDesVitessesChaqueSeconde;
+					double moyenneDesVitesses;
 					if(nbVoituresActives!=0) {
-						moyenneDesVitessesChaqueSeconde = vitessesTotales * 1.0/(double)nbVoituresActives;
+						moyenneDesVitesses = vitessesTotales * 1.0/(double)nbVoituresActives;
 					}else {
-						moyenneDesVitessesChaqueSeconde = 0;
+						moyenneDesVitesses = 0;
 					}
 					//On met dans la liste à chaque seconde
-					System.out.println(moyenneDesVitesse.toString());
-					moyenneDesVitesse.add((int)moyenneDesVitessesChaqueSeconde);
-					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
+					moyenneDesVitesse.add((int)moyenneDesVitesses);
 					//On ajoute la valeur dans la liste
+					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
 					nbVoituresEnAttente.add(voituresEnAttenteTotal);
 					tempsDArretMoyen.add(this.calculeTempsDArretMoyen());
 					nbRepetitionsStats=0; //On remet le compteur a 0
 				}
-				if(nbVoituresGenerees>=nbVoituresMax){//Toutes les voitures ont été générées, donc find de la simulation
-					boolean aucuneVoiture = true;
-					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+				//on vérifie le temps d'arrêt des voies à chaque 5 secondes
+				if(nbRepetitionsPourLumieres>=500) {
+					//on réinitialise nos valeurs
+					densiteHorizontale = 0;
+					densiteVerticale = 0;
+					tempsDArretMaxHoriz = 0;
+					tempsDArretMaxVert = 0;
+					//On vérifie les voitures ayant est comme direction
+					for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 						Voiture v = i.next();
-						if(v.getVoitureActive()){//Il reste aucune voiture active
-							aucuneVoiture = false;
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
+						if(v.getXVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							//si oui, on l'ajoute à la densité de voitures des voies horizontales
+							densiteHorizontale++;
+							if(v.getTempsDArret()>tempsDArretMaxHoriz) {
+								tempsDArretMaxHoriz = v.getTempsDArret();
+							}
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceHoriz = true;
+							}
 						}
 					}
-					if(aucuneVoiture) {
-						this.arreter();
-						leverEvenFenetreStatistiquesVisible();
-					}
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement1) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement2) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres == nbBouclesAvantChangement3) {
-					changeCouleurLumieres();
-					repaint();
-				}
-				if(nbRepetitionsPourLumieres >= nbBouclesAvantChangement4) {
-					changeCouleurLumieres();
-					repaint();
-					nbRepetitionsPourLumieres =0;
-				}
-				if(nbRepetitionsPourVoitures == nbBouclesAvantMenage) {
-					for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+					//On vérifie les voitures ayant ouest comme direction
+					for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
 						Voiture v = i.next();
-						if(!v.getVoitureActive()){
-							//voitures.remove(v);
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
+						if(v.getXVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							//si oui, on l'ajoute à la densité de voitures des voies horizontales
+							densiteHorizontale++;
+							if(v.getTempsDArret()>tempsDArretMaxHoriz) {
+								tempsDArretMaxHoriz = v.getTempsDArret();
+							}
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceHoriz = true;
+							}
 						}
-					}	
-					nbRepetitionsPourMenage=0;
+					}
+					//On vérifie les voitures ayant nord comme direction
+					for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
+						if(v.getYVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							//si oui, on l'ajoute à la densité de voitures des voies verticales
+							densiteVerticale++;
+							if(v.getTempsDArret()>tempsDArretMaxVert) {
+								tempsDArretMaxVert = v.getTempsDArret();
+							}
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceVert = true;
+							}
+						}
+						//On vérifie les voitures ayant sud comme direction
+					}for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
+						Voiture v = i.next();
+						//on vérifie si la voiture n'a pas encore dépassé la lumière
+						if(v.getYVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+							//si oui, on l'ajoute à la densité de voitures des voies verticales
+							densiteVerticale++;
+							if(v.getTempsDArret()>tempsDArretMaxVert) {
+								tempsDArretMaxVert = v.getTempsDArret();
+							}
+							if(v.estVoitureDUrgence()) {
+								ilYAVoitureDUrgenceVert = true;
+							}
+						}
+					}
+					if(tempsDArretMaxHoriz>10) {
+						//si une voiture sur les voies horizontales a attendu pour plus de 10 secondes, on modifie les densités pour la permettre de passer
+						densiteHorizontale = 1;
+						densiteVerticale = 0;
+					} else {
+						//si une voiture sur les voies verticales a attendu pour plus de 10 secondes, on modifie les densités pour la permettre de passer
+						if(tempsDArretMaxVert>10) {
+							densiteHorizontale = 0;
+							densiteVerticale = 1;
+						}
+					}
+					if(ilYAVoitureDUrgenceHoriz){
+						//s'il y a une voiture d'urgence sur une des voies horizontales, on fait comme si ces voies avait une plus grande densité
+						densiteHorizontale = 1;
+						densiteVerticale = 0;
+					} else {
+						if(ilYAVoitureDUrgenceVert) {
+							//s'il y a une voiture d'urgence sur une des voies verticales, on fait comme si ces voies avait une plus grande densité
+							densiteHorizontale = 0;
+							densiteVerticale = 1;
+						}
+					}
+					nbRepetitionsPourLumieres=0;
+					/*System.out.println("nbRep = " + nbRepetitionsPourLumieres);
+					System.out.println("DensHor = " + densiteHorizontale);
+					System.out.println("DensVer = " + densiteVerticale);*/
+				} else {
+					nbRepetitionsPourLumieres++;
+				}
+				//on vérifie si les voies avec les temps d'arrêt supérieurs ont la lumière verte
+				if(densiteHorizontale>densiteVerticale&&lumEst.getCouleur()==ROUGE) {
+					//Sinon, on change la lumière opposée de vert à jaune
+					if(lumNord.getCouleur()==VERTE) {
+						changeCouleurLumieres();
+					} else {
+						//petite pause avant de changer la lumière opposée de jaune à rouge
+						if(nbRepetitionsPourChangement!=nbBouclesAvantChangement2) {
+							nbRepetitionsPourChangement++;
+						} else {
+							changeCouleurLumieres();
+							nbRepetitionsPourChangement = 0;
+						}
+					}
+				} else {
+					if(densiteVerticale>densiteHorizontale&&lumNord.getCouleur()==ROUGE) {
+						//Changement de vert à jaune
+						if(lumEst.getCouleur()==VERTE) {
+							changeCouleurLumieres();
+						} else {
+							//petite pause avant de changer de jaune à rouge
+							if(nbRepetitionsPourChangement!=nbBouclesAvantChangement2) {
+								nbRepetitionsPourChangement++;
+							} else {
+								changeCouleurLumieres();
+								nbRepetitionsPourChangement = 0;
+							}
+						}
+					} else {
+						if(densiteVerticale==densiteHorizontale) {
+							//On ne change rien
+						}
+					}
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -772,6 +825,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				enCoursDAnimation = false;
 				veutProchainImage = false;
 			}
+
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
@@ -824,7 +878,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public void demarrer() {
 		if (!enCoursDAnimation) { 
-			System.out.println("demarrer");
 			Thread proc = new Thread(this);
 			proc.start();
 			enCoursDAnimation = true;
@@ -836,8 +889,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public void arreter() {
 		enCoursDAnimation = false;
-
-
 	}
 	//Mamadou
 	/**
@@ -845,11 +896,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public void reinitialiser() {
 		arreter();
-		est.clear();
-		ouest.clear();
-		nord.clear();
-		sud.clear();
-		voitures.clear();
+		voitures.removeAll(est);
+		voitures.removeAll(ouest);
+		voitures.removeAll(nord);
+		voitures.removeAll(sud);
 		this.nbVoituresGenerees = 0;
 		repaint();
 	}
@@ -945,23 +995,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 					lumEst.setCouleur(couleurInv);
 				}
 			}
-		}
-	}
-	//Ecouteurs
-	//Mamadou
-	/**
-	 * Methode permettant a un objet de s'enregistrer comme ecouteur
-	 */
-	public void addVisibiliteFenStatistiquesListener( VisibiliteFenStatistiquesListener visibiliteFenStats) {
-		listeEcouteursFenStats.add(visibiliteFenStats);
-	}
-	//Mamadou
-	/**
-	 * methode qui appelle la methode voulu pour chacun des objets qui sont enregistres
-	 */
-	public void leverEvenFenetreStatistiquesVisible() {
-		for(VisibiliteFenStatistiquesListener ecout : listeEcouteursFenStats ) {
-			ecout.rendreFenetreStatistiquesVisible();
 		}
 	}
 	//Mamadou
@@ -1079,18 +1112,11 @@ public class SceneAnimee extends JPanel implements Runnable{
 	}
 	/**
 	 * Methode qui set le type d'images a generer
-	 * @param typeImages type d'images
+	 * @param typeImages le type d'images
 	 */
 	//Mamadou
 	public void setTypeImages(int typeImages) {
 		this.typeImages  = typeImages;
-	}
-	/**
-	 * Methode qui retourne le array list contenat les valeurs des voitures arretes
-	 * @return	nbVoituresEnAttente la liste contenant les nombres des voitures arretes
-	 */
-	public ArrayList<Integer> getListeVoituresEnArret() {
-		return this.nbVoituresEnAttente;
 	}
 	//Reiner 
 	/**
@@ -1103,6 +1129,25 @@ public class SceneAnimee extends JPanel implements Runnable{
 		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
 			Voiture v = i.next();
 			tempsDArretTotale += v.getTempsDArret();
+		}
+		tempsDArretMoyen = tempsDArretTotale/(double)nbVoituresGenerees;
+		return tempsDArretMoyen;
+	}
+	//Reiner
+	/**
+	 * Méthode qui calcule le temps d'arrêt moyen d'un certain groupe de voitures spécifié
+	 * @param list liste contenant le groupe de voiture spécifié
+	 * @return temps d'arrêt moyen d'un certain groupe de voitures spécifié
+	 */
+	public double calculerTempsDArretMoyen(ArrayList<Voiture> list) {
+		double tempsDArretTotale = 0;
+		double tempsDArretMoyen;
+		for(Iterator<Voiture> i = list.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//différence de l'autre méthode, on ignore les voitures qui ne sont pas présentes dans l'intersection
+			if(v.getVoitureActive()) {
+			tempsDArretTotale += v.getTempsDArret();
+			}
 		}
 		tempsDArretMoyen = tempsDArretTotale/(double)nbVoituresGenerees;
 		return tempsDArretMoyen;
