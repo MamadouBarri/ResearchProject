@@ -106,6 +106,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
 	public static ArrayList<Integer> moyenneDesVitesse = new ArrayList<Integer>();
 	public static ArrayList<Double> tempsDArretMoyen = new ArrayList<Double>();
+	public static ArrayList<Double> densiteVoitures = new ArrayList<Double>();
 	private int nbRepetitionsMaxStats = 100;
 	private int nbVoituresActives = 0;
 	private double vitessesTotales = 0;
@@ -723,6 +724,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//On ajoute la valeur dans la liste
 					nbVoituresEnAttente.add(voituresEnAttenteTotal);
 					tempsDArretMoyen.add(this.calculeTempsDArretMoyen());
+					densiteVoitures.add(calculeDensite(voitures, this.LARGEUR_REELLE*4));//On fait LARGEUR_REELLE*4, car il y a 4 voies dans l'intersection
 					nbRepetitionsStats=0; //On remet le compteur a 0
 				}
 				if(nbVoituresGenerees>=nbVoituresMax){//Toutes les voitures ont été générées, donc find de la simulation
@@ -1106,5 +1108,33 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}
 		tempsDArretMoyen = tempsDArretTotale/(double)nbVoituresGenerees;
 		return tempsDArretMoyen;
+	}
+	//Reiner
+	/**
+	 * Méthode qui calcule la densité de voitures sur une certaine longeur de route
+	 * @param list Collection de voitures 
+	 * @param longueurDeRoute Longeur de la route où les voitures se trouvent en metres
+	 * @return densité de voitures sur une longeur donnée en voiture/kilometre
+	 */
+	public double calculeDensite(ArrayList<Voiture> list, double longeurDeRoute) {
+		double nbVoituresTotales = 0;
+		for(Iterator<Voiture> i = list.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//on vérifie si la voiture est encore sur l'intersection
+			if(v.getVoitureActive()) {
+				//si oui, on l'ajoute au nombre de voitures totales
+				nbVoituresTotales++;
+			}
+		}
+		return nbVoituresTotales/(longeurDeRoute/1000.0);//on converti les metres en kilometres pour avoir une densité en voitures par kilometre
+		
+	}
+	//Reiner 
+	/**
+	 * Getter qui retourne la densité de voitures sur toute l'intersection
+	 * @return La densité de voitures sur toute l'intersection en voitures/kilometre;
+	 */
+	public double getDensiteTotale() {
+		return calculeDensite(this.voitures,this.LARGEUR_REELLE*4);//On calcule la densité avec toutes les voitures générés et la longeur totale des voies horizontales et verticales 
 	}
 }

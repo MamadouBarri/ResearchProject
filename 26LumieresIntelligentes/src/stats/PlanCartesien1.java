@@ -112,6 +112,18 @@ public class PlanCartesien1 extends JPanel {
 				}
 				break;
 			case 3:
+				donneesSansAlgo = new ArrayList<Integer>();
+				donneesAvecAlgoDensite = new ArrayList<Integer>();
+				donneesAvecAlgoDensiteTempsArret = new ArrayList<Integer>();
+				for(double d : SceneAnimee.densiteVoitures) {
+					donneesSansAlgo.add((int)d);
+				}
+				for(double d : SceneAnimeeAvecAlgo.densiteVoitures) {
+					donneesAvecAlgoDensite.add((int)d);
+				}
+				for(double d : SceneAnimeeAvecAlgoTempsDArret.densiteVoitures) {
+					donneesAvecAlgoDensiteTempsArret.add((int)d);
+				}
 				break;
 			default:
 				System.out.println("LES DONNEES N'ONT PAS ETE LUES");
