@@ -7,29 +7,26 @@ import java.awt.RenderingHints;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import java.util.Collections;
 
 import sceneAnimee.SceneAnimee;
 import sceneAnimee.SceneAnimeeAvecAlgo;
 import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
-
 import javax.swing.JPanel;
 
 
 public class PlanCartesien1 extends JPanel {
 
+	/**
+	 * Numéro par défaut
+	 */
+	private static final long serialVersionUID = 1L;
 	//Les lignes
-	private Path2D.Double axes, ligneBrisee,ligneBriseeAvecAlgo;
+	private Path2D.Double ligneBrisee;
 	//Les listes
 	private ArrayList<Integer> donneesSansAlgo;
 	private ArrayList<Integer> donneesAvecAlgoDensite;
 	private ArrayList<Integer> donneesAvecAlgoDensiteTempsArret;
-	private ArrayList<Double> donneesSansAlgoDouble;
-	private ArrayList<Double> donneesAAlgoDouble;
-
 	//
 	//62, 209,400, 400
 	//coordonnes de l'axe des X
@@ -77,7 +74,10 @@ public class PlanCartesien1 extends JPanel {
 
 	}//fin du constructeur
 
-
+	/**
+	 * Dessine le graphique avec les données passées en paramètres
+	 * @param g Le conexte graphique
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -248,24 +248,5 @@ public class PlanCartesien1 extends JPanel {
 			ligneBrisee.lineTo( x, y);
 		}//fin for
 	}
-	/**
-	 * Creation d'une approximation de la courbe
-	 * Le resultat est place dans le Path2D "ligneBrisee"
-	 */
-//	private void creerApproxCourbeAvecAlgo() {
-		//double x, y;
-
-	//	ligneBriseeAvecAlgo = new Path2D.Double();
-	//	x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
-	//	y = this.COORD_Y_AXE_X;
-	//	ligneBriseeAvecAlgo.moveTo( x, y );
-
-	//	for (int k=0; k<nbSegmentsPourApproximerAvecAlgoDensite; k++) {
-//
-	//		x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
-	//		y = this.getHeight() - this.COORD_X_AXE_Y- this.donneesAvecAlgoDensite.get(k) * this.largeurEntreY;
-	//		ligneBriseeAvecAlgo.lineTo( x, y);
-	//	}//fin for
-	//}
 }
 

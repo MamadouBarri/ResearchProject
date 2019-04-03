@@ -1,17 +1,15 @@
 package aaplication;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.FlowLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
-import stats.PlanCartesien;
+
 import stats.PlanCartesien1;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 /**
  * JFrame contenant des statistiques qui comparent notre algorithme à des feux de circulations normals
