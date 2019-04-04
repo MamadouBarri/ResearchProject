@@ -4,7 +4,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -55,6 +58,7 @@ public class PlanCartesien1 extends JPanel {
 	// now we are define length of cathetas of that triangle
 	public static final int FIRST_LENGHT = 10;
 	public static final int SECOND_LENGHT = 5;
+	private static final double ANGLE_ARC = 45; //angle en degres
 
 	//Approximation
 	private int nbSegmentsPourApproximerAvecAlgoDensite;
@@ -183,16 +187,19 @@ public class PlanCartesien1 extends JPanel {
 		this.numeroterAxeY(g2d);
 		//On cree les courbes et on les dessine
 		//Sans algo
-		creerApproxCourbe(nbSegmentsPourApproximerSansAlgo,donneesSansAlgo);
+		int numCourbe =0;
 		g2d.setColor(Color.red);
+		creerApproxCourbe(nbSegmentsPourApproximerSansAlgo,donneesSansAlgo,g2d,numCourbe);
 		g2d.draw(ligneBrisee); 
 		//Densite
-		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensite,donneesAvecAlgoDensite);
+		numCourbe =1;
 		g2d.setColor(Color.green);
+		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensite,donneesAvecAlgoDensite,g2d,numCourbe);
 		g2d.draw(ligneBrisee);
 		//Densite et temps d'arret
+		numCourbe=2;
 		g2d.setColor(Color.cyan);
-		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensiteTempsArret,donneesAvecAlgoDensiteTempsArret);
+		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensiteTempsArret,donneesAvecAlgoDensiteTempsArret,g2d,numCourbe);
 		g2d.draw(ligneBrisee);
 	}
 
@@ -234,8 +241,10 @@ public class PlanCartesien1 extends JPanel {
 	 * Creation d'une approximation de la courbe
 	 * Le resultat est place dans le Path2D "ligneBrisee"
 	 */
-	private void creerApproxCourbe(int nbSegments, ArrayList<Integer> donnees) {
+	private void creerApproxCourbe(int nbSegments, ArrayList<Integer> donnees,Graphics2D g,int numCourbe) {
 		double x, y;
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		ligneBrisee = new Path2D.Double();
 		x = this.COORD_INITIAL_X_AXE_X;  //on commence a l'extreme gauche
 		y = this.COORD_Y_AXE_X;
@@ -246,6 +255,42 @@ public class PlanCartesien1 extends JPanel {
 			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
 			y = this.getHeight() - this.COORD_X_AXE_Y- donnees.get(k)* this.largeurEntreY;
 			ligneBrisee.lineTo( x, y);
+			switch(numCourbe) {
+			case 0 : //lumieres ordinaires
+				
+				g2d.fill(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				Color couleurTemp = g2d.getColor();
+				g2d.setColor(Color.BLACK);
+				g2d.draw(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				g2d.setColor(couleurTemp);
+				break;
+			case 1 ://algorithme avec densite seulement
+				g2d.fill(new Rectangle2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				couleurTemp = g2d.getColor();
+				g2d.setColor(Color.BLACK);
+				g2d.draw(new Rectangle2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				g2d.setColor(couleurTemp);
+				break;
+			case 2 : //algorithme avec temps d'attente et densite
+				g2d.fill(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				couleurTemp = g2d.getColor();
+				g2d.setColor(Color.BLACK);
+				g2d.draw(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				g2d.setColor(couleurTemp);
+				
+				
+				
+				//g2d.fill(new Arc2D.Double(x-LARGEUR_POINT/2.0*5, y-LARGEUR_POINT/2.0*5, LARGEUR_POINT*5, LARGEUR_POINT*5, 0, ANGLE_ARC, Arc2D.OPEN ));
+				//couleurTemp = g2d.getColor();
+				//g2d.setColor(Color.BLACK);
+				//g2d.draw(new Arc2D.Double(x-LARGEUR_POINT/2.0*5, y-LARGEUR_POINT/2.0*5, LARGEUR_POINT*5, LARGEUR_POINT*5, 0, ANGLE_ARC, Arc2D.OPEN  ));
+				//g2d.setColor(couleurTemp);
+				break;
+			case 3:
+				break;
+			default:
+				System.out.println("LES DONNEES N'ONT PAS ETE LUES");
+		}
 		}//fin for
 	}
 }
