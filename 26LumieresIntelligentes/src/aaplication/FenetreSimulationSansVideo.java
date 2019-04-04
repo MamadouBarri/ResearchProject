@@ -129,6 +129,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		mntmStatisitques.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fenStats.setVisible(true);
+				fenStats.miseAJour();
 			}
 		});
 		mnMenu.add(mntmStatisitques);
@@ -170,6 +171,12 @@ public class FenetreSimulationSansVideo extends JFrame {
 				fenStats.creerLesGraphiques();
 				fenStats.repaint();
 				
+			}
+
+			@Override
+			public void faireLaMiseAJour() {
+				fenStats.creerLesGraphiques();
+				fenStats.miseAJour();
 			}
 		});
 		sceneAnimee1.setBounds(10, 109, 600, 600);
