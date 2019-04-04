@@ -227,9 +227,12 @@ public class PlanCartesien1 extends JPanel {
 					COORD_Y_AXE_X - SECOND_LENGHT,
 					COORD_INITIAL_X_AXE_X + (i * largeurEntreX),
 					COORD_Y_AXE_X + SECOND_LENGHT);
-			g.drawString(Integer.toString(i), 
-					COORD_INITIAL_X_AXE_X + (i * largeurEntreX) - 3,
-					COORD_Y_AXE_X + DISTANCE_AXE_ECRITURE);
+			
+			if(i%5==0||xNbCoord<25) {
+				g.drawString(Integer.toString(i), 
+						COORD_INITIAL_X_AXE_X + (i * largeurEntreX) - 3,
+						COORD_Y_AXE_X + DISTANCE_AXE_ECRITURE);
+			}
 		}
 
 	}
@@ -244,9 +247,11 @@ public class PlanCartesien1 extends JPanel {
 					COORD_FINALE_Y_AXE_Y - (i * largeurEntreY), 
 					COORD_X_AXE_Y + SECOND_LENGHT,
 					COORD_FINALE_Y_AXE_Y - (i * largeurEntreY));
+			if(i%5==0||yNbCoord<25) {
 			g.drawString(Integer.toString(i), 
 					COORD_X_AXE_Y - DISTANCE_AXE_ECRITURE, 
 					COORD_FINALE_Y_AXE_Y - (i * largeurEntreY));
+			}
 		}
 	}
 
