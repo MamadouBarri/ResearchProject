@@ -46,7 +46,7 @@ public class FenetreStatistiques extends JFrame {
 	public FenetreStatistiques() {
 		setTitle("Statistiques\r\n");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1443, 1000);
+		setBounds(100, 100, 1443, 1080);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -127,5 +127,11 @@ public class FenetreStatistiques extends JFrame {
 		PlanCartesien1 planCartesien3 = new PlanCartesien1(2); 
 		planCartesien3.setBounds(980, 209,400, 400);
 		contentPane.add(planCartesien3);
+		
+		//Graphique 3 : 
+		//520 619 400 400
+		PlanCartesien1 planCartesienDensite = new PlanCartesien1(3);
+		planCartesienDensite.setBounds(520,619,400,400);
+		contentPane.add(planCartesienDensite);
 	}
 }
