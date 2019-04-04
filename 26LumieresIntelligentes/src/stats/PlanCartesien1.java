@@ -214,6 +214,7 @@ public class PlanCartesien1 extends JPanel {
 		creerApproxCourbe(nbSegmentsPourApproximerAvecAlgoDensiteTempsArret,donneesAvecAlgoDensiteTempsArret,g2d,numCourbe);
 		g2d.draw(ligneBrisee);
 	}
+	//
 
 	/**
 	 * Méthode pour numeroter les axes
