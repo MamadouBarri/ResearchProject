@@ -134,7 +134,7 @@ public class PlanCartesien1 extends JPanel {
 		}
 		
 		//Determiner le nombre de X max
-		xNbCoord = Math.max(Math.max(donneesSansAlgo.size(), donneesAvecAlgoDensite.size()), donneesAvecAlgoDensiteTempsArret.size());//Le nombre de donnees
+		xNbCoord = Math.max(Math.max(donneesSansAlgo.size(), donneesAvecAlgoDensite.size()), donneesAvecAlgoDensiteTempsArret.size()) + 1;//Le nombre de donnees
 		//Determiner le nombre de Y max
 		int valeurMaxSansAlgo = Collections.max(donneesSansAlgo);
 		int valeurMaxAvecAlgoDensite = Collections.max(donneesAvecAlgoDensite);
@@ -222,7 +222,7 @@ public class PlanCartesien1 extends JPanel {
 	 */
 	private void numeroterAxeX(Graphics2D g) {
 		// draw x-axis numbers
-		for(int i = 1; i < xNbCoord; i++) {
+		for(int i = 0; i < xNbCoord; i++) {
 			g.drawLine(COORD_INITIAL_X_AXE_X + (i * largeurEntreX),
 					COORD_Y_AXE_X - SECOND_LENGHT,
 					COORD_INITIAL_X_AXE_X + (i * largeurEntreX),
@@ -239,7 +239,7 @@ public class PlanCartesien1 extends JPanel {
 	 */
 	private void numeroterAxeY(Graphics2D g) {
 
-		for(int i = 1; i < yNbCoord; i++) {
+		for(int i = 0; i < yNbCoord; i++) {
 			g.drawLine(COORD_X_AXE_Y - SECOND_LENGHT,
 					COORD_FINALE_Y_AXE_Y - (i * largeurEntreY), 
 					COORD_X_AXE_Y + SECOND_LENGHT,
@@ -270,16 +270,17 @@ public class PlanCartesien1 extends JPanel {
 			ligneBrisee.lineTo( x, y);
 			switch(numCourbe) {
 			case 0 : //lumieres ordinaires
+				//aucune géométrie
 				
-				g2d.fill(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
-				Color couleurTemp = g2d.getColor();
-				g2d.setColor(Color.BLACK);
-				g2d.draw(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
-				g2d.setColor(couleurTemp);
+				//g2d.fill(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				//Color couleurTemp = g2d.getColor();
+				//g2d.setColor(Color.BLACK);
+				//g2d.draw(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
+				//g2d.setColor(couleurTemp);
 				break;
 			case 1 ://algorithme avec densite seulement
 				g2d.fill(new Rectangle2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
-				couleurTemp = g2d.getColor();
+				Color couleurTemp = g2d.getColor();
 				g2d.setColor(Color.BLACK);
 				g2d.draw(new Rectangle2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
 				g2d.setColor(couleurTemp);

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.swing.JPanel;
 
+import ecouteursperso.EvenFenetreStatistiquesMiseAJour;
 import ecouteursperso.VisibiliteFenStatistiquesListener;
 import geometrie.Direction;
 import geometrie.Intersection;
@@ -101,7 +102,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private boolean ilYAVoitureQuiBloque = false;
 	//Gestion de l'arret de l'animation
 	private ArrayList<VisibiliteFenStatistiquesListener> listeEcouteursFenStats = new ArrayList<VisibiliteFenStatistiquesListener>();
-
+	private ArrayList<EvenFenetreStatistiquesMiseAJour> listeEcouteursFenStatsMiseAJour = new ArrayList<EvenFenetreStatistiquesMiseAJour>();
 	//Pour les statistiques
 	public static ArrayList<Integer> nbVoituresEnAttente = new ArrayList<Integer>();
 	public static ArrayList<Integer> moyenneDesVitesse = new ArrayList<Integer>();
@@ -726,6 +727,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 					tempsDArretMoyen.add(this.calculeTempsDArretMoyen());
 					densiteVoitures.add(calculeDensite(voitures, this.LARGEUR_REELLE*4));//On fait LARGEUR_REELLE*4, car il y a 4 voies dans l'intersection
 					nbRepetitionsStats=0; //On remet le compteur a 0
+					leverEvenFenetreStatistiquesMiseAJour();
 				}
 				if(nbVoituresGenerees>=nbVoituresMax){//Toutes les voitures ont été générées, donc find de la simulation
 					boolean aucuneVoiture = true;
@@ -774,6 +776,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				enCoursDAnimation = false;
 				veutProchainImage = false;
 			}
+			
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
@@ -959,11 +962,27 @@ public class SceneAnimee extends JPanel implements Runnable{
 	}
 	//Mamadou
 	/**
+	 * Methode permettant a un objet de s'enregistrer comme ecouteur
+	 */
+	public void addFenStatistiquesMiseAJour(EvenFenetreStatistiquesMiseAJour miseAJourStats) {
+		listeEcouteursFenStatsMiseAJour.add(miseAJourStats);
+	}
+	//Mamadou
+	/**
 	 * methode qui appelle la methode voulu pour chacun des objets qui sont enregistres
 	 */
 	public void leverEvenFenetreStatistiquesVisible() {
 		for(VisibiliteFenStatistiquesListener ecout : listeEcouteursFenStats ) {
-			ecout.rendreFenetreStatistiquesVisible();
+			ecout.faireLaMiseAJour();
+		}
+	}
+	//Mamadou
+	/**
+	 * Methode qui appelle la methode voulu 
+	 */
+	public void leverEvenFenetreStatistiquesMiseAJour() {
+		for(VisibiliteFenStatistiquesListener ecout : listeEcouteursFenStats ) {
+			ecout.faireLaMiseAJour();
 		}
 	}
 	//Mamadou

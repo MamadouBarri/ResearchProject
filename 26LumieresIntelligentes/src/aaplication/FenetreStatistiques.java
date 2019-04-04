@@ -134,4 +134,12 @@ public class FenetreStatistiques extends JFrame {
 		planCartesienDensite.setBounds(520,619,400,400);
 		contentPane.add(planCartesienDensite);
 	}
+	//Mamadou
+	/**
+	 * Methode qui met ajour les graphiques
+	 */
+	public void miseAJour() {
+		creerLesGraphiques();
+		this.repaint();
+	}
 }
