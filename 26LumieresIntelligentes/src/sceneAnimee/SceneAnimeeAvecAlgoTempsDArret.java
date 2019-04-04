@@ -238,6 +238,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
 						}
 					}
+					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
+						v.setVoitureActive(false);
+					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -258,6 +261,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 								}
 								v.setYVoiture(v.getYVoiture()-v.getDeplacement());
 							}
+						}
+						if(v.getYVoiture()<=0&&v.getVoitureActive()) {
+							v.setVoitureActive(false);
 						}
 						break;
 					}
@@ -367,6 +373,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							v.setXVoiture(v.getXVoiture()-v.getDeplacement());
 						}
 					}
+					if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+						v.setVoitureActive(false);
+					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -388,6 +397,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 								v.setXVoiture(v.getXVoiture()+v.getDeplacement());
 							}
 						}
+					}
+					if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+						v.setVoitureActive(false);
 					}
 					break;
 				}
@@ -476,6 +488,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							v.setYVoiture(v.getYVoiture()-v.getDeplacement());
 						}
 					}
+					if(v.getYVoiture()<=0&&v.getVoitureActive()) {
+						v.setVoitureActive(false);
+					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -497,6 +512,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 								v.setYVoiture(v.getYVoiture()+v.getDeplacement());
 							}
 						}
+					}
+					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
+						v.setVoitureActive(false);
 					}
 				}
 				//Lorsque la lumiere redevient verte ou est jaune
@@ -587,6 +605,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							v.setXVoiture(v.getXVoiture()+v.getDeplacement());
 						}
 					}
+					if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+						v.setVoitureActive(false);
+					}
 					break;
 				case 2:
 					//La voiture tourne à gauche
@@ -608,6 +629,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 								v.setXVoiture(v.getXVoiture()-v.getDeplacement());
 							}
 						}
+					}
+					if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+						v.setVoitureActive(false);
 					}
 					break;
 				}
