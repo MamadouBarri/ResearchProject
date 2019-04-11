@@ -150,7 +150,7 @@ public class Voiture implements Dessinable {
 			//génère un nombre entre 0 et 99
 			int aleatoire = rn.nextInt(100);
 			//5% de chance que la voiture soit un véhicule d'urgence
-			if(aleatoire>=95) {
+			if(aleatoire>=85) {
 				fichVoiture = getClass().getClassLoader().getResource("vehiculeDUrgence.jpg");
 				voitureDUrgence = true; 
 			}

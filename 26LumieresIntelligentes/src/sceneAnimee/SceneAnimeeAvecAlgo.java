@@ -40,7 +40,11 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	private final double DISTANCE_LIGNE_ARRET = 2; 
 	//Constante de conversion
 	//private final double CONVERSION_KMH_MS = 3.6; //Constante de conversion à utiliser plus tard
-
+	//Nombre de voies
+	private int nbVoiesEst=2;
+	private int nbVoiesOuest=1;
+	private int nbVoiesSud=3;
+	private int nbVoiesNord=2;
 	//Modele
 	private ModeleAffichage modele;
 
@@ -123,24 +127,24 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		calculerVitesse();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//On passe les dimensions du JPanel a l'intersection
-		inter = new Intersection(this.LARGEUR_REELLE);
+		inter = new Intersection(this.LARGEUR_REELLE,this.nbVoiesEst,this.nbVoiesOuest,this.nbVoiesSud,this.nbVoiesNord);
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 
 		lumSud = new Lumiere(0,0,75,couleurInv,4);
-		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumSud.getLargeur()-5);
+		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
 		lumSud.dessiner(g2d, mat);
 
 		lumNord = new Lumiere(0,0,75,couleurInv,1);
-		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0+5);
+		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst+5);
 		lumNord.dessiner(g2d, mat);
 
 		lumOuest = new Lumiere(0,0,75,couleur,2);
-		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
+		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
 		lumOuest.dessiner(g2d, mat);	
 
 		lumEst = new Lumiere(0,0,75,couleur,3);
-		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
+		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lumEst.dessiner(g2d, mat);
 
 

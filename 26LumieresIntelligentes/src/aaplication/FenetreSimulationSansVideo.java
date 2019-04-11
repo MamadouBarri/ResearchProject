@@ -169,8 +169,10 @@ public class FenetreSimulationSansVideo extends JFrame {
 				//creation de la fenetre de stats
 				fenStats.setVisible(true);
 				fenStats.creerLesGraphiques();
-				fenStats.repaint();
-				
+				fenStats.repaint();	
+				sceneAnimee1.arreter();
+				sceneAnimee2.arreter();
+				sceneAnimee3.arreter();
 			}
 
 			@Override

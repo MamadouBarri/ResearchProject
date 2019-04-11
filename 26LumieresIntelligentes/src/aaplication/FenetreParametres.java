@@ -49,7 +49,6 @@ public class FenetreParametres extends JFrame {
 	private JCheckBox chkbxTrfcAnom2;
 	private JCheckBox chkbxTrfcAnom4;
 	private JCheckBox chkbxTrfcAnom3;
-	private JButton btnChoisirVideo;
 	private JLabel lblVoieEst;
 	private JLabel lblVoieOuest;
 	private JLabel lblVoieSud;
@@ -124,53 +123,16 @@ public class FenetreParametres extends JFrame {
 		panel.setBounds(0, 0, 622, 584);
 		contentPane.add(panel);
 		
-		JRadioButton rdbtnSimuler = new JRadioButton("Simuler l'intersection");
-		rdbtnSimuler.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(rdbtnSimuler.isSelected()) {
-					setEtatParams(true);
-					if(chkbxTrfcAnom.isSelected()) {
-						setEtatVoiesAnom(true);
-					}
-				} else {
-					setEtatParams(false);
-					setEtatVoiesAnom(true);					
-				}
-			}
-		});
-		btngrpChoixDeTypeDeSimulation.add(rdbtnSimuler);
-		rdbtnSimuler.setSelected(true);
-		rdbtnSimuler.setBounds(6, 19, 154, 23);
-		panel.add(rdbtnSimuler);
-		
-		JRadioButton rdbtnVideo = new JRadioButton("Vid\u00E9o");
-		rdbtnVideo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(rdbtnVideo.isSelected()) {
-					setEtatParams(false);
-					setEtatVoiesAnom(false);
-				} else {
-					setEtatParams(true);
-					if(chkbxTrfcAnom.isSelected()) {
-						setEtatVoiesAnom(true);
-					}
-				}
-			}
-		});
-		btngrpChoixDeTypeDeSimulation.add(rdbtnVideo);
-		rdbtnVideo.setBounds(373, 133, 139, 23);
-		panel.add(rdbtnVideo);
-		
 		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
-		lblVitesseMoyenne.setBounds(21, 69, 123, 14);
+		lblVitesseMoyenne.setBounds(6, 26, 123, 14);
 		panel.add(lblVitesseMoyenne);
 		
 		JLabel lblNbVoitures = new JLabel("Nombre de voitures :");
-		lblNbVoitures.setBounds(21, 116, 123, 14);
+		lblNbVoitures.setBounds(6, 73, 123, 14);
 		panel.add(lblNbVoitures);
 		
 		JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
-		lblTauxDApparition.setBounds(21, 167, 123, 14);
+		lblTauxDApparition.setBounds(6, 124, 123, 14);
 		panel.add(lblTauxDApparition);
 		
 		spnVitesse = new JSpinner();
@@ -180,7 +142,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnVitesse.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
-		spnVitesse.setBounds(128, 66, 48, 20);
+		spnVitesse.setBounds(113, 23, 48, 20);
 		panel.add(spnVitesse);
 		
 		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
@@ -194,7 +156,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom.setBounds(373, 19, 112, 23);
+		chkbxTrfcAnom.setBounds(6, 159, 112, 23);
 		panel.add(chkbxTrfcAnom);
 		
 		chkbxTrfcAnom1 = new JCheckBox("Voie NORD");
@@ -208,7 +170,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom1.setBounds(390, 54, 97, 23);
+		chkbxTrfcAnom1.setBounds(23, 194, 97, 23);
 		panel.add(chkbxTrfcAnom1);
 		
 		chkbxTrfcAnom2 = new JCheckBox("Voie OUEST");
@@ -222,7 +184,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom2.setBounds(500, 54, 97, 23);
+		chkbxTrfcAnom2.setBounds(133, 194, 97, 23);
 		panel.add(chkbxTrfcAnom2);
 		
 		chkbxTrfcAnom3 = new JCheckBox("Voie SUD");
@@ -236,7 +198,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom3.setBounds(390, 80, 97, 23);
+		chkbxTrfcAnom3.setBounds(23, 220, 97, 23);
 		panel.add(chkbxTrfcAnom3);
 		
 		chkbxTrfcAnom4 = new JCheckBox("Voie EST");
@@ -250,17 +212,17 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom4.setBounds(500, 80, 97, 23);
+		chkbxTrfcAnom4.setBounds(133, 220, 97, 23);
 		panel.add(chkbxTrfcAnom4);
 		
 		setEtatVoiesAnom(false);
 		
 		JLabel lblUnitesTauxDApparition = new JLabel("Voitures/Minute");
-		lblUnitesTauxDApparition.setBounds(186, 167, 126, 14);
+		lblUnitesTauxDApparition.setBounds(171, 124, 126, 14);
 		panel.add(lblUnitesTauxDApparition);
 		
 		JLabel lblUniteVitesse = new JLabel("km/h");
-		lblUniteVitesse.setBounds(186, 69, 46, 14);
+		lblUniteVitesse.setBounds(171, 26, 46, 14);
 		panel.add(lblUniteVitesse);
 		
 		spnTauxDApparition = new JSpinner();
@@ -270,46 +232,37 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
-		spnTauxDApparition.setBounds(128, 164, 48, 20);
+		spnTauxDApparition.setBounds(113, 121, 48, 20);
 		panel.add(spnTauxDApparition);
-		
-		btnChoisirVideo = new JButton("Choisir une vid\u00E9o");
-		btnChoisirVideo.setEnabled(false);
-		btnChoisirVideo.setBounds(441, 177, 143, 23);
-		panel.add(btnChoisirVideo);
 		
 		JButton btnConfirmer = new JButton("Confirmer");
 		btnConfirmer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnSimuler.isSelected()) {
-					leverEvenFenetreSimulationSansVideoVisible();
-				} else {
-					leverEvenFenetreSimulationAvecVideoVisible(); 
-				}
+				leverEvenFenetreSimulationSansVideoVisible();
 			}
 		});
-		btnConfirmer.setBounds(258, 550, 105, 23);
+		btnConfirmer.setBounds(507, 550, 105, 23);
 		panel.add(btnConfirmer);
 		
 		SceneAnimee sceneAnimee = new SceneAnimee();
-		sceneAnimee.setBounds(258, 250, 242, 243);
+		sceneAnimee.setBounds(161, 292, 242, 243);
 		panel.add(sceneAnimee);
 		sceneAnimee.setLayout(null);
 		
 		JLabel lblVoieNord = new JLabel("Voie NORD");
-		lblVoieNord.setBounds(355, 225, 89, 14);
+		lblVoieNord.setBounds(258, 267, 89, 14);
 		panel.add(lblVoieNord);
 		
 		lblVoieEst = new JLabel("Voie EST");
-		lblVoieEst.setBounds(514, 362, 84, 14);
+		lblVoieEst.setBounds(417, 404, 84, 14);
 		panel.add(lblVoieEst);
 		
 		lblVoieOuest = new JLabel("Voie OUEST");
-		lblVoieOuest.setBounds(187, 362, 89, 14);
+		lblVoieOuest.setBounds(90, 404, 89, 14);
 		panel.add(lblVoieOuest);
 		
 		lblVoieSud = new JLabel("Voie SUD");
-		lblVoieSud.setBounds(360, 504, 84, 14);
+		lblVoieSud.setBounds(263, 546, 84, 14);
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();
@@ -320,7 +273,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoitures.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
-		spnNbVoitures.setBounds(154, 113, 48, 20);
+		spnNbVoitures.setBounds(139, 70, 48, 20);
 		panel.add(spnNbVoitures);
 		
 		JRadioButton rdbtnVoituresNormales = new JRadioButton("voitures normales");
@@ -336,7 +289,7 @@ public class FenetreParametres extends JFrame {
 		rdbtnVoituresNormales.setForeground(Color.BLACK);
 		rdbtnVoituresNormales.setSelected(true);
 		buttonGroup.add(rdbtnVoituresNormales);
-		rdbtnVoituresNormales.setBounds(35, 221, 127, 23);
+		rdbtnVoituresNormales.setBounds(296, 39, 127, 23);
 		panel.add(rdbtnVoituresNormales);
 		
 		JRadioButton rdbtnVoituresDeSport = new JRadioButton("voitures de sport");
@@ -350,7 +303,7 @@ public class FenetreParametres extends JFrame {
 		});
 		rdbtnVoituresDeSport.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresDeSport);
-		rdbtnVoituresDeSport.setBounds(35, 334, 125, 23);
+		rdbtnVoituresDeSport.setBounds(298, 145, 125, 23);
 		panel.add(rdbtnVoituresDeSport);
 		
 		JRadioButton rdbtnVoituresClassiques = new JRadioButton("voitures classiques");
@@ -364,23 +317,27 @@ public class FenetreParametres extends JFrame {
 		});
 		rdbtnVoituresClassiques.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresClassiques);
-		rdbtnVoituresClassiques.setBounds(35, 441, 141, 23);
+		rdbtnVoituresClassiques.setBounds(451, 39, 141, 23);
 		panel.add(rdbtnVoituresClassiques);
 		
 		JLabel lblImageVoitureNormal = new JLabel("New label");
 		lblImageVoitureNormal.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeNormal.jpg")));
-		lblImageVoitureNormal.setBounds(40, 250, 120, 70);
+		lblImageVoitureNormal.setBounds(301, 68, 120, 70);
 		panel.add(lblImageVoitureNormal);
 		
 		JLabel lblImageVoitureSport = new JLabel("New label");
 		lblImageVoitureSport.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeSport.jpg")));
-		lblImageVoitureSport.setBounds(40, 362, 120, 70);
+		lblImageVoitureSport.setBounds(303, 173, 120, 70);
 		panel.add(lblImageVoitureSport);
 		
 		JLabel lblImageVoitureClassique = new JLabel("New label");
 		lblImageVoitureClassique.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeClassique.jpg")));
-		lblImageVoitureClassique.setBounds(40, 476, 120, 70);
+		lblImageVoitureClassique.setBounds(463, 68, 120, 70);
 		panel.add(lblImageVoitureClassique);
+		
+		JLabel lblTypeDeVoiture = new JLabel("Type de Voiture :");
+		lblTypeDeVoiture.setBounds(291, 11, 112, 20);
+		panel.add(lblTypeDeVoiture);
 	}
 	//Reiner
 	/**
@@ -392,7 +349,6 @@ public class FenetreParametres extends JFrame {
 		spnVitesse.setEnabled(etat);
 		spnNbVoitures.setEnabled(etat);
 		chkbxTrfcAnom.setEnabled(etat);
-		btnChoisirVideo.setEnabled(!etat);
 	}
 	//Reiner
 	/**

@@ -6,4 +6,5 @@ import java.util.EventListener;
  **/
 public interface VisibiliteFenStatistiquesListener extends EventListener{
 		public void faireLaMiseAJour();
+		public void rendreFenetreStatistiquesVisible();
 }
