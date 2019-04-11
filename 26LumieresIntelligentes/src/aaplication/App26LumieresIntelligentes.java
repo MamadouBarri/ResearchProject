@@ -207,6 +207,11 @@ public class App26LumieresIntelligentes extends JFrame {
 			public void typeImages(int typeImages) {
 				simulSansVideo.setTypeImages(typeImages);
 			}
+
+			@Override
+			public void setNbVoies(int nbVoiesEst, int nbVoiesOuest, int nbVoiesSud, int nbVoiesNord) {
+				simulSansVideo.setNbVoies(nbVoiesEst, nbVoiesOuest, nbVoiesSud, nbVoiesNord);
+			}
 			
 		});
 		

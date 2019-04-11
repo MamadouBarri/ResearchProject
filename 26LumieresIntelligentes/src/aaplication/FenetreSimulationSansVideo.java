@@ -606,4 +606,22 @@ public class FenetreSimulationSansVideo extends JFrame {
 		sceneAnimee2.addTrafficNormale(voie);
 		sceneAnimee3.addTrafficNormale(voie);
 	}
+	public void setNbVoies(int nbVoiesEst, int nbVoiesOuest, int nbVoiesSud, int nbVoiesNord) {
+		//Voies Est
+		sceneAnimee1.setNbVoiesEst(nbVoiesEst);
+		sceneAnimee2.setNbVoiesEst(nbVoiesEst);
+		sceneAnimee3.setNbVoiesEst(nbVoiesEst);
+		//Voies Ouest
+		sceneAnimee1.setNbVoiesOuest(nbVoiesOuest);
+		sceneAnimee2.setNbVoiesOuest(nbVoiesEst);
+		sceneAnimee3.setNbVoiesOuest(nbVoiesEst);
+		//Voies Sud
+		sceneAnimee1.setNbVoiesSud(nbVoiesSud);
+		sceneAnimee2.setNbVoiesSud(nbVoiesEst);
+		sceneAnimee3.setNbVoiesSud(nbVoiesEst);
+		//Voies Nord
+		sceneAnimee1.setNbVoiesNord(nbVoiesNord);
+		sceneAnimee2.setNbVoiesNord(nbVoiesEst);
+		sceneAnimee3.setNbVoiesNord(nbVoiesEst);
+	}
 }

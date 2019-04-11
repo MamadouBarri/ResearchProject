@@ -44,10 +44,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 	//Constante de conversion
 	//private final double CONVERSION_KMH_MS = 3.6; //Constante de conversion à utiliser plus tard
 	//Nombre de voies
-	private int nbVoiesEst=2;
+	private int nbVoiesEst=1;
 	private int nbVoiesOuest=1;
-	private int nbVoiesSud=3;
-	private int nbVoiesNord=2;
+	private int nbVoiesSud=1;
+	private int nbVoiesNord=1;
 	//Modele
 	private ModeleAffichage modele;
 
@@ -123,6 +123,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		this.vitesse = 20;
 		setBackground(Color.gray);
 		trafficAnormale = new int[1];
+		
 	}
 	//Mamadou et Reiner
 	/**
@@ -1159,5 +1160,65 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public double getDensiteTotale() {
 		return calculeDensite(this.voitures,this.LARGEUR_REELLE*4);//On calcule la densité avec toutes les voitures générés et la longeur totale des voies horizontales et verticales 
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction est
+	 * @return nbVoiesEst int le nombre de voies de direction est
+	 */
+	public int getNbVoiesEst() {
+		return nbVoiesEst;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction est
+	 * @param nbVoiesEst int le nombre de voies de direction est
+	 */
+	public void setNbVoiesEst(int nbVoiesEst) {
+		this.nbVoiesEst = nbVoiesEst;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction ouest
+	 * @return the nbVoiesOuest int le nombre de voies de direction ouest
+	 */
+	public int getNbVoiesOuest() {
+		return nbVoiesOuest;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction ouest
+	 * @param nbVoiesOuest int le nombre de voies de direction ouest
+	 */
+	public void setNbVoiesOuest(int nbVoiesOuest) {
+		this.nbVoiesOuest = nbVoiesOuest;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction sud
+	 * @return the nbVoiesSud le nombre de voies de direction sud
+	 */
+	public int getNbVoiesSud() {
+		return nbVoiesSud;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction sud
+	 * @param nbVoiesSud le nombre de voies de direction sud
+	 */
+	public void setNbVoiesSud(int nbVoiesSud) {
+		this.nbVoiesSud = nbVoiesSud;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction nord
+	 * @return the nbVoiesNord le nombre de voies de direction nord
+	 */
+	public int getNbVoiesNord() {
+		return nbVoiesNord;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction nord
+	 * @param nbVoiesNord le nombre de voies de direction nord
+	 */
+	public void setNbVoiesNord(int nbVoiesNord) {
+		this.nbVoiesNord = nbVoiesNord;
+		repaint();
 	}
 }

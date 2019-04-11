@@ -65,6 +65,10 @@ public class FenetreParametres extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	//booleans des images des voitures
 	private int typeImages = 0; // 0 : images normales ; 1 : images de voitures de sport ; 2 : images de voitures classiques; 
+	private JSpinner spnNbVoiesNord;
+	private JSpinner spnNbVoiesOuest;
+	private JSpinner spnNbVoiesSud;
+	private JSpinner spnNbVoiesEst;
 
 	/**
 	 * Launch the application.
@@ -250,19 +254,19 @@ public class FenetreParametres extends JFrame {
 		sceneAnimee.setLayout(null);
 		
 		JLabel lblVoieNord = new JLabel("Voie NORD");
-		lblVoieNord.setBounds(258, 267, 89, 14);
+		lblVoieNord.setBounds(258, 254, 89, 14);
 		panel.add(lblVoieNord);
 		
 		lblVoieEst = new JLabel("Voie EST");
-		lblVoieEst.setBounds(417, 404, 84, 14);
+		lblVoieEst.setBounds(417, 400, 84, 14);
 		panel.add(lblVoieEst);
 		
 		lblVoieOuest = new JLabel("Voie OUEST");
-		lblVoieOuest.setBounds(90, 404, 89, 14);
+		lblVoieOuest.setBounds(90, 400, 89, 14);
 		panel.add(lblVoieOuest);
 		
 		lblVoieSud = new JLabel("Voie SUD");
-		lblVoieSud.setBounds(263, 546, 84, 14);
+		lblVoieSud.setBounds(258, 564, 84, 14);
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();
@@ -338,6 +342,50 @@ public class FenetreParametres extends JFrame {
 		JLabel lblTypeDeVoiture = new JLabel("Type de Voiture :");
 		lblTypeDeVoiture.setBounds(291, 11, 112, 20);
 		panel.add(lblTypeDeVoiture);
+		
+		spnNbVoiesNord = new JSpinner();
+		spnNbVoiesNord.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				sceneAnimee.setNbVoiesNord((int)spnNbVoiesNord.getValue());
+				leverEvenGetParams();
+			}
+		});
+		spnNbVoiesNord.setModel(new SpinnerNumberModel(1, 1, 3, 1));
+		spnNbVoiesNord.setBounds(268, 269, 29, 20);
+		panel.add(spnNbVoiesNord);
+		
+		spnNbVoiesSud = new JSpinner();
+		spnNbVoiesSud.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				sceneAnimee.setNbVoiesSud((int)spnNbVoiesSud.getValue());
+				leverEvenGetParams();
+			}
+		});
+		spnNbVoiesSud.setModel(new SpinnerNumberModel(1, 1, 3, 1));
+		spnNbVoiesSud.setBounds(268, 541, 29, 20);
+		panel.add(spnNbVoiesSud);
+		
+		spnNbVoiesEst = new JSpinner();
+		spnNbVoiesEst.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				sceneAnimee.setNbVoiesEst((int)spnNbVoiesEst.getValue());
+				leverEvenGetParams();
+			}
+		});
+		spnNbVoiesEst.setModel(new SpinnerNumberModel(1, 1, 3, 1));
+		spnNbVoiesEst.setBounds(422, 417, 29, 20);
+		panel.add(spnNbVoiesEst);
+		
+		spnNbVoiesOuest = new JSpinner();
+		spnNbVoiesOuest.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				sceneAnimee.setNbVoiesOuest((int)spnNbVoiesOuest.getValue());
+				leverEvenGetParams();
+			}
+		});
+		spnNbVoiesOuest.setModel(new SpinnerNumberModel(1, 1, 3, 1));
+		spnNbVoiesOuest.setBounds(104, 417, 29, 20);
+		panel.add(spnNbVoiesOuest);
 	}
 	//Reiner
 	/**
@@ -432,6 +480,7 @@ public class FenetreParametres extends JFrame {
 			ecout.VitesseDesVoitures((int)spnVitesse.getValue());
 			ecout.NombreDeVoituresAGenerer((int)spnNbVoitures.getValue());
 			ecout.TauxDApparitionDesVoitures((int)spnTauxDApparition.getValue());
+			ecout.setNbVoies((int)spnNbVoiesEst.getValue(), (int)spnNbVoiesOuest.getValue(), (int)spnNbVoiesSud.getValue(), (int)spnNbVoiesNord.getValue());
 			if(chkbxTrfcAnom.isSelected()) {
 				ecout.isTraficAnormal(true);
 			} else {
