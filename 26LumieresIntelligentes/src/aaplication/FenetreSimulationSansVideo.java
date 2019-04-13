@@ -613,15 +613,15 @@ public class FenetreSimulationSansVideo extends JFrame {
 		sceneAnimee3.setNbVoiesEst(nbVoiesEst);
 		//Voies Ouest
 		sceneAnimee1.setNbVoiesOuest(nbVoiesOuest);
-		sceneAnimee2.setNbVoiesOuest(nbVoiesEst);
-		sceneAnimee3.setNbVoiesOuest(nbVoiesEst);
+		sceneAnimee2.setNbVoiesOuest(nbVoiesOuest);
+		sceneAnimee3.setNbVoiesOuest(nbVoiesOuest);
 		//Voies Sud
 		sceneAnimee1.setNbVoiesSud(nbVoiesSud);
-		sceneAnimee2.setNbVoiesSud(nbVoiesEst);
-		sceneAnimee3.setNbVoiesSud(nbVoiesEst);
+		sceneAnimee2.setNbVoiesSud(nbVoiesSud);
+		sceneAnimee3.setNbVoiesSud(nbVoiesSud);
 		//Voies Nord
 		sceneAnimee1.setNbVoiesNord(nbVoiesNord);
-		sceneAnimee2.setNbVoiesNord(nbVoiesEst);
-		sceneAnimee3.setNbVoiesNord(nbVoiesEst);
+		sceneAnimee2.setNbVoiesNord(nbVoiesNord);
+		sceneAnimee3.setNbVoiesNord(nbVoiesNord);
 	}
 }
