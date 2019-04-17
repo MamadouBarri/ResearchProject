@@ -1380,4 +1380,11 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 			this.nbVoiesNord = nbVoiesNord;
 			repaint();
 		}
+		//Mamadou
+		/**
+		 * Retourne le nombre de voitures generees
+		 */
+		public int getNombreVoituresGeneree() {
+			return(this.nbVoituresGenerees);
+		}
 }

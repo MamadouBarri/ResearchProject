@@ -2,7 +2,7 @@ package ecouteursperso;
 import java.util.EventListener;
 
 /**
- * Écouteur qui permet la fenêtre de simulation d'ouvrir la fenêtre de statistiques
+ * Écouteur qui permet de faire la mise à jour des statistiques
  * @author Mamadou
  **/
 public interface EvenFenetreStatistiquesMiseAJour extends EventListener{

@@ -123,6 +123,8 @@ public class Intersection implements Dessinable {
 	public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
 		this.nbVoiesHorizontale = nbVoiesHorizontale;
 	}
+	
+	
 	private void DessinerVoiesEst(Graphics2D g2d, AffineTransform matLocale) {
 		Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
 		Stroke normal = g2d.getStroke();

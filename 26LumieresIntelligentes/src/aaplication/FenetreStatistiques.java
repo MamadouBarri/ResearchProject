@@ -62,10 +62,6 @@ public class FenetreStatistiques extends JFrame {
 		lblTempsArretTitre.setBounds(1069, 157, 290, 14);
 		contentPane.add(lblTempsArretTitre);
 
-		//PlanCartesien graphiqueTempsArret = new PlanCartesien();
-		//graphiqueTempsArret.setBounds(62, 209,400, 400);
-		//contentPane.add(graphiqueTempsArret);
-
 		JLabel lblNbVoituresEnAttenteTitre = new JLabel("Nombre de voitures arr\u00EAt\u00E9es \r\nen fonction du temps");
 		lblNbVoituresEnAttenteTitre.setFont(new Font("Tw Cen MT", Font.BOLD, 15));
 		lblNbVoituresEnAttenteTitre.setBounds(95, 157, 344, 14);
