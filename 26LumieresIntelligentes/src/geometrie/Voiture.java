@@ -53,6 +53,7 @@ public class Voiture implements Dessinable {
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
 	private double largeurVoie;
+	private double largeurVoiePixels;
 	//Boolean indiquant si la voiture tourne
 	private boolean enRotation = false;
 	//Integer indiquant si la voiture tourne à gauche ou à droite (0=tout droit; 1=tourne droite; 2=tourne gauche)
@@ -68,6 +69,11 @@ public class Voiture implements Dessinable {
 	private double tempsDArret = 0;
 	//statistiques pour les vitesses moyennes
 	private double tempsSurIntersection = 0;
+	//proprietes de l'intersection
+	private int nbVoiesEst;
+	private int nbVoiesOuest;
+	private int nbVoiesSud;
+	private int nbVoiesNord;
 
 	
 
@@ -122,13 +128,14 @@ public class Voiture implements Dessinable {
 	 * @param trafficAnormal tableau du traffic anormal
 	 * @param typeImages 
 	 */
-	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal, int typeImages, boolean inclureVoituresDUrgence) {
+	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, double largeurVoiePixels, int[] trafficAnormal, int typeImages, boolean inclureVoituresDUrgence) {
 		//Initialisation des parametres de la voiture
 		this.typeImages  = typeImages;
 		this.largeurVoie = largeurVoie;
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
 		this.longueurVoiturePixels = longueurVoiturePixels;
+		this.largeurVoiePixels = largeurVoiePixels;
 		this.setTrafficAnormal(trafficAnormal);
 		//génère un nombre entre 0 et 2 pour déterminer si la voiture tourne ou non et, si oui, dans quelle direction
 		//this.directionDeVirage=((int)(Math.random()*3));
@@ -194,24 +201,80 @@ public class Voiture implements Dessinable {
 		//Si premiere fois 
 		AffineTransform matInitial = g2d.getTransform();
 		if (premiereFois) {
+			double i=0;
 			switch (this.direction.getNumDirection())
 			{
 			case 1:
 				//se deplace vers l'est
-				xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie);
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesEst<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesEst-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie + this.largeurVoiePixels*i/2.0);
 				break;
 			case 2:
 				//se deplace vers le sud
-				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 );yVoiture=0;
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesSud<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesSud-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 - this.largeurVoiePixels*i/2.0);yVoiture=0;
 				break;
 			case 3:
 				//se deplace vers l'ouest
-				//Rotation de l'image
-				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 );
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesOuest<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesOuest-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 - this.largeurVoiePixels*i/2.0);
 				break;
 			case 4:
 				//se deplace vers le nord
-				xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0) ;yVoiture=(int)dimensionRoutePixels;
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesNord<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesNord-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0+ this.largeurVoiePixels*i/2.0) ;yVoiture=(int)dimensionRoutePixels;
 				break;
 			}
 			premiereFois = false;
@@ -582,6 +645,20 @@ public class Voiture implements Dessinable {
 	 */
 	public boolean estVoitureDUrgence() {
 		return voitureDUrgence;
+	}
+	//Reiner 
+	/**
+	 * Setter qui permet a la voiture de connaitre le nombre de voies sur l'intersection
+	 * @param nbVoiesEst le nombre de voies allant vers l'est
+	 * @param nbVoiesOuest le nombre de voies allant vers l'ouest
+	 * @param nbVoiesSud le nombre de voies allant vers le sud
+	 * @param nbVoiesNord le nombre de voies allant vers le nord
+	 */
+	public void setNbVoies(int nbVoiesEst, int nbVoiesOuest, int nbVoiesSud, int nbVoiesNord) {
+		this.nbVoiesEst = nbVoiesEst;
+		this.nbVoiesOuest = nbVoiesOuest;
+		this.nbVoiesSud = nbVoiesSud;
+		this.nbVoiesNord = nbVoiesNord;
 	}
 
 }
