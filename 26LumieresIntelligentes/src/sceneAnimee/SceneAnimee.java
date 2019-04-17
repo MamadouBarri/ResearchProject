@@ -3,7 +3,6 @@ package sceneAnimee;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.text.SimpleDateFormat;
@@ -101,7 +100,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private final int JAUNE = 1;
 	private final int ROUGE = 2;
 	private int typeImages = 0;
-	private int nbRepetitionsPourMenage = 0;
 	//Voiture
 	private boolean ilYAVoitureQuiBloque = false;
 	//Gestion de l'arret de l'animation
@@ -681,7 +679,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 				nbRepetitionsPourVoitures++;
 				nbRepetitionsPourLumieres++;
 				nbRepetitionsStats++;
-				nbRepetitionsPourMenage++;
 				double vitesse;
 				//System.out.println(nbRepetitionsPourLumieres);
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
@@ -771,7 +768,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 							//voitures.remove(v);
 						}
 					}	
-					nbRepetitionsPourMenage=0;
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

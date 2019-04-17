@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
@@ -58,7 +57,6 @@ public class PlanCartesien1 extends JPanel {
 	// now we are define length of cathetas of that triangle
 	public static final int FIRST_LENGHT = 10;
 	public static final int SECOND_LENGHT = 5;
-	private static final double ANGLE_ARC = 45; //angle en degres
 
 	//Approximation
 	private int nbSegmentsPourApproximerAvecAlgoDensite;
@@ -269,19 +267,13 @@ public class PlanCartesien1 extends JPanel {
 		ligneBrisee.moveTo( x, y );
 
 		for (int k=0; k<nbSegments; k++) {
-
+			//Ajouter des formes pour l'esthétique
 			x = x +this.largeurEntreX;  //on ajoute un intervalle fixe en x, une seconde dans notre cas
 			y = this.getHeight() - this.COORD_X_AXE_Y- donnees.get(k)* this.largeurEntreY;
 			ligneBrisee.lineTo( x, y);
 			switch(numCourbe) {
 			case 0 : //lumieres ordinaires
 				//aucune géométrie
-				
-				//g2d.fill(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
-				//Color couleurTemp = g2d.getColor();
-				//g2d.setColor(Color.BLACK);
-				//g2d.draw(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
-				//g2d.setColor(couleurTemp);
 				break;
 			case 1 ://algorithme avec densite seulement
 				g2d.fill(new Rectangle2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
@@ -296,14 +288,6 @@ public class PlanCartesien1 extends JPanel {
 				g2d.setColor(Color.BLACK);
 				g2d.draw(new Ellipse2D.Double(x-LARGEUR_POINT/2.0, y-LARGEUR_POINT/2.0, LARGEUR_POINT, LARGEUR_POINT));
 				g2d.setColor(couleurTemp);
-				
-				
-				
-				//g2d.fill(new Arc2D.Double(x-LARGEUR_POINT/2.0*5, y-LARGEUR_POINT/2.0*5, LARGEUR_POINT*5, LARGEUR_POINT*5, 0, ANGLE_ARC, Arc2D.OPEN ));
-				//couleurTemp = g2d.getColor();
-				//g2d.setColor(Color.BLACK);
-				//g2d.draw(new Arc2D.Double(x-LARGEUR_POINT/2.0*5, y-LARGEUR_POINT/2.0*5, LARGEUR_POINT*5, LARGEUR_POINT*5, 0, ANGLE_ARC, Arc2D.OPEN  ));
-				//g2d.setColor(couleurTemp);
 				break;
 			case 3:
 				break;
