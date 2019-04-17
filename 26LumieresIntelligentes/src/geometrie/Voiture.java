@@ -60,6 +60,7 @@ public class Voiture implements Dessinable {
 	private int directionDeVirage;
 	//Angle de rotation de la voiture en radians
 	private double rotation;
+	private double vitesseDeRotation;
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 	//type de voiture
@@ -295,7 +296,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(3);
+					rotation = rotation + this.vitesseDeRotation;
 					if(rotation>=Math.PI/2.0) {
 						rotation = Math.PI/2.0;
 					}
@@ -303,7 +304,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(2);
+					rotation = rotation - this.vitesseDeRotation;
 					}
 				}
 				if(rotation<=-Math.PI/2.0) {
@@ -325,7 +326,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(3);
+					rotation = rotation + this.vitesseDeRotation;
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation>=Math.PI) {
 						rotation = Math.PI;
@@ -334,7 +335,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(2);
+					rotation = rotation - this.vitesseDeRotation;
 				}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation<=0) {
@@ -357,7 +358,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(3);
+					rotation = rotation + this.vitesseDeRotation;
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation>=3*Math.PI/2.0) {
 						rotation = 3*Math.PI/2.0;
@@ -366,7 +367,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(1.5);
+					rotation = rotation - this.vitesseDeRotation;
 					}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 				}
@@ -389,7 +390,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(4);
+					rotation = rotation + this.vitesseDeRotation;
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation>=0) {
 						rotation = 0;
@@ -398,7 +399,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(2);
+					rotation = rotation - this.vitesseDeRotation;
 					}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation<=-Math.PI) {
@@ -659,6 +660,18 @@ public class Voiture implements Dessinable {
 		this.nbVoiesOuest = nbVoiesOuest;
 		this.nbVoiesSud = nbVoiesSud;
 		this.nbVoiesNord = nbVoiesNord;
+	}
+	//Reiner
+	/**
+	 * Setter qui permet la voiture de caluculer sa vitesse de rotation lorsqu'elle fait un virage
+	 * @param deplacement la vitesse linéaire de la voiture
+	 * @param distanceAParcourir la distance entre les points où la voiture commence et finit le virage
+	 */
+	public void setVitesseDeRotation(double deplacement, double distanceAParcourir) {
+		//on calcule le temps que la voiture à pour faire sa rotation
+		double tempsDeVirage = distanceAParcourir/deplacement;
+		//on calcule la vitesse de rotation de la voiture
+		this.vitesseDeRotation = Math.toRadians(90)/tempsDeVirage;
 	}
 
 }

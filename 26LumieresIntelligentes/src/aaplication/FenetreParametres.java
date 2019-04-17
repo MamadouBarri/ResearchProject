@@ -272,7 +272,7 @@ public class FenetreParametres extends JFrame {
 		spnNbVoitures = new JSpinner();
 		spnNbVoitures.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				nbVoituresMax = (int)spnNbVoitures.getValue();
+				nbVoituresMax = (Integer)spnNbVoitures.getValue();
 				leverEvenGetParams();
 			}
 		});
@@ -477,10 +477,10 @@ public class FenetreParametres extends JFrame {
 		for(ResultatsFenParamListener ecout : listeEcouteursDeParam) {
 			System.out.println("on leve evenement");
 			ecout.typeImages(typeImages);
-			ecout.VitesseDesVoitures((int)spnVitesse.getValue());
-			ecout.NombreDeVoituresAGenerer((int)spnNbVoitures.getValue());
-			ecout.TauxDApparitionDesVoitures((int)spnTauxDApparition.getValue());
-			ecout.setNbVoies((int)spnNbVoiesEst.getValue(), (int)spnNbVoiesOuest.getValue(), (int)spnNbVoiesSud.getValue(), (int)spnNbVoiesNord.getValue());
+			ecout.VitesseDesVoitures((Integer)spnVitesse.getValue());
+			ecout.NombreDeVoituresAGenerer((Integer)spnNbVoitures.getValue());
+			ecout.TauxDApparitionDesVoitures((Integer)spnTauxDApparition.getValue());
+			ecout.setNbVoies((Integer)spnNbVoiesEst.getValue(), (Integer)spnNbVoiesOuest.getValue(), (Integer)spnNbVoiesSud.getValue(), (Integer)spnNbVoiesNord.getValue());
 			if(chkbxTrfcAnom.isSelected()) {
 				ecout.isTraficAnormal(true);
 			} else {
