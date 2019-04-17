@@ -76,6 +76,15 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private int nbVoituresMax;
 	private int typeImages;
 	private JLabel nbVoituresAGenerer;
+	private JLabel lblNombreDeVoitures;
+	private JLabel lblNombreDeVoitures2;
+	private JLabel lblNombreDeVoitures3;
+	private JLabel lblVitesseMoyenne1;
+	private JLabel lblNombreVoituresGenerees1;
+	private JLabel lblVitesseMoyenne2;
+	private JLabel lblNombreVoituresGenerees2;
+	private JLabel lblVitesseMoyenne3;
+	private JLabel lblNombreVoituresGenerees3;
 
 	/**
 	 * Launch the application.
@@ -177,6 +186,20 @@ public class FenetreSimulationSansVideo extends JFrame {
 
 			@Override
 			public void faireLaMiseAJour() {
+				//Mise a jour des stats sur la fenêtre de la simulation
+				//Voitures arretees
+				lblNombreDeVoitures.setText("Nombre de voitures arrêtées: "  + SceneAnimee.nbVoituresEnAttente.get(SceneAnimee.nbVoituresEnAttente.size()-1));
+				lblNombreDeVoitures2.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgo.nbVoituresEnAttente.get(SceneAnimeeAvecAlgo.nbVoituresEnAttente.size()-1));
+				lblNombreDeVoitures3.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.get(SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.size()-1));
+				//Nombre de voitures generees
+				lblNombreVoituresGenerees1.setText("Nombre de voitures générées: " + sceneAnimee1.getNombreVoituresGeneree());
+				lblNombreVoituresGenerees2.setText("Nombre de voitures générées: " + sceneAnimee2.getNombreVoituresGeneree());
+				lblNombreVoituresGenerees3.setText("Nombre de voitures générées: " + sceneAnimee3.getNombreVoituresGeneree());
+				//Vitesse moyenne
+				lblVitesseMoyenne1.setText("Vitesse moyenne: "  + SceneAnimee.moyenneDesVitesse.get(SceneAnimee.moyenneDesVitesse.size()-1));
+				lblVitesseMoyenne2.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgo.moyenneDesVitesse.get(SceneAnimeeAvecAlgo.moyenneDesVitesse.size()-1));
+				lblVitesseMoyenne3.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.get(SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.size()-1));
+				//La fenetres des stats
 				fenStats.creerLesGraphiques();
 				fenStats.miseAJour();
 			}
@@ -358,7 +381,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		contentPane.add(chkbxTraficAnormal);
 
 		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setBounds(762, 741, 350, 103);
+		pnEmplacementsDesBoutons.setBounds(290, 894, 350, 103);
 		contentPane.add(pnEmplacementsDesBoutons);
 		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
 		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
@@ -425,6 +448,42 @@ public class FenetreSimulationSansVideo extends JFrame {
 		nbVoituresAGenerer = new JLabel("");
 		nbVoituresAGenerer.setBounds(1280, 966, 48, 14);
 		contentPane.add(nbVoituresAGenerer);
+		
+		lblNombreDeVoitures = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
+		lblNombreDeVoitures.setBounds(88, 741, 281, 28);
+		contentPane.add(lblNombreDeVoitures);
+		
+		lblNombreDeVoitures2 = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
+		lblNombreDeVoitures2.setBounds(687, 741, 286, 28);
+		contentPane.add(lblNombreDeVoitures2);
+		
+		lblNombreDeVoitures3 = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
+		lblNombreDeVoitures3.setBounds(1323, 741, 275, 28);
+		contentPane.add(lblNombreDeVoitures3);
+		
+		lblVitesseMoyenne2 = new JLabel("Vitesse moyenne:\r\n");
+		lblVitesseMoyenne2.setBounds(687, 770, 286, 28);
+		contentPane.add(lblVitesseMoyenne2);
+		
+		lblVitesseMoyenne3 = new JLabel("Vitesse moyenne:");
+		lblVitesseMoyenne3.setBounds(1323, 770, 286, 28);
+		contentPane.add(lblVitesseMoyenne3);
+		
+		lblVitesseMoyenne1 = new JLabel("Vitesse moyenne:\r\n");
+		lblVitesseMoyenne1.setBounds(88, 770, 286, 28);
+		contentPane.add(lblVitesseMoyenne1);
+		
+		lblNombreVoituresGenerees1 = new JLabel("Nombre de voitures pass\u00E9es:");
+		lblNombreVoituresGenerees1.setBounds(88, 798, 286, 28);
+		contentPane.add(lblNombreVoituresGenerees1);
+		
+		lblNombreVoituresGenerees2 = new JLabel("Nombre de voitures pass\u00E9es:");
+		lblNombreVoituresGenerees2.setBounds(687, 798, 286, 28);
+		contentPane.add(lblNombreVoituresGenerees2);
+		
+		lblNombreVoituresGenerees3 = new JLabel("Nombre de voitures pass\u00E9es:");
+		lblNombreVoituresGenerees3.setBounds(1323, 798, 286, 28);
+		contentPane.add(lblNombreVoituresGenerees3);
 	}
 
 	//Reiner
