@@ -305,7 +305,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					int f = 1;
 					switch (nbVoiesEst) {
 					case 2:
-						if(v.getDirectionDeVirage()==0&&v.getDirectionDeVirage()==2) {
+						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
 							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&est.indexOf(v)-f!=0) {
 								voitureDevant = est.get(est.indexOf(v)-f);
 								f++;
@@ -470,7 +470,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					int f = 1;
 					switch (nbVoiesSud) {
 					case 2:
-						if(v.getDirectionDeVirage()==0&&v.getDirectionDeVirage()==2) {
+						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
 							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&sud.indexOf(v)-f!=0) {
 								voitureDevant = sud.get(sud.indexOf(v)-f);
 								f++;
@@ -626,7 +626,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					int f = 1;
 					switch (nbVoiesOuest) {
 					case 2:
-						if(v.getDirectionDeVirage()==0&&v.getDirectionDeVirage()==2) {
+						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
 							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&ouest.indexOf(v)-f!=0) {
 								voitureDevant = ouest.get(ouest.indexOf(v)-f);
 								f++;
@@ -785,7 +785,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					int f = 1;
 					switch (nbVoiesNord) {
 					case 2:
-						if(v.getDirectionDeVirage()==0&&v.getDirectionDeVirage()==2) {
+						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
 							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&nord.indexOf(v)-f!=0) {
 								voitureDevant = nord.get(nord.indexOf(v)-f);
 								f++;
