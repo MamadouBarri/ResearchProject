@@ -53,12 +53,14 @@ public class Voiture implements Dessinable {
 	String descriptionDirection = "";
 	private double dimensionRoutePixels;
 	private double largeurVoie;
+	private double largeurVoiePixels;
 	//Boolean indiquant si la voiture tourne
 	private boolean enRotation = false;
 	//Integer indiquant si la voiture tourne à gauche ou à droite (0=tout droit; 1=tourne droite; 2=tourne gauche)
 	private int directionDeVirage;
 	//Angle de rotation de la voiture en radians
 	private double rotation;
+	private double vitesseDeRotation;
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 	//type de voiture
@@ -68,6 +70,11 @@ public class Voiture implements Dessinable {
 	private double tempsDArret = 0;
 	//statistiques pour les vitesses moyennes
 	private double tempsSurIntersection = 0;
+	//proprietes de l'intersection
+	private int nbVoiesEst;
+	private int nbVoiesOuest;
+	private int nbVoiesSud;
+	private int nbVoiesNord;
 
 	
 
@@ -122,13 +129,14 @@ public class Voiture implements Dessinable {
 	 * @param trafficAnormal tableau du traffic anormal
 	 * @param typeImages 
 	 */
-	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, int[] trafficAnormal, int typeImages, boolean inclureVoituresDUrgence) {
+	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, double largeurVoiePixels, int[] trafficAnormal, int typeImages, boolean inclureVoituresDUrgence) {
 		//Initialisation des parametres de la voiture
 		this.typeImages  = typeImages;
 		this.largeurVoie = largeurVoie;
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
 		this.longueurVoiturePixels = longueurVoiturePixels;
+		this.largeurVoiePixels = largeurVoiePixels;
 		this.setTrafficAnormal(trafficAnormal);
 		//génère un nombre entre 0 et 2 pour déterminer si la voiture tourne ou non et, si oui, dans quelle direction
 		//this.directionDeVirage=((int)(Math.random()*3));
@@ -194,24 +202,80 @@ public class Voiture implements Dessinable {
 		//Si premiere fois 
 		AffineTransform matInitial = g2d.getTransform();
 		if (premiereFois) {
+			double i=0;
 			switch (this.direction.getNumDirection())
 			{
 			case 1:
 				//se deplace vers l'est
-				xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie);
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesEst<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesEst-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie + this.largeurVoiePixels*i/2.0);
 				break;
 			case 2:
 				//se deplace vers le sud
-				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 );yVoiture=0;
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesSud<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesSud-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 - this.largeurVoiePixels*i/2.0);yVoiture=0;
 				break;
 			case 3:
 				//se deplace vers l'ouest
-				//Rotation de l'image
-				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 );
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesOuest<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesOuest-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 - this.largeurVoiePixels*i/2.0);
 				break;
 			case 4:
 				//se deplace vers le nord
-				xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0) ;yVoiture=(int)dimensionRoutePixels;
+				switch (this.directionDeVirage) {
+				case 0:
+					if(this.nbVoiesNord<3) {
+						i=0;
+					} else {
+						i=1;
+					}
+					break;
+				case 1:
+					i=this.nbVoiesNord-1;
+					break;
+				case 2:
+					i=0;
+				}
+				xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0+ this.largeurVoiePixels*i/2.0) ;yVoiture=(int)dimensionRoutePixels;
 				break;
 			}
 			premiereFois = false;
@@ -232,7 +296,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(3);
+					rotation = rotation + this.vitesseDeRotation;
 					if(rotation>=Math.PI/2.0) {
 						rotation = Math.PI/2.0;
 					}
@@ -240,7 +304,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(2);
+					rotation = rotation - this.vitesseDeRotation;
 					}
 				}
 				if(rotation<=-Math.PI/2.0) {
@@ -262,7 +326,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(3);
+					rotation = rotation + this.vitesseDeRotation;
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation>=Math.PI) {
 						rotation = Math.PI;
@@ -271,7 +335,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(2);
+					rotation = rotation - this.vitesseDeRotation;
 				}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation<=0) {
@@ -294,7 +358,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(3);
+					rotation = rotation + this.vitesseDeRotation;
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation>=3*Math.PI/2.0) {
 						rotation = 3*Math.PI/2.0;
@@ -303,7 +367,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(1.5);
+					rotation = rotation - this.vitesseDeRotation;
 					}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 				}
@@ -326,7 +390,7 @@ public class Voiture implements Dessinable {
 					break;
 				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
 				case 1:
-					rotation = rotation + Math.toRadians(4);
+					rotation = rotation + this.vitesseDeRotation;
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation>=0) {
 						rotation = 0;
@@ -335,7 +399,7 @@ public class Voiture implements Dessinable {
 				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
 				case 2:
 					if(peutTournerGauche) {
-					rotation = rotation - Math.toRadians(2);
+					rotation = rotation - this.vitesseDeRotation;
 					}
 					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
 					if(rotation<=-Math.PI) {
@@ -582,6 +646,32 @@ public class Voiture implements Dessinable {
 	 */
 	public boolean estVoitureDUrgence() {
 		return voitureDUrgence;
+	}
+	//Reiner 
+	/**
+	 * Setter qui permet a la voiture de connaitre le nombre de voies sur l'intersection
+	 * @param nbVoiesEst le nombre de voies allant vers l'est
+	 * @param nbVoiesOuest le nombre de voies allant vers l'ouest
+	 * @param nbVoiesSud le nombre de voies allant vers le sud
+	 * @param nbVoiesNord le nombre de voies allant vers le nord
+	 */
+	public void setNbVoies(int nbVoiesEst, int nbVoiesOuest, int nbVoiesSud, int nbVoiesNord) {
+		this.nbVoiesEst = nbVoiesEst;
+		this.nbVoiesOuest = nbVoiesOuest;
+		this.nbVoiesSud = nbVoiesSud;
+		this.nbVoiesNord = nbVoiesNord;
+	}
+	//Reiner
+	/**
+	 * Setter qui permet la voiture de caluculer sa vitesse de rotation lorsqu'elle fait un virage
+	 * @param deplacement la vitesse linéaire de la voiture
+	 * @param distanceAParcourir la distance entre les points où la voiture commence et finit le virage
+	 */
+	public void setVitesseDeRotation(double deplacement, double distanceAParcourir) {
+		//on calcule le temps que la voiture à pour faire sa rotation
+		double tempsDeVirage = distanceAParcourir/deplacement;
+		//on calcule la vitesse de rotation de la voiture
+		this.vitesseDeRotation = Math.toRadians(90)/tempsDeVirage;
 	}
 
 }
