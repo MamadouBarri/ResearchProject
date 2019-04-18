@@ -188,17 +188,21 @@ public class FenetreSimulationSansVideo extends JFrame {
 			public void faireLaMiseAJour() {
 				//Mise a jour des stats sur la fenêtre de la simulation
 				//Voitures arretees
-				lblNombreDeVoitures.setText("Nombre de voitures arrêtées: "  + SceneAnimee.nbVoituresEnAttente.get(SceneAnimee.nbVoituresEnAttente.size()-1));
-				lblNombreDeVoitures2.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgo.nbVoituresEnAttente.get(SceneAnimeeAvecAlgo.nbVoituresEnAttente.size()-1));
-				lblNombreDeVoitures3.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.get(SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.size()-1));
-				//Nombre de voitures generees
-				lblNombreVoituresGenerees1.setText("Nombre de voitures générées: " + sceneAnimee1.getNombreVoituresGeneree());
-				lblNombreVoituresGenerees2.setText("Nombre de voitures générées: " + sceneAnimee2.getNombreVoituresGeneree());
-				lblNombreVoituresGenerees3.setText("Nombre de voitures générées: " + sceneAnimee3.getNombreVoituresGeneree());
-				//Vitesse moyenne
-				lblVitesseMoyenne1.setText("Vitesse moyenne: "  + SceneAnimee.moyenneDesVitesse.get(SceneAnimee.moyenneDesVitesse.size()-1));
-				lblVitesseMoyenne2.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgo.moyenneDesVitesse.get(SceneAnimeeAvecAlgo.moyenneDesVitesse.size()-1));
-				lblVitesseMoyenne3.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.get(SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.size()-1));
+				if(SceneAnimee.nbVoituresEnAttente.size() >0 && SceneAnimeeAvecAlgo.nbVoituresEnAttente.size()>0 && SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.size() > 0 
+						&&SceneAnimee.moyenneDesVitesse.size() > 0 &&  SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.size()>0  && SceneAnimeeAvecAlgo.moyenneDesVitesse.size()-1 >0 ) {
+					lblNombreDeVoitures.setText("Nombre de voitures arrêtées: "  + SceneAnimee.nbVoituresEnAttente.get(SceneAnimee.nbVoituresEnAttente.size()-1));
+					lblNombreDeVoitures2.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgo.nbVoituresEnAttente.get(SceneAnimeeAvecAlgo.nbVoituresEnAttente.size()-1));
+					lblNombreDeVoitures3.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.get(SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.size()-1));
+					//Nombre de voitures generees
+					lblNombreVoituresGenerees1.setText("Nombre de voitures générées: " + sceneAnimee1.getNombreVoituresGeneree());
+					lblNombreVoituresGenerees2.setText("Nombre de voitures générées: " + sceneAnimee2.getNombreVoituresGeneree());
+					lblNombreVoituresGenerees3.setText("Nombre de voitures générées: " + sceneAnimee3.getNombreVoituresGeneree());
+					//Vitesse moyenne
+					lblVitesseMoyenne1.setText("Vitesse moyenne: "  + SceneAnimee.moyenneDesVitesse.get(SceneAnimee.moyenneDesVitesse.size()-1));
+					lblVitesseMoyenne2.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgo.moyenneDesVitesse.get(SceneAnimeeAvecAlgo.moyenneDesVitesse.size()-1));
+					lblVitesseMoyenne3.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.get(SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.size()-1));
+				}
+				
 				//La fenetres des stats
 				fenStats.creerLesGraphiques();
 				fenStats.miseAJour();
