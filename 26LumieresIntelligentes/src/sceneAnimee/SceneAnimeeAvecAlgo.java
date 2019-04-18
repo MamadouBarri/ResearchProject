@@ -891,7 +891,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					for(Iterator<Voiture> i = est.iterator();i.hasNext();) {
 						Voiture v = i.next();
 						//on vérifie si la voiture n'a pas encore dépassé la lumière
-						if(v.getXVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						if(v.getXVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()) {
 							//si oui, on l'ajoute à la densité de voitures des voies horizontales
 							densiteHorizontale++;
 							if(v.estVoitureDUrgence()) {
@@ -903,7 +903,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					for(Iterator<Voiture> i = ouest.iterator();i.hasNext();) {
 						Voiture v = i.next();
 						//on vérifie si la voiture n'a pas encore dépassé la lumière
-						if(v.getXVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						if(v.getXVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()) {
 							//si oui, on l'ajoute à la densité de voitures des voies horizontales
 							densiteHorizontale++;
 							if(v.estVoitureDUrgence()) {
@@ -915,7 +915,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					for(Iterator<Voiture> i = nord.iterator();i.hasNext();) {
 						Voiture v = i.next();
 						//on vérifie si la voiture n'a pas encore dépassé la lumière
-						if(v.getYVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+						if(v.getYVoiture()>(LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()) {
 							//si oui, on l'ajoute à la densité de voitures des voies verticales
 							densiteVerticale++;
 							if(v.estVoitureDUrgence()) {
@@ -926,7 +926,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 					}for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 						Voiture v = i.next();
 						//on vérifie si la voiture n'a pas encore dépassé la lumière
-						if(v.getYVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()) {
+						if(v.getYVoiture()<(LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()) {
 							//si oui, on l'ajoute à la densité de voitures des voies verticales
 							densiteVerticale++;
 							if(v.estVoitureDUrgence()) {
