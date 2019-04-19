@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
+
 import javax.swing.JPanel;
 
 import geometrie.Direction;
@@ -32,12 +34,16 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	 */
 	//Largeur reelle
 	private final double LARGEUR_REELLE = 100; //En metres
-
 	//Voitures constantes
 	private final int LARGEUR_VOITURE = 2;
 	private final int LONGUEUR_VOITURE = 4;
 	private final double DIMENSION_VOIE_REELLE = 10;
 	private final double DISTANCE_LIGNE_ARRET = 2; 
+	//Distribution gaussienne
+	private final double DEVIATION_GAUSSIENNE = 0.3 ;
+	private double tauxDApparitionMoyen = 0.789; // Par seconde
+	private static final double TAUX_GAUSS_MAX = 1.8;
+	private static final double TAUX_GAUSS_MIN= 0.1;
 	//Constante de conversion
 	//private final double CONVERSION_KMH_MS = 3.6; //Constante de conversion à utiliser plus tard
 	//Nombre de voies
@@ -1040,6 +1046,24 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		}
 		//pour linstants jajoute dans voitures general
 		voitures.add(voiture);
+		normalisationGaussienneTauxApparition();
+	}
+	//Mamadou
+		/**
+		 * Cette methode permet de changer la valeur du taux d'apparition de voitures
+		 * selon la loi de Gauss
+		 */
+	private void normalisationGaussienneTauxApparition() {
+		double tauxGauss; //Une valeur initiale quelconque < 0
+		do{
+			// Un objet Random
+	        Random ran = new Random(); 
+	        // ON genere un double selon la distribution gaussienne
+	        tauxGauss = ran.nextGaussian(); 
+	        tauxGauss = tauxGauss*DEVIATION_GAUSSIENNE+ tauxDApparitionMoyen;
+		}while(tauxGauss<=TAUX_GAUSS_MIN || tauxGauss >TAUX_GAUSS_MAX); // On ne veut pas un taux négatif, contrainte car fonction Gaussienne n'a pas de limite théorique
+		 //On change le taux d'apparition et ainsi le nombre de boucles pour chaque apparition
+        this.setTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
 	}
 	//Mamadou
 	/**
@@ -1113,17 +1137,17 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	public double getDeltaT() {
 		return (deltaT);
 	}
-	//Reiner
+	//Mamadou
 	/**
 	 * Modifie le nombre de boucles nécessaires avant de créer une voiture
 	 * @param taux Le taux d'apparition des voitures en voitures/secondes.
 	 */
 	public void setTauxDApparition(double tauxParMinute) {
 		double tauxParSeconde = tauxParMinute/60.0;
+		//this.tauxDApparitionMoyen = tauxParSeconde;
 		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
 		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
-		System.out.println("Nombre de boucle sleep avant une nouvelle voiture : " + this.nbBouclesAvantNouvelleVoiture); //Test
-
+		System.out.println("Nombre de boucle sleep avant une nouvelle voiture AVEC ALGO : " + this.nbBouclesAvantNouvelleVoiture); //Test
 	}
 	//Mamadou
 	/**
