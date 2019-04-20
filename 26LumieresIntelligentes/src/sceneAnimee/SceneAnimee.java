@@ -1708,4 +1708,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public int getNombreVoituresGeneree() {
 		return(this.nbVoituresGenerees);
 	}
+	//Reiner
+	/**
+	 * Retoune le temps d'arrêt moyen de toutes les voitures sur l'intersection
+	 * @return le temps d'arrêt moyen de toutes les voitures sur l'intersection
+	 */
+	public double getTempsDArretMoyen() {
+		return this.calculeTempsDArretMoyen();
+	}
 }
