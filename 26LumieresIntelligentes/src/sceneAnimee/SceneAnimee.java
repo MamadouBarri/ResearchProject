@@ -470,16 +470,44 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				//La voiture continue tout droite, car elle n'effectue aucun virage
 				case 0:
-					if(!v.getVoitureArretee()) {
+					if(!v.getVoitureArretee() && !v.getVoitureRalentit()) {
 						v.setYVoiture((v.getYVoiture()+deplacement));
 					}
+					
+					//Lorsque la voiture ralenti
+					if(v.getVoitureRalentit()) {
+						System.out.println("VOITURE RALENTI");
+						v.setYVoiture((v.getYVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+						v.setCompteurTemp(v.getCompteurTemp()-1);
+						System.out.println(v.getCompteurTemp());
+						if(v.getCompteurTemp()==0) {
+							v.setVoitureArretee(true);
+							v.setVoitureRalentit(false);
+							v.setCompteurTemp(110);
+						}
+					}
+
 					break;
 				case 1:
 					//La voiture tourne à droite
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*this.nbVoiesOuest)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE/2.0) {
-							v.setYVoiture((v.getYVoiture()+deplacement));
+							
+							if(!v.getVoitureRalentit()) {
+								v.setYVoiture((v.getYVoiture()+deplacement));
+							}else {
+								System.out.println("VOITURE RALENTI");
+								v.setYVoiture((v.getYVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+								v.setCompteurTemp(v.getCompteurTemp()-1);
+								System.out.println(v.getCompteurTemp());
+								//Lorsque la voiture ralentit
+								if(v.getCompteurTemp()==0) {
+									v.setVoitureArretee(true);
+									v.setVoitureRalentit(false);
+									v.setCompteurTemp(110);
+								}
+							}
 							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteY())));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -504,7 +532,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 						if(v.getPeutTournerGauche()) {
 							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0-this.LARGEUR_VOITURE)*modele.getPixelsParUniteY()-this.DISTANCE_BORDURE) {
-								v.setYVoiture((v.getYVoiture()+deplacement));
+								
+								if(!v.getVoitureRalentit()) {
+									v.setYVoiture((v.getYVoiture()+deplacement));
+								}else {
+									System.out.println("VOITURE RALENTI");
+									v.setYVoiture((v.getYVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+									v.setCompteurTemp(v.getCompteurTemp()-1);
+									System.out.println(v.getCompteurTemp());
+									//Lorsque la voiture ralentit
+									if(v.getCompteurTemp()==0) {
+										v.setVoitureArretee(true);
+										v.setVoitureRalentit(false);
+										v.setCompteurTemp(110);
+									}							}
+
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
 								}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -577,6 +619,13 @@ public class SceneAnimee extends JPanel implements Runnable{
  					}
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
+					}
+					
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+						v.setVoitureRalentit(true);
+						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 				}
 			}
@@ -624,9 +673,24 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 				switch(v.getDirectionDeVirage()){
 				case 0:
+					
+					
+					
 					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.getVoitureArretee()) {
+					if(!v.getVoitureArretee() && !v.getVoitureRalentit()) {
 						v.setXVoiture((v.getXVoiture()-deplacement));
+					}
+					//Lorsque la voiture ralenti
+					if(v.getVoitureRalentit()) {
+						System.out.println("VOITURE RALENTI");
+						v.setXVoiture((v.getXVoiture() - deplacement*v.getCompteurTemp()*0.009 ));
+						v.setCompteurTemp(v.getCompteurTemp()-1);
+						System.out.println(v.getCompteurTemp());
+						if(v.getCompteurTemp()==0) {
+							v.setVoitureArretee(true);
+							v.setVoitureRalentit(false);
+							v.setCompteurTemp(110);
+						}
 					}
 					break;
 				case 1:
@@ -634,7 +698,21 @@ public class SceneAnimee extends JPanel implements Runnable{
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord-1))*modele.getPixelsParUniteX()+this.DISTANCE_BORDURE) {
-							v.setXVoiture((v.getXVoiture()-deplacement));
+							if(!v.getVoitureRalentit()) {
+								v.setXVoiture((v.getXVoiture()+deplacement));
+							}else {
+								System.out.println("VOITURE RALENTI");
+								v.setXVoiture((v.getXVoiture() - deplacement*v.getCompteurTemp()*0.009 ));
+								v.setCompteurTemp(v.getCompteurTemp()-1);
+								System.out.println(v.getCompteurTemp());
+								//Lorsque la voiture ralentit
+								if(v.getCompteurTemp()==0) {
+									v.setVoitureArretee(true);
+									v.setVoitureRalentit(false);
+									v.setCompteurTemp(110);
+								}
+							}
+							
 							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteX())));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -659,7 +737,20 @@ public class SceneAnimee extends JPanel implements Runnable{
 						if(v.getPeutTournerGauche()) {
 							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 							if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
-								v.setXVoiture((v.getXVoiture()-deplacement));
+								if(!v.getVoitureRalentit()) {
+									v.setXVoiture((v.getXVoiture()-deplacement));
+								}else {
+									System.out.println("VOITURE RALENTI");
+									v.setXVoiture((v.getXVoiture() - deplacement*v.getCompteurTemp()*0.009 ));
+									v.setCompteurTemp(v.getCompteurTemp()-1);
+									System.out.println(v.getCompteurTemp());
+									//Lorsque la voiture ralentit
+									if(v.getCompteurTemp()==0) {
+										v.setVoitureArretee(true);
+										v.setVoitureRalentit(false);
+										v.setCompteurTemp(110);
+									}							}
+
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
 							}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -732,7 +823,15 @@ public class SceneAnimee extends JPanel implements Runnable{
  					}
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
 					}
+					//La voiture est assez proche donc doit ralentir
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+						v.setVoitureRalentit(true);
+						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
+					}
+
 				}
 			}
 
@@ -782,8 +881,20 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.getVoitureArretee()) {
+					if(!v.getVoitureArretee() && !v.getVoitureRalentit()) {
 						v.setYVoiture((v.getYVoiture()-deplacement));
+					}
+					//Lorsque la voiture ralenti
+					if(v.getVoitureRalentit()) {
+						System.out.println("VOITURE RALENTI");
+						v.setYVoiture((v.getYVoiture() - deplacement*v.getCompteurTemp()*0.009 ));
+						v.setCompteurTemp(v.getCompteurTemp()-1);
+						System.out.println(v.getCompteurTemp());
+						if(v.getCompteurTemp()==0) {
+							v.setVoitureArretee(true);
+							v.setVoitureRalentit(false);
+							v.setCompteurTemp(110);
+						}
 					}
 					break;
 				case 1:
@@ -791,7 +902,23 @@ public class SceneAnimee extends JPanel implements Runnable{
 					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst-1))*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
-							v.setYVoiture((v.getYVoiture()-deplacement));
+							
+							if(!v.getVoitureRalentit()) {
+								v.setYVoiture((v.getYVoiture()-deplacement));
+							}else {
+								System.out.println("VOITURE RALENTI");
+								v.setYVoiture((v.getYVoiture() - deplacement*v.getCompteurTemp()*0.009 ));
+								v.setCompteurTemp(v.getCompteurTemp()-1);
+								System.out.println(v.getCompteurTemp());
+								//Lorsque la voiture ralentit
+								if(v.getCompteurTemp()==0) {
+									v.setVoitureArretee(true);
+									v.setVoitureRalentit(false);
+									v.setCompteurTemp(110);
+								}
+							}
+							
+							
 							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteY())));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -817,7 +944,22 @@ public class SceneAnimee extends JPanel implements Runnable{
 						if(v.getPeutTournerGauche()) {
 							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
 							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
-								v.setYVoiture((v.getYVoiture()-deplacement));
+								
+								if(!v.getVoitureRalentit()) {
+									v.setYVoiture((v.getYVoiture()-deplacement));
+								}else {
+									System.out.println("VOITURE RALENTI");
+									v.setYVoiture((v.getYVoiture() - deplacement*v.getCompteurTemp()*0.009 ));
+									v.setCompteurTemp(v.getCompteurTemp()-1);
+									System.out.println(v.getCompteurTemp());
+									//Lorsque la voiture ralentit
+									if(v.getCompteurTemp()==0) {
+										v.setVoitureArretee(true);
+										v.setVoitureRalentit(false);
+										v.setCompteurTemp(110);
+									}							}
+
+
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
 							
 							}
@@ -891,6 +1033,14 @@ public class SceneAnimee extends JPanel implements Runnable{
  					}
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
+					}
+					
+					//La voiture est assez proche donc doit ralentir
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+						v.setVoitureRalentit(true);
+						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 				}
 			}
