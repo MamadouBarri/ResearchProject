@@ -75,6 +75,8 @@ public class Voiture implements Dessinable {
 	private int nbVoiesOuest;
 	private int nbVoiesSud;
 	private int nbVoiesNord;
+	private boolean voitureRalentit = false;
+	private double compteurTemp = 110;
 
 	
 
@@ -672,6 +674,34 @@ public class Voiture implements Dessinable {
 		double tempsDeVirage = distanceAParcourir/deplacement;
 		//on calcule la vitesse de rotation de la voiture
 		this.vitesseDeRotation = Math.toRadians(90)/tempsDeVirage;
+	}
+	/**
+	 *Methode qui set l'état de ralentissement de la voiture
+	 * @param voitureRalentit ralenti ou pas
+	 */
+	public void setVoitureRalentit(boolean voitureRalentit) {
+		this.voitureRalentit  = voitureRalentit;
+	}
+	/**
+	 * Methode qui retourne vrai si la voiture est en train de ralentir
+	 * @return voitureRalentit ralenti ou pas 
+	 */
+	public boolean getVoitureRalentit() {
+		return this.voitureRalentit;
+	}
+	/**
+	 * Methode qui retourne le compteur
+	 * @return	compteurTemp 	le compteur
+	 */
+	public double getCompteurTemp() {
+		return this.compteurTemp;
+	}
+	/**
+	 * Methode qui permet de set un compteurTemp
+	 * @param compteurTemp 	le compteur temporaire
+	 */
+	public void setCompteurTemp(double compteurTemp) {
+		this.compteurTemp = compteurTemp;
 	}
 
 }
