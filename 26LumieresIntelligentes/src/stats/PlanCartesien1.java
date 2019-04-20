@@ -296,5 +296,15 @@ public class PlanCartesien1 extends JPanel {
 		}
 		}//fin for
 	}
+	//Reiner 
+	/**
+	 * Méthode qui efface les graphiques lorsqu'on réinitialise la fenêtre de simulations
+	 */
+	public void reinitisaliser() {
+		this.donneesAvecAlgoDensite.clear();
+		this.donneesAvecAlgoDensiteTempsArret.clear();
+		this.donneesSansAlgo.clear();
+		this.repaint();
+	}
 }
 

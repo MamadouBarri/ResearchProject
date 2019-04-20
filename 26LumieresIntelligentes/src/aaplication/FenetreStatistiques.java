@@ -17,7 +17,11 @@ import java.awt.Font;
  *
  */
 public class FenetreStatistiques extends JFrame {
-
+	//Graphiques
+	PlanCartesien1 planCartesien1;
+	PlanCartesien1 planCartesien2;
+	PlanCartesien1 planCartesien3;
+	PlanCartesien1 planCartesienDensite;
 	/**
 	 * numero par defaut
 	 */
@@ -108,25 +112,25 @@ public class FenetreStatistiques extends JFrame {
 	 */
 	public void creerLesGraphiques() {
 		// Graphique 0 : Nombre de voitures en fonction du temps
-		PlanCartesien1 planCartesien1 = new PlanCartesien1(0); 
+		planCartesien1 = new PlanCartesien1(0); 
 		planCartesien1.setBounds(62, 209,400, 400);
 		contentPane.add(planCartesien1);
 		
 		//Graphique 1 : La vitesse moyenne en fonction du temps
 		//520 209 400 400
-		PlanCartesien1 planCartesien2 = new PlanCartesien1(1); 
+		planCartesien2 = new PlanCartesien1(1); 
 		planCartesien2.setBounds(520, 209,400, 400);
 		contentPane.add(planCartesien2);
 		
 		//Gtaphique 2 : 
 		//1022 209 400 400
-		PlanCartesien1 planCartesien3 = new PlanCartesien1(2); 
+		planCartesien3 = new PlanCartesien1(2); 
 		planCartesien3.setBounds(980, 209,400, 400);
 		contentPane.add(planCartesien3);
 		
 		//Graphique 3 : 
 		//520 619 400 400
-		PlanCartesien1 planCartesienDensite = new PlanCartesien1(3);
+		planCartesienDensite = new PlanCartesien1(3);
 		planCartesienDensite.setBounds(520,619,400,400);
 		contentPane.add(planCartesienDensite);
 	}
@@ -137,5 +141,15 @@ public class FenetreStatistiques extends JFrame {
 	public void miseAJour() {
 		creerLesGraphiques();
 		this.repaint();
+	}
+	//Reiner
+	/**
+	 * Méthode qui réinitialise les graphiques
+	 */
+	public void reinitialiser() {
+		this.planCartesien1.reinitisaliser();
+		this.planCartesien2.reinitisaliser();
+		this.planCartesien3.reinitisaliser();
+		this.planCartesienDensite.reinitisaliser();
 	}
 }
