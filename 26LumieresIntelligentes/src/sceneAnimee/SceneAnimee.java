@@ -242,8 +242,24 @@ public class SceneAnimee extends JPanel implements Runnable{
 				switch(v.getDirectionDeVirage()){
 				case 0:
 					//La voiture continue tout droite, car elle n'effectue pas de virage
-					if(!v.getVoitureArretee() && !v.getVoitureRalentit()) {
+					if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
 						v.setXVoiture((v.getXVoiture()+deplacement));
+					}
+					/**
+					 * CHANGEMENTS
+					 */
+					//La voiture accelere
+					if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+						System.out.println("VOITURE ACCELERE");
+						v.setXVoiture((v.getXVoiture() + deplacement - deplacement*v.getCompteurTemp()*0.009 ));
+						v.setCompteurTemp(v.getCompteurTemp()-1);
+						System.out.println(v.getCompteurTemp());
+						if(v.getCompteurTemp()==0) {
+							v.setAccelTerminee(true);
+							v.setVoitureArretee(false);
+							v.setVoitureAccelere(false);
+							v.setCompteurTemp(110);
+						}
 					}
 					//Lorsque la voiture ralenti
 					if(v.getVoitureRalentit()) {
@@ -265,19 +281,36 @@ public class SceneAnimee extends JPanel implements Runnable{
 						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX()) {
 							if(!v.getVoitureRalentit()) {
 								v.setXVoiture((v.getXVoiture()+deplacement));
-							}else {
-								System.out.println("VOITURE RALENTI");
-								v.setXVoiture((v.getXVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+							}
+								/**
+								 * VOITURE ACCELERE
+								 */
+							//La voiture accelere
+							if(v.getVoitureAccelere() && (!v.getVoitureAccelere() || v.getAccelTerminee())) {
+								System.out.println("VOITURE ACCELERE");
+								v.setXVoiture((v.getXVoiture() + deplacement - deplacement*v.getCompteurTemp()*0.009 ));
 								v.setCompteurTemp(v.getCompteurTemp()-1);
 								System.out.println(v.getCompteurTemp());
-								//Lorsque la voiture ralentit
 								if(v.getCompteurTemp()==0) {
-									v.setVoitureArretee(true);
-									v.setVoitureRalentit(false);
+									v.setAccelTerminee(true);
+									v.setVoitureArretee(false);
+									v.setVoitureAccelere(false);
 									v.setCompteurTemp(110);
 								}
 							}
-							
+								if(v.getVoitureRalentit()) {
+									System.out.println("VOITURE RALENTI");
+									v.setXVoiture((v.getXVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+									v.setCompteurTemp(v.getCompteurTemp()-1);
+									System.out.println(v.getCompteurTemp());
+									//Lorsque la voiture ralentit
+									if(v.getCompteurTemp()==0) {
+										v.setVoitureArretee(true);
+										v.setVoitureRalentit(false);
+										v.setCompteurTemp(110);
+									}
+								}
+								
 							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteX())));
 						}
 						
@@ -306,18 +339,35 @@ public class SceneAnimee extends JPanel implements Runnable{
 							if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
 								if(!v.getVoitureRalentit()) {
 									v.setXVoiture((v.getXVoiture()+deplacement));
-								}else {
-									System.out.println("VOITURE RALENTI");
-									v.setXVoiture((v.getXVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+								}
+								//Voiture accelere 
+								/**
+								 * CHANGMENET
+								 */
+								if(v.getVoitureAccelere() && (!v.getVoitureAccelere() || v.getAccelTerminee())) {
+									System.out.println("VOITURE ACCELERE");
+									v.setXVoiture((v.getXVoiture() + deplacement - deplacement*v.getCompteurTemp()*0.009 ));
 									v.setCompteurTemp(v.getCompteurTemp()-1);
 									System.out.println(v.getCompteurTemp());
-									//Lorsque la voiture ralentit
 									if(v.getCompteurTemp()==0) {
-										v.setVoitureArretee(true);
-										v.setVoitureRalentit(false);
+										v.setAccelTerminee(true);
+										v.setVoitureArretee(false);
+										v.setVoitureAccelere(false);
 										v.setCompteurTemp(110);
 									}
 								}
+									if(v.getVoitureRalentit()) {
+										System.out.println("VOITURE RALENTI");
+										v.setXVoiture((v.getXVoiture() + deplacement*v.getCompteurTemp()*0.009 ));
+										v.setCompteurTemp(v.getCompteurTemp()-1);
+										System.out.println(v.getCompteurTemp());
+										//Lorsque la voiture ralentit
+										if(v.getCompteurTemp()==0) {
+											v.setVoitureArretee(true);
+											v.setVoitureRalentit(false);
+											v.setCompteurTemp(110);
+										}
+									}
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
 							}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
@@ -342,6 +392,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
+					v.setVoitureAccelere(true);
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
@@ -402,17 +453,54 @@ public class SceneAnimee extends JPanel implements Runnable{
 					//La voiture est trop proche donc s'arrête
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setVoitureAccelere(false);
 						v.setCompteurTemp(100);
 						v.setVoitureRalentit(false);
 					}
-					//La voiture est assez proche donc doit ralentir
-					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+					//La voiture est assez proche donc doit ralentir /**CHENGMENT ICI
+					//
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee() && lumEst.getCouleur() == ROUGE) {
 						v.setVoitureRalentit(true);
-						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
+					}
+					/**
+					 * CHANGEMENTS
+					 */
+		
+						//La voiture devant est assez loin pour accelerer
+						if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) > LARGEUR_VOITURE*4.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 &&
+								 !voitureDevant.getVoitureArretee() && !voitureDevant.getVoitureAccelere() && lumEst.getCouleur() == VERTE && voitureDevant.getVoitureActive()) {
+							v.setVoitureAccelere(true);
+							/**
+							 * CHANGEMMENT && !voitureDevant.getVoitureArretee() && Math.abs(voitureDevant.getXVoiture()) < LARGEUR_VOITURE*5.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE
+							 */
+							v.setVoitureArretee(false);
+							//
+							System.out.println("ON ACCELERE !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 					
+					//if(!voitureDevant.getVoitureAccelere() && !voitureDevant.getVoitureArretee() && (lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE)) { 
+						//v.setVoitureAccelere(true);
+					//}
+					/**
+					 * CHANGEMENTS
+					 */
+					//if(!voitureDevant.getVoitureArretee( ) && Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
+						//v.setVoitureAccelere(false);
+					//}
+					/**
+					 * CHANGEMENT
+					 */
+					//if(voitureDevant.getVoitureAccelere()) {
+						//v.setVoitureArretee(true);
+					//}else {
+					//	v.setVoitureArretee(false);
+					//}
 					
-					
+				
+				}else {
+					if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
+						v.setVoitureArretee(false);
+					}
 				}
 
 			}//fin DIRECTION EST
@@ -569,7 +657,9 @@ public class SceneAnimee extends JPanel implements Runnable{
 				}
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumSud.getCouleur() == VERTE||lumSud.getCouleur() == JAUNE) {
+					
 					v.setVoitureArretee(false);
+					
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
@@ -627,6 +717,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 						v.setVoitureRalentit(true);
 						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
+					
+					
 				}
 			}
 

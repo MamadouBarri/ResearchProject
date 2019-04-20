@@ -77,6 +77,8 @@ public class Voiture implements Dessinable {
 	private int nbVoiesNord;
 	private boolean voitureRalentit = false;
 	private double compteurTemp = 110;
+	private boolean voitureAccelere;
+	private boolean accelTerminee = false;
 
 	
 
@@ -702,6 +704,30 @@ public class Voiture implements Dessinable {
 	 */
 	public void setCompteurTemp(double compteurTemp) {
 		this.compteurTemp = compteurTemp;
+	}
+	/**
+	 * Methode qui permet de set l'état d'accélération de la voiture
+	 * @param voitureAccelere l'état de l'accélération
+	 */
+	public void setVoitureAccelere(boolean voitureAccelere) {
+		
+		this.voitureAccelere = voitureAccelere;
+		
+	}
+	/**
+	 * Méthode qui permet de get l'état d'accélération de la voiture
+	 * @return voitureAccelere	l'état de l'accélération
+	 */
+	public boolean getVoitureAccelere() {
+		
+		return this.voitureAccelere;
+	}
+
+	public boolean getAccelTerminee() {
+		return this.accelTerminee ;
+	}
+	public void setAccelTerminee(boolean accelTerminee) { 
+		this.accelTerminee = accelTerminee;
 	}
 
 }
