@@ -1344,6 +1344,10 @@ public class SceneAnimee extends JPanel implements Runnable{
 		lumSud.setCouleur(couleur);
 		lumEst.setCouleur(couleurInv);
 		lumOuest.setCouleur(couleurInv);
+		nbVoituresEnAttente.clear();
+		moyenneDesVitesse.clear();
+		tempsDArretMoyen.clear();
+		densiteVoitures.clear();
 		repaint();
 	}
 	//Mamadou

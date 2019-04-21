@@ -142,14 +142,4 @@ public class FenetreStatistiques extends JFrame {
 		creerLesGraphiques();
 		this.repaint();
 	}
-	//Reiner
-	/**
-	 * Méthode qui réinitialise les graphiques
-	 */
-	public void reinitialiser() {
-		this.planCartesien1.reinitisaliser();
-		this.planCartesien2.reinitisaliser();
-		this.planCartesien3.reinitisaliser();
-		this.planCartesienDensite.reinitisaliser();
-	}
 }

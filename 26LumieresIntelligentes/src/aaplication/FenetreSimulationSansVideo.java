@@ -441,7 +441,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 				sceneAnimee1.reinitialiser();
 				sceneAnimee2.reinitialiser();
 				sceneAnimee3.reinitialiser();
-				fenStats.reinitialiser();
 				
 			}
 		});//À CHANGER 

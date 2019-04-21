@@ -1094,6 +1094,14 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		voitures.removeAll(nord);
 		voitures.removeAll(sud);
 		this.nbVoituresGenerees = 0;
+		lumNord.setCouleur(couleur);
+		lumSud.setCouleur(couleur);
+		lumEst.setCouleur(couleurInv);
+		lumOuest.setCouleur(couleurInv);
+		nbVoituresEnAttente.clear();
+		moyenneDesVitesse.clear();
+		tempsDArretMoyen.clear();
+		densiteVoitures.clear();
 		repaint();
 	}
 	//Mamadou
