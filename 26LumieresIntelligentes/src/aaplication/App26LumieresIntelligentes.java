@@ -189,7 +189,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		
 		setTitle("Lumi\u00E8res Intelligentes - Mamadou Barri, Reiner Luis Gayta\r\n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 675, 543);
+		setBounds(1920/2-675/2, 1080/2-543/2, 675, 543);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

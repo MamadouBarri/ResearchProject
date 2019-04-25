@@ -55,7 +55,7 @@ public class FenetreConcepts extends JFrame {
 	public FenetreConcepts() {
 		setTitle("Concepts scientifiques");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 698, 543);
+		setBounds(1920/2-698/2, 1080/2-543/2, 698, 543);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

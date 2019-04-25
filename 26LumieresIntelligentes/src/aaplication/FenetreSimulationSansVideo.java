@@ -107,7 +107,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	public FenetreSimulationSansVideo(){
 		setTitle("Simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1920, 1080);
+		setBounds(0, 0, 1920, 1080);
 
 		
 

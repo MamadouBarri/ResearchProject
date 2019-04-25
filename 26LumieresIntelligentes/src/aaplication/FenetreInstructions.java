@@ -54,7 +54,7 @@ public class FenetreInstructions extends JFrame {
 	public FenetreInstructions() {
 		setTitle("Instructions");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(1920/2-450/2, 1080/2-300/2, 450, 300);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

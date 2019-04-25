@@ -90,7 +90,7 @@ public class FenetreParametres extends JFrame {
 	public FenetreParametres() {
 		setTitle("Modifier les param\u00E8tres de la simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 630, 538);
+		setBounds(1920/2-630/2, 1080/2-538/2, 630, 538);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

@@ -50,7 +50,7 @@ public class FenetreStatistiques extends JFrame {
 	public FenetreStatistiques() {
 		setTitle("Statistiques\r\n");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1443, 1080);
+		setBounds(1920/2-1443/2, 0, 1443, 1080);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
