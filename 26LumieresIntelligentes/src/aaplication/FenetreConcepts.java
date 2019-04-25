@@ -1,6 +1,5 @@
 package aaplication;
-
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,11 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
-
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -22,18 +16,23 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 /**
  * JFrame contenant les concepts scientifiques utilisés pour ce projet
- * @author Gayta
+ * @author Mamadou et Reiner
  *
  */
 
 public class FenetreConcepts extends JFrame {
 	
+	/**
+	 * Numero par défaut
+	 */
+	private static final long serialVersionUID = 1L;
 	//Listes contenant les objets qui veulent écouter à cette fenetre
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();
 	private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();
 
 	private JPanel contentPane;
-
+	
+	//Mamadou
 	/**
 	 * Launch the application.
 	 */
@@ -49,14 +48,14 @@ public class FenetreConcepts extends JFrame {
 			}
 		});
 	}
-	//Reiner
+	//Mamadou
 		/**
 		 * Constructeur de la fenêtre
 		 */
 	public FenetreConcepts() {
 		setTitle("Concepts scientifiques");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 323);
+		setBounds(100, 100, 698, 543);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -92,16 +91,18 @@ public class FenetreConcepts extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 414, 239);
-		contentPane.add(scrollPane);
+		ImageAvecDefilementConcepts imageAvecDefilementConcepts = new ImageAvecDefilementConcepts();
+		imageAvecDefilementConcepts.setBounds(23, 12, 640, 450);
+		contentPane.add(imageAvecDefilementConcepts);
 		
-		JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollPane.setRowHeaderView(scrollBar);
+		//Pour fixer couleur du cadre
+		imageAvecDefilementConcepts.setBackground(Color.yellow);
+		//Pour modifier la largeur du cadre 
+		imageAvecDefilementConcepts.setLargeurCadre(10);
+		//Pour charger l'image pre-fabriquee
+		imageAvecDefilementConcepts.setFichierImage("ImageConceptsScientifiques.jpg");
 	}
+	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
 	 * @param objEcouteur objet qui desire savoir quand on veut rouvrir la fenetre de depart
@@ -109,6 +110,7 @@ public class FenetreConcepts extends JFrame {
 	public void addVisibiliteFenDepartListener(VisibiliteFenDepartListener objEcouteur) {
 		listeEcouteurs.add(objEcouteur);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs si on desire faire apparaitre la fenetre de depart
 	 */
@@ -117,6 +119,7 @@ public class FenetreConcepts extends JFrame {
 			ecout.rendreFenetreDepartVisible();
 		}
 	}
+	//Reiner
 	/**
 	 * ajoute à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de parametres
 	 * @param visibiliteFenParamListener objet ecouteur qui desire savoir quand on veut ouvrir la fenetre de parametres
@@ -124,6 +127,7 @@ public class FenetreConcepts extends JFrame {
 	public void addVisibiliteFenParamListener(VisibiliteFenParamListener visibiliteFenParamListener) {
 		listeEcouteursFenParam.add(visibiliteFenParamListener);
 	}
+	//Reiner
 	/**
 	 * indique aux objets ecouteurs si on desire faire apparaitre la fenetre de parametres
 	 */

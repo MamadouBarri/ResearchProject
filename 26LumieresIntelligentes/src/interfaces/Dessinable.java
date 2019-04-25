@@ -6,6 +6,11 @@ import java.awt.geom.AffineTransform;
  * @author Mamadou Barri
  */
 public interface Dessinable {
+	/**
+	 * Méthode qui permet de dessiner 
+	 * @param g2d	Le contexte graphique
+	 * @param mat	La matrice de transformation
+	 */
 	public void dessiner( Graphics2D g2d, AffineTransform mat);
 
 }
