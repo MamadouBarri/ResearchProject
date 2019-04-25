@@ -55,7 +55,6 @@ public class App26LumieresIntelligentes extends JFrame {
 	FenetreInstructions instructions;
 	FenetreParametres parametres;
 	FenetreSimulationSansVideo simulSansVideo;
-	FenetreSimulationAvecVideo simulAvecVideo;
 	FenetreStatistiques fenetreStats;
 	/**
 	 * Launch the application.
@@ -77,23 +76,6 @@ public class App26LumieresIntelligentes extends JFrame {
 		 * Constructeur de la fenêtre
 		 */
 	public App26LumieresIntelligentes() {
-		//creation de la fentre de simulations avec video
-		simulAvecVideo = new FenetreSimulationAvecVideo();
-		//ecouteur qui permet de revenir au menu de depart à partir de la fenetre de simulations avec video
-		simulAvecVideo.addVisibiliteFenDepartListener(new VisibiliteFenDepartListener() {
-			public void rendreFenetreDepartVisible() {
-				simulAvecVideo.setVisible(false);
-				setVisible(true);
-			}
-			
-		});
-		
-		//ecouteur qui permet l'utilisateur de revenir à la fenetre de parametres à partir de la fenêtre de simulations avec video
-		simulAvecVideo.addVisibiliteFenParamListener(new VisibiliteFenParamListener(){
-			public void rendreFenetreParamVisible() {
-				simulAvecVideo.setVisible(false);
-				parametres.setVisible(true);
-			}});
 		//création de la fenetre de simulations sans video
 		simulSansVideo = new FenetreSimulationSansVideo();
 		//ecouteur qui permet l'utilisateur de revenir à la fenetre de depart à partir de la fenetre de simulations sans video
@@ -168,15 +150,6 @@ public class App26LumieresIntelligentes extends JFrame {
 				simulSansVideo.setVisible(true);
 			}
 			
-		});
-		//ecouteur qui permet l'utilisateur d'ouvrir la fenetre de simulations avec video
-		parametres.addVisibiliteFenSimulVideoListener(new VisibiliteFenSimulVideoListener() {
-
-			public void rendreFenetreSimulationsAvecVideoVisible() {
-				parametres.setVisible(false);
-				simulSansVideo.miseAJourText();
-				simulAvecVideo.setVisible(true);
-			}
 		});
 		parametres.addResultatsFenParamListener(new ResultatsFenParamListener() {
 			public void VitesseDesVoitures(int vitesse) {

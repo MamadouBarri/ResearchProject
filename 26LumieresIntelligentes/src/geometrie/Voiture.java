@@ -677,6 +677,7 @@ public class Voiture implements Dessinable {
 		//on calcule la vitesse de rotation de la voiture
 		this.vitesseDeRotation = Math.toRadians(90)/tempsDeVirage;
 	}
+	//Mamadou
 	/**
 	 *Methode qui set l'état de ralentissement de la voiture
 	 * @param voitureRalentit ralenti ou pas
@@ -684,6 +685,7 @@ public class Voiture implements Dessinable {
 	public void setVoitureRalentit(boolean voitureRalentit) {
 		this.voitureRalentit  = voitureRalentit;
 	}
+	//Mamadou
 	/**
 	 * Methode qui retourne vrai si la voiture est en train de ralentir
 	 * @return voitureRalentit ralenti ou pas 
@@ -691,6 +693,7 @@ public class Voiture implements Dessinable {
 	public boolean getVoitureRalentit() {
 		return this.voitureRalentit;
 	}
+	//Mamadou
 	/**
 	 * Methode qui retourne le compteur
 	 * @return	compteurTemp 	le compteur
@@ -698,6 +701,7 @@ public class Voiture implements Dessinable {
 	public double getCompteurTemp() {
 		return this.compteurTemp;
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de set un compteurTemp
 	 * @param compteurTemp 	le compteur temporaire
@@ -705,6 +709,7 @@ public class Voiture implements Dessinable {
 	public void setCompteurTemp(double compteurTemp) {
 		this.compteurTemp = compteurTemp;
 	}
+	//Mamadou
 	/**
 	 * Methode qui permet de set l'état d'accélération de la voiture
 	 * @param voitureAccelere l'état de l'accélération
@@ -714,6 +719,7 @@ public class Voiture implements Dessinable {
 		this.voitureAccelere = voitureAccelere;
 		
 	}
+	//Mamadou
 	/**
 	 * Méthode qui permet de get l'état d'accélération de la voiture
 	 * @return voitureAccelere	l'état de l'accélération
