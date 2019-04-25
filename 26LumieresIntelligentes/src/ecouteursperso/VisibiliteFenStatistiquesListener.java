@@ -5,6 +5,12 @@ import java.util.EventListener;
  * @author Mamadou
  **/
 public interface VisibiliteFenStatistiquesListener extends EventListener{
-		public void faireLaMiseAJour();
-		public void rendreFenetreStatistiquesVisible();
+	/**
+	 * Méthode qui permet de faire la mise à jour des graphiques des statistiques
+	 */
+	public void faireLaMiseAJour();
+	/**
+	 * Méthode qui permet de rendre la fenêtre des statistiques visibles
+	 */
+	public void rendreFenetreStatistiquesVisible();
 }
