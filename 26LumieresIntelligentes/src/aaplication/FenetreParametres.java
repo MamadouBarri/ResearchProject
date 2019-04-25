@@ -92,7 +92,7 @@ public class FenetreParametres extends JFrame {
 	public FenetreParametres() {
 		setTitle("Modifier les param\u00E8tres de la simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 638, 644);
+		setBounds(100, 100, 630, 538);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -124,7 +124,7 @@ public class FenetreParametres extends JFrame {
 		panel.setLayout(null);
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Param\u00E8tres", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.scrollbar);
-		panel.setBounds(0, 0, 622, 584);
+		panel.setBounds(0, 0, 614, 480);
 		contentPane.add(panel);
 		
 		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
@@ -150,6 +150,7 @@ public class FenetreParametres extends JFrame {
 		panel.add(spnVitesse);
 		
 		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
+		chkbxTrfcAnom.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chkbxTrfcAnom.isSelected()) {
@@ -164,6 +165,7 @@ public class FenetreParametres extends JFrame {
 		panel.add(chkbxTrfcAnom);
 		
 		chkbxTrfcAnom1 = new JCheckBox("Voie NORD");
+		chkbxTrfcAnom1.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom1.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(chkbxTrfcAnom1.isSelected()) {
@@ -178,6 +180,7 @@ public class FenetreParametres extends JFrame {
 		panel.add(chkbxTrfcAnom1);
 		
 		chkbxTrfcAnom2 = new JCheckBox("Voie OUEST");
+		chkbxTrfcAnom2.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom2.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(chkbxTrfcAnom2.isSelected()) {
@@ -192,6 +195,7 @@ public class FenetreParametres extends JFrame {
 		panel.add(chkbxTrfcAnom2);
 		
 		chkbxTrfcAnom3 = new JCheckBox("Voie SUD");
+		chkbxTrfcAnom3.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom3.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(chkbxTrfcAnom3.isSelected()) {
@@ -206,6 +210,7 @@ public class FenetreParametres extends JFrame {
 		panel.add(chkbxTrfcAnom3);
 		
 		chkbxTrfcAnom4 = new JCheckBox("Voie EST");
+		chkbxTrfcAnom4.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom4.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(chkbxTrfcAnom4.isSelected()) {
@@ -245,28 +250,29 @@ public class FenetreParametres extends JFrame {
 				leverEvenFenetreSimulationSansVideoVisible();
 			}
 		});
-		btnConfirmer.setBounds(507, 550, 105, 23);
+		btnConfirmer.setBounds(243, 440, 105, 23);
 		panel.add(btnConfirmer);
 		
 		SceneAnimee sceneAnimee = new SceneAnimee();
-		sceneAnimee.setBounds(161, 292, 242, 243);
+		sceneAnimee.setBounds(345, 52, 200, 200);
+		sceneAnimee.setTailleLum(50);
 		panel.add(sceneAnimee);
 		sceneAnimee.setLayout(null);
 		
 		JLabel lblVoieNord = new JLabel("Voie NORD");
-		lblVoieNord.setBounds(258, 254, 89, 14);
+		lblVoieNord.setBounds(422, 5, 89, 14);
 		panel.add(lblVoieNord);
 		
 		lblVoieEst = new JLabel("Voie EST");
-		lblVoieEst.setBounds(417, 400, 84, 14);
+		lblVoieEst.setBounds(555, 132, 84, 14);
 		panel.add(lblVoieEst);
 		
 		lblVoieOuest = new JLabel("Voie OUEST");
-		lblVoieOuest.setBounds(90, 400, 89, 14);
+		lblVoieOuest.setBounds(273, 132, 89, 14);
 		panel.add(lblVoieOuest);
 		
 		lblVoieSud = new JLabel("Voie SUD");
-		lblVoieSud.setBounds(258, 564, 84, 14);
+		lblVoieSud.setBounds(422, 284, 84, 14);
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();
@@ -293,7 +299,7 @@ public class FenetreParametres extends JFrame {
 		rdbtnVoituresNormales.setForeground(Color.BLACK);
 		rdbtnVoituresNormales.setSelected(true);
 		buttonGroup.add(rdbtnVoituresNormales);
-		rdbtnVoituresNormales.setBounds(296, 39, 127, 23);
+		rdbtnVoituresNormales.setBounds(28, 306, 127, 23);
 		panel.add(rdbtnVoituresNormales);
 		
 		JRadioButton rdbtnVoituresDeSport = new JRadioButton("voitures de sport");
@@ -307,7 +313,7 @@ public class FenetreParametres extends JFrame {
 		});
 		rdbtnVoituresDeSport.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresDeSport);
-		rdbtnVoituresDeSport.setBounds(298, 145, 125, 23);
+		rdbtnVoituresDeSport.setBounds(420, 306, 125, 23);
 		panel.add(rdbtnVoituresDeSport);
 		
 		JRadioButton rdbtnVoituresClassiques = new JRadioButton("voitures classiques");
@@ -321,26 +327,26 @@ public class FenetreParametres extends JFrame {
 		});
 		rdbtnVoituresClassiques.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresClassiques);
-		rdbtnVoituresClassiques.setBounds(451, 39, 141, 23);
+		rdbtnVoituresClassiques.setBounds(220, 306, 141, 23);
 		panel.add(rdbtnVoituresClassiques);
 		
 		JLabel lblImageVoitureNormal = new JLabel("New label");
 		lblImageVoitureNormal.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeNormal.jpg")));
-		lblImageVoitureNormal.setBounds(301, 68, 120, 70);
+		lblImageVoitureNormal.setBounds(33, 335, 120, 70);
 		panel.add(lblImageVoitureNormal);
 		
 		JLabel lblImageVoitureSport = new JLabel("New label");
 		lblImageVoitureSport.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeSport.jpg")));
-		lblImageVoitureSport.setBounds(303, 173, 120, 70);
+		lblImageVoitureSport.setBounds(425, 335, 120, 70);
 		panel.add(lblImageVoitureSport);
 		
 		JLabel lblImageVoitureClassique = new JLabel("New label");
 		lblImageVoitureClassique.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeClassique.jpg")));
-		lblImageVoitureClassique.setBounds(463, 68, 120, 70);
+		lblImageVoitureClassique.setBounds(232, 335, 120, 70);
 		panel.add(lblImageVoitureClassique);
 		
 		JLabel lblTypeDeVoiture = new JLabel("Type de Voiture :");
-		lblTypeDeVoiture.setBounds(291, 11, 112, 20);
+		lblTypeDeVoiture.setBounds(23, 278, 112, 20);
 		panel.add(lblTypeDeVoiture);
 		
 		spnNbVoiesNord = new JSpinner();
@@ -351,7 +357,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesNord.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesNord.setBounds(268, 269, 29, 20);
+		spnNbVoiesNord.setBounds(432, 20, 29, 20);
 		panel.add(spnNbVoiesNord);
 		
 		spnNbVoiesSud = new JSpinner();
@@ -362,7 +368,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesSud.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesSud.setBounds(268, 541, 29, 20);
+		spnNbVoiesSud.setBounds(432, 261, 29, 20);
 		panel.add(spnNbVoiesSud);
 		
 		spnNbVoiesEst = new JSpinner();
@@ -373,7 +379,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesEst.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesEst.setBounds(422, 417, 29, 20);
+		spnNbVoiesEst.setBounds(560, 149, 29, 20);
 		panel.add(spnNbVoiesEst);
 		
 		spnNbVoiesOuest = new JSpinner();
@@ -384,7 +390,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesOuest.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesOuest.setBounds(104, 417, 29, 20);
+		spnNbVoiesOuest.setBounds(295, 149, 29, 20);
 		panel.add(spnNbVoiesOuest);
 	}
 	//Reiner
