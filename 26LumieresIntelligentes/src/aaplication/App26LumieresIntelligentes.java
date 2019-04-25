@@ -38,7 +38,6 @@ import javax.swing.SwingConstants;
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
 import ecouteursperso.VisibiliteFenSimulListener;
-import ecouteursperso.VisibiliteFenSimulVideoListener;
 import ecouteursperso.ResultatsFenParamListener;
 import ecouteursperso.VisibiliteFenStatistiquesListener;
 /**

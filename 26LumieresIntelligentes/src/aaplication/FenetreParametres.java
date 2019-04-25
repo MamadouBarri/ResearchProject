@@ -27,7 +27,6 @@ import javax.swing.event.ChangeListener;
 import ecouteursperso.ResultatsFenParamListener;
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenSimulListener;
-import ecouteursperso.VisibiliteFenSimulVideoListener;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
@@ -57,7 +56,6 @@ public class FenetreParametres extends JFrame {
 	////listes contenant les objets qui veulent ecouter à cet objet
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteursFenDepart = new ArrayList<VisibiliteFenDepartListener>();
 	private ArrayList<VisibiliteFenSimulListener> listeEcouteursFenSimul = new ArrayList<VisibiliteFenSimulListener>();
-	private ArrayList<VisibiliteFenSimulVideoListener> listeEcouteursFenSimulVideo = new ArrayList<VisibiliteFenSimulVideoListener>();
 	private ArrayList<ResultatsFenParamListener> listeEcouteursDeParam = new ArrayList<ResultatsFenParamListener>();
 	//tableau contenant les voies avec traffic anormale
 	int[] tabTrafficAnom = new int[4];
@@ -299,7 +297,7 @@ public class FenetreParametres extends JFrame {
 		rdbtnVoituresNormales.setForeground(Color.BLACK);
 		rdbtnVoituresNormales.setSelected(true);
 		buttonGroup.add(rdbtnVoituresNormales);
-		rdbtnVoituresNormales.setBounds(28, 306, 127, 23);
+		rdbtnVoituresNormales.setBounds(28, 306, 147, 23);
 		panel.add(rdbtnVoituresNormales);
 		
 		JRadioButton rdbtnVoituresDeSport = new JRadioButton("voitures de sport");
@@ -447,23 +445,6 @@ public class FenetreParametres extends JFrame {
 	private void leverEvenFenetreSimulationSansVideoVisible() {	
 		for(VisibiliteFenSimulListener ecout : listeEcouteursFenSimul ) {
 			ecout.rendreFenetreSimulationsSansVideoVisible();
-		}
-	}
-	//Reiner
-	/**
-	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut ouvrir la fenetre de simulations avec video
-	 * @param visibiliteFenSimulVideoListener objet qui desire savoir quand on veut ouvrir la fenetre de simulations avec video
-	 */
-	public void addVisibiliteFenSimulVideoListener(VisibiliteFenSimulVideoListener visibiliteFenSimulVideoListener) {
-		listeEcouteursFenSimulVideo.add(visibiliteFenSimulVideoListener);
-	}
-	//Reiner
-	/**
-	 * indique aux objets ecouteurs qu'on desire ouvrir la fenetre de simulations avec video
-	 */
-	private void leverEvenFenetreSimulationAvecVideoVisible() {	
-		for(VisibiliteFenSimulVideoListener ecout : listeEcouteursFenSimulVideo ) {
-			ecout.rendreFenetreSimulationsAvecVideoVisible();
 		}
 	}
 	//Reiner

@@ -123,7 +123,7 @@ public class Voiture implements Dessinable {
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
 	}
 
-	//Mamadou et Reiner
+	//Mamadou
 	/**
 	 * Constructeur de la voiture qui génère: image, direction et action, avec traffic anormal
 	 * @param longueurVoiturePixels longueur d'une voiture en pixels
@@ -192,7 +192,7 @@ public class Voiture implements Dessinable {
 		action = new Action();
 		affichageAvecTemps("Voiture générée. INFOS: #image : " + numImage + " | type :  " + typeImages + " | direction :  " + direction.toString() +  " | action :  " + action.toString());
 	}
-	//Mamadou & Reiner
+	//Mamadou
 	/**
 	 * Permet de dessiner la voiture en forme d'une image aleatoire qui aura
 	 * un scale pour transformer les coordonnees en double et
@@ -206,81 +206,18 @@ public class Voiture implements Dessinable {
 		//Si premiere fois 
 		AffineTransform matInitial = g2d.getTransform();
 		if (premiereFois) {
-			double i=0;
-			switch (this.direction.getNumDirection())
-			{
+			switch (this.direction.getNumDirection()) {
 			case 1:
-				//se deplace vers l'est
-				switch (this.directionDeVirage) {
-				case 0:
-					if(this.nbVoiesEst<3) {
-						i=0;
-					} else {
-						i=1;
-					}
-					break;
-				case 1:
-					i=this.nbVoiesEst-1;
-					break;
-				case 2:
-					i=0;
-				}
-				xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie + this.largeurVoiePixels*i/2.0);
+				placerVoitures(1,nbVoiesEst);
 				break;
 			case 2:
-				//se deplace vers le sud
-				switch (this.directionDeVirage) {
-				case 0:
-					if(this.nbVoiesSud<3) {
-						i=0;
-					} else {
-						i=1;
-					}
-					break;
-				case 1:
-					i=this.nbVoiesSud-1;
-					break;
-				case 2:
-					i=0;
-				}
-				xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 - this.largeurVoiePixels*i/2.0);yVoiture=0;
+				placerVoitures(2,nbVoiesOuest);
 				break;
 			case 3:
-				//se deplace vers l'ouest
-				switch (this.directionDeVirage) {
-				case 0:
-					if(this.nbVoiesOuest<3) {
-						i=0;
-					} else {
-						i=1;
-					}
-					break;
-				case 1:
-					i=this.nbVoiesOuest-1;
-					break;
-				case 2:
-					i=0;
-				}
-				xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 - this.largeurVoiePixels*i/2.0);
+				placerVoitures(3,nbVoiesSud);
 				break;
 			case 4:
-				//se deplace vers le nord
-				switch (this.directionDeVirage) {
-				case 0:
-					if(this.nbVoiesNord<3) {
-						i=0;
-					} else {
-						i=1;
-					}
-					break;
-				case 1:
-					i=this.nbVoiesNord-1;
-					break;
-				case 2:
-					i=0;
-				}
-				xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0+ this.largeurVoiePixels*i/2.0) ;yVoiture=(int)dimensionRoutePixels;
-				break;
+				placerVoitures(4,nbVoiesNord);
 			}
 			premiereFois = false;
 		}
@@ -289,128 +226,25 @@ public class Voiture implements Dessinable {
 		{
 		case 1:
 			//se deplace vers l'est
-			if(!enRotation) {
-				//aucune rotation d'image
-				rotation = 0;
-			}else {
-				switch(this.directionDeVirage) {
-				//aucune rotation d'image, car la voiture ne tourne pas
-				case 0:
-					rotation = 0;
-					break;
-				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
-				case 1:
-					rotation = rotation + this.vitesseDeRotation;
-					if(rotation>=Math.PI/2.0) {
-						rotation = Math.PI/2.0;
-					}
-					break;
-				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
-				case 2:
-					if(peutTournerGauche) {
-					rotation = rotation - this.vitesseDeRotation;
-					}
-				}
-				if(rotation<=-Math.PI/2.0) {
-					rotation = -Math.PI/2.0;
-				}
-			}
+			rotationVoiture(0, Math.PI/2.0,-Math.PI/2.0);
 			AffineTransform rotationMoins0 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotationMoins0);
 			break;
 		case 2:
 			//se deplace vers le sud
-			if(!enRotation) {
-				rotation = Math.PI/2.0;
-			}else {
-				switch(this.directionDeVirage) {
-				//aucune rotation d'image, car la voiture ne tourne pas
-				case 0:
-					rotation = Math.PI/2.0;
-					break;
-				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
-				case 1:
-					rotation = rotation + this.vitesseDeRotation;
-					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
-					if(rotation>=Math.PI) {
-						rotation = Math.PI;
-					}
-					break;
-				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
-				case 2:
-					if(peutTournerGauche) {
-					rotation = rotation - this.vitesseDeRotation;
-				}
-					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
-					if(rotation<=0) {
-						rotation = 0;
-					}
-				}
-			}
+			rotationVoiture(Math.PI/2.0,Math.PI,0);
 			AffineTransform rotationMoins90 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotationMoins90);
 			break;
 		case 3:
 			//se deplace vers l'ouest
-			if(!enRotation) {
-				rotation = Math.PI;
-			}else {
-				switch(this.directionDeVirage) {
-				//aucune rotation d'image, car la voiture ne tourne pas
-				case 0:
-					rotation = 0;
-					break;
-				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
-				case 1:
-					rotation = rotation + this.vitesseDeRotation;
-					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
-					if(rotation>=3*Math.PI/2.0) {
-						rotation = 3*Math.PI/2.0;
-					}
-					break;
-				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
-				case 2:
-					if(peutTournerGauche) {
-					rotation = rotation - this.vitesseDeRotation;
-					}
-					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
-				}
-				if(rotation<=Math.PI/2.0) {
-					rotation = Math.PI/2.0;
-				}
-			}
+			rotationVoiture(Math.PI,3*Math.PI/2.0,Math.PI/2.0);
 			AffineTransform rotation180 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotation180);
 			break;
 		case 4:
 			//se deplace vers le nord
-			if(!enRotation) {
-				rotation = -Math.PI/2.0;
-			}else {
-				switch(this.directionDeVirage) {
-				//aucune rotation d'image, car la voiture ne tourne pas
-				case 0:
-					rotation = -Math.PI/2.0;
-					break;
-				//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
-				case 1:
-					rotation = rotation + this.vitesseDeRotation;
-					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
-					if(rotation>=0) {
-						rotation = 0;
-					}
-					break;
-				//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
-				case 2:
-					if(peutTournerGauche) {
-					rotation = rotation - this.vitesseDeRotation;
-					}
-					//lorsqu'on atteint une certain valeur de rotation, on fixe la rotation à cette valeur ce qui veut dire que la voiture a fini de tourner
-					if(rotation<=-Math.PI) {
-						rotation = -Math.PI;
-					}
-				}
-			}
+			rotationVoiture(-Math.PI/2.0,0,-Math.PI);
 			AffineTransform rotation90 = AffineTransform.getRotateInstance(rotation, xVoiture+((int)this.longueurVoiturePixels)/2.0,yVoiture+((int)this.largeurVoiturePixels)/2.0);
 			g2d.setTransform(rotation90);
 			break;
@@ -426,6 +260,72 @@ public class Voiture implements Dessinable {
 		g2d.setTransform(matInitial);
 		if(this.voitureArretee) {
 			this.tempsDArret++;
+		}
+	}
+	//Reiner
+	/**
+	 * Méthode qui modifie l'emplacement de la voiture selon son action, sa direction et le nombre de voies sur sa direction
+	 * @param direction Direction vers laquelle la voiture se dirige (1=est;2=sud;3=ouest;4=nord)
+	 * @param nbVoies nombre de voies ayant vers la direction de la voiture
+	 */
+	public void placerVoitures(int direction,int nbVoies) {
+		int i=0;
+		switch (this.directionDeVirage) {
+		case 0:
+			if(nbVoies<3) {
+				i=0;
+			} else {
+				i=1;
+			}
+			break;
+		case 1:
+			i=nbVoies-1;
+			break;
+		case 2:
+			i=0;
+		}
+		switch (direction) {
+		case 1:
+			xVoiture = 0;yVoiture=(int) (dimensionRoutePixels/2.0+ largeurVoie + this.largeurVoiePixels*i/2.0);
+			break;
+		case 2:
+			xVoiture=(int)(dimensionRoutePixels/2.0 - largeurVoie*2.0 - largeurVoiturePixels/2.0 - this.largeurVoiePixels*i/2.0);yVoiture=0;
+			break;
+		case 3:
+			xVoiture=(int)dimensionRoutePixels;yVoiture = (int)(dimensionRoutePixels/2.0 - largeurVoie * 2 - this.largeurVoiePixels*i/2.0);
+			break;
+		case 4:
+			xVoiture= (int) (dimensionRoutePixels/2.0+ largeurVoie - largeurVoiturePixels/2.0+ this.largeurVoiePixels*i/2.0) ;yVoiture=(int)dimensionRoutePixels;
+			break;
+		}
+	}
+	//Reiner 
+	public void rotationVoiture(double rotationInitiale, double maxRotationDroite, double maxRotationGauche) {
+		if(!enRotation) {
+			//aucune rotation d'image
+			rotation = rotationInitiale;
+		}else {
+			switch(this.directionDeVirage) {
+			//aucune rotation d'image, car la voiture ne tourne pas
+			case 0:
+				rotation = rotationInitiale;
+				break;
+			//Voiture tourne droite, alors on augmente la valeur de rotation graduellement
+			case 1:
+				rotation = rotation + this.vitesseDeRotation;
+				if(rotation>=maxRotationDroite) {
+					rotation = maxRotationDroite;
+				}
+				break;
+			//Voiture tourne gauche, alors on diminue la valeur de rotation graduellement
+			case 2:
+				if(peutTournerGauche) {
+				rotation = rotation - this.vitesseDeRotation;
+				}
+			}
+			if(rotation<=maxRotationGauche) {
+				rotation = maxRotationGauche;
+			}
 		}
 	}
 	//Mamadou

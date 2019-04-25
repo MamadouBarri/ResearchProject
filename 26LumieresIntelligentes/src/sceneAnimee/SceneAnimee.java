@@ -154,6 +154,26 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 
+		dessinerLumieres(g2d, mat);
+
+		//Dessiner l'échelle
+		g2d.setColor(Color.cyan);
+		g2d.drawString("Échelle: " + LARGEUR_REELLE + " m", (float)DISTANCE_BORDURE, (float)(LARGEUR_REELLE * modele.getPixelsParUniteY() - DISTANCE_BORDURE));
+
+		//Parcourir et dessiner chaque voiture
+		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			v.setNbVoies(nbVoiesEst, nbVoiesOuest, nbVoiesSud, nbVoiesNord);
+			v.dessiner(g2d, mat);
+		}	
+	}//fin paintComponent
+	//Reiner
+	/**
+	 * Méthode qui dessine les lumières sur l'intersection
+	 * @param g2d contexte graphique
+	 * @param mat matrice de transformation monde-vers-composant
+	 */
+	public void dessinerLumieres(Graphics2D g2d, AffineTransform mat) {
 		lumSud = new Lumiere(0,0,tailleLum,couleur,4);
 		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
 		lumSud.dessiner(g2d, mat);
@@ -169,20 +189,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		lumEst = new Lumiere(0,0,tailleLum,couleurInv,3);
 		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lumEst.dessiner(g2d, mat);
-
-
-
-		//Dessiner l'échelle
-		g2d.setColor(Color.cyan);
-		g2d.drawString("Échelle: " + LARGEUR_REELLE + " m", (float)DISTANCE_BORDURE, (float)(LARGEUR_REELLE * modele.getPixelsParUniteY() - DISTANCE_BORDURE));
-
-		//Parcourir et dessiner chaque voiture
-		for(Iterator<Voiture> i = voitures.iterator();i.hasNext();) {
-			Voiture v = i.next();
-			v.setNbVoies(nbVoiesEst, nbVoiesOuest, nbVoiesSud, nbVoiesNord);
-			v.dessiner(g2d, mat);
-		}	
-	}//fin paintComponent
+	}
 	//Mamadou et Reiner
 	/**
 	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST

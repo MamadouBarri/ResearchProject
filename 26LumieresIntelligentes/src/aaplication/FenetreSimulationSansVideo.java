@@ -158,16 +158,16 @@ public class FenetreSimulationSansVideo extends JFrame {
 
 		JPanel pnSimulations = new JPanel();
 		pnSimulations.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Simulations", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnSimulations.setBounds(0, 0, 1904, 730);
+		pnSimulations.setBounds(0, 0, 1904, 665);
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
-		lblSimulationSansLAlgorithme.setBounds(224, 70, 214, 14);
+		lblSimulationSansLAlgorithme.setBounds(224, 11, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 
 		sceneAnimee2 = new SceneAnimeeAvecAlgo();
-		sceneAnimee2.setBounds(639, 109, 600, 600);
+		sceneAnimee2.setBounds(639, 50, 600, 600);
 		pnSimulations.add(sceneAnimee2);
 
 		sceneAnimee1 = new SceneAnimee();
@@ -207,7 +207,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 				fenStats.miseAJour();
 			}
 		});
-		sceneAnimee1.setBounds(10, 109, 600, 600);
+		sceneAnimee1.setBounds(10, 50, 600, 600);
 		pnSimulations.add(sceneAnimee1);
 		
 		
@@ -216,15 +216,15 @@ public class FenetreSimulationSansVideo extends JFrame {
 		
 		
 		JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme bas\u00E9e sur la densit\u00E9 de voitures\r\n");
-		lblSimulationAvecLalgorithme.setBounds(742, 70, 386, 14);
+		lblSimulationAvecLalgorithme.setBounds(742, 11, 386, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithme);
 		
 		sceneAnimee3 = new SceneAnimeeAvecAlgoTempsDArret();
-		sceneAnimee3.setBounds(1282, 109, 600, 600);
+		sceneAnimee3.setBounds(1282, 50, 600, 600);
 		pnSimulations.add(sceneAnimee3);
 		
 		JLabel lblSimulationAvecLalgorithmeTempsDArret = new JLabel("Simulation avec l'algorithme bas\u00E9e sur le temps d'arr\u00EAt des voitures\r\n\r\n");
-		lblSimulationAvecLalgorithmeTempsDArret.setBounds(1366, 70, 386, 14);
+		lblSimulationAvecLalgorithmeTempsDArret.setBounds(1366, 11, 386, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithmeTempsDArret);
 
 		JLabel lblVideo = new JLabel("Param\u00E8tres");

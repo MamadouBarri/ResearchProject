@@ -7,5 +7,8 @@ import java.util.EventListener;
  *
  */
 	public interface VisibiliteFenDepartListener extends EventListener {
+		/**
+		 * Méthode qui indique quand l'utilisateur veut ouvrir la fenêtre de départ
+		 */
 		public void rendreFenetreDepartVisible();
 }

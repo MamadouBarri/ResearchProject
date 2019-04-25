@@ -7,5 +7,8 @@ import java.util.EventListener;
  *
  */
 public interface VisibiliteFenSimulListener extends EventListener {
+	/**
+	 * Méthode qui indique quand l'utilisateur veut ouvrir la fenêtre de simulations
+	 */
 	public void rendreFenetreSimulationsSansVideoVisible();
 }
