@@ -15,8 +15,11 @@ import sceneAnimee.SceneAnimee;
 import sceneAnimee.SceneAnimeeAvecAlgo;
 import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
 import javax.swing.JPanel;
-
-
+/**
+ * Classe qui dessine le plan cartésien
+ * @author Mamadou Barri
+ *
+ */
 public class PlanCartesien1 extends JPanel {
 
 	/**
