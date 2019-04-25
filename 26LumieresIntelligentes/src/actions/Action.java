@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * Cette classe va permettre de generer une action aleatoire pour les voitures. Les actions possibles sont les suivantes : 
  * aller tout droit, tourner a gauche et tourner a droite.
- * @author Barri Mamadou
+ * @author Barri Mamadou et Reiner Gayta
  *
  */
 public class Action {

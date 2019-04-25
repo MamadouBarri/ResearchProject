@@ -85,6 +85,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	private int nbVoituresMax = 60 ;
 
 	//Lumieres 
+	//Taille des lumieres
+	private double tailleLum=75;
 	//nombres de tours de run faits pour déterminer quand faire avancer le cycle de lumieres
 	private double nbBouclesAvantChangement1 = 2400;
 	private double nbBouclesAvantChangement2 = 2700;
@@ -152,19 +154,19 @@ public class SceneAnimee extends JPanel implements Runnable{
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
 
-		lumSud = new Lumiere(0,0,75,couleur,4);
+		lumSud = new Lumiere(0,0,tailleLum,couleur,4);
 		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
 		lumSud.dessiner(g2d, mat);
 
-		lumNord = new Lumiere(0,0,75,couleur,1);
+		lumNord = new Lumiere(0,0,tailleLum,couleur,1);
 		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst+5);
 		lumNord.dessiner(g2d, mat);
 
-		lumOuest = new Lumiere(0,0,75,couleurInv,2);
+		lumOuest = new Lumiere(0,0,tailleLum,couleurInv,2);
 		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
 		lumOuest.dessiner(g2d, mat);	
 
-		lumEst = new Lumiere(0,0,75,couleurInv,3);
+		lumEst = new Lumiere(0,0,tailleLum,couleurInv,3);
 		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lumEst.dessiner(g2d, mat);
 
@@ -1723,5 +1725,13 @@ public class SceneAnimee extends JPanel implements Runnable{
 	 */
 	public double getTempsDArretMoyen() {
 		return this.calculeTempsDArretMoyen();
+	}
+	//Reiner
+	/**
+	 * Setter qui permet de changer la taille des lumières
+	 * @param taille largeur de la lumière en pixels
+	 */
+	public void setTailleLum(double taille) {
+		this.tailleLum = taille;
 	}
 }

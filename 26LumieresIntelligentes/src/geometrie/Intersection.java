@@ -10,7 +10,7 @@ import interfaces.Dessinable;
 
 /**
  * Cette classe va dessiner l'intersection c'est a dire : les voies et les rues.
- * @author Mamadou Barri
+ * @author Mamadou Barri et Reiner Gayta
  *
  */
 public class Intersection implements Dessinable {
@@ -124,7 +124,12 @@ public class Intersection implements Dessinable {
 		this.nbVoiesHorizontale = nbVoiesHorizontale;
 	}
 	
-	
+	//Reiner
+	/**
+	 * Méthode pour dessiner les lignes représentant les voies est
+	 * @param g2d contexte graphique
+	 * @param matLocale matrice de transformation monde-vers-composant
+	 */
 	private void DessinerVoiesEst(Graphics2D g2d, AffineTransform matLocale) {
 		Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
 		Stroke normal = g2d.getStroke();
@@ -153,6 +158,12 @@ public class Intersection implements Dessinable {
 			}
 		}
 	}
+	//Reiner
+	/**
+	 * Méthode pour dessiner les lignes représentant les voies est
+	 * @param g2d contexte graphique
+	 * @param matLocale matrice de transformation monde-vers-composant
+	 */
 	private void DessinerVoiesOuest(Graphics2D g2d, AffineTransform matLocale) {
 		Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
 		Stroke normal = g2d.getStroke();
@@ -181,6 +192,12 @@ public class Intersection implements Dessinable {
 			}
 		}
 	}
+	//Reiner
+	/**
+	 * Méthode pour dessiner les lignes représentant les voies est
+	 * @param g2d contexte graphique
+	 * @param matLocale matrice de transformation monde-vers-composant
+	 */
 	private void DessinerVoiesSud(Graphics2D g2d, AffineTransform matLocale) {
 		Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
 		Stroke normal = g2d.getStroke();
@@ -209,6 +226,12 @@ public class Intersection implements Dessinable {
 			}
 		}
 	}
+	//Reiner
+	/**
+	 * Méthode pour dessiner les lignes représentant les voies est
+	 * @param g2d contexte graphique
+	 * @param matLocale matrice de transformation monde-vers-composant
+	 */
 	private void DessinerVoiesNord(Graphics2D g2d, AffineTransform matLocale) {
 		Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
 		Stroke normal = g2d.getStroke();

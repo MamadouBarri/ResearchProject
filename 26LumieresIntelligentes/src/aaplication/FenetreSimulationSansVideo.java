@@ -54,7 +54,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 	
 	private JPanel contentPane;
 	private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();
-	private FenetreFileChooser popup;
 	private java.net.URL  urlAnimer = getClass().getClassLoader().getResource("play.jpg");
 	private java.net.URL  urlPause = getClass().getClassLoader().getResource("pause.jpg");
 	private java.net.URL  urlProchaineImage = getClass().getClassLoader().getResource("pas.jpg");
