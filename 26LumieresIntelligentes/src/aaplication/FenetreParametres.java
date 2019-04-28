@@ -143,7 +143,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		spnVitesse.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
+		spnVitesse.setModel(new SpinnerNumberModel(60, 20, 100, 1));
 		spnVitesse.setBounds(113, 23, 48, 20);
 		panel.add(spnVitesse);
 		
@@ -238,7 +238,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
+		spnTauxDApparition.setModel(new SpinnerNumberModel(60, 30, 120, 1));
 		spnTauxDApparition.setBounds(113, 121, 48, 20);
 		panel.add(spnTauxDApparition);
 		
@@ -257,19 +257,19 @@ public class FenetreParametres extends JFrame {
 		panel.add(sceneAnimee);
 		sceneAnimee.setLayout(null);
 		
-		JLabel lblVoieNord = new JLabel("Voie NORD");
+		JLabel lblVoieNord = new JLabel("Voies NORD");
 		lblVoieNord.setBounds(422, 5, 89, 14);
 		panel.add(lblVoieNord);
 		
-		lblVoieEst = new JLabel("Voie EST");
+		lblVoieEst = new JLabel("Voies EST");
 		lblVoieEst.setBounds(555, 132, 84, 14);
 		panel.add(lblVoieEst);
 		
-		lblVoieOuest = new JLabel("Voie OUEST");
+		lblVoieOuest = new JLabel("Voies OUEST");
 		lblVoieOuest.setBounds(273, 132, 89, 14);
 		panel.add(lblVoieOuest);
 		
-		lblVoieSud = new JLabel("Voie SUD");
+		lblVoieSud = new JLabel("Voies SUD");
 		lblVoieSud.setBounds(422, 284, 84, 14);
 		panel.add(lblVoieSud);
 		
@@ -280,7 +280,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		spnNbVoitures.setModel(new SpinnerNumberModel(new Integer(60), null, null, new Integer(1)));
+		spnNbVoitures.setModel(new SpinnerNumberModel(60, 0, 150, 1));
 		spnNbVoitures.setBounds(139, 70, 48, 20);
 		panel.add(spnNbVoitures);
 		

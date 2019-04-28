@@ -422,43 +422,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 				//Voiture devant trop proche
 				if(est.indexOf(v)!=0) {
-					Voiture voitureDevant = est.get(est.indexOf(v)-1);
-					int f = 1;
-					switch (nbVoiesEst) {
-					case 2:
-						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
-							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&est.indexOf(v)-f!=0) {
-								voitureDevant = est.get(est.indexOf(v)-f);
-								f++;
-							}
-						} else {
-							while(voitureDevant.getDirectionDeVirage()!=1&&est.indexOf(v)-f!=0) {
-								voitureDevant = est.get(est.indexOf(v)-f);
-								f++;
-							}
-						}
-						break;
-					case 3:
-						switch (v.getDirectionDeVirage()) {
-						case 0:
-							while(voitureDevant.getDirectionDeVirage()!=0&&est.indexOf(v)-f!=0) {
-								voitureDevant = est.get(est.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 1:
-							while(voitureDevant.getDirectionDeVirage()!=1&&est.indexOf(v)-f!=0) {
-								voitureDevant = est.get(est.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 2:
-							while(voitureDevant.getDirectionDeVirage()!=2&&est.indexOf(v)-f!=0) {
-								voitureDevant = est.get(est.indexOf(v)-f);
-								f++;
-							}
-						}
- 					}
+					Voiture voitureDevant = verifierVoitureDevant(est,v, nbVoiesEst);
 					//La voiture est trop proche donc s'arrête
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
 						v.setVoitureArretee(true);
@@ -679,43 +643,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 				//Voiture devant trop proche
 				if(sud.indexOf(v)!=0) {
-					Voiture voitureDevant = sud.get(sud.indexOf(v)-1);
-					int f = 1;
-					switch (nbVoiesSud) {
-					case 2:
-						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
-							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&sud.indexOf(v)-f!=0) {
-								voitureDevant = sud.get(sud.indexOf(v)-f);
-								f++;
-							}
-						} else {
-							while(voitureDevant.getDirectionDeVirage()!=1&&sud.indexOf(v)-f!=0) {
-								voitureDevant = sud.get(sud.indexOf(v)-f);
-								f++;
-							}
-						}
-						break;
-					case 3:
-						switch (v.getDirectionDeVirage()) {
-						case 0:
-							while(voitureDevant.getDirectionDeVirage()!=0&&sud.indexOf(v)-f!=0) {
-								voitureDevant = sud.get(sud.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 1:
-							while(voitureDevant.getDirectionDeVirage()!=1&&sud.indexOf(v)-f!=0) {
-								voitureDevant = sud.get(sud.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 2:
-							while(voitureDevant.getDirectionDeVirage()!=2&&sud.indexOf(v)-f!=0) {
-								voitureDevant = sud.get(sud.indexOf(v)-f);
-								f++;
-							}
-						}
- 					}
+					Voiture voitureDevant = verifierVoitureDevant(sud,v, nbVoiesSud);
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3) {
 						v.setVoitureArretee(true);
 						v.setCompteurTemp(100);
@@ -885,43 +813,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 				//Voiture devant trop proche
 				if(ouest.indexOf(v)!=0) {
-					Voiture voitureDevant = ouest.get(ouest.indexOf(v)-1);
-					int f = 1;
-					switch (nbVoiesOuest) {
-					case 2:
-						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
-							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&ouest.indexOf(v)-f!=0) {
-								voitureDevant = ouest.get(ouest.indexOf(v)-f);
-								f++;
-							}
-						} else {
-							while(voitureDevant.getDirectionDeVirage()!=1&&ouest.indexOf(v)-f!=0) {
-								voitureDevant = ouest.get(ouest.indexOf(v)-f);
-								f++;
-							}
-						}
-						break;
-					case 3:
-						switch (v.getDirectionDeVirage()) {
-						case 0:
-							while(voitureDevant.getDirectionDeVirage()!=0&&ouest.indexOf(v)-f!=0) {
-								voitureDevant = ouest.get(ouest.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 1:
-							while(voitureDevant.getDirectionDeVirage()!=1&&ouest.indexOf(v)-f!=0) {
-								voitureDevant = ouest.get(ouest.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 2:
-							while(voitureDevant.getDirectionDeVirage()!=2&&ouest.indexOf(v)-f!=0) {
-								voitureDevant = ouest.get(ouest.indexOf(v)-f);
-								f++;
-							}
-						}
- 					}
+					Voiture voitureDevant = verifierVoitureDevant(ouest,v, nbVoiesOuest);
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
 						v.setVoitureArretee(true);
 						v.setCompteurTemp(100);
@@ -1095,43 +987,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 
 				//Voiture devant trop proche
 				if(nord.indexOf(v)!=0) {
-					Voiture voitureDevant = nord.get(nord.indexOf(v)-1);
-					int f = 1;
-					switch (nbVoiesNord) {
-					case 2:
-						if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
-							while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&nord.indexOf(v)-f!=0) {
-								voitureDevant = nord.get(nord.indexOf(v)-f);
-								f++;
-							}
-						} else {
-							while(voitureDevant.getDirectionDeVirage()!=1&&nord.indexOf(v)-f!=0) {
-								voitureDevant = nord.get(nord.indexOf(v)-f);
-								f++;
-							}
-						}
-						break;
-					case 3:
-						switch (v.getDirectionDeVirage()) {
-						case 0:
-							while(voitureDevant.getDirectionDeVirage()!=0&&nord.indexOf(v)-f!=0) {
-								voitureDevant = nord.get(nord.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 1:
-							while(voitureDevant.getDirectionDeVirage()!=1&&nord.indexOf(v)-f!=0) {
-								voitureDevant = nord.get(nord.indexOf(v)-f);
-								f++;
-							}
-							break;
-						case 2:
-							while(voitureDevant.getDirectionDeVirage()!=2&&nord.indexOf(v)-f!=0) {
-								voitureDevant = nord.get(nord.indexOf(v)-f);
-								f++;
-							}
-						}
- 					}
+					Voiture voitureDevant = verifierVoitureDevant(nord,v, nbVoiesNord);
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3) {
 						v.setVoitureArretee(true);
 						v.setCompteurTemp(100);
@@ -1253,6 +1109,53 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
+	//Reiner
+		/**
+		 * Méthode qui permet d'itentifier la voiture devant 
+		 * @param list array liste contenant la voiture qu'on examine
+		 * @param v voiture examinée dont on cherhce la voiture qui est devant elle
+		 * @param nbVoies nombre de voie de la direction sur laquelle la voiture examinée se retrouve
+		 */
+		public Voiture verifierVoitureDevant(ArrayList<Voiture> list, Voiture v, int nbVoies) {
+			Voiture voitureDevant = list.get(list.indexOf(v)-1);
+			int f = 1;
+			switch (nbVoies) {
+			case 2:
+				if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
+					while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
+						voitureDevant = list.get(list.indexOf(v)-f);
+						f++;
+					}
+				} else {
+					while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
+						voitureDevant = list.get(list.indexOf(v)-f);
+						f++;
+					}
+				}
+				break;
+			case 3:
+				switch (v.getDirectionDeVirage()) {
+				case 0:
+					while(voitureDevant.getDirectionDeVirage()!=0&&list.indexOf(v)-f!=0) {
+						voitureDevant = list.get(list.indexOf(v)-f);
+						f++;
+					}
+					break;
+				case 1:
+					while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
+						voitureDevant = list.get(list.indexOf(v)-f);
+						f++;
+					}
+					break;
+				case 2:
+					while(voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
+						voitureDevant = list.get(list.indexOf(v)-f);
+						f++;
+					}
+				}
+				}
+			return voitureDevant;
+		}
 	//Mamadou
 	/**
 	 * Méthode qui fait l'affichage a la console avec le temps precisé

@@ -212,7 +212,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		btnDepart.setBounds(248, 171, 171, 46);
 		contentPane.add(btnDepart);
 		
-		JButton btnInstructions = new JButton("Instructions");
+		JButton btnInstructions = new JButton("Guide d'utilisation");
 		btnInstructions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				instructions.setVisible(true);

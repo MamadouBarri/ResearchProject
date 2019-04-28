@@ -1,6 +1,7 @@
 package aaplication;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 /**
  * JFrame contenant les instructions qui indiquent comment utiliser l'application
  * @author Gayta
@@ -52,9 +54,9 @@ public class FenetreInstructions extends JFrame {
 		 * Constructeur de la fenêtre
 		 */
 	public FenetreInstructions() {
-		setTitle("Instructions");
+		setTitle("Guide d'utilisation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1920/2-450/2, 1080/2-300/2, 450, 300);
+		setBounds(1920/2-1005/2, 1080/2-693/2, 1005, 693);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -89,16 +91,63 @@ public class FenetreInstructions extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		/**
+		 * Page 1
+		 */
+		ImageAvecDefilementConcepts guideDUtilisationPage1 = new ImageAvecDefilementConcepts();
+		guideDUtilisationPage1.setBounds(23, 12, (int)(this.getWidth()*956.0/1005.0), (int)(this.getHeight()*610.0/693.0));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 414, 217);
-		contentPane.add(scrollPane);
+		//Pour fixer couleur du cadre
+		guideDUtilisationPage1.setBackground(Color.gray);
+		//Pour modifier la largeur du cadre 
+		guideDUtilisationPage1.setLargeurCadre(0);
+		//Pour charger l'image pre-fabriquee
+		guideDUtilisationPage1.setFichierImage("Guide 1.PNG");
+		/**
+		 * Page 2
+		 */
+		ImageAvecDefilementConcepts guideDUtilisationPage2 = new ImageAvecDefilementConcepts();
+		guideDUtilisationPage2.setBounds(23, 12, (int)(this.getWidth()*956.0/1005.0), (int)(this.getHeight()*610.0/693.0));
 		
-		JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
+		//Pour fixer couleur du cadre
+		guideDUtilisationPage2.setBackground(Color.gray);
+		//Pour modifier la largeur du cadre 
+		guideDUtilisationPage2.setLargeurCadre(0);
+		//Pour charger l'image pre-fabriquee
+		guideDUtilisationPage2.setFichierImage("Guide 2.PNG");
+		/**
+		 * Page 3
+		 */
+		ImageAvecDefilementConcepts guideDUtilisationPage3 = new ImageAvecDefilementConcepts();
+		guideDUtilisationPage3.setBounds(23, 12, (int)(this.getWidth()*956.0/1005.0), (int)(this.getHeight()*610.0/693.0));
 		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollPane.setRowHeaderView(scrollBar);
+		//Pour fixer couleur du cadre
+		guideDUtilisationPage3.setBackground(Color.gray);
+		//Pour modifier la largeur du cadre 
+		guideDUtilisationPage3.setLargeurCadre(0);
+		//Pour charger l'image pre-fabriquee
+		guideDUtilisationPage3.setFichierImage("guide 3.PNG");
+		/**
+		 * Page 4
+		 */
+		ImageAvecDefilementConcepts guideDUtilisationPage4 = new ImageAvecDefilementConcepts();
+		guideDUtilisationPage4.setBounds(23, 12, (int)(this.getWidth()*956.0/1005.0), (int)(this.getHeight()*610.0/693.0));
+		//Pour fixer couleur du cadre
+		guideDUtilisationPage4.setBackground(Color.gray);
+		//Pour modifier la largeur du cadre 
+		guideDUtilisationPage4.setLargeurCadre(0);
+		//Pour charger l'image pre-fabriquee
+		guideDUtilisationPage4.setFichierImage("guide 4.PNG");
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 11, (int)(this.getWidth()*969.0/1005.0), (int)(this.getHeight()*611.0/693.0));
+		tabbedPane.addTab("Page 1", guideDUtilisationPage1);
+		tabbedPane.addTab("Page 2", guideDUtilisationPage2);
+		tabbedPane.addTab("Page 3", guideDUtilisationPage3);
+		tabbedPane.addTab("Page 4", guideDUtilisationPage4);
+		contentPane.add(tabbedPane);
+		
+		
 	}
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart
