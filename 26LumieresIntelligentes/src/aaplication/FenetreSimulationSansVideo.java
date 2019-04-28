@@ -84,6 +84,12 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private JLabel lblNombreVoituresGenerees2;
 	private JLabel lblVitesseMoyenne3;
 	private JLabel lblNombreVoituresGenerees3;
+	private JLabel lblDensite1;
+	private JLabel lblTempsDArret1;
+	private JLabel lblDensite2;
+	private JLabel lblTempsDArret2;
+	private JLabel lblDensite3;
+	private JLabel lblTempsDArret3;
 
 	/**
 	 * Launch the application.
@@ -189,6 +195,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 				//Voitures arretees
 				if(SceneAnimee.nbVoituresEnAttente.size() >0 && SceneAnimeeAvecAlgo.nbVoituresEnAttente.size()>0 && SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.size() > 0 
 						&&SceneAnimee.moyenneDesVitesse.size() > 0 &&  SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.size()>0  && SceneAnimeeAvecAlgo.moyenneDesVitesse.size()-1 >0 ) {
+					//Nombre de voitures sur l'intersection
 					lblNombreDeVoitures.setText("Nombre de voitures arrêtées: "  + SceneAnimee.nbVoituresEnAttente.get(SceneAnimee.nbVoituresEnAttente.size()-1));
 					lblNombreDeVoitures2.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgo.nbVoituresEnAttente.get(SceneAnimeeAvecAlgo.nbVoituresEnAttente.size()-1));
 					lblNombreDeVoitures3.setText("Nombre de voitures arrêtées: "  + SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.get(SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente.size()-1));
@@ -200,6 +207,14 @@ public class FenetreSimulationSansVideo extends JFrame {
 					lblVitesseMoyenne1.setText("Vitesse moyenne: "  + SceneAnimee.moyenneDesVitesse.get(SceneAnimee.moyenneDesVitesse.size()-1));
 					lblVitesseMoyenne2.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgo.moyenneDesVitesse.get(SceneAnimeeAvecAlgo.moyenneDesVitesse.size()-1));
 					lblVitesseMoyenne3.setText("Vitesse moyenne: "  + SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.get(SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse.size()-1));
+					//Densité
+					lblDensite1.setText("Densité du trafic : " + SceneAnimee.densiteVoitures.get(SceneAnimee.densiteVoitures.size()-1));
+					lblDensite2.setText("Densité du trafic : " + SceneAnimeeAvecAlgo.densiteVoitures.get(SceneAnimeeAvecAlgo.densiteVoitures.size()-1));
+					lblDensite3.setText("Densité du trafic : " + SceneAnimeeAvecAlgoTempsDArret.densiteVoitures.get(SceneAnimeeAvecAlgoTempsDArret.densiteVoitures.size()-1));
+					//Temps d'arrêt
+					lblTempsDArret1.setText("Temps d'arrêt moyen : " + SceneAnimee.tempsDArretMoyen.get(SceneAnimee.tempsDArretMoyen.size()-1));
+					lblTempsDArret2.setText("Temps d'arrêt moyen : " + SceneAnimeeAvecAlgo.tempsDArretMoyen.get(SceneAnimeeAvecAlgo.tempsDArretMoyen.size()-1));
+					lblTempsDArret3.setText("Temps d'arrêt moyen : " + SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen.get(SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen.size()-1));
 				}
 				
 				//La fenetres des stats
@@ -488,6 +503,30 @@ public class FenetreSimulationSansVideo extends JFrame {
 		lblNombreVoituresGenerees3 = new JLabel("Nombre de voitures pass\u00E9es:");
 		lblNombreVoituresGenerees3.setBounds(1323, 798, 286, 28);
 		contentPane.add(lblNombreVoituresGenerees3);
+		
+		lblTempsDArret1 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
+		lblTempsDArret1.setBounds(88, 708, 281, 28);
+		contentPane.add(lblTempsDArret1);
+		
+		lblDensite1 = new JLabel("Densit\u00E9 du trafic :\r\n");
+		lblDensite1.setBounds(88, 676, 281, 28);
+		contentPane.add(lblDensite1);
+		
+		lblDensite2 = new JLabel("Densit\u00E9 du trafic :\r\n");
+		lblDensite2.setBounds(687, 676, 281, 28);
+		contentPane.add(lblDensite2);
+		
+		lblTempsDArret2 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
+		lblTempsDArret2.setBounds(687, 708, 281, 28);
+		contentPane.add(lblTempsDArret2);
+		
+		lblDensite3 = new JLabel("Densit\u00E9 du trafic :\r\n");
+		lblDensite3.setBounds(1323, 676, 281, 28);
+		contentPane.add(lblDensite3);
+		
+		lblTempsDArret3 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
+		lblTempsDArret3.setBounds(1323, 708, 281, 28);
+		contentPane.add(lblTempsDArret3);
 	}
 
 	//Reiner
