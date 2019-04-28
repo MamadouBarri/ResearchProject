@@ -55,7 +55,7 @@ public class FenetreConcepts extends JFrame {
 	public FenetreConcepts() {
 		setTitle("Concepts scientifiques");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1920/2-698/2, 1080/2-543/2, 698, 543);
+		setBounds(1920/2-698/2, 1080/2-543/2, 1005, 693);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -92,7 +92,7 @@ public class FenetreConcepts extends JFrame {
 		contentPane.setLayout(null);
 		
 		ImageAvecDefilementConcepts imageAvecDefilementConcepts = new ImageAvecDefilementConcepts();
-		imageAvecDefilementConcepts.setBounds(23, 12, 640, 450);
+		imageAvecDefilementConcepts.setBounds(23, 12, 956, 610);
 		contentPane.add(imageAvecDefilementConcepts);
 		
 		//Pour fixer couleur du cadre
@@ -100,7 +100,7 @@ public class FenetreConcepts extends JFrame {
 		//Pour modifier la largeur du cadre 
 		imageAvecDefilementConcepts.setLargeurCadre(10);
 		//Pour charger l'image pre-fabriquee
-		imageAvecDefilementConcepts.setFichierImage("ImageConceptsScientifiques.jpg");
+		imageAvecDefilementConcepts.setFichierImage("ConceptsScientifiquesFinal.jpg");
 	}
 	//Reiner
 	/**
