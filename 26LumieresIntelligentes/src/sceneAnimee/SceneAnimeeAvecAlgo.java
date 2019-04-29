@@ -998,8 +998,19 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 			tauxGauss = tauxGauss*DEVIATION_GAUSSIENNE+ tauxDApparitionMoyen;
 		}while(tauxGauss<=TAUX_GAUSS_MIN || tauxGauss >TAUX_GAUSS_MAX); // On ne veut pas un taux négatif, contrainte car fonction Gaussienne n'a pas de limite théorique
 		//On change le taux d'apparition et ainsi le nombre de boucles pour chaque apparition
-		this.setTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
+		this.calculerTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
 	}
+	//Reiner 
+		/**
+		 * Méthode pour convertir le taux de voitures/secondes à nbBoucles/voitures
+		 * @param tauxParMinute le taux d'apparition en voitures/minutes
+		 */
+		private void calculerTauxDApparition(double tauxParMinute) {
+			double tauxParSeconde = tauxParMinute/60.0;
+			double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
+			this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
+			System.out.println("Nombre de boucle sleep avant une nouvelle voiture AVEC ALGO TEMPS: " + this.nbBouclesAvantNouvelleVoiture); //Test
+		}
 	//Mamadou
 	/**
 	 * Demarre le thread s'il n'est pas deja demarre
@@ -1087,10 +1098,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 	 */
 	public void setTauxDApparition(double tauxParMinute) {
 		double tauxParSeconde = tauxParMinute/60.0;
-		//this.tauxDApparitionMoyen = tauxParSeconde;
-		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
-		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
-		System.out.println("Nombre de boucle sleep avant une nouvelle voiture AVEC ALGO : " + this.nbBouclesAvantNouvelleVoiture); //Test
+		this.tauxDApparitionMoyen = tauxParSeconde;
 	}
 	//Mamadou
 	/**

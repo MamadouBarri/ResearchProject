@@ -138,7 +138,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		inter = new Intersection(this.LARGEUR_REELLE,this.nbVoiesEst,this.nbVoiesOuest,this.nbVoiesSud,this.nbVoiesNord);
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
-		
+
 		dessinerLumieres(g2d,mat);
 
 		//Dessiner l'échelle
@@ -153,28 +153,28 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		}	
 	}//fin paintComponent
 	//Reiner
-		/**
-		 * Méthode qui dessine les lumières sur l'intersection
-		 * @param g2d contexte graphique
-		 * @param mat matrice de transformation monde-vers-composant
-		 */
-		public void dessinerLumieres(Graphics2D g2d, AffineTransform mat) {
-			lumSud = new Lumiere(0,0,75,couleur,4);
-			lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
-			lumSud.dessiner(g2d, mat);
+	/**
+	 * Méthode qui dessine les lumières sur l'intersection
+	 * @param g2d contexte graphique
+	 * @param mat matrice de transformation monde-vers-composant
+	 */
+	public void dessinerLumieres(Graphics2D g2d, AffineTransform mat) {
+		lumSud = new Lumiere(0,0,75,couleur,4);
+		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
+		lumSud.dessiner(g2d, mat);
 
-			lumNord = new Lumiere(0,0,75,couleur,1);
-			lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst+5);
-			lumNord.dessiner(g2d, mat);
+		lumNord = new Lumiere(0,0,75,couleur,1);
+		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst+5);
+		lumNord.dessiner(g2d, mat);
 
-			lumOuest = new Lumiere(0,0,75,couleurInv,2);
-			lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
-			lumOuest.dessiner(g2d, mat);	
+		lumOuest = new Lumiere(0,0,75,couleurInv,2);
+		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
+		lumOuest.dessiner(g2d, mat);	
 
-			lumEst = new Lumiere(0,0,75,couleurInv,3);
-			lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
-			lumEst.dessiner(g2d, mat);
-		}
+		lumEst = new Lumiere(0,0,75,couleurInv,3);
+		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
+		lumEst.dessiner(g2d, mat);
+	}
 	//Mamadou et Reiner
 	/**
 	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST
@@ -535,7 +535,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
 								v.setYVoiture((v.getYVoiture()-deplacement));
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
-								
+
 							}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
 							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
@@ -590,7 +590,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 				//Lorsque le thread a sleep 10 fois (intervale 10 x tempsSleep)
 				if(nbRepetitionsPourVoitures == nbBouclesAvantNouvelleVoiture && nbVoituresGenerees < nbVoituresMax ) {
 					ajouterNouvelleVoiture();
-					
+
 					nbRepetitionsPourVoitures=0;
 				}
 				//Lorsque une seconde passe, donc on prend une nouvelle valeur pour les statistiques
@@ -913,55 +913,55 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		}
 	}
 	//Reiner
-			/**
-			 * Méthode qui permet d'itentifier la voiture devant 
-			 * @param list array liste contenant la voiture qu'on examine
-			 * @param v voiture examinée dont on cherhce la voiture qui est devant elle
-			 * @param nbVoies nombre de voie de la direction sur laquelle la voiture examinée se retrouve
-			 */
-			public Voiture verifierVoitureDevant(ArrayList<Voiture> list, Voiture v, int nbVoies) {
-				Voiture voitureDevant = list.get(list.indexOf(v)-1);
-				int f = 1;
-				switch (nbVoies) {
-				case 1:
+	/**
+	 * Méthode qui permet d'itentifier la voiture devant 
+	 * @param list array liste contenant la voiture qu'on examine
+	 * @param v voiture examinée dont on cherhce la voiture qui est devant elle
+	 * @param nbVoies nombre de voie de la direction sur laquelle la voiture examinée se retrouve
+	 */
+	public Voiture verifierVoitureDevant(ArrayList<Voiture> list, Voiture v, int nbVoies) {
+		Voiture voitureDevant = list.get(list.indexOf(v)-1);
+		int f = 1;
+		switch (nbVoies) {
+		case 1:
+			voitureDevant = list.get(list.indexOf(v)-f);
+			break;
+		case 2:
+			if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
+				while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
 					voitureDevant = list.get(list.indexOf(v)-f);
-					break;
-				case 2:
-					if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
-						while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-					} else {
-						while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-					}
-					break;
-				case 3:
-					switch (v.getDirectionDeVirage()) {
-					case 0:
-						while(voitureDevant.getDirectionDeVirage()!=0&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-						break;
-					case 1:
-						while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-						break;
-					case 2:
-						while(voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-					}
-					}
-				return voitureDevant;
+					f++;
+				}
+			} else {
+				while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
 			}
+			break;
+		case 3:
+			switch (v.getDirectionDeVirage()) {
+			case 0:
+				while(voitureDevant.getDirectionDeVirage()!=0&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+				break;
+			case 1:
+				while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+				break;
+			case 2:
+				while(voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+			}
+		}
+		return voitureDevant;
+	}
 	//Mamadou
 	/**
 	 * Méthode qui fait l'affichage a la console avec le temps precisé
@@ -1007,22 +1007,33 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		normalisationGaussienneTauxApparition();
 	}
 	//Mamadou
-		/**
-		 * Cette methode permet de changer la valeur du taux d'apparition de voitures
-		 * selon la loi de Gauss
-		 */
-		private void normalisationGaussienneTauxApparition() {
-			double tauxGauss; //Une valeur initiale quelconque < 0
-			do{
-				// Un objet Random
-		        Random ran = new Random(); 
-		        // ON genere un double selon la distribution gaussienne
-		        tauxGauss = ran.nextGaussian(); 
-		        tauxGauss = tauxGauss*DEVIATION_GAUSSIENNE+ tauxDApparitionMoyen;
-			}while(tauxGauss<=TAUX_GAUSS_MIN || tauxGauss >TAUX_GAUSS_MAX); // On ne veut pas un taux négatif, contrainte car fonction Gaussienne n'a pas de limite théorique
-			 //On change le taux d'apparition et ainsi le nombre de boucles pour chaque apparition
-	        this.setTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
-		}
+	/**
+	 * Cette methode permet de changer la valeur du taux d'apparition de voitures
+	 * selon la loi de Gauss
+	 */
+	private void normalisationGaussienneTauxApparition() {
+		double tauxGauss; //Une valeur initiale quelconque < 0
+		do{
+			// Un objet Random
+			Random ran = new Random(); 
+			// ON genere un double selon la distribution gaussienne
+			tauxGauss = ran.nextGaussian(); 
+			tauxGauss = tauxGauss*DEVIATION_GAUSSIENNE+ tauxDApparitionMoyen;
+		}while(tauxGauss<=TAUX_GAUSS_MIN || tauxGauss >TAUX_GAUSS_MAX); // On ne veut pas un taux négatif, contrainte car fonction Gaussienne n'a pas de limite théorique
+		//On change le taux d'apparition et ainsi le nombre de boucles pour chaque apparition
+		this.calculerTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
+	}
+	//Reiner 
+	/**
+	 * Méthode pour convertir le taux de voitures/secondes à nbBoucles/voitures
+	 * @param tauxParMinute le taux d'apparition en voitures/minutes
+	 */
+	private void calculerTauxDApparition(double tauxParMinute) {
+		double tauxParSeconde = tauxParMinute/60.0;
+		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
+		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
+		System.out.println("Nombre de boucle sleep avant une nouvelle voiture AVEC ALGO TEMPS: " + this.nbBouclesAvantNouvelleVoiture); //Test
+	}
 	//Mamadou
 	/**
 	 * Demarre le thread s'il n'est pas deja demarre
@@ -1110,10 +1121,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 	 */
 	public void setTauxDApparition(double tauxParMinute) {
 		double tauxParSeconde = tauxParMinute/60.0;
-		//this.tauxDApparitionMoyen = tauxParSeconde;
-		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
-		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
-		System.out.println("Nombre de boucle sleep avant une nouvelle voiture AVEC ALGO TEMPS: " + this.nbBouclesAvantNouvelleVoiture); //Test
+		this.tauxDApparitionMoyen = tauxParSeconde;
 	}
 	//Mamadou
 	/**
@@ -1305,113 +1313,113 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 			Voiture v = i.next();
 			//différence de l'autre méthode, on ignore les voitures qui ne sont pas présentes dans l'intersection
 			if(v.getVoitureActive()) {
-			tempsDArretTotale += v.getTempsDArret();
+				tempsDArretTotale += v.getTempsDArret();
 			}
 		}
 		tempsDArretMoyen = tempsDArretTotale/(double)nbVoituresGenerees;
 		return tempsDArretMoyen;
 	}
 	//Reiner
-		/**
-		 * Méthode qui calcule la densité de voitures sur une certaine longeur de route
-		 * @param list Collection de voitures 
-		 * @param longueurDeRoute Longeur de la route où les voitures se trouvent en metres
-		 * @return densité de voitures sur une longeur donnée en voiture/kilometre
-		 */
-		public double calculeDensite(ArrayList<Voiture> list, double longeurDeRoute) {
-			double nbVoituresTotales = 0;
-			for(Iterator<Voiture> i = list.iterator();i.hasNext();) {
-				Voiture v = i.next();
-				//on vérifie si la voiture est encore sur l'intersection
-				if(v.getVoitureActive()) {
-					//si oui, on l'ajoute au nombre de voitures totales
-					nbVoituresTotales++;
-				}
+	/**
+	 * Méthode qui calcule la densité de voitures sur une certaine longeur de route
+	 * @param list Collection de voitures 
+	 * @param longueurDeRoute Longeur de la route où les voitures se trouvent en metres
+	 * @return densité de voitures sur une longeur donnée en voiture/kilometre
+	 */
+	public double calculeDensite(ArrayList<Voiture> list, double longeurDeRoute) {
+		double nbVoituresTotales = 0;
+		for(Iterator<Voiture> i = list.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//on vérifie si la voiture est encore sur l'intersection
+			if(v.getVoitureActive()) {
+				//si oui, on l'ajoute au nombre de voitures totales
+				nbVoituresTotales++;
 			}
-			return nbVoituresTotales/(longeurDeRoute/1000.0);//on converti les metres en kilometres pour avoir une densité en voitures par kilometre
-			
 		}
-		//Reiner 
-		/**
-		 * Getter qui retourne la densité de voitures sur toute l'intersection
-		 * @return La densité de voitures sur toute l'intersection en voitures/kilometre;
-		 */
-		public double getDensiteTotale() {
-			return calculeDensite(this.voitures,this.LARGEUR_REELLE*4);//On calcule la densité avec toutes les voitures générés et la longeur totale des voies horizontales et verticales 
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction est
-		 * @return nbVoiesEst int le nombre de voies de direction est
-		 */
-		public int getNbVoiesEst() {
-			return nbVoiesEst;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction est
-		 * @param nbVoiesEst int le nombre de voies de direction est
-		 */
-		public void setNbVoiesEst(int nbVoiesEst) {
-			this.nbVoiesEst = nbVoiesEst;
-			repaint();
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction ouest
-		 * @return the nbVoiesOuest int le nombre de voies de direction ouest
-		 */
-		public int getNbVoiesOuest() {
-			return nbVoiesOuest;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction ouest
-		 * @param nbVoiesOuest int le nombre de voies de direction ouest
-		 */
-		public void setNbVoiesOuest(int nbVoiesOuest) {
-			this.nbVoiesOuest = nbVoiesOuest;
-			repaint();
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction sud
-		 * @return the nbVoiesSud le nombre de voies de direction sud
-		 */
-		public int getNbVoiesSud() {
-			return nbVoiesSud;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction sud
-		 * @param nbVoiesSud le nombre de voies de direction sud
-		 */
-		public void setNbVoiesSud(int nbVoiesSud) {
-			this.nbVoiesSud = nbVoiesSud;
-			repaint();
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction nord
-		 * @return the nbVoiesNord le nombre de voies de direction nord
-		 */
-		public int getNbVoiesNord() {
-			return nbVoiesNord;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction nord
-		 * @param nbVoiesNord le nombre de voies de direction nord
-		 */
-		public void setNbVoiesNord(int nbVoiesNord) {
-			this.nbVoiesNord = nbVoiesNord;
-			repaint();
-		}
-		//Mamadou
-		/**
-		 * Retourne le nombre de voitures generees
-		 */
-		public int getNombreVoituresGeneree() {
-			return(this.nbVoituresGenerees);
-		}
-		//Reiner
-		/**
-		 * Retoune le temps d'arrêt moyen de toutes les voitures sur l'intersection
-		 * @return le temps d'arrêt moyen de toutes les voitures sur l'intersection
-		 */
-		public double getTempsDArretMoyen() {
-			return this.calculeTempsDArretMoyen();
-		}
+		return nbVoituresTotales/(longeurDeRoute/1000.0);//on converti les metres en kilometres pour avoir une densité en voitures par kilometre
+
+	}
+	//Reiner 
+	/**
+	 * Getter qui retourne la densité de voitures sur toute l'intersection
+	 * @return La densité de voitures sur toute l'intersection en voitures/kilometre;
+	 */
+	public double getDensiteTotale() {
+		return calculeDensite(this.voitures,this.LARGEUR_REELLE*4);//On calcule la densité avec toutes les voitures générés et la longeur totale des voies horizontales et verticales 
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction est
+	 * @return nbVoiesEst int le nombre de voies de direction est
+	 */
+	public int getNbVoiesEst() {
+		return nbVoiesEst;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction est
+	 * @param nbVoiesEst int le nombre de voies de direction est
+	 */
+	public void setNbVoiesEst(int nbVoiesEst) {
+		this.nbVoiesEst = nbVoiesEst;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction ouest
+	 * @return the nbVoiesOuest int le nombre de voies de direction ouest
+	 */
+	public int getNbVoiesOuest() {
+		return nbVoiesOuest;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction ouest
+	 * @param nbVoiesOuest int le nombre de voies de direction ouest
+	 */
+	public void setNbVoiesOuest(int nbVoiesOuest) {
+		this.nbVoiesOuest = nbVoiesOuest;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction sud
+	 * @return the nbVoiesSud le nombre de voies de direction sud
+	 */
+	public int getNbVoiesSud() {
+		return nbVoiesSud;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction sud
+	 * @param nbVoiesSud le nombre de voies de direction sud
+	 */
+	public void setNbVoiesSud(int nbVoiesSud) {
+		this.nbVoiesSud = nbVoiesSud;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction nord
+	 * @return the nbVoiesNord le nombre de voies de direction nord
+	 */
+	public int getNbVoiesNord() {
+		return nbVoiesNord;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction nord
+	 * @param nbVoiesNord le nombre de voies de direction nord
+	 */
+	public void setNbVoiesNord(int nbVoiesNord) {
+		this.nbVoiesNord = nbVoiesNord;
+		repaint();
+	}
+	//Mamadou
+	/**
+	 * Retourne le nombre de voitures generees
+	 */
+	public int getNombreVoituresGeneree() {
+		return(this.nbVoituresGenerees);
+	}
+	//Reiner
+	/**
+	 * Retoune le temps d'arrêt moyen de toutes les voitures sur l'intersection
+	 * @return le temps d'arrêt moyen de toutes les voitures sur l'intersection
+	 */
+	public double getTempsDArretMoyen() {
+		return this.calculeTempsDArretMoyen();
+	}
 }
