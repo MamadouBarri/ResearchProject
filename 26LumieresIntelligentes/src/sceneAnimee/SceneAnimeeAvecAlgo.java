@@ -900,6 +900,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		Voiture voitureDevant = list.get(list.indexOf(v)-1);
 		int f = 1;
 		switch (nbVoies) {
+		case 1:
+			voitureDevant = list.get(list.indexOf(v)-f);
+			break;
 		case 2:
 			if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
 				while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
