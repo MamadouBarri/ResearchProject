@@ -1,6 +1,6 @@
 package aaplication;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,12 +10,10 @@ import sceneAnimee.SceneAnimee;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 import java.awt.SystemColor;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ButtonGroup;
@@ -34,6 +32,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 /**
  * JFrame qui permet l'utilisateur de modifier les paramètres de la simulation
  * @author Gayta//
@@ -41,8 +41,11 @@ import javax.swing.ImageIcon;
  */
 public class FenetreParametres extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private final ButtonGroup btngrpChoixDeTypeDeSimulation = new ButtonGroup();
 	private JSpinner spnVitesse;
 	private JSpinner spnTauxDApparition;
 	private JCheckBox chkbxTrfcAnom1;
@@ -92,7 +95,7 @@ public class FenetreParametres extends JFrame {
 	public FenetreParametres() {
 		setTitle("Modifier les param\u00E8tres de la simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1920/2-630/2, 1080/2-538/2, 630, 538);
+		setBounds(1920/2-630/2, 1080/2-538/2, 630, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -130,21 +133,23 @@ public class FenetreParametres extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Param\u00E8tres", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.scrollbar);
-		panel.setBounds(0, 0, 614, 480);
+		panel.setBounds(0, 0, 614, 542);
 		contentPane.add(panel);
 		
 		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
-		lblVitesseMoyenne.setBounds(6, 26, 123, 14);
+		lblVitesseMoyenne.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblVitesseMoyenne.setBounds(6, 94, 123, 14);
 		panel.add(lblVitesseMoyenne);
 		
 		JLabel lblNbVoitures = new JLabel("Nombre de voitures :");
-		lblNbVoitures.setBounds(6, 73, 123, 14);
+		lblNbVoitures.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblNbVoitures.setBounds(6, 141, 123, 14);
 		panel.add(lblNbVoitures);
 		
 		JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
-		lblTauxDApparition.setBounds(6, 124, 123, 14);
+		lblTauxDApparition.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblTauxDApparition.setBounds(6, 192, 123, 14);
 		panel.add(lblTauxDApparition);
 		
 		spnVitesse = new JSpinner();
@@ -154,10 +159,11 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnVitesse.setModel(new SpinnerNumberModel(60, 20, 100, 1));
-		spnVitesse.setBounds(113, 23, 48, 20);
+		spnVitesse.setBounds(113, 91, 48, 20);
 		panel.add(spnVitesse);
 		
 		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
+		chkbxTrfcAnom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		chkbxTrfcAnom.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -169,10 +175,11 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom.setBounds(6, 159, 112, 23);
+		chkbxTrfcAnom.setBounds(6, 227, 112, 23);
 		panel.add(chkbxTrfcAnom);
 		
 		chkbxTrfcAnom1 = new JCheckBox("Voie NORD");
+		chkbxTrfcAnom1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		chkbxTrfcAnom1.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom1.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -184,10 +191,11 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom1.setBounds(23, 194, 97, 23);
+		chkbxTrfcAnom1.setBounds(23, 262, 97, 23);
 		panel.add(chkbxTrfcAnom1);
 		
 		chkbxTrfcAnom2 = new JCheckBox("Voie OUEST");
+		chkbxTrfcAnom2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		chkbxTrfcAnom2.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom2.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -199,10 +207,11 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom2.setBounds(133, 194, 97, 23);
+		chkbxTrfcAnom2.setBounds(133, 262, 97, 23);
 		panel.add(chkbxTrfcAnom2);
 		
 		chkbxTrfcAnom3 = new JCheckBox("Voie SUD");
+		chkbxTrfcAnom3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		chkbxTrfcAnom3.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom3.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -214,10 +223,11 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom3.setBounds(23, 220, 97, 23);
+		chkbxTrfcAnom3.setBounds(23, 288, 97, 23);
 		panel.add(chkbxTrfcAnom3);
 		
 		chkbxTrfcAnom4 = new JCheckBox("Voie EST");
+		chkbxTrfcAnom4.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		chkbxTrfcAnom4.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom4.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -229,17 +239,19 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom4.setBounds(133, 220, 97, 23);
+		chkbxTrfcAnom4.setBounds(133, 288, 97, 23);
 		panel.add(chkbxTrfcAnom4);
 		
 		setEtatVoiesAnom(false);
 		
 		JLabel lblUnitesTauxDApparition = new JLabel("Voitures/Minute");
-		lblUnitesTauxDApparition.setBounds(171, 124, 126, 14);
+		lblUnitesTauxDApparition.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblUnitesTauxDApparition.setBounds(171, 192, 126, 14);
 		panel.add(lblUnitesTauxDApparition);
 		
 		JLabel lblUniteVitesse = new JLabel("km/h");
-		lblUniteVitesse.setBounds(171, 26, 46, 14);
+		lblUniteVitesse.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblUniteVitesse.setBounds(171, 94, 46, 14);
 		panel.add(lblUniteVitesse);
 		
 		spnTauxDApparition = new JSpinner();
@@ -249,38 +261,43 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(60, 30, 120, 1));
-		spnTauxDApparition.setBounds(113, 121, 48, 20);
+		spnTauxDApparition.setBounds(113, 189, 48, 20);
 		panel.add(spnTauxDApparition);
 		
 		JButton btnConfirmer = new JButton("Confirmer");
+		btnConfirmer.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		btnConfirmer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				leverEvenFenetreSimulationSansVideoVisible();
 			}
 		});
-		btnConfirmer.setBounds(243, 440, 105, 23);
+		btnConfirmer.setBounds(243, 508, 105, 23);
 		panel.add(btnConfirmer);
 		
 		SceneAnimee sceneAnimee = new SceneAnimee();
-		sceneAnimee.setBounds(345, 52, 200, 200);
+		sceneAnimee.setBounds(345, 120, 200, 200);
 		sceneAnimee.setTailleLum(50);
 		panel.add(sceneAnimee);
 		sceneAnimee.setLayout(null);
 		
 		JLabel lblVoieNord = new JLabel("Voies NORD");
-		lblVoieNord.setBounds(422, 5, 89, 14);
+		lblVoieNord.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblVoieNord.setBounds(419, 73, 89, 14);
 		panel.add(lblVoieNord);
 		
 		lblVoieEst = new JLabel("Voies EST");
-		lblVoieEst.setBounds(555, 132, 84, 14);
+		lblVoieEst.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblVoieEst.setBounds(553, 200, 84, 14);
 		panel.add(lblVoieEst);
 		
 		lblVoieOuest = new JLabel("Voies OUEST");
-		lblVoieOuest.setBounds(273, 132, 89, 14);
+		lblVoieOuest.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblVoieOuest.setBounds(275, 200, 89, 14);
 		panel.add(lblVoieOuest);
 		
 		lblVoieSud = new JLabel("Voies SUD");
-		lblVoieSud.setBounds(422, 284, 84, 14);
+		lblVoieSud.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblVoieSud.setBounds(422, 352, 84, 14);
 		panel.add(lblVoieSud);
 		
 		spnNbVoitures = new JSpinner();
@@ -291,10 +308,11 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoitures.setModel(new SpinnerNumberModel(60, 0, 150, 1));
-		spnNbVoitures.setBounds(139, 70, 48, 20);
+		spnNbVoitures.setBounds(139, 138, 48, 20);
 		panel.add(spnNbVoitures);
 		
-		JRadioButton rdbtnVoituresNormales = new JRadioButton("voitures normales");
+		JRadioButton rdbtnVoituresNormales = new JRadioButton("Voitures normales");
+		rdbtnVoituresNormales.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		rdbtnVoituresNormales.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				if(rdbtnVoituresNormales.isSelected()) {
@@ -307,10 +325,11 @@ public class FenetreParametres extends JFrame {
 		rdbtnVoituresNormales.setForeground(Color.BLACK);
 		rdbtnVoituresNormales.setSelected(true);
 		buttonGroup.add(rdbtnVoituresNormales);
-		rdbtnVoituresNormales.setBounds(28, 306, 147, 23);
+		rdbtnVoituresNormales.setBounds(28, 374, 147, 23);
 		panel.add(rdbtnVoituresNormales);
 		
-		JRadioButton rdbtnVoituresDeSport = new JRadioButton("voitures de sport");
+		JRadioButton rdbtnVoituresDeSport = new JRadioButton("Voitures de sport");
+		rdbtnVoituresDeSport.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		rdbtnVoituresDeSport.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(rdbtnVoituresDeSport.isSelected()) {
@@ -321,10 +340,11 @@ public class FenetreParametres extends JFrame {
 		});
 		rdbtnVoituresDeSport.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresDeSport);
-		rdbtnVoituresDeSport.setBounds(420, 306, 125, 23);
+		rdbtnVoituresDeSport.setBounds(420, 374, 125, 23);
 		panel.add(rdbtnVoituresDeSport);
 		
-		JRadioButton rdbtnVoituresClassiques = new JRadioButton("voitures classiques");
+		JRadioButton rdbtnVoituresClassiques = new JRadioButton("Voitures classiques");
+		rdbtnVoituresClassiques.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		rdbtnVoituresClassiques.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(rdbtnVoituresClassiques.isSelected()) {
@@ -335,26 +355,27 @@ public class FenetreParametres extends JFrame {
 		});
 		rdbtnVoituresClassiques.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		buttonGroup.add(rdbtnVoituresClassiques);
-		rdbtnVoituresClassiques.setBounds(220, 306, 141, 23);
+		rdbtnVoituresClassiques.setBounds(220, 374, 141, 23);
 		panel.add(rdbtnVoituresClassiques);
 		
 		JLabel lblImageVoitureNormal = new JLabel("New label");
 		lblImageVoitureNormal.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeNormal.jpg")));
-		lblImageVoitureNormal.setBounds(33, 335, 120, 70);
+		lblImageVoitureNormal.setBounds(33, 403, 120, 70);
 		panel.add(lblImageVoitureNormal);
 		
 		JLabel lblImageVoitureSport = new JLabel("New label");
 		lblImageVoitureSport.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeSport.jpg")));
-		lblImageVoitureSport.setBounds(425, 335, 120, 70);
+		lblImageVoitureSport.setBounds(425, 403, 120, 70);
 		panel.add(lblImageVoitureSport);
 		
 		JLabel lblImageVoitureClassique = new JLabel("New label");
 		lblImageVoitureClassique.setIcon(new ImageIcon(FenetreParametres.class.getResource("/icones/iconeClassique.jpg")));
-		lblImageVoitureClassique.setBounds(232, 335, 120, 70);
+		lblImageVoitureClassique.setBounds(232, 403, 120, 70);
 		panel.add(lblImageVoitureClassique);
 		
 		JLabel lblTypeDeVoiture = new JLabel("Type de Voiture :");
-		lblTypeDeVoiture.setBounds(23, 278, 112, 20);
+		lblTypeDeVoiture.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblTypeDeVoiture.setBounds(23, 346, 112, 20);
 		panel.add(lblTypeDeVoiture);
 		
 		spnNbVoiesNord = new JSpinner();
@@ -365,7 +386,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesNord.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesNord.setBounds(432, 20, 29, 20);
+		spnNbVoiesNord.setBounds(432, 88, 29, 20);
 		panel.add(spnNbVoiesNord);
 		
 		spnNbVoiesSud = new JSpinner();
@@ -376,7 +397,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesSud.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesSud.setBounds(432, 261, 29, 20);
+		spnNbVoiesSud.setBounds(432, 329, 29, 20);
 		panel.add(spnNbVoiesSud);
 		
 		spnNbVoiesEst = new JSpinner();
@@ -387,7 +408,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesEst.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesEst.setBounds(560, 149, 29, 20);
+		spnNbVoiesEst.setBounds(560, 217, 29, 20);
 		panel.add(spnNbVoiesEst);
 		
 		spnNbVoiesOuest = new JSpinner();
@@ -398,8 +419,14 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoiesOuest.setModel(new SpinnerNumberModel(1, 1, 3, 1));
-		spnNbVoiesOuest.setBounds(295, 149, 29, 20);
+		spnNbVoiesOuest.setBounds(295, 217, 29, 20);
 		panel.add(spnNbVoiesOuest);
+		
+		JLabel lblParametres = new JLabel("Param\u00E8tres");
+		lblParametres.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 29));
+		lblParametres.setHorizontalAlignment(SwingConstants.CENTER);
+		lblParametres.setBounds(133, 11, 330, 50);
+		panel.add(lblParametres);
 	}
 	//Reiner
 	/**
