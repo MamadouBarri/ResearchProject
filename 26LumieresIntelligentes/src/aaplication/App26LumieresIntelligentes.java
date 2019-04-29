@@ -179,12 +179,13 @@ public class App26LumieresIntelligentes extends JFrame {
 		
 		JLabel lblTitre = new JLabel("Lumi\u00E8res intelligentes");
 		lblTitre.setForeground(Color.yellow);
-		lblTitre.setFont(new Font("Tahoma", Font.PLAIN, 36));
+		lblTitre.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 36));
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setBounds(39, 26, 568, 110);
 		contentPane.add(lblTitre);
 		
 		JButton btnDepart = new JButton("Commencer");
+		btnDepart.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		btnDepart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parametres.setVisible(true);
@@ -195,6 +196,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(btnDepart);
 		
 		JButton btnInstructions = new JButton("Guide d'utilisation");
+		btnInstructions.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		btnInstructions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				instructions.setVisible(true);
@@ -205,6 +207,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(btnInstructions);
 		
 		JButton btnConceptsScientifiques = new JButton("Concepts Scientifiques");
+		btnConceptsScientifiques.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		btnConceptsScientifiques.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				concepts.setVisible(true);
@@ -215,6 +218,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(btnConceptsScientifiques);
 		
 		JButton btnQuitter = new JButton("Quitter");
+		btnQuitter.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		btnQuitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
@@ -224,6 +228,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.add(btnQuitter);
 		
 		JButton btnAPropos = new JButton("\u00C0 propos");
+		btnAPropos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		btnAPropos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null, "Auteurs : Mamadou Barri et Reiner Luis Gayta\n"+"Date de création : 29 avril 2019\n"+"Cette application a été conçue dans le cadre du cours SCD");

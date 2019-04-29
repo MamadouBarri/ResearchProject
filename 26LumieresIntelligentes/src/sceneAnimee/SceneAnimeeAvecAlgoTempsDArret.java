@@ -175,7 +175,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
 		lumEst.dessiner(g2d, mat);
 	}
-	//Mamadou et Reiner
+	//Mamadou 
 	/**
 	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST
 	 */
@@ -254,7 +254,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 						 */
 						v.setVoitureArretee(false);
 						//
-						System.out.println("ON ACCELERE !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 
 					//if(!voitureDevant.getVoitureAccelere() && !voitureDevant.getVoitureArretee() && (lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE)) { 
@@ -326,7 +325,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
 						v.setVoitureRalentit(true);
-						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 
 
@@ -371,7 +369,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					//La voiture est assez proche donc doit ralentir
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
 						v.setVoitureRalentit(true);
-						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 
 				}
@@ -417,7 +414,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					//La voiture est assez proche donc doit ralentir
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
 						v.setVoitureRalentit(true);
-						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 				}
 			}
@@ -475,7 +471,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					//On met dans la liste à chaque seconde
 					moyenneDesVitesse.add((int)moyenneDesVitesses);
 					//On ajoute la valeur dans la liste
-					System.out.println("voitures en attente : " + voituresEnAttenteTotal);
 					nbVoituresEnAttente.add(voituresEnAttenteTotal);
 					tempsDArretMoyen.add(this.calculeTempsDArretMoyen());
 					densiteVoitures.add(calculeDensite(voitures, this.LARGEUR_REELLE*4));//On fait LARGEUR_REELLE*4, car il y a 4 voies dans l'intersection
@@ -617,7 +612,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 			}
 
 		}//fin while
-		System.out.println("Le thread est mort...");
 	}
 	//Mamadou
 	/**
@@ -628,10 +622,8 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		if(direction=='e') {
 			iTemp = 1;
 		}
-		System.out.println("VOITURE ACCELERE");
 		v.setXVoiture((v.getXVoiture() + iTemp *deplacement - iTemp *deplacement*v.getCompteurTemp()*0.009 ));
 		v.setCompteurTemp(v.getCompteurTemp()-1);
-		System.out.println(v.getCompteurTemp());
 		if(v.getCompteurTemp()==0) {
 			v.setAccelTerminee(true);
 			v.setVoitureArretee(false);
@@ -648,10 +640,8 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		if(direction=='s') {
 			iTemp = 1;
 		}
-		System.out.println("VOITURE ACCELERE");
 		v.setYVoiture((v.getYVoiture() + iTemp * deplacement - iTemp * deplacement*v.getCompteurTemp()*0.009 ));
 		v.setCompteurTemp(v.getCompteurTemp()-1);
-		System.out.println(v.getCompteurTemp());
 		if(v.getCompteurTemp()==0) {
 			v.setAccelTerminee(true);
 			v.setVoitureArretee(false);
@@ -670,10 +660,8 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		if(direction=='e') {
 			iTemp = 1;
 		}
-		System.out.println("VOITURE RALENTI");
 		v.setXVoiture((v.getXVoiture() + iTemp *deplacement*v.getCompteurTemp()*0.009 ));
 		v.setCompteurTemp(v.getCompteurTemp()-1);
-		System.out.println(v.getCompteurTemp());
 		if(v.getCompteurTemp()==0) {
 			v.setVoitureArretee(true);
 			v.setVoitureRalentit(false);
@@ -691,10 +679,8 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		if(direction=='s') {
 			iTemp = 1;
 		}
-		System.out.println("VOITURE RALENTI");
 		v.setYVoiture((v.getYVoiture() + iTemp*deplacement*v.getCompteurTemp()*0.009 ));
 		v.setCompteurTemp(v.getCompteurTemp()-1);
-		System.out.println(v.getCompteurTemp());
 		if(v.getCompteurTemp()==0) {
 			v.setVoitureArretee(true);
 			v.setVoitureRalentit(false);
@@ -1046,7 +1032,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					//La voiture commence sa rotation après avoir dépassé sa lumiere
 					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
 						v.setEnRotation(true);
-						//System.out.println("I WANNA TURN");
 					}
 					//La voiture commence graduellement à avancer vers sa nouvelle direction 
 					if(v.getEnRotation()) {
@@ -1305,7 +1290,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date maintenant = new Date();
 		String strDate = sdfDate.format(maintenant);
-		System.out.println("[" + strDate + "] " + affichage);
 	}
 	//Mamadou
 	/**
@@ -1366,7 +1350,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		double tauxParSeconde = tauxParMinute/60.0;
 		double periodeApparition = 1.0/tauxParSeconde * this.UNE_SECONDE_EN_MILLISECONDE; //On passe de la fréquence d'apparition au temps (période)
 		this.nbBouclesAvantNouvelleVoiture = (int)(periodeApparition/tempsDuSleep); //On calcule le nombre de boucle avant une nouvelle voiture avecle tempsDuSleep
-		System.out.println("Nombre de boucle sleep avant une nouvelle voiture AVEC ALGO TEMPS: " + this.nbBouclesAvantNouvelleVoiture); //Test
 	}
 	//Mamadou
 	/**

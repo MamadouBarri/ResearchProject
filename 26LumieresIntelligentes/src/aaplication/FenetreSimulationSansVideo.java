@@ -33,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 /**
  * JFrame qui compare notre algorithme à une intersection normale dans la vraie vie
  * avec une video d'une intersection et des simulations
@@ -172,6 +173,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		pnSimulations.setLayout(null);
 
 		JLabel lblSimulationSansLAlgorithme = new JLabel("Lumi\u00E8res bas\u00E9es sur le temps");
+		lblSimulationSansLAlgorithme.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblSimulationSansLAlgorithme.setBounds(224, 11, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 
@@ -233,7 +235,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 		fenStats.setVisible(false);
 		
 		
-		JLabel lblSimulationAvecLalgorithme = new JLabel("Smart Traffic Light Schedualing algorithm based on traffic Density");
+		JLabel lblSimulationAvecLalgorithme = new JLabel("Feux de circulation bas\u00E9s sur la densit\u00E9 de voitures\r\n");
+		lblSimulationAvecLalgorithme.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblSimulationAvecLalgorithme.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSimulationAvecLalgorithme.setBounds(742, 11, 386, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithme);
@@ -242,77 +245,96 @@ public class FenetreSimulationSansVideo extends JFrame {
 		sceneAnimee3.setBounds(1282, 50, 600, 600);
 		pnSimulations.add(sceneAnimee3);
 		
-		JLabel lblSimulationAvecLalgorithmeTempsDArret = new JLabel("Smart Traffic Light Schedualing algorithm based on traffic Density and delay Time");
+		JLabel lblSimulationAvecLalgorithmeTempsDArret = new JLabel("Feux de circulation bas\u00E9s sur la densit\u00E9 et le temps d'arr\u00EAt des voitures");
+		lblSimulationAvecLalgorithmeTempsDArret.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		lblSimulationAvecLalgorithmeTempsDArret.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSimulationAvecLalgorithmeTempsDArret.setBounds(1360, 11, 505, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithmeTempsDArret);
 		
 		lblStlsd = new JLabel("(STLSD)");
+		lblStlsd.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblStlsd.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStlsd.setBounds(746, 25, 386, 14);
 		pnSimulations.add(lblStlsd);
 		
 		lblstlsdt = new JLabel("(STLSDT)");
+		lblstlsdt.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblstlsdt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblstlsdt.setBounds(1373, 25, 416, 14);
 		pnSimulations.add(lblstlsdt);
 		
 		lblNombreDeVoitures = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
+		lblNombreDeVoitures.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblNombreDeVoitures.setBounds(88, 741, 281, 28);
 		contentPane.add(lblNombreDeVoitures);
 		
 		lblNombreDeVoitures2 = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
+		lblNombreDeVoitures2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblNombreDeVoitures2.setBounds(687, 741, 286, 28);
 		contentPane.add(lblNombreDeVoitures2);
 		
 		lblNombreDeVoitures3 = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
+		lblNombreDeVoitures3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblNombreDeVoitures3.setBounds(1323, 741, 275, 28);
 		contentPane.add(lblNombreDeVoitures3);
 		
 		lblVitesseMoyenne2 = new JLabel("Vitesse moyenne:\r\n");
+		lblVitesseMoyenne2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblVitesseMoyenne2.setBounds(687, 770, 286, 28);
 		contentPane.add(lblVitesseMoyenne2);
 		
 		lblVitesseMoyenne3 = new JLabel("Vitesse moyenne:");
+		lblVitesseMoyenne3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblVitesseMoyenne3.setBounds(1323, 770, 286, 28);
 		contentPane.add(lblVitesseMoyenne3);
 		
 		lblVitesseMoyenne1 = new JLabel("Vitesse moyenne:\r\n");
+		lblVitesseMoyenne1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblVitesseMoyenne1.setBounds(88, 770, 286, 28);
 		contentPane.add(lblVitesseMoyenne1);
 		
 		lblNombreVoituresGenerees1 = new JLabel("Nombre de voitures pass\u00E9es:");
+		lblNombreVoituresGenerees1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblNombreVoituresGenerees1.setBounds(88, 798, 286, 28);
 		contentPane.add(lblNombreVoituresGenerees1);
 		
 		lblNombreVoituresGenerees2 = new JLabel("Nombre de voitures pass\u00E9es:");
+		lblNombreVoituresGenerees2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblNombreVoituresGenerees2.setBounds(687, 798, 286, 28);
 		contentPane.add(lblNombreVoituresGenerees2);
 		
 		lblNombreVoituresGenerees3 = new JLabel("Nombre de voitures pass\u00E9es:");
+		lblNombreVoituresGenerees3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblNombreVoituresGenerees3.setBounds(1323, 798, 286, 28);
 		contentPane.add(lblNombreVoituresGenerees3);
 		
 		lblTempsDArret1 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
+		lblTempsDArret1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblTempsDArret1.setBounds(88, 708, 281, 28);
 		contentPane.add(lblTempsDArret1);
 		
 		lblDensite1 = new JLabel("Densit\u00E9 du trafic :\r\n");
+		lblDensite1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblDensite1.setBounds(88, 676, 281, 28);
 		contentPane.add(lblDensite1);
 		
 		lblDensite2 = new JLabel("Densit\u00E9 du trafic :\r\n");
+		lblDensite2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblDensite2.setBounds(687, 676, 281, 28);
 		contentPane.add(lblDensite2);
 		
 		lblTempsDArret2 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
+		lblTempsDArret2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblTempsDArret2.setBounds(687, 708, 281, 28);
 		contentPane.add(lblTempsDArret2);
 		
 		lblDensite3 = new JLabel("Densit\u00E9 du trafic :\r\n");
+		lblDensite3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblDensite3.setBounds(1323, 676, 281, 28);
 		contentPane.add(lblDensite3);
 		
 		lblTempsDArret3 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
+		lblTempsDArret3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		lblTempsDArret3.setBounds(1323, 708, 281, 28);
 		contentPane.add(lblTempsDArret3);
 		
@@ -323,6 +345,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		pnParamètres.setLayout(null);
 		
 				JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
+				lblVitesseMoyenne.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 				lblVitesseMoyenne.setBounds(10, 45, 123, 14);
 				pnParamètres.add(lblVitesseMoyenne);
 				
@@ -344,6 +367,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 						spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), new Integer(0), null, new Integer(1)));
 						
 								JLabel lblKmParHeure = new JLabel("km/h");
+								lblKmParHeure.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 								lblKmParHeure.setBounds(175, 45, 46, 14);
 								pnParamètres.add(lblKmParHeure);
 								
@@ -356,23 +380,26 @@ public class FenetreSimulationSansVideo extends JFrame {
 												sceneAnimee1.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 												sceneAnimee2.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 												sceneAnimee3.setTauxDApparition((Integer)spnTauxDApparition.getValue());
-												//System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
 											}
 										});
 										spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
 										
 												JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
+												lblTauxDApparition.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 												lblTauxDApparition.setBounds(11, 94, 123, 14);
 												pnParamètres.add(lblTauxDApparition);
 												
 														JLabel lblVoituresParMinute = new JLabel("Voitures/Minute");
+														lblVoituresParMinute.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 														lblVoituresParMinute.setBounds(176, 94, 126, 14);
 														pnParamètres.add(lblVoituresParMinute);
 														JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
+														lblNombreDeVoituresAGenerer.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 														lblNombreDeVoituresAGenerer.setBounds(627, 135, 214, 14);
 														pnParamètres.add(lblNombreDeVoituresAGenerer);
 														
 																chkbxVoie3 = new JCheckBox("Voie SUD");
+																chkbxVoie3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 																chkbxVoie3.setBounds(666, 85, 97, 23);
 																pnParamètres.add(chkbxVoie3);
 																chkbxVoie3.addActionListener(new ActionListener() {
@@ -387,6 +414,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 																chkbxVoie3.setEnabled(false);
 																
 																		chkbxVoie4 = new JCheckBox("Voie EST");
+																		chkbxVoie4.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 																		chkbxVoie4.setBounds(776, 85, 97, 23);
 																		pnParamètres.add(chkbxVoie4);
 																		chkbxVoie4.addActionListener(new ActionListener() {
@@ -401,6 +429,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 																		chkbxVoie4.setEnabled(false);
 																		
 																				chkbxVoie2 = new JCheckBox("Voie OUEST");
+																				chkbxVoie2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 																				chkbxVoie2.setBounds(776, 59, 97, 23);
 																				pnParamètres.add(chkbxVoie2);
 																				chkbxVoie2.addActionListener(new ActionListener() {
@@ -415,6 +444,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 																				chkbxVoie2.setEnabled(false);
 																				
 																						chkbxVoie1 = new JCheckBox("Voie NORD");
+																						chkbxVoie1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 																						chkbxVoie1.setBounds(666, 59, 97, 23);
 																						pnParamètres.add(chkbxVoie1);
 																						chkbxVoie1.addActionListener(new ActionListener() {
@@ -429,7 +459,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 																						chkbxVoie1.setEnabled(false);
 																						
 																								chkbxTraficAnormal = new JCheckBox("Trafic anormal (augmentation du flux)");
-																								chkbxTraficAnormal.setBounds(649, 24, 224, 23);
+																								chkbxTraficAnormal.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+																								chkbxTraficAnormal.setBounds(627, 24, 260, 23);
 																								pnParamètres.add(chkbxTraficAnormal);
 																								
 																										JPanel pnEmplacementsDesBoutons = new JPanel();
@@ -686,7 +717,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 	 */
 	public void setNombreDeVoituresMax(int nbVoitures) {
 		this.nbVoituresMax = nbVoitures;
-		System.out.println("Le nombre de voitures générées sera : " + nbVoitures);
 		sceneAnimee1.setNbVoituresMax(nbVoitures);
 		sceneAnimee2.setNbVoituresMax(nbVoitures);
 		sceneAnimee3.setNbVoituresMax(nbVoitures);

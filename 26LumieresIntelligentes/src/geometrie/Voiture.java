@@ -148,7 +148,6 @@ public class Voiture implements Dessinable {
 		genererImageVoitre();
 		URL fichVoiture;
 		if(typeImages == 0) {
-			System.out.println("on genere voiture normal");
 			fichVoiture = getClass().getClassLoader().getResource(numImage +".jpg");
 		}else if(typeImages == 1) {
 			fichVoiture = getClass().getClassLoader().getResource("sport" + numImage +".jpg");
@@ -366,7 +365,6 @@ public class Voiture implements Dessinable {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date maintenant = new Date();
 		String strDate = sdfDate.format(maintenant);
-		System.out.println("[" + strDate + "] " + affichage);
 	}
 	//Mamadou
 	/**

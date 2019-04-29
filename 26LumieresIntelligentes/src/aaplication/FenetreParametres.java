@@ -499,7 +499,6 @@ public class FenetreParametres extends JFrame {
 		 */
 	private void leverEvenGetParams() {
 		for(ResultatsFenParamListener ecout : listeEcouteursDeParam) {
-			System.out.println("on leve evenement");
 			ecout.typeImages(typeImages);
 			ecout.VitesseDesVoitures((Integer)spnVitesse.getValue());
 			ecout.NombreDeVoituresAGenerer((Integer)spnNbVoitures.getValue());
@@ -513,7 +512,6 @@ public class FenetreParametres extends JFrame {
 			if(chkbxTrfcAnom1.isSelected()||chkbxTrfcAnom2.isSelected()||chkbxTrfcAnom3.isSelected()||chkbxTrfcAnom4.isSelected()) {
 			ecout.setVoiesAvecTraficAnormal(tabTrafficAnom);
 			}
-			System.out.println(listeEcouteursDeParam.size());
 		}
 	}
 }

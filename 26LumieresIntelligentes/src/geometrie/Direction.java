@@ -120,10 +120,6 @@ public class Direction  {
 			}
 			//assure qu'on ne peut pas avoir plus que 4 voies anormales
 			nbVoiesNormales--;
-			System.out.println("prob1: " + probVoie1+"/"+probabiliteTotale);
-			System.out.println("prob2: " + probVoie2+"/"+probabiliteTotale);
-			System.out.println("prob3: " + probVoie3+"/"+probabiliteTotale);
-			System.out.println("prob4: " + probVoie4+"/"+probabiliteTotale);
 		}
 	}
 	//Reiner
@@ -158,10 +154,6 @@ public class Direction  {
 			//assure qu'on ne peut pas avoir plus que 4 voies normales
 			nbVoiesNormales++;
 		}
-		System.out.println("prob1: " + probVoie1/probabiliteTotale);
-		System.out.println("prob2: " + probVoie2/probabiliteTotale);
-		System.out.println("prob3: " + probVoie3/probabiliteTotale);
-		System.out.println("prob4: " + probVoie4/probabiliteTotale);
 	}
 	//Reiner
 	/**
