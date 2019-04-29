@@ -93,6 +93,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private JLabel lblTempsDArret3;
 	private JLabel lblStlsd;
 	private JLabel lblstlsdt;
+	private JPanel pnParamètres;
 
 	/**
 	 * Launch the application.
@@ -256,228 +257,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 		lblstlsdt.setBounds(1373, 25, 416, 14);
 		pnSimulations.add(lblstlsdt);
 
-		JLabel lblVideo = new JLabel("Param\u00E8tres");
-		lblVideo.setBounds(762, 855, 123, 14);
-		contentPane.add(lblVideo);
-
-		JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
-		lblVitesseMoyenne.setBounds(762, 904, 123, 14);
-		contentPane.add(lblVitesseMoyenne);
-
-		spnVitesse = new JSpinner();
-		spnVitesse.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				if(!spnVitesse.getValue().equals(null)) {
-					double VitesseKmParHeure = (Integer)spnVitesse.getValue();
-					//convertir les km/h en m/s (1m/s = (1km/h)*(1000m/km)/(3600s/h)
-					double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
-					sceneAnimee1.setVitesse((int)VitesseMParSeconde);
-					sceneAnimee2.setVitesse((int)VitesseMParSeconde);
-					sceneAnimee3.setVitesse((int)VitesseMParSeconde);
-				}
-			}
-		});
-		spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), new Integer(0), null, new Integer(1)));
-		spnVitesse.setBounds(869, 901, 48, 20);
-		contentPane.add(spnVitesse);
-
-		JLabel lblKmParHeure = new JLabel("km/h");
-		lblKmParHeure.setBounds(927, 904, 46, 14);
-		contentPane.add(lblKmParHeure);
-
-		JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
-		lblTauxDApparition.setBounds(763, 953, 123, 14);
-		contentPane.add(lblTauxDApparition);
-
-		spnTauxDApparition = new JSpinner();
-		spnTauxDApparition.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				//On modifie le taux pour les deux fenêtres d'animation ainsi que le nombre de voitures dans le même écouteur
-				sceneAnimee1.setTauxDApparition((Integer)spnTauxDApparition.getValue());
-				sceneAnimee2.setTauxDApparition((Integer)spnTauxDApparition.getValue());
-				sceneAnimee3.setTauxDApparition((Integer)spnTauxDApparition.getValue());
-				//System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
-			}
-		});
-		spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
-		spnTauxDApparition.setBounds(870, 950, 48, 20);
-		contentPane.add(spnTauxDApparition);
-
-		JLabel lblVoituresParMinute = new JLabel("Voitures/Minute");
-		lblVoituresParMinute.setBounds(928, 953, 126, 14);
-		contentPane.add(lblVoituresParMinute);
-
-		chkbxVoie3 = new JCheckBox("Voie SUD");
-		chkbxVoie3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(chkbxVoie3.isSelected()) {
-					setTrafficAnormal(3);
-				}else {
-					setTrafficNormal(3);
-				}
-			}
-		});
-		chkbxVoie3.setEnabled(false);
-		chkbxVoie3.setBounds(1081, 916, 97, 23);
-		contentPane.add(chkbxVoie3);
-
-		chkbxVoie4 = new JCheckBox("Voie EST");
-		chkbxVoie4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(chkbxVoie4.isSelected()) {
-					setTrafficAnormal(4);
-				}else {
-					setTrafficNormal(4);
-				}
-			}
-		});
-		chkbxVoie4.setEnabled(false);
-		chkbxVoie4.setBounds(1191, 916, 97, 23);
-		contentPane.add(chkbxVoie4);
-
-		chkbxVoie2 = new JCheckBox("Voie OUEST");
-		chkbxVoie2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(chkbxVoie2.isSelected()) {
-					setTrafficAnormal(2);
-				}else {
-					setTrafficNormal(2);
-				}
-			}
-		});
-		chkbxVoie2.setEnabled(false);
-		chkbxVoie2.setBounds(1191, 890, 97, 23);
-		contentPane.add(chkbxVoie2);
-
-		chkbxVoie1 = new JCheckBox("Voie NORD");
-		chkbxVoie1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(chkbxVoie1.isSelected()) {
-					setTrafficAnormal(1);
-				} else {
-					setTrafficNormal(1);
-				}
-			}
-		});
-		chkbxVoie1.setEnabled(false);
-		chkbxVoie1.setBounds(1081, 890, 97, 23);
-		contentPane.add(chkbxVoie1);
-
-		chkbxTraficAnormal = new JCheckBox("Trafic anormal");
-		chkbxTraficAnormal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(chkbxTraficAnormal.isSelected()) {
-					sceneAnimee1.setTrafficAnormale(true);
-					sceneAnimee2.setTrafficAnormale(true);
-					sceneAnimee3.setTrafficAnormale(true);
-					chkbxVoie3.setEnabled(true);
-					if(chkbxVoie3.isSelected()) {
-						setTrafficAnormal(3);
-					}
-					chkbxVoie4.setEnabled(true);
-					if(chkbxVoie4.isSelected()) {
-						setTrafficAnormal(4);
-					}
-					chkbxVoie2.setEnabled(true);
-					if(chkbxVoie2.isSelected()) {
-						setTrafficAnormal(2);
-					}
-					chkbxVoie1.setEnabled(true);
-					if(chkbxVoie1.isSelected()) {
-						setTrafficAnormal(1);
-					}
-				} else {
-					sceneAnimee1.setTrafficAnormale(false);
-					sceneAnimee2.setTrafficAnormale(false);
-					sceneAnimee3.setTrafficAnormale(false);
-					chkbxVoie3.setEnabled(false);
-					if(chkbxVoie3.isSelected()) {
-						setTrafficNormal(3);
-					}
-					chkbxVoie4.setEnabled(false);
-					if(chkbxVoie4.isSelected()) {
-						setTrafficNormal(4);
-					}
-					chkbxVoie2.setEnabled(false);
-					if(chkbxVoie2.isSelected()) {
-						setTrafficNormal(2);
-					}
-					chkbxVoie1.setEnabled(false);
-					if(chkbxVoie1.isSelected()) {
-						setTrafficNormal(1);
-					}
-				}
-			}
-		});
-		chkbxTraficAnormal.setBounds(1064, 855, 112, 23);
-		contentPane.add(chkbxTraficAnormal);
-
-		JPanel pnEmplacementsDesBoutons = new JPanel();
-		pnEmplacementsDesBoutons.setBounds(290, 894, 350, 103);
-		contentPane.add(pnEmplacementsDesBoutons);
-		pnEmplacementsDesBoutons.setForeground(Color.BLACK);
-		pnEmplacementsDesBoutons.setBackground(Color.WHITE);
-		pnEmplacementsDesBoutons.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Boutons ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnEmplacementsDesBoutons.setLayout(null);
-
-		JButton btnAnimer = new JButton(new ImageIcon(urlAnimer));
-		btnAnimer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//On fait juste une scene pour l'instant
-				sceneAnimee1.demarrer();
-				sceneAnimee2.demarrer();
-				sceneAnimee3.demarrer();
-				//sceneAnimee2.demarrer();
-			}
-		});
-		btnAnimer.setBounds(10, 16, 76, 76);
-		pnEmplacementsDesBoutons.add(btnAnimer);
-
-		JButton btnPause = new JButton(new ImageIcon(urlPause));
-		btnPause.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(sceneAnimee1.getEnCoursDAnimation()) {
-				sceneAnimee1.arreter();
-				sceneAnimee2.arreter();
-				sceneAnimee3.arreter();
-				}
-			}
-		});
-		btnPause.setBounds(96, 16, 76, 76);
-		pnEmplacementsDesBoutons.add(btnPause);
-
-		JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
-		btnProchainImage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(sceneAnimee1.getEnCoursDAnimation()) {
-					sceneAnimee1.arreter();
-					sceneAnimee2.arreter();
-					sceneAnimee3.arreter();
-					} else {
-						sceneAnimee1.prochainImage();
-						sceneAnimee2.prochainImage();
-						sceneAnimee3.prochainImage();
-					}
-				}
-		});
-		btnProchainImage.setBounds(182, 16, 76, 76);
-		pnEmplacementsDesBoutons.add(btnProchainImage);
-
-		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
-		btnRecommencer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				sceneAnimee1.reinitialiser();
-				sceneAnimee2.reinitialiser();
-				sceneAnimee3.reinitialiser();
-				
-			}
-		});//À CHANGER 
-		btnRecommencer.setBounds(268, 16, 76, 76);
-		pnEmplacementsDesBoutons.add(btnRecommencer);
-		JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
-		lblNombreDeVoituresAGenerer.setBounds(1064, 966, 214, 14);
-		contentPane.add(lblNombreDeVoituresAGenerer);
-
 		nbVoituresAGenerer = new JLabel("");
 		nbVoituresAGenerer.setBounds(1280, 966, 48, 14);
 		contentPane.add(nbVoituresAGenerer);
@@ -541,6 +320,230 @@ public class FenetreSimulationSansVideo extends JFrame {
 		lblTempsDArret3 = new JLabel("Temps d'arr\u00EAt moyen :\r\n");
 		lblTempsDArret3.setBounds(1323, 708, 281, 28);
 		contentPane.add(lblTempsDArret3);
+		
+		pnParamètres = new JPanel();
+		pnParamètres.setBorder(new TitledBorder(null, "Param\u00E8tres", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnParamètres.setBounds(522, 837, 893, 160);
+		contentPane.add(pnParamètres);
+		pnParamètres.setLayout(null);
+		
+				JLabel lblVitesseMoyenne = new JLabel("Vitesse moyenne :");
+				lblVitesseMoyenne.setBounds(10, 45, 123, 14);
+				pnParamètres.add(lblVitesseMoyenne);
+				
+						spnVitesse = new JSpinner();
+						spnVitesse.setBounds(117, 42, 48, 20);
+						pnParamètres.add(spnVitesse);
+						spnVitesse.addChangeListener(new ChangeListener() {
+							public void stateChanged(ChangeEvent arg0) {
+								if(!spnVitesse.getValue().equals(null)) {
+									double VitesseKmParHeure = (Integer)spnVitesse.getValue();
+									//convertir les km/h en m/s (1m/s = (1km/h)*(1000m/km)/(3600s/h)
+									double VitesseMParSeconde = VitesseKmParHeure*1000.0/3600.0;
+									sceneAnimee1.setVitesse((int)VitesseMParSeconde);
+									sceneAnimee2.setVitesse((int)VitesseMParSeconde);
+									sceneAnimee3.setVitesse((int)VitesseMParSeconde);
+								}
+							}
+						});
+						spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), new Integer(0), null, new Integer(1)));
+						
+								JLabel lblKmParHeure = new JLabel("km/h");
+								lblKmParHeure.setBounds(175, 45, 46, 14);
+								pnParamètres.add(lblKmParHeure);
+								
+										spnTauxDApparition = new JSpinner();
+										spnTauxDApparition.setBounds(118, 91, 48, 20);
+										pnParamètres.add(spnTauxDApparition);
+										spnTauxDApparition.addChangeListener(new ChangeListener() {
+											public void stateChanged(ChangeEvent arg0) {
+												//On modifie le taux pour les deux fenêtres d'animation ainsi que le nombre de voitures dans le même écouteur
+												sceneAnimee1.setTauxDApparition((Integer)spnTauxDApparition.getValue());
+												sceneAnimee2.setTauxDApparition((Integer)spnTauxDApparition.getValue());
+												sceneAnimee3.setTauxDApparition((Integer)spnTauxDApparition.getValue());
+												//System.out.println("Nouveau taux d'apparition : " + (Integer)spnTauxDApparition.getValue());
+											}
+										});
+										spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
+										
+												JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
+												lblTauxDApparition.setBounds(11, 94, 123, 14);
+												pnParamètres.add(lblTauxDApparition);
+												
+														JLabel lblVoituresParMinute = new JLabel("Voitures/Minute");
+														lblVoituresParMinute.setBounds(176, 94, 126, 14);
+														pnParamètres.add(lblVoituresParMinute);
+														JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
+														lblNombreDeVoituresAGenerer.setBounds(649, 135, 214, 14);
+														pnParamètres.add(lblNombreDeVoituresAGenerer);
+														
+																chkbxVoie3 = new JCheckBox("Voie SUD");
+																chkbxVoie3.setBounds(666, 85, 97, 23);
+																pnParamètres.add(chkbxVoie3);
+																chkbxVoie3.addActionListener(new ActionListener() {
+																	public void actionPerformed(ActionEvent arg0) {
+																		if(chkbxVoie3.isSelected()) {
+																			setTrafficAnormal(3);
+																		}else {
+																			setTrafficNormal(3);
+																		}
+																	}
+																});
+																chkbxVoie3.setEnabled(false);
+																
+																		chkbxVoie4 = new JCheckBox("Voie EST");
+																		chkbxVoie4.setBounds(776, 85, 97, 23);
+																		pnParamètres.add(chkbxVoie4);
+																		chkbxVoie4.addActionListener(new ActionListener() {
+																			public void actionPerformed(ActionEvent arg0) {
+																				if(chkbxVoie4.isSelected()) {
+																					setTrafficAnormal(4);
+																				}else {
+																					setTrafficNormal(4);
+																				}
+																			}
+																		});
+																		chkbxVoie4.setEnabled(false);
+																		
+																				chkbxVoie2 = new JCheckBox("Voie OUEST");
+																				chkbxVoie2.setBounds(776, 59, 97, 23);
+																				pnParamètres.add(chkbxVoie2);
+																				chkbxVoie2.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent arg0) {
+																						if(chkbxVoie2.isSelected()) {
+																							setTrafficAnormal(2);
+																						}else {
+																							setTrafficNormal(2);
+																						}
+																					}
+																				});
+																				chkbxVoie2.setEnabled(false);
+																				
+																						chkbxVoie1 = new JCheckBox("Voie NORD");
+																						chkbxVoie1.setBounds(666, 59, 97, 23);
+																						pnParamètres.add(chkbxVoie1);
+																						chkbxVoie1.addActionListener(new ActionListener() {
+																							public void actionPerformed(ActionEvent arg0) {
+																								if(chkbxVoie1.isSelected()) {
+																									setTrafficAnormal(1);
+																								} else {
+																									setTrafficNormal(1);
+																								}
+																							}
+																						});
+																						chkbxVoie1.setEnabled(false);
+																						
+																								chkbxTraficAnormal = new JCheckBox("Trafic anormal");
+																								chkbxTraficAnormal.setBounds(649, 24, 112, 23);
+																								pnParamètres.add(chkbxTraficAnormal);
+																								
+																										JPanel pnEmplacementsDesBoutons = new JPanel();
+																										pnEmplacementsDesBoutons.setBounds(272, 29, 350, 103);
+																										pnParamètres.add(pnEmplacementsDesBoutons);
+																										pnEmplacementsDesBoutons.setForeground(Color.BLACK);
+																										pnEmplacementsDesBoutons.setBackground(Color.WHITE);
+																										pnEmplacementsDesBoutons.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Boutons ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+																										pnEmplacementsDesBoutons.setLayout(null);
+																										
+																												JButton btnAnimer = new JButton(new ImageIcon(urlAnimer));
+																												btnAnimer.addActionListener(new ActionListener() {
+																													public void actionPerformed(ActionEvent arg0) {
+																														//On fait juste une scene pour l'instant
+																														sceneAnimee1.demarrer();
+																														sceneAnimee2.demarrer();
+																														sceneAnimee3.demarrer();
+																														//sceneAnimee2.demarrer();
+																													}
+																												});
+																												btnAnimer.setBounds(10, 16, 76, 76);
+																												pnEmplacementsDesBoutons.add(btnAnimer);
+																												
+																														JButton btnPause = new JButton(new ImageIcon(urlPause));
+																														btnPause.addActionListener(new ActionListener() {
+																															public void actionPerformed(ActionEvent arg0) {
+																																if(sceneAnimee1.getEnCoursDAnimation()) {
+																																sceneAnimee1.arreter();
+																																sceneAnimee2.arreter();
+																																sceneAnimee3.arreter();
+																																}
+																															}
+																														});
+																														btnPause.setBounds(96, 16, 76, 76);
+																														pnEmplacementsDesBoutons.add(btnPause);
+																														
+																																JButton btnProchainImage = new JButton(new ImageIcon(urlProchaineImage));
+																																btnProchainImage.addActionListener(new ActionListener() {
+																																	public void actionPerformed(ActionEvent arg0) {
+																																		if(sceneAnimee1.getEnCoursDAnimation()) {
+																																			sceneAnimee1.arreter();
+																																			sceneAnimee2.arreter();
+																																			sceneAnimee3.arreter();
+																																			} else {
+																																				sceneAnimee1.prochainImage();
+																																				sceneAnimee2.prochainImage();
+																																				sceneAnimee3.prochainImage();
+																																			}
+																																		}
+																																});
+																																btnProchainImage.setBounds(182, 16, 76, 76);
+																																pnEmplacementsDesBoutons.add(btnProchainImage);
+																																
+																																		JButton btnRecommencer = new JButton(new ImageIcon(urlRecommencer));
+																																		btnRecommencer.addActionListener(new ActionListener() {
+																																			public void actionPerformed(ActionEvent arg0) {
+																																				sceneAnimee1.reinitialiser();
+																																				sceneAnimee2.reinitialiser();
+																																				sceneAnimee3.reinitialiser();
+																																				
+																																			}
+																																		});//À CHANGER 
+																																		btnRecommencer.setBounds(268, 16, 76, 76);
+																																		pnEmplacementsDesBoutons.add(btnRecommencer);
+																								chkbxTraficAnormal.addActionListener(new ActionListener() {
+																									public void actionPerformed(ActionEvent arg0) {
+																										if(chkbxTraficAnormal.isSelected()) {
+																											sceneAnimee1.setTrafficAnormale(true);
+																											sceneAnimee2.setTrafficAnormale(true);
+																											sceneAnimee3.setTrafficAnormale(true);
+																											chkbxVoie3.setEnabled(true);
+																											if(chkbxVoie3.isSelected()) {
+																												setTrafficAnormal(3);
+																											}
+																											chkbxVoie4.setEnabled(true);
+																											if(chkbxVoie4.isSelected()) {
+																												setTrafficAnormal(4);
+																											}
+																											chkbxVoie2.setEnabled(true);
+																											if(chkbxVoie2.isSelected()) {
+																												setTrafficAnormal(2);
+																											}
+																											chkbxVoie1.setEnabled(true);
+																											if(chkbxVoie1.isSelected()) {
+																												setTrafficAnormal(1);
+																											}
+																										} else {
+																											sceneAnimee1.setTrafficAnormale(false);
+																											sceneAnimee2.setTrafficAnormale(false);
+																											sceneAnimee3.setTrafficAnormale(false);
+																											chkbxVoie3.setEnabled(false);
+																											if(chkbxVoie3.isSelected()) {
+																												setTrafficNormal(3);
+																											}
+																											chkbxVoie4.setEnabled(false);
+																											if(chkbxVoie4.isSelected()) {
+																												setTrafficNormal(4);
+																											}
+																											chkbxVoie2.setEnabled(false);
+																											if(chkbxVoie2.isSelected()) {
+																												setTrafficNormal(2);
+																											}
+																											chkbxVoie1.setEnabled(false);
+																											if(chkbxVoie1.isSelected()) {
+																												setTrafficNormal(1);
+																											}
+																										}
+																									}
+																								});
 	}
 
 	//Reiner
