@@ -1,6 +1,6 @@
 package aaplication;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,12 +10,10 @@ import sceneAnimee.SceneAnimee;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 import java.awt.SystemColor;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ButtonGroup;
@@ -43,8 +41,11 @@ import java.awt.Font;
  */
 public class FenetreParametres extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private final ButtonGroup btngrpChoixDeTypeDeSimulation = new ButtonGroup();
 	private JSpinner spnVitesse;
 	private JSpinner spnTauxDApparition;
 	private JCheckBox chkbxTrfcAnom1;

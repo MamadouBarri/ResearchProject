@@ -1,6 +1,5 @@
 package aaplication;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -19,9 +18,6 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 /**
  * JFrame contenant les instructions qui indiquent comment utiliser l'application
@@ -30,6 +26,10 @@ import javax.swing.JTabbedPane;
  */
 
 public class FenetreInstructions extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//listes contenant les objets qui veulent ecouter à cet objet
 	private ArrayList<VisibiliteFenDepartListener> listeEcouteurs = new ArrayList<VisibiliteFenDepartListener>();
 	private ArrayList<VisibiliteFenParamListener> listeEcouteursFenParam = new ArrayList<VisibiliteFenParamListener>();

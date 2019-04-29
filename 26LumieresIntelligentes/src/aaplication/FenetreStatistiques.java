@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
 
 import stats.PlanCartesien1;
 import java.awt.Font;

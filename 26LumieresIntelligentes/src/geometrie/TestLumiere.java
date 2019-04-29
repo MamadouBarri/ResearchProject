@@ -14,6 +14,10 @@ import sceneAnimee.SceneAnimee;
  *
  */
 public class TestLumiere extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
