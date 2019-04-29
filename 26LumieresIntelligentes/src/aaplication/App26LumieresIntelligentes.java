@@ -178,7 +178,7 @@ public class App26LumieresIntelligentes extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblTitre = new JLabel("Lumi\u00E8res intelligentes");
-		lblTitre.setForeground(Color.YELLOW);
+		lblTitre.setForeground(Color.yellow);
 		lblTitre.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setBounds(39, 26, 568, 110);

@@ -203,9 +203,11 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 				//fin de la verification
 				//Voiture en mouvement
 				v = animationVirages(v,'e');
+
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
+					v.setVoitureAccelere(true);
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
@@ -227,8 +229,56 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 				//Voiture devant trop proche
 				if(est.indexOf(v)!=0) {
 					Voiture voitureDevant = verifierVoitureDevant(est,v, nbVoiesEst);
+					//La voiture est trop proche donc s'arrête
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setVoitureAccelere(false);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
+					}
+					//La voiture est assez proche donc doit ralentir /**CHENGMENT ICI
+					//
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee() && lumEst.getCouleur() == ROUGE) {
+						v.setVoitureRalentit(true);
+					}
+					/**
+					 * CHANGEMENTS
+					 */
+
+					//La voiture devant est assez loin pour accelerer
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) > LARGEUR_VOITURE*4.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 &&
+							!voitureDevant.getVoitureArretee() && !voitureDevant.getVoitureAccelere() && lumEst.getCouleur() == VERTE && voitureDevant.getVoitureActive()) {
+						v.setVoitureAccelere(true);
+						/**
+						 * CHANGEMMENT && !voitureDevant.getVoitureArretee() && Math.abs(voitureDevant.getXVoiture()) < LARGEUR_VOITURE*5.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE
+						 */
+						v.setVoitureArretee(false);
+						//
+						System.out.println("ON ACCELERE !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
+					}
+
+					//if(!voitureDevant.getVoitureAccelere() && !voitureDevant.getVoitureArretee() && (lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE)) { 
+					//v.setVoitureAccelere(true);
+					//}
+					/**
+					 * CHANGEMENTS
+					 */
+					//if(!voitureDevant.getVoitureArretee( ) && Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
+					//v.setVoitureAccelere(false);
+					//}
+					/**
+					 * CHANGEMENT
+					 */
+					//if(voitureDevant.getVoitureAccelere()) {
+					//v.setVoitureArretee(true);
+					//}else {
+					//	v.setVoitureArretee(false);
+					//}
+
+
+				}else {
+					if(lumEst.getCouleur() == VERTE||lumEst.getCouleur() == JAUNE) {
+						v.setVoitureArretee(false);
 					}
 				}
 
@@ -254,7 +304,9 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 				v = animationVirages(v,'s');
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumSud.getCouleur() == VERTE||lumSud.getCouleur() == JAUNE) {
+
 					v.setVoitureArretee(false);
+
 				}
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
@@ -268,7 +320,16 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					Voiture voitureDevant = verifierVoitureDevant(sud,v, nbVoiesSud);
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
 					}
+
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+						v.setVoitureRalentit(true);
+						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
+					}
+
+
 				}
 			}
 
@@ -304,7 +365,15 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					Voiture voitureDevant = verifierVoitureDevant(ouest,v, nbVoiesOuest);
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
 					}
+					//La voiture est assez proche donc doit ralentir
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+						v.setVoitureRalentit(true);
+						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
+					}
+
 				}
 			}
 
@@ -313,7 +382,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					verifierVoitureOppose('n',v);
+					verifierVoitureOppose('n', v);
 				}
 				//fin de la verification
 				if(v.getYVoiture()<-this.LARGEUR_VOITURE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -324,7 +393,8 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 				}
 
 				//Voiture en mouvement
-				v = animationVirages(v,'n');
+				v = animationVirages(v,'n'); 
+
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumNord.getCouleur() == VERTE||lumNord.getCouleur() == JAUNE) {
 					v.setVoitureArretee(false);
@@ -340,6 +410,14 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					Voiture voitureDevant = verifierVoitureDevant(nord,v, nbVoiesNord);
 					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*2.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3) {
 						v.setVoitureArretee(true);
+						v.setCompteurTemp(100);
+						v.setVoitureRalentit(false);
+					}
+
+					//La voiture est assez proche donc doit ralentir
+					if(Math.abs((v.getYVoiture() - voitureDevant.getYVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getXVoiture()-voitureDevant.getXVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
+						v.setVoitureRalentit(true);
+						System.out.println("ON A SET A RALENTIT !!!!!!!!!!!!!!!!!!!!!" + v.getXVoiture() + " et " + voitureDevant.getXVoiture());
 					}
 				}
 			}
@@ -541,30 +619,177 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
+	//Mamadou
+	/**
+	 * Methode qui gere l'acceleration horizontale des voitures
+	 */
+	public void voitureAccelereHorizontalement(Voiture v, char direction) {
+		int iTemp = -1;
+		if(direction=='e') {
+			iTemp = 1;
+		}
+		System.out.println("VOITURE ACCELERE");
+		v.setXVoiture((v.getXVoiture() + iTemp *deplacement - iTemp *deplacement*v.getCompteurTemp()*0.009 ));
+		v.setCompteurTemp(v.getCompteurTemp()-1);
+		System.out.println(v.getCompteurTemp());
+		if(v.getCompteurTemp()==0) {
+			v.setAccelTerminee(true);
+			v.setVoitureArretee(false);
+			v.setVoitureAccelere(false);
+			v.setCompteurTemp(110);
+		}
+	}
+	//Mamadou
+	/**
+	 * Methode qui gere l'acceleration verticale des voitures
+	 */
+	public void voitureAccelereVerticalement(Voiture v,char direction) {
+		int iTemp =-1;
+		if(direction=='s') {
+			iTemp = 1;
+		}
+		System.out.println("VOITURE ACCELERE");
+		v.setYVoiture((v.getYVoiture() + iTemp * deplacement - iTemp * deplacement*v.getCompteurTemp()*0.009 ));
+		v.setCompteurTemp(v.getCompteurTemp()-1);
+		System.out.println(v.getCompteurTemp());
+		if(v.getCompteurTemp()==0) {
+			v.setAccelTerminee(true);
+			v.setVoitureArretee(false);
+			v.setVoitureAccelere(false);
+			v.setCompteurTemp(110);
+		}
+	}
+	//Mamadou
+	/**
+	 * Methode qui gere la deceleration horizontale des voitures
+	 * @param v
+	 * @param direction
+	 */
+	public void voitureDecelereHorizontalement(Voiture v, char direction) {
+		int iTemp =-1;
+		if(direction=='e') {
+			iTemp = 1;
+		}
+		System.out.println("VOITURE RALENTI");
+		v.setXVoiture((v.getXVoiture() + iTemp *deplacement*v.getCompteurTemp()*0.009 ));
+		v.setCompteurTemp(v.getCompteurTemp()-1);
+		System.out.println(v.getCompteurTemp());
+		if(v.getCompteurTemp()==0) {
+			v.setVoitureArretee(true);
+			v.setVoitureRalentit(false);
+			v.setCompteurTemp(110);
+		}
+	}
+	//Mamadou
+	/**
+	 * Methode qui gere la deceleration verticale des voitures
+	 * @param v
+	 * @param direction
+	 */
+	public void voitureDecelereVerticalement(Voiture v, char direction) {
+		int iTemp =-1;
+		if(direction=='s') {
+			iTemp = 1;
+		}
+		System.out.println("VOITURE RALENTI");
+		v.setYVoiture((v.getYVoiture() + iTemp*deplacement*v.getCompteurTemp()*0.009 ));
+		v.setCompteurTemp(v.getCompteurTemp()-1);
+		System.out.println(v.getCompteurTemp());
+		if(v.getCompteurTemp()==0) {
+			v.setVoitureArretee(true);
+			v.setVoitureRalentit(false);
+			v.setCompteurTemp(110);
+		}
+	}
+
 	//Reiner
-		/**
-		 * Méthode contenant tout le code qui permet la voiture de se déplacer sur l'intersection 
-		 * @param v voiture qui se déplace
-		 * @param direction direction de conduite de la voiture
-		 * @return la voiture qui se déplace avec ses nouveaux coordonnées
-		 */
-		public Voiture animationVirages(Voiture v, char direction) {
-			switch(direction) {
-			case'e':
-				switch(v.getDirectionDeVirage()){
-				case 0:
-					//La voiture continue tout droite, car elle n'effectue pas de virage
-					if(!v.getVoitureArretee()) {
-						v.setXVoiture((v.getXVoiture()+deplacement));
-					}
-					break;
-				case 1:
-					//La voiture tourne à droite
-					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
-						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX()) {
+	/**
+	 * Méthode contenant tout le code qui permet la voiture de se déplacer sur l'intersection 
+	 * @param v voiture qui se déplace
+	 * @param direction direction de conduite de la voiture
+	 * @return la voiture qui se déplace avec ses nouveaux coordonnées
+	 */
+	//Reiner 
+	public Voiture animationVirages(Voiture v, char direction) {
+		switch (direction) {
+		case'e':
+			switch(v.getDirectionDeVirage()){
+			case 0:
+				//La voiture continue tout droite, car elle n'effectue pas de virage
+				if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+					v.setXVoiture((v.getXVoiture()+deplacement));
+				}
+				/**
+				 * CHANGEMENTS
+				 */
+				//La voiture accelere
+				if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+					voitureAccelereHorizontalement(v, direction);
+				}
+				//Lorsque la voiture ralenti
+				if(v.getVoitureRalentit()) {
+					voitureDecelereHorizontalement(v, direction);
+				}
+				break;
+			case 1:
+				//La voiture tourne à droite
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX()) {
+						if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
 							v.setXVoiture((v.getXVoiture()+deplacement));
-							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX())));
+						}
+						/**
+						 * VOITURE ACCELERE
+						 */
+						//La voiture accelere
+						if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+							voitureAccelereHorizontalement(v, direction);
+						}
+						if(v.getVoitureRalentit()) {
+							voitureDecelereHorizontalement(v, direction);
+						}
+
+						v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteX())));
+					}
+
+
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX()){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setYVoiture(v.getYVoiture()+v.getDeplacement());
+					}
+				}
+				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
+					v.setVoitureActive(false);
+				}
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if((!v.getVoitureArretee()||v.getEnRotation() == true)) {
+					if(v.getPeutTournerGauche()) {
+						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+								v.setXVoiture((v.getXVoiture()+deplacement));
+							}
+							//Voiture accelere 
+							/**
+							 * CHANGMENET
+							 */
+							if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+								voitureAccelereHorizontalement(v, direction);
+							}
+							if(v.getVoitureRalentit()) {
+								voitureDecelereHorizontalement(v, direction);
+							}
+							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
 						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX()){
@@ -573,58 +798,88 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
 						if(v.getEnRotation()) {
 							if(v.getDeplacement() < deplacement) {
-								v.setDeplacement(v.getDeplacement()+0.05);
+								v.setDeplacement(v.getDeplacement()+0.050);
 							}
-							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
+							v.setYVoiture(v.getYVoiture()-v.getDeplacement());
 						}
 					}
-					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
+					if(v.getYVoiture()<=0&&v.getVoitureActive()) {
 						v.setVoitureActive(false);
 					}
 					break;
-				case 2:
-					//La voiture tourne à gauche
-					if((!v.getVoitureArretee()||v.getEnRotation() == true)) {
-						if(v.getPeutTournerGauche()) {
-							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-							if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-								v.setXVoiture((v.getXVoiture()+deplacement));
-								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
-							}
-							//La voiture commence sa rotation après avoir dépassé sa lumiere
-							if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX()){
-								v.setEnRotation(true);
-							}
-							//La voiture commence graduellement à avancer vers sa nouvelle direction 
-							if(v.getEnRotation()) {
-								if(v.getDeplacement() < deplacement) {
-									v.setDeplacement(v.getDeplacement()+0.025);
-								}
-								v.setYVoiture(v.getYVoiture()-v.getDeplacement());
-							}
-						}
-						if(v.getYVoiture()<=0&&v.getVoitureActive()) {
-							v.setVoitureActive(false);
-						}
-						break;
-					}
+				}
+			}
+			break;
+		case'o':
+
+			switch(v.getDirectionDeVirage()){
+			case 0:
+
+				//La voiture continue tout droite, car elle n'effectue aucun virage
+				if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+					v.setXVoiture((v.getXVoiture()-deplacement));
+				}
+				//Lorsque la voiture ralenti
+				if(v.getVoitureRalentit()) {
+					voitureDecelereHorizontalement(v, direction);
+				}
+				//La voiture accelere
+				if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+					voitureAccelereHorizontalement(v, direction);
 				}
 				break;
-			case'o':
-				switch(v.getDirectionDeVirage()){
-				case 0:
-					//La voiture continue tout droite, car elle n'effectue aucun virage
-					if(!v.getVoitureArretee()) {
-						v.setXVoiture((v.getXVoiture()-deplacement));
+			case 1:
+				//La voiture tourne à droite
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord-1))*modele.getPixelsParUniteX()+this.DISTANCE_BORDURE) {
+						if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+							v.setXVoiture((v.getXVoiture()+deplacement));
+						}
+						//Lorsque la voiture ralenti
+						if(v.getVoitureRalentit()) {
+							voitureDecelereHorizontalement(v, direction);
+						}
+						//La voiture accelere
+						if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+							voitureAccelereHorizontalement(v, direction);
+						}
+						v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteX())));
 					}
-					break;
-				case 1:
-					//La voiture tourne à droite
-					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(lumOuest.getCouleur()!=ROUGE&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getXVoiture()>0){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setYVoiture(v.getYVoiture()-v.getDeplacement());
+					}
+				}
+				if(v.getYVoiture()<=0&&v.getVoitureActive()) {
+					v.setVoitureActive(false);
+				}
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					if(v.getPeutTournerGauche()) {
 						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord-1))*modele.getPixelsParUniteX()+this.DISTANCE_BORDURE) {
-							v.setXVoiture((v.getXVoiture()-deplacement));
-							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteX())));
+						if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
+							if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+								v.setXVoiture((v.getXVoiture()-deplacement));
+							}
+							//Lorsque la voiture ralenti
+							if(v.getVoitureRalentit()) {
+								voitureDecelereHorizontalement(v, direction);
+							}
+							//La voiture accelere
+							if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+								voitureAccelereHorizontalement(v, direction);
+							}
+							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
 						if(lumOuest.getCouleur()!=ROUGE&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getXVoiture()>0){
@@ -635,59 +890,204 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							if(v.getDeplacement() < deplacement) {
 								v.setDeplacement(v.getDeplacement()+0.05);
 							}
-							v.setYVoiture(v.getYVoiture()-v.getDeplacement());
+							v.setYVoiture(v.getYVoiture()+v.getDeplacement());
 						}
-					}
-					if(v.getYVoiture()<=0&&v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
-					break;
-				case 2:
-					//La voiture tourne à gauche
-					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
-						if(v.getPeutTournerGauche()) {
-							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-							if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
-								v.setXVoiture((v.getXVoiture()-deplacement));
-								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
-
-							}
-							//La voiture commence sa rotation après avoir dépassé sa lumiere
-							if(lumOuest.getCouleur()!=ROUGE&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getXVoiture()>0){
-								v.setEnRotation(true);
-							}
-							//La voiture commence graduellement à avancer vers sa nouvelle direction 
-							if(v.getEnRotation()) {
-								if(v.getDeplacement() < deplacement) {
-									v.setDeplacement(v.getDeplacement()+0.05);
-								}
-								v.setYVoiture(v.getYVoiture()+v.getDeplacement());
-							}
-						}
-					}
-					if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
-						v.setVoitureActive(false);
 					}
 				}
+				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY()&&v.getVoitureActive()) {
+					v.setVoitureActive(false);
+				}
+			}
+			break;
+		case's':
+
+			switch(v.getDirectionDeVirage()){
+			//La voiture continue tout droite, car elle n'effectue aucun virage
+			case 0:
+				if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+					v.setYVoiture((v.getYVoiture()+deplacement));
+				}
+				//Voiture accelere 
+				/**
+				 * CHANGMENET
+				 */
+				if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+					voitureAccelereVerticalement(v, direction);
+				}
+				if(v.getVoitureRalentit()) {
+					voitureDecelereVerticalement(v, direction);
+				}
+
 				break;
-			case's':
-				switch(v.getDirectionDeVirage()){
-				//La voiture continue tout droite, car elle n'effectue aucun virage
-				case 0:
-					if(!v.getVoitureArretee()) {
-						v.setYVoiture((v.getYVoiture()+deplacement));
-					}
-					break;
-				case 1:
-					//La voiture tourne à droite
-					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
-						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*this.nbVoiesOuest)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE/2.0) {
+			case 1:
+				//La voiture tourne à droite
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*this.nbVoiesOuest)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE/2.0) {
+
+						if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
 							v.setYVoiture((v.getYVoiture()+deplacement));
-							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteY())));
+						}
+						//Voiture accelere 
+						/**
+						 * CHANGMENET
+						 */
+						if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+							voitureAccelereVerticalement(v, direction);
+						}
+						if(v.getVoitureRalentit()) {
+							voitureDecelereVerticalement(v, direction);
+						}
+
+						v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteY())));
+					}
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*this.nbVoiesOuest-this.LONGUEUR_VOITURE)*modele.getPixelsParUniteY()){
+						v.setEnRotation(true);
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setXVoiture(v.getXVoiture()-v.getDeplacement());
+					}
+				}
+				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+					v.setVoitureActive(false);
+				}
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					if(v.getPeutTournerGauche()) {
+						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0-this.LARGEUR_VOITURE)*modele.getPixelsParUniteY()-this.DISTANCE_BORDURE) {
+
+							if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+								v.setYVoiture((v.getYVoiture()+deplacement));
+							}
+
+							//Voiture accelere 
+							/**
+							 * CHANGMENET
+							 */
+							if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+								voitureAccelereVerticalement(v, direction);
+							}
+							if(v.getVoitureRalentit()) {
+								voitureDecelereVerticalement(v, direction);
+							}
+
+
+							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
 						}
 						//La voiture commence sa rotation après avoir dépassé sa lumiere
-						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*this.nbVoiesOuest-this.LONGUEUR_VOITURE)*modele.getPixelsParUniteY()){
+						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()){
+							v.setEnRotation(true);
+						}
+						//La voiture commence graduellement à avancer vers sa nouvelle direction 
+						if(v.getEnRotation()) {
+							if(v.getDeplacement() < deplacement) {
+								v.setDeplacement(v.getDeplacement()+0.03);
+							}
+							v.setXVoiture(v.getXVoiture()+v.getDeplacement());
+						}
+					}
+				}
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+					v.setVoitureActive(false);
+				}
+				break;
+			}
+			break;
+		case'n':
+
+			switch(v.getDirectionDeVirage()){
+			case 0:
+				//La voiture continue tout droite, car elle n'effectue aucun virage
+				if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+					v.setYVoiture((v.getYVoiture()-deplacement));
+				}
+				//Voiture accelere 
+				/**
+				 * CHANGMENET
+				 */
+				if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+					voitureAccelereVerticalement(v, direction);
+				}
+				if(v.getVoitureRalentit()) {
+					voitureDecelereVerticalement(v, direction);
+				}
+				break;
+			case 1:
+				//La voiture tourne à droite
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+					if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst-1))*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
+
+						if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+							v.setYVoiture((v.getYVoiture()-deplacement));
+						}
+						//Voiture accelere 
+						/**
+						 * CHANGMENET
+						 */
+						if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+							voitureAccelereVerticalement(v, direction);
+						}
+						if(v.getVoitureRalentit()) {
+							voitureDecelereVerticalement(v, direction);
+						}
+
+
+						v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteY())));
+					}
+					//La voiture commence sa rotation après avoir dépassé sa lumiere
+					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
+						v.setEnRotation(true);
+						//System.out.println("I WANNA TURN");
+					}
+					//La voiture commence graduellement à avancer vers sa nouvelle direction 
+					if(v.getEnRotation()) {
+						if(v.getDeplacement() < deplacement) {
+							v.setDeplacement(v.getDeplacement()+0.05);
+						}
+						v.setXVoiture(v.getXVoiture()+v.getDeplacement());
+					}
+				}
+				if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+					v.setVoitureActive(false);
+				}
+				break;
+			case 2:
+				//La voiture tourne à gauche
+				if(!v.getVoitureArretee()||v.getEnRotation() == true) {
+					if(v.getPeutTournerGauche()) {
+						//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
+						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
+
+							if(!v.getVoitureArretee() && !v.getVoitureRalentit()&&(!v.getVoitureAccelere() || v.getAccelTerminee())) {
+								v.setYVoiture((v.getYVoiture()-deplacement));
+							}
+
+							//Voiture accelere 
+							/**
+							 * CHANGMENET
+							 */
+							if(v.getVoitureAccelere() && !v.getAccelTerminee()) {
+								voitureAccelereVerticalement(v, direction);
+							}
+							if(v.getVoitureRalentit()) {
+								voitureDecelereVerticalement(v, direction);
+							}
+
+
+							v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
+
+						}
+						//La voiture commence sa rotation après avoir dépassé sa lumiere
+						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
 							v.setEnRotation(true);
 						}
 						//La voiture commence graduellement à avancer vers sa nouvelle direction 
@@ -698,103 +1098,15 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 							v.setXVoiture(v.getXVoiture()-v.getDeplacement());
 						}
 					}
-					if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
-					break;
-				case 2:
-					//La voiture tourne à gauche
-					if(!v.getVoitureArretee()||v.getEnRotation() == true) {
-						if(v.getPeutTournerGauche()) {
-							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0-this.LARGEUR_VOITURE)*modele.getPixelsParUniteY()-this.DISTANCE_BORDURE) {
-								v.setYVoiture((v.getYVoiture()+deplacement));
-								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
-							}
-							//La voiture commence sa rotation après avoir dépassé sa lumiere
-							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()){
-								v.setEnRotation(true);
-							}
-							//La voiture commence graduellement à avancer vers sa nouvelle direction 
-							if(v.getEnRotation()) {
-								if(v.getDeplacement() < deplacement) {
-									v.setDeplacement(v.getDeplacement()+0.03);
-								}
-								v.setXVoiture(v.getXVoiture()+v.getDeplacement());
-							}
-						}
-					}
-					if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-						v.setVoitureActive(false);
-					}
-					break;
+				}
+				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
+					v.setVoitureActive(false);
 				}
 				break;
-			case'n':
-
-	switch(v.getDirectionDeVirage()){
-					case 0:
-						//La voiture continue tout droite, car elle n'effectue aucun virage
-						if(!v.getVoitureArretee()) {
-							v.setYVoiture((v.getYVoiture()-deplacement));
-						}
-						break;
-					case 1:
-						//La voiture tourne à droite
-						if(!v.getVoitureArretee()||v.getEnRotation() == true) {
-							//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst-1))*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
-								v.setYVoiture((v.getYVoiture()-deplacement));
-								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0-this.LONGUEUR_VOITURE)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()-this.DIMENSION_VOIE_REELLE/2.0*modele.getPixelsParUniteY())));
-							}
-							//La voiture commence sa rotation après avoir dépassé sa lumiere
-							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
-								v.setEnRotation(true);
-								//System.out.println("I WANNA TURN");
-							}
-							//La voiture commence graduellement à avancer vers sa nouvelle direction 
-							if(v.getEnRotation()) {
-								if(v.getDeplacement() < deplacement) {
-									v.setDeplacement(v.getDeplacement()+0.05);
-								}
-								v.setXVoiture(v.getXVoiture()+v.getDeplacement());
-							}
-						}
-						if(v.getXVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-							v.setVoitureActive(false);
-						}
-						break;
-					case 2:
-						//La voiture tourne à gauche
-						if(!v.getVoitureArretee()||v.getEnRotation() == true) {
-							if(v.getPeutTournerGauche()) {
-								//La voiture continue à aller tout droit jusqu'au point où elle finit tourner
-								if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
-									v.setYVoiture((v.getYVoiture()-deplacement));
-									v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
-
-								}
-								//La voiture commence sa rotation après avoir dépassé sa lumiere
-								if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
-									v.setEnRotation(true);
-								}
-								//La voiture commence graduellement à avancer vers sa nouvelle direction 
-								if(v.getEnRotation()) {
-									if(v.getDeplacement() < deplacement) {
-										v.setDeplacement(v.getDeplacement()+0.05);
-									}
-									v.setXVoiture(v.getXVoiture()-v.getDeplacement());
-								}
-							}
-						}
-						if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
-							v.setVoitureActive(false);
-						}
-						break;
-					}
 			}
-			return v;
 		}
+		return v;
+	}
 	//Reiner
 	/**
 	 * Méthode qui permet une voiture de connaitre la position de la voiture opposée à elle pour assurer un virage sans collision
@@ -1144,7 +1456,6 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 	public void setTauxDApparition(double tauxParMinute) {
 		double tauxParSeconde = tauxParMinute/60.0;
 		this.tauxDApparitionMoyen = tauxParSeconde;
-		normalisationGaussienneTauxApparition();
 	}
 	//Mamadou
 	/**

@@ -215,9 +215,9 @@ public class FenetreSimulationSansVideo extends JFrame {
 					lblDensite2.setText("Densité du trafic : " + SceneAnimeeAvecAlgo.densiteVoitures.get(SceneAnimeeAvecAlgo.densiteVoitures.size()-1));
 					lblDensite3.setText("Densité du trafic : " + SceneAnimeeAvecAlgoTempsDArret.densiteVoitures.get(SceneAnimeeAvecAlgoTempsDArret.densiteVoitures.size()-1));
 					//Temps d'arrêt
-					lblTempsDArret1.setText("Temps d'arrêt moyen : " + SceneAnimee.tempsDArretMoyen.get(SceneAnimee.tempsDArretMoyen.size()-1));
-					lblTempsDArret2.setText("Temps d'arrêt moyen : " + SceneAnimeeAvecAlgo.tempsDArretMoyen.get(SceneAnimeeAvecAlgo.tempsDArretMoyen.size()-1));
-					lblTempsDArret3.setText("Temps d'arrêt moyen : " + SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen.get(SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen.size()-1));
+					lblTempsDArret1.setText("Temps d'arrêt moyen : " +  String.format("%.3f", SceneAnimee.tempsDArretMoyen.get(SceneAnimee.tempsDArretMoyen.size()-1)));
+					lblTempsDArret2.setText("Temps d'arrêt moyen : " + String.format("%.3f", SceneAnimeeAvecAlgo.tempsDArretMoyen.get(SceneAnimeeAvecAlgo.tempsDArretMoyen.size()-1)) );
+					lblTempsDArret3.setText("Temps d'arrêt moyen : " + String.format("%.3f", SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen.get(SceneAnimeeAvecAlgoTempsDArret.tempsDArretMoyen.size()-1)));
 				}
 				
 				//La fenetres des stats
@@ -255,10 +255,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 		lblstlsdt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblstlsdt.setBounds(1373, 25, 416, 14);
 		pnSimulations.add(lblstlsdt);
-
-		nbVoituresAGenerer = new JLabel("");
-		nbVoituresAGenerer.setBounds(1280, 966, 48, 14);
-		contentPane.add(nbVoituresAGenerer);
 		
 		lblNombreDeVoitures = new JLabel("Nombre de voitures arr\u00EAt\u00E9es:\r\n");
 		lblNombreDeVoitures.setBounds(88, 741, 281, 28);
@@ -373,7 +369,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 														lblVoituresParMinute.setBounds(176, 94, 126, 14);
 														pnParamètres.add(lblVoituresParMinute);
 														JLabel lblNombreDeVoituresAGenerer = new JLabel("NOMBRE DE VOITURES \u00C0 G\u00C9N\u00C9RER : ");
-														lblNombreDeVoituresAGenerer.setBounds(649, 135, 214, 14);
+														lblNombreDeVoituresAGenerer.setBounds(627, 135, 214, 14);
 														pnParamètres.add(lblNombreDeVoituresAGenerer);
 														
 																chkbxVoie3 = new JCheckBox("Voie SUD");
@@ -432,8 +428,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 																						});
 																						chkbxVoie1.setEnabled(false);
 																						
-																								chkbxTraficAnormal = new JCheckBox("Trafic anormal");
-																								chkbxTraficAnormal.setBounds(649, 24, 112, 23);
+																								chkbxTraficAnormal = new JCheckBox("Trafic anormal (augmentation du flux)");
+																								chkbxTraficAnormal.setBounds(649, 24, 224, 23);
 																								pnParamètres.add(chkbxTraficAnormal);
 																								
 																										JPanel pnEmplacementsDesBoutons = new JPanel();
@@ -498,6 +494,10 @@ public class FenetreSimulationSansVideo extends JFrame {
 																																		});//À CHANGER 
 																																		btnRecommencer.setBounds(268, 16, 76, 76);
 																																		pnEmplacementsDesBoutons.add(btnRecommencer);
+																																		
+																																				nbVoituresAGenerer = new JLabel("");
+																																				nbVoituresAGenerer.setBounds(845, 135, 48, 14);
+																																				pnParamètres.add(nbVoituresAGenerer);
 																								chkbxTraficAnormal.addActionListener(new ActionListener() {
 																									public void actionPerformed(ActionEvent arg0) {
 																										if(chkbxTraficAnormal.isSelected()) {

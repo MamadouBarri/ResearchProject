@@ -81,7 +81,7 @@ public class FenetreStatistiques extends JFrame {
 		contentPane.add(lblVitesseMoyenne);
 		
 		JLabel lblTempsSimlule2 = new JLabel("Le temps simul\u00E9  t (s)");
-		lblTempsSimlule2.setBounds(316, 999, 123, 31);
+		lblTempsSimlule2.setBounds(316, 987, 123, 31);
 		contentPane.add(lblTempsSimlule2);
 		
 		JLabel lblTempsArretTt = new JLabel("F(t) : Temps d'arr\u00EAt moyen\r\n\r\n");
@@ -107,7 +107,7 @@ public class FenetreStatistiques extends JFrame {
 		contentPane.add(label_2);
 		
 		JLabel label_3 = new JLabel("Le temps simul\u00E9  t (s)");
-		label_3.setBounds(947, 999, 123, 31);
+		label_3.setBounds(947, 987, 123, 31);
 		contentPane.add(label_3);
 		
 		URL urlImage = getClass().getClassLoader().getResource("legende.png");

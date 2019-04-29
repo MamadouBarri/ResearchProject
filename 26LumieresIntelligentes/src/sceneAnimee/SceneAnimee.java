@@ -367,11 +367,12 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur()==JAUNE) {
 					v.setVoitureArretee(false);
+					v.setVoitureAccelere(true);
 				}
 
 				//Lumiere est rouge 
 				//Lorsque la voiture doit s'arreter (lumiere est rouge ou voiture devant est trop proche)
-				if(Math.abs(v.getXVoiture() - (this.LARGEUR_REELLE/2.0 + DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()) < DISTANCE_LIGNE_ARRET && lumOuest.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
+				if(Math.abs(v.getXVoiture() - ((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX() + DIMENSION_VOIE_REELLE/2.0*nbVoiesSud*modele.getPixelsParUniteX())) < DISTANCE_LIGNE_ARRET && lumEst.getCouleur() == ROUGE) { // Lorsque voiture est devant l'intersection
 					v.setVoitureArretee(true);
 				}
 
@@ -544,6 +545,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
+	//Mamadou
 	/**
 	 * Methode qui gere l'acceleration horizontale des voitures
 	 */
@@ -563,6 +565,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			v.setCompteurTemp(110);
 		}
 	}
+	//Mamadou
 	/**
 	 * Methode qui gere l'acceleration verticale des voitures
 	 */
@@ -582,7 +585,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			v.setCompteurTemp(110);
 		}
 	}
-	
+	//Mamadou
 	/**
 	 * Methode qui gere la deceleration horizontale des voitures
 	 * @param v
@@ -603,6 +606,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 			v.setCompteurTemp(110);
 		}
 	}
+	//Mamadou
 	/**
 	 * Methode qui gere la deceleration verticale des voitures
 	 * @param v
@@ -1379,7 +1383,6 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setTauxDApparition(double tauxParMinute) {
 		double tauxParSeconde = tauxParMinute/60.0;
 		this.tauxDApparitionMoyen = tauxParSeconde;
-		normalisationGaussienneTauxApparition();
 	}
 	//Mamadou
 	/**

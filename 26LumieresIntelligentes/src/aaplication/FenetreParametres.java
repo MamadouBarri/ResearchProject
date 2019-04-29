@@ -159,10 +159,10 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnVitesse.setModel(new SpinnerNumberModel(60, 20, 100, 1));
-		spnVitesse.setBounds(113, 91, 48, 20);
+		spnVitesse.setBounds(126, 92, 48, 20);
 		panel.add(spnVitesse);
 		
-		chkbxTrfcAnom = new JCheckBox("Trafic anormal");
+		chkbxTrfcAnom = new JCheckBox("Trafic anormal (augmentation du flux)");
 		chkbxTrfcAnom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		chkbxTrfcAnom.setBackground(UIManager.getColor("ScrollBar.trackForeground"));
 		chkbxTrfcAnom.addActionListener(new ActionListener() {
@@ -175,7 +175,7 @@ public class FenetreParametres extends JFrame {
 				leverEvenGetParams();
 			}
 		});
-		chkbxTrfcAnom.setBounds(6, 227, 112, 23);
+		chkbxTrfcAnom.setBounds(6, 227, 224, 23);
 		panel.add(chkbxTrfcAnom);
 		
 		chkbxTrfcAnom1 = new JCheckBox("Voie NORD");
@@ -246,12 +246,12 @@ public class FenetreParametres extends JFrame {
 		
 		JLabel lblUnitesTauxDApparition = new JLabel("Voitures/Minute");
 		lblUnitesTauxDApparition.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
-		lblUnitesTauxDApparition.setBounds(171, 192, 126, 14);
+		lblUnitesTauxDApparition.setBounds(185, 192, 126, 14);
 		panel.add(lblUnitesTauxDApparition);
 		
 		JLabel lblUniteVitesse = new JLabel("km/h");
 		lblUniteVitesse.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
-		lblUniteVitesse.setBounds(171, 94, 46, 14);
+		lblUniteVitesse.setBounds(184, 94, 46, 14);
 		panel.add(lblUniteVitesse);
 		
 		spnTauxDApparition = new JSpinner();
@@ -261,7 +261,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnTauxDApparition.setModel(new SpinnerNumberModel(60, 30, 120, 1));
-		spnTauxDApparition.setBounds(113, 189, 48, 20);
+		spnTauxDApparition.setBounds(127, 190, 48, 20);
 		panel.add(spnTauxDApparition);
 		
 		JButton btnConfirmer = new JButton("Confirmer");
@@ -308,7 +308,7 @@ public class FenetreParametres extends JFrame {
 			}
 		});
 		spnNbVoitures.setModel(new SpinnerNumberModel(60, 0, 150, 1));
-		spnNbVoitures.setBounds(139, 138, 48, 20);
+		spnNbVoitures.setBounds(126, 139, 48, 20);
 		panel.add(spnNbVoitures);
 		
 		JRadioButton rdbtnVoituresNormales = new JRadioButton("Voitures normales");
