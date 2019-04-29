@@ -41,6 +41,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
 import javax.swing.SwingConstants;
@@ -94,6 +95,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private JLabel lblStlsd;
 	private JLabel lblstlsdt;
 	private JPanel pnParamètres;
+	private JMenuItem mntmAPropos;
 
 	/**
 	 * Launch the application.
@@ -158,6 +160,14 @@ public class FenetreSimulationSansVideo extends JFrame {
 				System.exit(0);
 			}
 		});
+		
+		mntmAPropos = new JMenuItem("\u00C0 Propos");
+		mntmAPropos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Auteurs : Mamadou Barri et Reiner Luis Gayta\n"+"Date de création : 29 avril 2019\n"+"Cette application a été conçue dans le cadre du cours SCD");
+			}
+		});
+		mnMenu.add(mntmAPropos);
 		mnMenu.add(mntmQuitter);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

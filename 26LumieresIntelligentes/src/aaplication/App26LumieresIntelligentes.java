@@ -33,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import ecouteursperso.VisibiliteFenDepartListener;
@@ -209,7 +210,7 @@ public class App26LumieresIntelligentes extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnDepart.setBounds(248, 171, 171, 46);
+		btnDepart.setBounds(248, 125, 171, 46);
 		contentPane.add(btnDepart);
 		
 		JButton btnInstructions = new JButton("Guide d'utilisation");
@@ -219,7 +220,7 @@ public class App26LumieresIntelligentes extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnInstructions.setBounds(248, 246, 171, 46);
+		btnInstructions.setBounds(248, 200, 171, 46);
 		contentPane.add(btnInstructions);
 		
 		JButton btnConceptsScientifiques = new JButton("Concepts Scientifiques");
@@ -229,7 +230,7 @@ public class App26LumieresIntelligentes extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnConceptsScientifiques.setBounds(248, 325, 171, 46);
+		btnConceptsScientifiques.setBounds(248, 275, 171, 46);
 		contentPane.add(btnConceptsScientifiques);
 		
 		JButton btnQuitter = new JButton("Quitter");
@@ -238,8 +239,17 @@ public class App26LumieresIntelligentes extends JFrame {
 				System.exit(0);
 			}
 		});
-		btnQuitter.setBounds(248, 400, 171, 46);
+		btnQuitter.setBounds(248, 425, 171, 46);
 		contentPane.add(btnQuitter);
+		
+		JButton btnAPropos = new JButton("\u00C0 propos");
+		btnAPropos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Auteurs : Mamadou Barri et Reiner Luis Gayta\n"+"Date de création : 29 avril 2019\n"+"Cette application a été conçue dans le cadre du cours SCD");
+			}
+		});
+		btnAPropos.setBounds(248, 350, 171, 46);
+		contentPane.add(btnAPropos);
 		
 		JLabel lblphoto = new JLabel((new ImageIcon(urlPhotoDeDepart)));
 		lblphoto.setBounds(0, 0, 659, 504);

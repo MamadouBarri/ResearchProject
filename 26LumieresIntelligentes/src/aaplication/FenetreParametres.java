@@ -32,6 +32,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 /**
  * JFrame qui permet l'utilisateur de modifier les paramètres de la simulation
@@ -67,6 +68,7 @@ public class FenetreParametres extends JFrame {
 	private JSpinner spnNbVoiesOuest;
 	private JSpinner spnNbVoiesSud;
 	private JSpinner spnNbVoiesEst;
+	private JMenuItem mntmAPropos;
 
 	/**
 	 * Launch the application.
@@ -112,6 +114,14 @@ public class FenetreParametres extends JFrame {
 			System.exit(0);
 			}
 		});
+		
+		mntmAPropos = new JMenuItem("\u00C0 Propos");
+		mntmAPropos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Auteurs : Mamadou Barri et Reiner Luis Gayta\n"+"Date de création : 29 avril 2019\n"+"Cette application a été conçue dans le cadre du cours SCD");
+			}
+		});
+		mnMenu.add(mntmAPropos);
 		mnMenu.add(mntmQuitter);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
