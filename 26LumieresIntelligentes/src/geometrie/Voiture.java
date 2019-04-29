@@ -64,8 +64,6 @@ public class Voiture implements Dessinable {
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 	//type de voiture
-	//warning mais cette valeur est utilisé dans le constructeur
-	private int typeImages;
 	private boolean voitureDUrgence = false;
 	//valeur du temps d'arrêt totale d'une voiture
 	private double tempsDArret = 0;
@@ -136,7 +134,6 @@ public class Voiture implements Dessinable {
 	 */
 	public Voiture(double longueurVoiturePixels, double largeurVoiturePixels, double dimensionRoutePixels, double largeurVoie, double largeurVoiePixels, int[] trafficAnormal, int typeImages, boolean inclureVoituresDUrgence) {
 		//Initialisation des parametres de la voiture
-		this.typeImages  = typeImages;
 		this.largeurVoie = largeurVoie;
 		this.dimensionRoutePixels = dimensionRoutePixels;
 		this.largeurVoiturePixels = largeurVoiturePixels;
