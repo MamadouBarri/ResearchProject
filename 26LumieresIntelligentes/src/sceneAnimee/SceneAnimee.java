@@ -1346,7 +1346,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setTauxDApparition(double tauxParMinute) {
 		double tauxParSeconde = tauxParMinute/60.0;
 		this.tauxDApparitionMoyen = tauxParSeconde;
-
+		normalisationGaussienneTauxApparition();
 	}
 	//Mamadou
 	/**
