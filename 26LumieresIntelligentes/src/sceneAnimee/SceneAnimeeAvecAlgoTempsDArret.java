@@ -1195,6 +1195,7 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 	public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
 		this.nbVoiesHorizontale= nbVoiesHorizontale; 
 	}
+	//Reiner
 	/**
 	 * Setter qui modifie la paramètre de vitesse de la scène
 	 * @param vitesse

@@ -1446,6 +1446,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setNbVoiesHorizontale(int nbVoiesHorizontale) {
 		this.nbVoiesHorizontale= nbVoiesHorizontale; 
 	}
+	//Reiner
 	/**
 	 * Setter qui modifie la paramètre de vitesse de la scène
 	 * @param vitesse
@@ -1559,6 +1560,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 	public void setTypeImages(int typeImages) {
 		this.typeImages  = typeImages;
 	}
+	//Mamadou
 	/**
 	 * Methode qui retourne le array list contenat les valeurs des voitures arretes
 	 * @return	nbVoituresEnAttente la liste contenant les nombres des voitures arretes
