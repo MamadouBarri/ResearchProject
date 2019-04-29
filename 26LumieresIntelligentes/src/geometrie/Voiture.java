@@ -64,6 +64,7 @@ public class Voiture implements Dessinable {
 	//valeur de deplacement temporaire pour la rotation
 	private double deplacementTemp = 0;
 	//type de voiture
+	//warning mais cette valeur est utilisé dans le constructeur
 	private int typeImages;
 	private boolean voitureDUrgence = false;
 	//valeur du temps d'arrêt totale d'une voiture
@@ -300,6 +301,12 @@ public class Voiture implements Dessinable {
 		}
 	}
 	//Reiner 
+	/**
+	 * Methode qui permet la rotation des voitures
+	 * @param rotationInitiale	angle initial de la rotation
+	 * @param maxRotationDroite	angle maximal de la rotation si elle tourne a droite
+	 * @param maxRotationGauche	angle maximal de la rotation si elle tourne a gauche
+	 */
 	public void rotationVoiture(double rotationInitiale, double maxRotationDroite, double maxRotationGauche) {
 		if(!enRotation) {
 			//aucune rotation d'image
@@ -365,7 +372,6 @@ public class Voiture implements Dessinable {
 		System.out.println("[" + strDate + "] " + affichage);
 	}
 	//Mamadou
-
 	/**
 	 * Methode qui permet de get la position de la voiture
 	 */
@@ -475,6 +481,7 @@ public class Voiture implements Dessinable {
 	public double getDeplacement() {
 		return this.deplacementTemp;
 	}
+	//Reiner
 	/**
 	 * Setter qui modifie la valeur de déplacement d'une voiture
 	 * @param deplacement la valeur de déplacement d'une voiture
@@ -628,10 +635,18 @@ public class Voiture implements Dessinable {
 		
 		return this.voitureAccelere;
 	}
-
+	
+	/**
+	 * Retourne vrai si l'accélération est terminée
+	 * @return	l'état de l'accélération de la voiture  
+	 */
 	public boolean getAccelTerminee() {
 		return this.accelTerminee ;
 	}
+	/**
+	 * Setter de l'état de l'accélération 
+	 * @param accelTerminee	l'état de l'accélération
+	 */
 	public void setAccelTerminee(boolean accelTerminee) { 
 		this.accelTerminee = accelTerminee;
 	}

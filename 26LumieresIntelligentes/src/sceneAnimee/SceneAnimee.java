@@ -192,7 +192,8 @@ public class SceneAnimee extends JPanel implements Runnable{
 	}
 	//Mamadou et Reiner
 	/**
-	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST
+	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST.
+	 * 
 	 */
 	@Override
 	public void run() {

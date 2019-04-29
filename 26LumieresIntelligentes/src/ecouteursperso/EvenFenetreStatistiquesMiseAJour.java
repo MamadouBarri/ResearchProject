@@ -6,5 +6,9 @@ import java.util.EventListener;
  * @author Mamadou
  **/
 public interface EvenFenetreStatistiquesMiseAJour extends EventListener{
-		public void miseAJourDesStats();
+	/**
+	 * Méthode qui permet la mise à jour de toute les statistiques
+	 * de la FenetreStatistique
+	 */
+	public void miseAJourDesStats();
 }

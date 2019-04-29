@@ -1,8 +1,6 @@
 package aaplication;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,32 +10,22 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
 import javax.swing.JSpinner;
-import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 
 import ecouteursperso.VisibiliteFenDepartListener;
 import ecouteursperso.VisibiliteFenParamListener;
 import ecouteursperso.VisibiliteFenStatistiquesListener;
-import ecouteursperso.VisibiliteFenStatistiquesListener;
 
 import javax.swing.event.ChangeEvent;
 import sceneAnimee.SceneAnimee;
 import sceneAnimee.SceneAnimeeAvecAlgo;
 
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -54,13 +42,15 @@ import javax.swing.SwingConstants;
 public class FenetreSimulationSansVideo extends JFrame {
 	////
 	
+	/**
+	 * Numéro par défaut
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private final ButtonGroup btngrpChoixDeComparaison = new ButtonGroup();
 	private java.net.URL  urlAnimer = getClass().getClassLoader().getResource("play.jpg");
 	private java.net.URL  urlPause = getClass().getClassLoader().getResource("pause.jpg");
 	private java.net.URL  urlProchaineImage = getClass().getClassLoader().getResource("pas.jpg");
 	private java.net.URL  urlRecommencer = getClass().getClassLoader().getResource("replay.png");
-	private java.net.URL  urlStats = getClass().getClassLoader().getResource("statistiques.jpg");
 	private SceneAnimee sceneAnimee1;
 	private SceneAnimeeAvecAlgo sceneAnimee2;
 	private SceneAnimeeAvecAlgoTempsDArret sceneAnimee3; 
@@ -75,7 +65,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private FenetreStatistiques fenStats;
 	private JCheckBox chkbxTraficAnormal;
 	private int nbVoituresMax;
-	private int typeImages;
 	private JLabel nbVoituresAGenerer;
 	private JLabel lblNombreDeVoitures;
 	private JLabel lblNombreDeVoitures2;
@@ -717,7 +706,6 @@ public class FenetreSimulationSansVideo extends JFrame {
 	 */
 	//Mamadou
 	public void setTypeImages(int typeImages) {
-			this.typeImages = typeImages;
 			sceneAnimee1.setTypeImages(typeImages);
 			sceneAnimee2.setTypeImages(typeImages);
 			sceneAnimee3.setTypeImages(typeImages);

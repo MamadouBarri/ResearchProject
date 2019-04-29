@@ -52,9 +52,9 @@ public class FenetreConcepts extends JFrame {
 		});
 	}
 	//Mamadou
-		/**
-		 * Constructeur de la fenêtre
-		 */
+	/**
+	 * Constructeur de la fenêtre
+	*/
 	public FenetreConcepts() {
 		setTitle("Concepts scientifiques");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,6 +114,7 @@ public class FenetreConcepts extends JFrame {
 		//Pour charger l'image pre-fabriquee
 		imageAvecDefilementConcepts.setFichierImage("ConceptsScientifiquesFinal.jpg");
 	}
+	
 	//Reiner
 	/**
 	 * ajoute un objet à la liste d'objets qui desirent savoir quand on veut rouvrir la fenetre de depart

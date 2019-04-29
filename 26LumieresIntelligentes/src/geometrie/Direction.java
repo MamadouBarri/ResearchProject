@@ -3,9 +3,9 @@ package geometrie;
 import java.util.Random;
 /**
  * Cette classe va gerer la generation du parametre Direction de chaque voiture avec des probabilites selon le traffic mis en place
- * @author Mamadou Barri & Reiner Gayta
+ * @author Mamadou & Reiner Gayta
  */
-public class Direction extends Ligne {
+public class Direction  {
 	//varbiales
 	private String descriptionDirection="";
 	private int numDirection;
