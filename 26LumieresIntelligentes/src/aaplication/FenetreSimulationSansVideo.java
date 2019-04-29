@@ -43,6 +43,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
 import sceneAnimee.SceneAnimeeAvecAlgoTempsDArret;
+import javax.swing.SwingConstants;
 /**
  * JFrame qui compare notre algorithme à une intersection normale dans la vraie vie
  * avec une video d'une intersection et des simulations
@@ -90,6 +91,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 	private JLabel lblTempsDArret2;
 	private JLabel lblDensite3;
 	private JLabel lblTempsDArret3;
+	private JLabel lblStlsd;
+	private JLabel lblstlsdt;
 
 	/**
 	 * Launch the application.
@@ -168,7 +171,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 		contentPane.add(pnSimulations);
 		pnSimulations.setLayout(null);
 
-		JLabel lblSimulationSansLAlgorithme = new JLabel("Simulation sans l'algorithme");
+		JLabel lblSimulationSansLAlgorithme = new JLabel("Lumi\u00E8res bas\u00E9es sur le temps");
 		lblSimulationSansLAlgorithme.setBounds(224, 11, 214, 14);
 		pnSimulations.add(lblSimulationSansLAlgorithme);
 
@@ -230,7 +233,8 @@ public class FenetreSimulationSansVideo extends JFrame {
 		fenStats.setVisible(false);
 		
 		
-		JLabel lblSimulationAvecLalgorithme = new JLabel("Simulation avec l'algorithme bas\u00E9e sur la densit\u00E9 de voitures\r\n");
+		JLabel lblSimulationAvecLalgorithme = new JLabel("Smart Traffic Light Schedualing algorithm based on traffic Density");
+		lblSimulationAvecLalgorithme.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSimulationAvecLalgorithme.setBounds(742, 11, 386, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithme);
 		
@@ -238,9 +242,19 @@ public class FenetreSimulationSansVideo extends JFrame {
 		sceneAnimee3.setBounds(1282, 50, 600, 600);
 		pnSimulations.add(sceneAnimee3);
 		
-		JLabel lblSimulationAvecLalgorithmeTempsDArret = new JLabel("Simulation avec l'algorithme bas\u00E9e sur le temps d'arr\u00EAt des voitures\r\n\r\n");
-		lblSimulationAvecLalgorithmeTempsDArret.setBounds(1366, 11, 386, 14);
+		JLabel lblSimulationAvecLalgorithmeTempsDArret = new JLabel("Smart Traffic Light Schedualing algorithm based on traffic Density and delay Time");
+		lblSimulationAvecLalgorithmeTempsDArret.setBounds(1360, 11, 505, 14);
 		pnSimulations.add(lblSimulationAvecLalgorithmeTempsDArret);
+		
+		lblStlsd = new JLabel("(STLSD)");
+		lblStlsd.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStlsd.setBounds(746, 25, 386, 14);
+		pnSimulations.add(lblStlsd);
+		
+		lblstlsdt = new JLabel("(STLSDT)");
+		lblstlsdt.setHorizontalAlignment(SwingConstants.CENTER);
+		lblstlsdt.setBounds(1373, 25, 416, 14);
+		pnSimulations.add(lblstlsdt);
 
 		JLabel lblVideo = new JLabel("Param\u00E8tres");
 		lblVideo.setBounds(762, 855, 123, 14);

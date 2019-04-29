@@ -212,40 +212,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();//pour chaque voiture qui s'en vers l'EST
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 2:
-								if(nbVoiesSud==1&&nbVoiesNord==1) {
-								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('e', v);
 				}
 				//fin de la verification
 				switch(v.getDirectionDeVirage()){
@@ -484,40 +451,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = nord.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesOuest+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()<this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesNord+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*this.nbVoiesNord)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 2:
-								if(nbVoiesEst==1&&nbVoiesOuest==1) {
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('s', v);
 				}
 				//fin de la verification
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -664,33 +598,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getYVoiture()<(this.LARGEUR_REELLE/2.0)*this.modele.getPixelsParUniteY()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('o', v);
 				}
 				//fin de la verification
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
@@ -833,33 +741,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = sud.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()>this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesOuest+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('n', v);
 				}
 				//fin de la verification
 				if(v.getYVoiture()<-this.LARGEUR_VOITURE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -1109,6 +991,145 @@ public class SceneAnimee extends JPanel implements Runnable{
 		}//fin while
 		System.out.println("Le thread est mort...");
 	}
+	//Reiner
+		/**
+		 * Méthode qui permet une voiture de connaitre la position de la voiture opposée à elle pour assurer un virage sans collision
+		 * @param direction direction de la voiture
+		 * @param v la voiture qui veut tourner à gauche
+		 */
+		public void verifierVoitureOppose(char direction, Voiture v) {
+			switch (direction) {
+			case 'e':
+				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+				for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
+					Voiture vOppose = iOppose.next();
+					//entre si la voiture est pret à tourner à gauche
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
+						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+						switch(vOppose.getDirectionDeVirage()) {
+						case 0:
+							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 1:
+							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 2:
+							if(nbVoiesSud==1&&nbVoiesNord==1) {
+								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+									ilYAVoitureQuiBloque = true;
+								}
+							}
+						}
+					}
+				}
+				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+				if(ilYAVoitureQuiBloque) {
+					v.setPeutTournerGauche(false);
+				} else {
+					v.setPeutTournerGauche(true);
+				}
+				//On remet le boolean à sa valeur initiale
+				this.ilYAVoitureQuiBloque = false;
+				break;
+			case 'o' :
+				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+				for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
+					Voiture vOppose = iOppose.next();
+					//entre si la voiture est pret à tourner à gauche
+					if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getYVoiture()<(this.LARGEUR_REELLE/2.0)*this.modele.getPixelsParUniteY()) {
+						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+						switch(vOppose.getDirectionDeVirage()) {
+						case 0:
+							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 1:
+							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+								ilYAVoitureQuiBloque = true;
+							}
+						}
+					}
+				}
+				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+				if(ilYAVoitureQuiBloque) {
+					v.setPeutTournerGauche(false);
+				} else {
+					v.setPeutTournerGauche(true);
+				}
+				//On remet le boolean à sa valeur initiale
+				this.ilYAVoitureQuiBloque = false;
+				break;
+			case 's' :
+				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+				for(Iterator<Voiture> iOppose = nord.iterator();iOppose.hasNext();) {
+					Voiture vOppose = iOppose.next();
+					//entre si la voiture est pret à tourner à gauche
+					if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesOuest+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()<this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+						switch(vOppose.getDirectionDeVirage()) {
+						case 0:
+							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesOuest+0.5))*modele.getPixelsParUniteY()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 1:
+							if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*this.nbVoiesNord)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 2:
+							if(nbVoiesEst==1&&nbVoiesOuest==1) {
+								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
+									ilYAVoitureQuiBloque = true;
+								}
+							}
+						}
+					}
+				}
+				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+				if(ilYAVoitureQuiBloque) {
+					v.setPeutTournerGauche(false);
+				} else {
+					v.setPeutTournerGauche(true);
+				}
+				//On remet le boolean à sa valeur initiale
+				this.ilYAVoitureQuiBloque = false;
+				break;
+			case 'n':
+				//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+				for(Iterator<Voiture> iOppose = sud.iterator();iOppose.hasNext();) {
+					Voiture vOppose = iOppose.next();
+					//entre si la voiture est pret à tourner à gauche
+					if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()>this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+						//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+						switch(vOppose.getDirectionDeVirage()) {
+						case 0:
+							if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()) {
+								ilYAVoitureQuiBloque = true;
+							}
+							break;
+						case 1:
+							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesOuest+0.5))*modele.getPixelsParUniteY()) {
+								ilYAVoitureQuiBloque = true;
+							}
+						}
+					}
+				}
+				//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+				if(ilYAVoitureQuiBloque) {
+					v.setPeutTournerGauche(false);
+				} else {
+					v.setPeutTournerGauche(true);
+				}
+				//On remet le boolean à sa valeur initiale
+				this.ilYAVoitureQuiBloque = false;
+			}
+		}
 	//Reiner
 		/**
 		 * Méthode qui permet d'itentifier la voiture devant 

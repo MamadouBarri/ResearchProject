@@ -136,7 +136,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		inter = new Intersection(this.LARGEUR_REELLE,this.nbVoiesEst,this.nbVoiesOuest,this.nbVoiesSud,this.nbVoiesNord);
 		inter.setNbVoiesHorizontale(nbVoiesHorizontale);
 		inter.dessiner(g2d,mat);
-		
+
 		dessinerLumieres(g2d,mat);
 
 		//Dessiner l'échelle
@@ -151,28 +151,28 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		}	
 	}//fin paintComponent
 	//Reiner
-		/**
-		 * Méthode qui dessine les lumières sur l'intersection
-		 * @param g2d contexte graphique
-		 * @param mat matrice de transformation monde-vers-composant
-		 */
-		public void dessinerLumieres(Graphics2D g2d, AffineTransform mat) {
-			lumSud = new Lumiere(0,0,75,couleur,4);
-			lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
-			lumSud.dessiner(g2d, mat);
+	/**
+	 * Méthode qui dessine les lumières sur l'intersection
+	 * @param g2d contexte graphique
+	 * @param mat matrice de transformation monde-vers-composant
+	 */
+	public void dessinerLumieres(Graphics2D g2d, AffineTransform mat) {
+		lumSud = new Lumiere(0,0,75,couleur,4);
+		lumSud.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumSud.getLongueur()-5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumSud.getLargeur()-5);
+		lumSud.dessiner(g2d, mat);
 
-			lumNord = new Lumiere(0,0,75,couleur,1);
-			lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst+5);
-			lumNord.dessiner(g2d, mat);
+		lumNord = new Lumiere(0,0,75,couleur,1);
+		lumNord.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+5,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst+5);
+		lumNord.dessiner(g2d, mat);
 
-			lumOuest = new Lumiere(0,0,75,couleurInv,2);
-			lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
-			lumOuest.dessiner(g2d, mat);	
+		lumOuest = new Lumiere(0,0,75,couleurInv,2);
+		lumOuest.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesNord+lumOuest.getLargeur()/2.0-lumOuest.getLongueur()/2.0+this.DISTANCE_BORDURE, this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesOuest-lumOuest.getLongueur()/2.0-lumOuest.getLargeur()/2.0-5);
+		lumOuest.dessiner(g2d, mat);	
 
-			lumEst = new Lumiere(0,0,75,couleurInv,3);
-			lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
-			lumEst.dessiner(g2d, mat);
-		}
+		lumEst = new Lumiere(0,0,75,couleurInv,3);
+		lumEst.setPosition(this.LARGEUR_REELLE*modele.getPixelsParUniteX()/2.0-(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteX()/2.0)*this.nbVoiesSud-lumEst.getLongueur()/2.0-lumEst.getLargeur()/2.0-this.DISTANCE_BORDURE,this.LARGEUR_REELLE*modele.getPixelsParUniteY()/2.0+(this.DIMENSION_VOIE_REELLE*modele.getPixelsParUniteY()/2.0)*this.nbVoiesEst-lumEst.getLargeur()/2.0+lumEst.getLongueur()/2.0+this.DISTANCE_BORDURE);
+		lumEst.dessiner(g2d, mat);
+	}
 	//Mamadou et Reiner
 	/**
 	 * Animation de l'intersection avec les voitures se deplacant dans les quatres directions differentes : NORD,SUD,OUEST,EST
@@ -196,40 +196,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				Voiture v = i.next();//pour chaque voiture qui s'en vers l'EST
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 2:
-								if(nbVoiesSud==1&&nbVoiesNord==1) {
-								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('e', v);
 				}
 				//fin de la verification
 				switch(v.getDirectionDeVirage()){
@@ -327,41 +294,9 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 			for(Iterator<Voiture> i = sud.iterator();i.hasNext();) {
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
+				
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = nord.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesOuest+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()<this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesNord+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*this.nbVoiesNord)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 2:
-								if(nbVoiesEst==1&&nbVoiesOuest==1) {
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('s', v);
 				}
 				//fin de la verification
 				if(v.getYVoiture()>this.LARGEUR_REELLE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -455,33 +390,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getYVoiture()<(this.LARGEUR_REELLE/2.0)*this.modele.getPixelsParUniteY()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
-									ilYAVoitureQuiBloque = true;
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('o', v);
 				}
 				//fin de la verification
 				if(v.getXVoiture()<-this.LONGUEUR_VOITURE*modele.getPixelsParUniteX() && v.getVoitureActive()) {
@@ -530,7 +439,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							if(v.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()) {
 								v.setXVoiture((v.getXVoiture()-deplacement));
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*this.modele.getPixelsParUniteX()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX())));
-								
+
 							}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
 							if(lumOuest.getCouleur()!=ROUGE&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getXVoiture()>0){
@@ -575,33 +484,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 				Voiture v = i.next();
 				//On vérifie seulement si la voiture tourne à gauche
 				if(v.getDirectionDeVirage()==2) {
-					//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
-					for(Iterator<Voiture> iOppose = sud.iterator();iOppose.hasNext();) {
-						Voiture vOppose = iOppose.next();
-						//entre si la voiture est pret à tourner à gauche
-						if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()>this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
-							//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
-							switch(vOppose.getDirectionDeVirage()) {
-							case 0:
-								if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-								break;
-							case 1:
-								if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesOuest+0.5))*modele.getPixelsParUniteY()) {
-									ilYAVoitureQuiBloque = true;
-								}
-							}
-						}
-					}
-					//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
-					if(ilYAVoitureQuiBloque) {
-						v.setPeutTournerGauche(false);
-					} else {
-						v.setPeutTournerGauche(true);
-					}
-					//On remet le boolean à sa valeur initiale
-					this.ilYAVoitureQuiBloque = false;
+					verifierVoitureOppose('n', v);
 				}
 				//fin de la verification
 				if(v.getYVoiture()<-this.LARGEUR_VOITURE*modele.getPixelsParUniteY() && v.getVoitureActive()) {
@@ -653,7 +536,7 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 							if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()+this.DISTANCE_BORDURE) {
 								v.setYVoiture((v.getYVoiture()-deplacement));
 								v.setVitesseDeRotation(deplacement, Math.abs((this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*this.modele.getPixelsParUniteY()-((this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY())));
-								
+
 							}
 							//La voiture commence sa rotation après avoir dépassé sa lumiere
 							if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&v.getYVoiture()>0){
@@ -868,52 +751,191 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		System.out.println("Le thread est mort...");
 	}
 	//Reiner
-			/**
-			 * Méthode qui permet d'itentifier la voiture devant 
-			 * @param list array liste contenant la voiture qu'on examine
-			 * @param v voiture examinée dont on cherhce la voiture qui est devant elle
-			 * @param nbVoies nombre de voie de la direction sur laquelle la voiture examinée se retrouve
-			 */
-			public Voiture verifierVoitureDevant(ArrayList<Voiture> list, Voiture v, int nbVoies) {
-				Voiture voitureDevant = list.get(list.indexOf(v)-1);
-				int f = 1;
-				switch (nbVoies) {
-				case 2:
-					if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
-						while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-					} else {
-						while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
-						}
-					}
-					break;
-				case 3:
-					switch (v.getDirectionDeVirage()) {
+	/**
+	 * Méthode qui permet une voiture de connaitre la position de la voiture opposée à elle pour assurer un virage sans collision
+	 * @param direction direction de la voiture
+	 * @param v la voiture qui veut tourner à gauche
+	 */
+	public void verifierVoitureOppose(char direction, Voiture v) {
+		switch (direction) {
+		case 'e':
+			//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+			for(Iterator<Voiture> iOppose = ouest.iterator();iOppose.hasNext();) {
+				Voiture vOppose = iOppose.next();
+				//entre si la voiture est pret à tourner à gauche
+				if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()&&v.getYVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteY()) {
+					//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+					switch(vOppose.getDirectionDeVirage()) {
 					case 0:
-						while(voitureDevant.getDirectionDeVirage()!=0&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
+						if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+							ilYAVoitureQuiBloque = true;
 						}
 						break;
 					case 1:
-						while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
+						if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesOuest)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+							ilYAVoitureQuiBloque = true;
 						}
 						break;
 					case 2:
-						while(voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
-							voitureDevant = list.get(list.indexOf(v)-f);
-							f++;
+						if(nbVoiesSud==1&&nbVoiesNord==1) {
+							if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+								ilYAVoitureQuiBloque = true;
+							}
 						}
 					}
-					}
-				return voitureDevant;
+				}
 			}
+			//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+			if(ilYAVoitureQuiBloque) {
+				v.setPeutTournerGauche(false);
+			} else {
+				v.setPeutTournerGauche(true);
+			}
+			//On remet le boolean à sa valeur initiale
+			this.ilYAVoitureQuiBloque = false;
+			break;
+		case 'o' :
+			//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+			for(Iterator<Voiture> iOppose = est.iterator();iOppose.hasNext();) {
+				Voiture vOppose = iOppose.next();
+				//entre si la voiture est pret à tourner à gauche
+				if(v.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&v.getYVoiture()<(this.LARGEUR_REELLE/2.0)*this.modele.getPixelsParUniteY()) {
+					//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+					switch(vOppose.getDirectionDeVirage()) {
+					case 0:
+						if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteX()&&vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesNord)*modele.getPixelsParUniteX()) {
+							ilYAVoitureQuiBloque = true;
+						}
+						break;
+					case 1:
+						if(vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()&&vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesNord+0.5))*modele.getPixelsParUniteX()) {
+							ilYAVoitureQuiBloque = true;
+						}
+					}
+				}
+			}
+			//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+			if(ilYAVoitureQuiBloque) {
+				v.setPeutTournerGauche(false);
+			} else {
+				v.setPeutTournerGauche(true);
+			}
+			//On remet le boolean à sa valeur initiale
+			this.ilYAVoitureQuiBloque = false;
+			break;
+		case 's' :
+			//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+			for(Iterator<Voiture> iOppose = nord.iterator();iOppose.hasNext();) {
+				Voiture vOppose = iOppose.next();
+				//entre si la voiture est pret à tourner à gauche
+				if(v.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesOuest+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()<this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()<(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+					//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+					switch(vOppose.getDirectionDeVirage()) {
+					case 0:
+						if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesOuest+0.5))*modele.getPixelsParUniteY()) {
+							ilYAVoitureQuiBloque = true;
+						}
+						break;
+					case 1:
+						if(vOppose.getXVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*this.nbVoiesNord)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+DIMENSION_VOIE_REELLE/2.0*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
+							ilYAVoitureQuiBloque = true;
+						}
+						break;
+					case 2:
+						if(nbVoiesEst==1&&nbVoiesOuest==1) {
+							if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE*(this.nbVoiesEst+0.5))*modele.getPixelsParUniteY()) {
+								ilYAVoitureQuiBloque = true;
+							}
+						}
+					}
+				}
+			}
+			//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+			if(ilYAVoitureQuiBloque) {
+				v.setPeutTournerGauche(false);
+			} else {
+				v.setPeutTournerGauche(true);
+			}
+			//On remet le boolean à sa valeur initiale
+			this.ilYAVoitureQuiBloque = false;
+			break;
+		case 'n':
+			//On vérifie si il y a une voiture qui bloque le chemin de la voiture qui veut tourner à gauche
+			for(Iterator<Voiture> iOppose = sud.iterator();iOppose.hasNext();) {
+				Voiture vOppose = iOppose.next();
+				//entre si la voiture est pret à tourner à gauche
+				if(v.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*(nbVoiesEst+0.5))*modele.getPixelsParUniteY()&&v.getYVoiture()>this.LARGEUR_REELLE/2.0*modele.getPixelsParUniteY()&&v.getXVoiture()>(this.LARGEUR_REELLE/2.0)*modele.getPixelsParUniteX()) {
+					//Conditions différents dépendant si la voiture qui bloque le chemin va tout droit ou tourne à droite
+					switch(vOppose.getDirectionDeVirage()) {
+					case 0:
+						if(vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE)*modele.getPixelsParUniteY()&&vOppose.getYVoiture()<(this.LARGEUR_REELLE/2.0+this.DIMENSION_VOIE_REELLE/2.0*nbVoiesEst)*modele.getPixelsParUniteY()) {
+							ilYAVoitureQuiBloque = true;
+						}
+						break;
+					case 1:
+						if(vOppose.getXVoiture()>(this.LARGEUR_REELLE/2.0-this.DIMENSION_VOIE_REELLE/2.0*nbVoiesSud)*modele.getPixelsParUniteX()&&vOppose.getYVoiture()>(this.LARGEUR_REELLE/2.0-DIMENSION_VOIE_REELLE/2.0*(nbVoiesOuest+0.5))*modele.getPixelsParUniteY()) {
+							ilYAVoitureQuiBloque = true;
+						}
+					}
+				}
+			}
+			//Si il y a voiture qui bloque, la voiture ne peut pas tourner à gauche, sinon, elle peut
+			if(ilYAVoitureQuiBloque) {
+				v.setPeutTournerGauche(false);
+			} else {
+				v.setPeutTournerGauche(true);
+			}
+			//On remet le boolean à sa valeur initiale
+			this.ilYAVoitureQuiBloque = false;
+		}
+	}
+	//Reiner
+	/**
+	 * Méthode qui permet d'itentifier la voiture devant 
+	 * @param list array liste contenant la voiture qu'on examine
+	 * @param v voiture examinée dont on cherhce la voiture qui est devant elle
+	 * @param nbVoies nombre de voie de la direction sur laquelle la voiture examinée se retrouve
+	 */
+	public Voiture verifierVoitureDevant(ArrayList<Voiture> list, Voiture v, int nbVoies) {
+		Voiture voitureDevant = list.get(list.indexOf(v)-1);
+		int f = 1;
+		switch (nbVoies) {
+		case 2:
+			if(v.getDirectionDeVirage()==0||v.getDirectionDeVirage()==2) {
+				while(voitureDevant.getDirectionDeVirage()!=0&&voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+			} else {
+				while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+			}
+			break;
+		case 3:
+			switch (v.getDirectionDeVirage()) {
+			case 0:
+				while(voitureDevant.getDirectionDeVirage()!=0&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+				break;
+			case 1:
+				while(voitureDevant.getDirectionDeVirage()!=1&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+				break;
+			case 2:
+				while(voitureDevant.getDirectionDeVirage()!=2&&list.indexOf(v)-f!=0) {
+					voitureDevant = list.get(list.indexOf(v)-f);
+					f++;
+				}
+			}
+		}
+		return voitureDevant;
+	}
 	//Mamadou
 	/**
 	 * Méthode qui fait l'affichage a la console avec le temps precisé
@@ -959,21 +981,21 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		normalisationGaussienneTauxApparition();
 	}
 	//Mamadou
-		/**
-		 * Cette methode permet de changer la valeur du taux d'apparition de voitures
-		 * selon la loi de Gauss
-		 */
+	/**
+	 * Cette methode permet de changer la valeur du taux d'apparition de voitures
+	 * selon la loi de Gauss
+	 */
 	private void normalisationGaussienneTauxApparition() {
 		double tauxGauss; //Une valeur initiale quelconque < 0
 		do{
 			// Un objet Random
-	        Random ran = new Random(); 
-	        // ON genere un double selon la distribution gaussienne
-	        tauxGauss = ran.nextGaussian(); 
-	        tauxGauss = tauxGauss*DEVIATION_GAUSSIENNE+ tauxDApparitionMoyen;
+			Random ran = new Random(); 
+			// ON genere un double selon la distribution gaussienne
+			tauxGauss = ran.nextGaussian(); 
+			tauxGauss = tauxGauss*DEVIATION_GAUSSIENNE+ tauxDApparitionMoyen;
 		}while(tauxGauss<=TAUX_GAUSS_MIN || tauxGauss >TAUX_GAUSS_MAX); // On ne veut pas un taux négatif, contrainte car fonction Gaussienne n'a pas de limite théorique
-		 //On change le taux d'apparition et ainsi le nombre de boucles pour chaque apparition
-        this.setTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
+		//On change le taux d'apparition et ainsi le nombre de boucles pour chaque apparition
+		this.setTauxDApparition(tauxGauss*60); // La methode prend le taux d'apparition par minute
 	}
 	//Mamadou
 	/**
@@ -1245,106 +1267,106 @@ public class SceneAnimeeAvecAlgo extends JPanel implements Runnable{
 		return tempsDArretMoyen;
 	}
 	//Reiner
-		/**
-		 * Méthode qui calcule la densité de voitures sur une certaine longeur de route
-		 * @param list Collection de voitures 
-		 * @param longueurDeRoute Longeur de la route où les voitures se trouvent en metres
-		 * @return densité de voitures sur une longeur donnée en voiture/kilometre
-		 */
-		public double calculeDensite(ArrayList<Voiture> list, double longeurDeRoute) {
-			double nbVoituresTotales = 0;
-			for(Iterator<Voiture> i = list.iterator();i.hasNext();) {
-				Voiture v = i.next();
-				//on vérifie si la voiture est encore sur l'intersection
-				if(v.getVoitureActive()) {
-					//si oui, on l'ajoute au nombre de voitures totales
-					nbVoituresTotales++;
-				}
+	/**
+	 * Méthode qui calcule la densité de voitures sur une certaine longeur de route
+	 * @param list Collection de voitures 
+	 * @param longueurDeRoute Longeur de la route où les voitures se trouvent en metres
+	 * @return densité de voitures sur une longeur donnée en voiture/kilometre
+	 */
+	public double calculeDensite(ArrayList<Voiture> list, double longeurDeRoute) {
+		double nbVoituresTotales = 0;
+		for(Iterator<Voiture> i = list.iterator();i.hasNext();) {
+			Voiture v = i.next();
+			//on vérifie si la voiture est encore sur l'intersection
+			if(v.getVoitureActive()) {
+				//si oui, on l'ajoute au nombre de voitures totales
+				nbVoituresTotales++;
 			}
-			return nbVoituresTotales/(longeurDeRoute/1000.0);//on converti les metres en kilometres pour avoir une densité en voitures par kilometre
-			
 		}
-		//Reiner 
-		/**
-		 * Getter qui retourne la densité de voitures sur toute l'intersection
-		 * @return La densité de voitures sur toute l'intersection en voitures/kilometre;
-		 */
-		public double getDensiteTotale() {
-			return calculeDensite(this.voitures,this.LARGEUR_REELLE*4);//On calcule la densité avec toutes les voitures générés et la longeur totale des voies horizontales et verticales 
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction est
-		 * @return nbVoiesEst int le nombre de voies de direction est
-		 */
-		public int getNbVoiesEst() {
-			return nbVoiesEst;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction est
-		 * @param nbVoiesEst int le nombre de voies de direction est
-		 */
-		public void setNbVoiesEst(int nbVoiesEst) {
-			this.nbVoiesEst = nbVoiesEst;
-			repaint();
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction ouest
-		 * @return the nbVoiesOuest int le nombre de voies de direction ouest
-		 */
-		public int getNbVoiesOuest() {
-			return nbVoiesOuest;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction ouest
-		 * @param nbVoiesOuest int le nombre de voies de direction ouest
-		 */
-		public void setNbVoiesOuest(int nbVoiesOuest) {
-			this.nbVoiesOuest = nbVoiesOuest;
-			repaint();
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction sud
-		 * @return the nbVoiesSud le nombre de voies de direction sud
-		 */
-		public int getNbVoiesSud() {
-			return nbVoiesSud;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction sud
-		 * @param nbVoiesSud le nombre de voies de direction sud
-		 */
-		public void setNbVoiesSud(int nbVoiesSud) {
-			this.nbVoiesSud = nbVoiesSud;
-			repaint();
-		}
-		//Reiner 
-		/**Getter qui retourne le nombre de voies de direction nord
-		 * @return the nbVoiesNord le nombre de voies de direction nord
-		 */
-		public int getNbVoiesNord() {
-			return nbVoiesNord;
-		}
-		//Reiner 
-		/**Setter qui permet de déterminer le nombre de voies de direction nord
-		 * @param nbVoiesNord le nombre de voies de direction nord
-		 */
-		public void setNbVoiesNord(int nbVoiesNord) {
-			this.nbVoiesNord = nbVoiesNord;
-			repaint();
-		}
-		//Mamadou
-		/**
-		 * Retourne le nombre de voitures generees
-		 */
-		public int getNombreVoituresGeneree() {
-			return(this.nbVoituresGenerees);
-		}
-		//Reiner
-		/**
-		 * Retoune le temps d'arrêt moyen de toutes les voitures sur l'intersection
-		 * @return le temps d'arrêt moyen de toutes les voitures sur l'intersection
-		 */
-		public double getTempsDArretMoyen() {
-			return this.calculeTempsDArretMoyen();
-		}
+		return nbVoituresTotales/(longeurDeRoute/1000.0);//on converti les metres en kilometres pour avoir une densité en voitures par kilometre
+
+	}
+	//Reiner 
+	/**
+	 * Getter qui retourne la densité de voitures sur toute l'intersection
+	 * @return La densité de voitures sur toute l'intersection en voitures/kilometre;
+	 */
+	public double getDensiteTotale() {
+		return calculeDensite(this.voitures,this.LARGEUR_REELLE*4);//On calcule la densité avec toutes les voitures générés et la longeur totale des voies horizontales et verticales 
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction est
+	 * @return nbVoiesEst int le nombre de voies de direction est
+	 */
+	public int getNbVoiesEst() {
+		return nbVoiesEst;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction est
+	 * @param nbVoiesEst int le nombre de voies de direction est
+	 */
+	public void setNbVoiesEst(int nbVoiesEst) {
+		this.nbVoiesEst = nbVoiesEst;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction ouest
+	 * @return the nbVoiesOuest int le nombre de voies de direction ouest
+	 */
+	public int getNbVoiesOuest() {
+		return nbVoiesOuest;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction ouest
+	 * @param nbVoiesOuest int le nombre de voies de direction ouest
+	 */
+	public void setNbVoiesOuest(int nbVoiesOuest) {
+		this.nbVoiesOuest = nbVoiesOuest;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction sud
+	 * @return the nbVoiesSud le nombre de voies de direction sud
+	 */
+	public int getNbVoiesSud() {
+		return nbVoiesSud;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction sud
+	 * @param nbVoiesSud le nombre de voies de direction sud
+	 */
+	public void setNbVoiesSud(int nbVoiesSud) {
+		this.nbVoiesSud = nbVoiesSud;
+		repaint();
+	}
+	//Reiner 
+	/**Getter qui retourne le nombre de voies de direction nord
+	 * @return the nbVoiesNord le nombre de voies de direction nord
+	 */
+	public int getNbVoiesNord() {
+		return nbVoiesNord;
+	}
+	//Reiner 
+	/**Setter qui permet de déterminer le nombre de voies de direction nord
+	 * @param nbVoiesNord le nombre de voies de direction nord
+	 */
+	public void setNbVoiesNord(int nbVoiesNord) {
+		this.nbVoiesNord = nbVoiesNord;
+		repaint();
+	}
+	//Mamadou
+	/**
+	 * Retourne le nombre de voitures generees
+	 */
+	public int getNombreVoituresGeneree() {
+		return(this.nbVoituresGenerees);
+	}
+	//Reiner
+	/**
+	 * Retoune le temps d'arrêt moyen de toutes les voitures sur l'intersection
+	 * @return le temps d'arrêt moyen de toutes les voitures sur l'intersection
+	 */
+	public double getTempsDArretMoyen() {
+		return this.calculeTempsDArretMoyen();
+	}
 }
