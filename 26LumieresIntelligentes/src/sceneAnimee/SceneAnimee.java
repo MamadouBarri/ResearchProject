@@ -345,7 +345,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 				//Lorsque la lumiere redevient verte ou est jaune
 				if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur()==JAUNE) {
 					v.setVoitureArretee(false);
-					v.setVoitureAccelere(true);
+					//v.setVoitureAccelere(true);
 				}
 				
 				
@@ -1205,6 +1205,7 @@ public class SceneAnimee extends JPanel implements Runnable{
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date maintenant = new Date();
 		String strDate = sdfDate.format(maintenant);
+		System.out.println("[" + strDate + "] " + affichage);
 	}
 	//Mamadou
 	/**
