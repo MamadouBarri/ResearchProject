@@ -364,7 +364,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 								}
 							}
 						});
-						spnVitesse.setModel(new SpinnerNumberModel(30, 30, 120, 1));
+						spnVitesse.setModel(new SpinnerNumberModel(60, 30, 120, 1));
 						
 								JLabel lblKmParHeure = new JLabel("km/h");
 								lblKmParHeure.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
