@@ -370,7 +370,20 @@ public class SceneAnimeeAvecAlgoTempsDArret extends JPanel implements Runnable{
 					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) < LARGEUR_VOITURE*7.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 && !v.getVoitureArretee() && voitureDevant.getVoitureArretee()) {
 						v.setVoitureRalentit(true);
 					}
+					//La voiture devant est assez loin pour accelerer
+					if(Math.abs((v.getXVoiture() - voitureDevant.getXVoiture())) > LARGEUR_VOITURE*4.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE&&Math.abs(v.getYVoiture()-voitureDevant.getYVoiture())<3 &&
+							!voitureDevant.getVoitureArretee() && !voitureDevant.getVoitureAccelere() && lumOuest.getCouleur() == VERTE && voitureDevant.getVoitureActive()) {
+						v.setVoitureAccelere(true);
+						/**
+						 * CHANGEMMENT && !voitureDevant.getVoitureArretee() && Math.abs(voitureDevant.getXVoiture()) < LARGEUR_VOITURE*5.0 * modele.getPixelsParUniteX() + DISTANCE_BORDURE
+						 */
+						v.setVoitureArretee(false);
+					}
 
+				}else {
+					if(lumOuest.getCouleur() == VERTE||lumOuest.getCouleur() == JAUNE) {
+						v.setVoitureArretee(false);
+					}
 				}
 			}
 
