@@ -94,13 +94,11 @@ public class PlanCartesien1 extends JPanel {
 				donneesSansAlgo = new ArrayList<Integer>(SceneAnimee.nbVoituresEnAttente); 
 				donneesAvecAlgoDensite = new ArrayList<Integer>(SceneAnimeeAvecAlgo.nbVoituresEnAttente);
 				donneesAvecAlgoDensiteTempsArret = new ArrayList<Integer>(SceneAnimeeAvecAlgoTempsDArret.nbVoituresEnAttente);
-				System.out.println("TYPE DONEEES 1 ");
 				break;
 			case 1 ://la vitesse moyenne en fonction du temps
 				donneesSansAlgo = new ArrayList<Integer>(SceneAnimee.moyenneDesVitesse); 
 				donneesAvecAlgoDensite = new ArrayList<Integer>(SceneAnimeeAvecAlgo.moyenneDesVitesse);
 				donneesAvecAlgoDensiteTempsArret = new ArrayList<Integer>(SceneAnimeeAvecAlgoTempsDArret.moyenneDesVitesse);
-				System.out.println("TYPE DONEEES 2 ");
 				break;
 			case 2 :
 				donneesSansAlgo = new ArrayList<Integer>();
@@ -142,7 +140,6 @@ public class PlanCartesien1 extends JPanel {
 		int valeurMaxAvecAlgoDensiteTempsArret = Collections.max(donneesAvecAlgoDensiteTempsArret);
 
 		yNbCoord= Math.max(Math.max(valeurMaxSansAlgo, valeurMaxAvecAlgoDensite), valeurMaxAvecAlgoDensiteTempsArret) + 1 ; // On se garde une unité pour la visibilité
-		System.out.println("LE NOMBRE Y MAX" +yNbCoord );
 		//Calculer la largeur entre les x et y
 		largeurEntreX = (COORD_FINALE_X_AXE_X - COORD_INITIAL_X_AXE_X)
 				/ xNbCoord;
