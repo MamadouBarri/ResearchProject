@@ -365,6 +365,7 @@ public class Voiture implements Dessinable {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date maintenant = new Date();
 		String strDate = sdfDate.format(maintenant);
+		System.out.println( "[" + strDate + "] " + affichage);
 	}
 	//Mamadou
 	/**
