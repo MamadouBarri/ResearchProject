@@ -364,7 +364,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 								}
 							}
 						});
-						spnVitesse.setModel(new SpinnerNumberModel(new Integer(20), new Integer(0), null, new Integer(1)));
+						spnVitesse.setModel(new SpinnerNumberModel(30, 30, 120, 1));
 						
 								JLabel lblKmParHeure = new JLabel("km/h");
 								lblKmParHeure.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
@@ -382,7 +382,7 @@ public class FenetreSimulationSansVideo extends JFrame {
 												sceneAnimee3.setTauxDApparition((Integer)spnTauxDApparition.getValue());
 											}
 										});
-										spnTauxDApparition.setModel(new SpinnerNumberModel(new Integer(60), new Integer(1), null, new Integer(1)));
+										spnTauxDApparition.setModel(new SpinnerNumberModel(60, 1, 120, 1));
 										
 												JLabel lblTauxDApparition = new JLabel("Taux d'apparition :");
 												lblTauxDApparition.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
