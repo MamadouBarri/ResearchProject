@@ -52,7 +52,7 @@ number of cars generated is infinity, thus it can simulate traffic
 for as long as we need it to. Changing these parameters can have
 a drastic effect on the results. 
 
-You can watch the demo of the simulation my Youtube Channel [here](https://www.youtube.com/watch?v=Gs0ZzuL_i4w&ab_channel=MamadouGuennadyBarri) and read the [research paper]).
+You can watch the demo of the simulation my Youtube Channel [here](https://www.youtube.com/watch?v=Gs0ZzuL_i4w&ab_channel=MamadouGuennadyBarri) and read the [research paper](https://github.com/MamadouBarri/ResearchProject/blob/master/ResearchSmartLights2019.pdf).
 
 ![alt text](https://github.com/MamadouBarri/ResearchProject/blob/master/thumbnail.jpg?raw=True)
 
