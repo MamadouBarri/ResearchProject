@@ -60,7 +60,7 @@ You can watch the demo of the simulation my Youtube Channel [here](https://www.y
 ### Built With
 
 These are the main technologies used to build this project:
-* [Java JDK 8](https://www.oracle.com/pt/java/technologies/javase/javase-jdk8-downloads.html)
+* [JDK 8](https://www.oracle.com/pt/java/technologies/javase/javase-jdk8-downloads.html)
 * [Swing](https://docs.oracle.com/javase/tutorial/uiswing/index.html)
 
 
